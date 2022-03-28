@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="Container" style="justify-content: space-between; flex-grow: 1;">
+        <ui:VisualElement name="Header">
+            <uie:EnumField label="Mode" value="Center" name="Mode-EnumField" />
+            <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                <ui:VisualElement name="TickCountContainer" style="flex-direction: row;">
+                    <ui:Label text="Tick#:" display-tooltip-when-elided="true" name="TickCount-Label" />
+                    <ui:Label text="1021" display-tooltip-when-elided="true" name="TickCountValue-Label" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Info2Container" style="flex-direction: row;">
+                    <ui:Label text="Tick#:" display-tooltip-when-elided="true" name="Info2Id-Label" />
+                    <ui:Label text="1021" display-tooltip-when-elided="true" name="Info2Value-Label" />
+                </ui:VisualElement>
+                <ui:Toggle label="Auto Run" name="AutoRun-Toggle" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Body" style="flex-grow: 1;" />
+        <ui:VisualElement name="Footer" style="flex-direction: row; justify-content: center;">
+            <ui:Button text="Start" display-tooltip-when-elided="true" name="StartButton" />
+            <ui:Button text="Stop" display-tooltip-when-elided="true" name="StopButton" />
+            <ui:Button text="Reload" display-tooltip-when-elided="true" name="ReloadButton" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

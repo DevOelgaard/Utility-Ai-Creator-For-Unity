@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Horizontal" style="flex-direction: row; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
+        <ui:VisualElement name="Left" style="flex-direction: column; flex-grow: 0; max-height: none; min-height: 56px; align-items: stretch;">
+            <ui:VisualElement name="DropdownContainer" style="flex-direction: column; flex-grow: 0; align-items: flex-start; justify-content: flex-start;">
+                <ui:DropdownField label="Dropdown" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="Elements-DropdownField" style="flex-direction: column;" />
+                <ui:VisualElement name="Spacer" style="flex-grow: 1;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="DescriptionContainer" style="flex-direction: row; flex-grow: 1; flex-wrap: wrap; margin-left: 3px; margin-top: 2px;">
+                <ui:Label text="Description:" display-tooltip-when-elided="true" name="Description-Label" style="-unity-font-style: bold;" />
+                <ui:Label text="Soem bver y long description agbout a lot of stuff what to do and hwar to say" display-tooltip-when-elided="true" name="DescriptionText-Label" style="flex-grow: 0; white-space: normal;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" style="flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

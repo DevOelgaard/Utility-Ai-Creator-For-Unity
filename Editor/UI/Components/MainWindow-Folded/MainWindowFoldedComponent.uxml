@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="Container" style="flex-direction: column;">
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="Type-Label-Folded" style="-unity-font-style: italic; font-size: 10px;" />
+        <ui:VisualElement style="flex-direction: row;">
+            <ui:VisualElement name="IdentifierContainer" style="flex-grow: 1;">
+                <ui:VisualElement name="NameIdentifier" style="flex-direction: row;">
+                    <ui:Label text="Name: " display-tooltip-when-elided="true" name="Identifier-Label" style="flex-grow: 0;" />
+                    <ui:Label text="Some Name" display-tooltip-when-elided="true" name="Value-Label" style="flex-grow: 1;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="DescriptionIdentifier" style="flex-direction: row;">
+                    <ui:Label text="Description: " display-tooltip-when-elided="true" name="Identifier-Label" style="flex-grow: 0;" />
+                    <ui:Label text="Some long description about the object" display-tooltip-when-elided="true" name="Value-Label" style="flex-grow: 1;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="ScoreContainer" style="min-width: 64px; flex-direction: column;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

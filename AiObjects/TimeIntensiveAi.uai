@@ -1,0 +1,120 @@
+{
+  "States": [
+    {
+      "$type": "UAIModelState, Devoe.UAS.Runtime",
+      "Name": "Time Intensitive",
+      "Description": null,
+      "Buckets": [
+        {
+          "Name": "Default",
+          "Description": null,
+          "Decisions": [
+            {
+              "Name": "Default",
+              "Description": null,
+              "AgentActions": [
+                {
+                  "Parameters": [
+                    {
+                      "Name": "ExecutionTime ms",
+                      "Value": 3,
+                      "FileName": "Parameter"
+                    }
+                  ],
+                  "Name": "Default (Demo_TimeIntensive)",
+                  "Description": null,
+                  "FileName": "Demo_TimeIntensive"
+                }
+              ],
+              "Considerations": [
+                {
+                  "Parameters": [],
+                  "ResponseCurveState": {
+                    "Name": "Linear",
+                    "MinY": 0.0,
+                    "MaxY": 1.0,
+                    "Parameters": [
+                      {
+                        "Name": "a",
+                        "Value": 1.0,
+                        "FileName": "Parameter"
+                      },
+                      {
+                        "Name": "b",
+                        "Value": 0.0,
+                        "FileName": "Parameter"
+                      }
+                    ],
+                    "FileName": "RCLinear"
+                  },
+                  "Name": "Default (Demo_ConsiderationRandomValue)",
+                  "Description": null,
+                  "Min": {
+                    "Name": "Min",
+                    "Value": 0.0,
+                    "FileName": "Parameter"
+                  },
+                  "Max": {
+                    "Name": "Max",
+                    "Value": 1.0,
+                    "FileName": "Parameter"
+                  },
+                  "FileName": "Demo_ConsiderationRandomValue"
+                }
+              ],
+              "FileName": "Decision"
+            }
+          ],
+          "Considerations": [
+            {
+              "Parameters": [],
+              "ResponseCurveState": {
+                "Name": "Linear",
+                "MinY": 0.0,
+                "MaxY": 1.0,
+                "Parameters": [
+                  {
+                    "Name": "a",
+                    "Value": 1.0,
+                    "FileName": "Parameter"
+                  },
+                  {
+                    "Name": "b",
+                    "Value": 0.0,
+                    "FileName": "Parameter"
+                  }
+                ],
+                "FileName": "RCLinear"
+              },
+              "Name": "Default (Demo_ConsiderationRandomValue)",
+              "Description": null,
+              "Min": {
+                "Name": "Min",
+                "Value": 0.0,
+                "FileName": "Parameter"
+              },
+              "Max": {
+                "Name": "Max",
+                "Value": 1.0,
+                "FileName": "Parameter"
+              },
+              "FileName": "Demo_ConsiderationRandomValue"
+            }
+          ],
+          "Weight": {
+            "Name": "Weight",
+            "Value": 1.0,
+            "FileName": "Parameter"
+          },
+          "FileName": "Bucket"
+        }
+      ],
+      "BucketSelectorName": "Highest Score",
+      "DecisionSelectorName": "Highest Score",
+      "USName": "Average",
+      "FileName": "UAIModel"
+    }
+  ],
+  "TypeString": "UAIModel",
+  "FileName": "RestoreAbleCollection"
+}

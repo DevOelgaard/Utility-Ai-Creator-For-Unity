@@ -1,0 +1,209 @@
+{
+  "AIs": [
+    {
+      "Name": "Random Vaule and debug.log",
+      "Description": null,
+      "IsPLayable": false,
+      "Buckets": [
+        {
+          "Name": "Default",
+          "Description": null,
+          "Decisions": [
+            {
+              "Name": "Default (Decision)",
+              "Description": null,
+              "AgentActions": [
+                {
+                  "Parameters": [
+                    {
+                      "Name": "Output",
+                      "Value": "Agent output",
+                      "FileName": "Parameter"
+                    }
+                  ],
+                  "Name": "Default (Demo_AgentActionParameter)",
+                  "Description": null,
+                  "FileName": "Demo_AgentActionParameter"
+                }
+              ],
+              "Considerations": [
+                {
+                  "Parameters": [],
+                  "ResponseCurveState": {
+                    "Name": "Default",
+                    "Description": null,
+                    "MinY": 0.0,
+                    "MaxY": 1.0,
+                    "MinX": 0.0,
+                    "MaxX": 1.0,
+                    "Segments": [],
+                    "ResponseFunctions": [
+                      {
+                        "Name": "Bool",
+                        "Description": null,
+                        "Parameters": [
+                          {
+                            "Name": "First Value",
+                            "Value": true,
+                            "FileName": "Parameter"
+                          },
+                          {
+                            "Name": "CutOff",
+                            "Value": 0.5,
+                            "FileName": "Parameter"
+                          }
+                        ],
+                        "FileName": "BoolFunction"
+                      }
+                    ],
+                    "FileName": "ResponseCurve"
+                  },
+                  "Name": "Default (Demo_ConsiderationRandomValue)",
+                  "Description": null,
+                  "Min": {
+                    "Name": "Min",
+                    "Value": 0.0,
+                    "FileName": "Parameter"
+                  },
+                  "Max": {
+                    "Name": "Max",
+                    "Value": 1.0,
+                    "FileName": "Parameter"
+                  },
+                  "PerformanceTag": 2,
+                  "BaseScore": 0.0,
+                  "NormalizedScore": 0.0,
+                  "FileName": "Demo_ConsiderationRandomValue"
+                }
+              ],
+              "Parameters": [],
+              "LastCalculatedUtility": 0.0,
+              "FileName": "Decision"
+            }
+          ],
+          "Considerations": [
+            {
+              "Parameters": [],
+              "ResponseCurveState": {
+                "Name": "Default",
+                "Description": null,
+                "MinY": 0.0,
+                "MaxY": 1.0,
+                "MinX": 0.0,
+                "MaxX": 1.0,
+                "Segments": [],
+                "ResponseFunctions": [
+                  {
+                    "Name": "Bool",
+                    "Description": null,
+                    "Parameters": [
+                      {
+                        "Name": "First Value",
+                        "Value": true,
+                        "FileName": "Parameter"
+                      },
+                      {
+                        "Name": "CutOff",
+                        "Value": 0.5,
+                        "FileName": "Parameter"
+                      }
+                    ],
+                    "FileName": "BoolFunction"
+                  }
+                ],
+                "FileName": "ResponseCurve"
+              },
+              "Name": "Default (Demo_ConsiderationRandomValue)",
+              "Description": null,
+              "Min": {
+                "Name": "Min",
+                "Value": 0.0,
+                "FileName": "Parameter"
+              },
+              "Max": {
+                "Name": "Max",
+                "Value": 1.0,
+                "FileName": "Parameter"
+              },
+              "PerformanceTag": 2,
+              "BaseScore": 0.0,
+              "NormalizedScore": 0.0,
+              "FileName": "Demo_ConsiderationRandomValue"
+            }
+          ],
+          "Weight": {
+            "Name": "Weight",
+            "Value": 1.0,
+            "FileName": "Parameter"
+          },
+          "LastCalculatedUtility": 0.0,
+          "FileName": "Bucket"
+        }
+      ],
+      "CurrentBucketSelectorName": "Random X Highest",
+      "CurrentDecisionSelectorName": "Random X Highest",
+      "BucketSelectors": [
+        {
+          "Parameters": [],
+          "FileName": "UCSHighestScore"
+        },
+        {
+          "Parameters": [
+            {
+              "Name": "Number Of Items",
+              "Value": 4,
+              "FileName": "Parameter"
+            },
+            {
+              "Name": "Percentage chance",
+              "Value": false,
+              "FileName": "Parameter"
+            },
+            {
+              "Name": "Max deviation from highest",
+              "Value": -0.14,
+              "FileName": "Parameter"
+            }
+          ],
+          "FileName": "UCSRandomFromXHighest"
+        }
+      ],
+      "DecisionSelectors": [
+        {
+          "Parameters": [],
+          "FileName": "UCSHighestScore"
+        },
+        {
+          "Parameters": [
+            {
+              "Name": "Number Of Items",
+              "Value": 1,
+              "FileName": "Parameter"
+            },
+            {
+              "Name": "Percentage chance",
+              "Value": true,
+              "FileName": "Parameter"
+            },
+            {
+              "Name": "Max deviation from highest",
+              "Value": 0.0,
+              "FileName": "Parameter"
+            }
+          ],
+          "FileName": "UCSRandomFromXHighest"
+        }
+      ],
+      "USName": "Average",
+      "FileName": "Ai"
+    }
+  ],
+  "Buckets": [],
+  "Decisions": [],
+  "Considerations": [],
+  "AgentActions": [],
+  "ResponseCurves": [],
+  "TestStrign": "",
+  "InternalTestString": "",
+  "FileName": "UASTemplateService"
+}

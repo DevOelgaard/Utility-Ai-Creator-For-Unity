@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="Container" style="flex-direction: row; flex-grow: 1; min-height: 32px;">
+        <ui:VisualElement name="Left" style="min-width: 32px;">
+            <ui:Button text="Expand" display-tooltip-when-elided="true" name="ToggleView-Button" style="-unity-font-style: bold;" />
+            <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                <ui:Button text="+" display-tooltip-when-elided="true" name="Up-Button" />
+                <ui:Button text="-" display-tooltip-when-elided="true" name="Down-Button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Center" style="flex-grow: 1;" />
+        <ui:VisualElement name="Right" style="min-width: 32px;">
+            <ui:Button text="X" display-tooltip-when-elided="true" name="Remove-Button" style="-unity-font-style: bold;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

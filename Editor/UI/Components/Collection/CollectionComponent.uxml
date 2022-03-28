@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="Container" style="flex-direction: column; flex-grow: 1;">
+        <ui:VisualElement name="TempContainer">
+            <ui:VisualElement name="TempHeader" style="flex-direction: row; justify-content: space-between;">
+                <ui:VisualElement name="DropdownContainer" />
+                <ui:Button text="Sort By Execution" display-tooltip-when-elided="true" name="SortCollection-Button" style="flex-direction: row-reverse; justify-content: flex-end; align-items: flex-end;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="ElementsContainer" style="flex-grow: 1;">
+            <ui:VisualElement name="ElementsHeader">
+                <ui:ScrollView name="ElementsBody" text="Sort By Performance" vertical-scroller-visibility="AlwaysVisible" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

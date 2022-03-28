@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <uie:Toolbar />
+    <SplitView fixed-pane-initial-dimension="400">
+        <ui:VisualElement name="left-panel">
+            <ui:DropdownField label="Dropdown" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="TypeDropdown" />
+            <ui:ScrollView name="ButtonContainer" style="flex-grow: 1;" />
+            <ui:VisualElement name="ActionsContainer">
+                <ui:VisualElement name="AddElementPopupContainer" style="flex-grow: 0;" />
+                <ui:VisualElement name="Buttons" style="flex-direction: row; flex-grow: 0; height: 24px; flex-wrap: wrap-reverse;">
+                    <ui:Button text="Copy" display-tooltip-when-elided="true" name="CopyButton" style="flex-grow: 1;" />
+                    <ui:Button text="Delete" display-tooltip-when-elided="true" name="DeleteButton" style="flex-grow: 1;" />
+                    <ui:Button text="Clear" display-tooltip-when-elided="true" name="ClearButton" style="flex-grow: 1;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="right-panel" style="padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;" />
+    </SplitView>
+</ui:UXML>

@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="Header" style="flex-direction: row; justify-content: flex-end; flex-grow: 0;">
+        <ui:DropdownField label="Response Curve" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="ResponseCurve-Dropdown" style="flex-direction: row; justify-content: flex-end;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Body" style="flex-grow: 1;">
+        <ui:VisualElement name="CurveContainer" style="flex-grow: 1;" />
+        <ui:ScrollView name="FunctionsContainer" mode="Horizontal" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Footer" style="flex-direction: row;">
+        <ui:Button text="Add Function" display-tooltip-when-elided="true" name="AddFunctionButton" vertical-scroller-visibility="Hidden" />
+    </ui:VisualElement>
+</ui:UXML>

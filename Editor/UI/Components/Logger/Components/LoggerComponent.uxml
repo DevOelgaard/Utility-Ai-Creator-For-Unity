@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement style="justify-content: space-between; flex-grow: 1;">
+        <ui:VisualElement name="Header" style="flex-direction: column; justify-content: space-between;">
+            <ui:Label text="Some info text" display-tooltip-when-elided="true" name="InfoLeft-Label" style="max-width: 45px; width: 45px; min-width: 45px; -unity-text-align: upper-left;" />
+            <ui:VisualElement name="ActionsContainer" style="flex-direction: column; flex-grow: 1; justify-content: center; align-items: stretch;">
+                <ui:VisualElement name="ButtonContainer" style="flex-direction: row; justify-content: center;">
+                    <ui:Button text="-10" display-tooltip-when-elided="true" name="BackLeapButton" />
+                    <ui:Button text="-1" display-tooltip-when-elided="true" name="BackStepButton" />
+                    <ui:Button text="Play" display-tooltip-when-elided="true" name="ToggleButton" />
+                    <ui:Button text="+1" display-tooltip-when-elided="true" name="ForwardStepButton" />
+                    <ui:Button text="+10" display-tooltip-when-elided="true" name="ForwardLeapButton" />
+                </ui:VisualElement>
+                <ui:SliderInt picking-mode="Ignore" label="0" value="42" high-value="100" name="Tick-Slider" style="flex-direction: column; -unity-text-align: upper-center;" />
+                <ui:VisualElement name="Toggles" style="flex-direction: row; flex-grow: 1; justify-content: space-around; align-items: stretch;">
+                    <ui:Toggle label="Color" name="Color-Toggle" value="true" style="flex-direction: column; width: 48px; flex-shrink: 1; align-items: flex-start;" />
+                    <ui:Toggle label="Record" name="Record-Toggle" value="true" style="flex-direction: column; flex-shrink: 1; width: 48px;" />
+                    <ui:Button text="Collapse All" display-tooltip-when-elided="true" name="Foldout-Button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="TickMetaDataContainer">
+            <ui:Label text="Tick Time: " display-tooltip-when-elided="true" name="TickTime-Label" />
+        </ui:VisualElement>
+        <ui:ScrollView name="Body" mode="VerticalAndHorizontal" style="flex-grow: 1;" />
+        <ui:VisualElement name="Footer" />
+    </ui:VisualElement>
+</ui:UXML>

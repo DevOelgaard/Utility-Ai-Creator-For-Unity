@@ -1,0 +1,106 @@
+AiComponent > TemplateContainer > VisualElement > #Header {
+    min-height: 64px;
+}
+
+DropdownDescriptionComponent {
+    margin-right: 8px;
+}
+
+CollectionComponent {
+    margin-top: 8px;
+    margin-left: 12px;
+    flex-grow: 1;
+/*    border-radius: 5px;
+    border-width: 2px;
+    border-color: rgb(33, 33, 33);*/
+}
+
+#Type-Label {
+    margin-left: 3px;
+}
+
+#TType-Label-Folded {
+    margin-left: 0px;
+}
+
+TabViewComponent {
+}
+
+#SettingsContainer {
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+#SettingsContainer > #DropdownScorerCollection {
+    margin: 8px;
+    align-items: center;
+    width: 30%;
+}
+
+#Tabs {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    min-height: 16px;
+}
+
+#TabContent {
+    padding: 8px;
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: rgb(90, 90, 90);
+}
+
+#Left {
+    width: 80px;
+}
+
+#Right {
+    width: 35px;
+}
+
+#Center {
+    /*color:rebeccapurple;*/
+    margin: 2px;
+    padding: 8px;
+    /*padding-top: 8px;
+    padding-bottom: 8px;*/
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: rgb(90, 90, 90);
+}
+
+#ScoreContainer {
+    flex-direction: column;
+}
+
+
+#ScoreContainer > ParameterComponent > FloatFieldMinMax {
+    display: flex;
+    flex-shrink: 1;
+    flex-direction: column;
+    width: 48px;
+}
+
+#Footer {
+    margin: 8px;
+    height: 16px;
+    justify-content: space-between;
+}
+
+UCSComponent > TemplateContainer > #DescriptionContainer {
+    margin: 3px;
+}
+
+UCSComponent > TemplateContainer > #ParametersContainer {
+    align-items: flex-start;
+}
+
+ListViewComponent > TemplateContainer > VisualElement > #Center:hover {
+    
+}
+
+AgentComponent > TemplateContainer > #Footer {
+    height: 24px;
+    min-height: 24px;
+}

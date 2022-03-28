@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Header">
+        <ui:DropdownField label="Type" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="TypeDropdown" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Body" style="flex-grow: 1;" />
+    <ui:VisualElement name="Footer">
+        <ui:Button text="Remove" display-tooltip-when-elided="true" name="RemoveButton" />
+    </ui:VisualElement>
+</ui:UXML>

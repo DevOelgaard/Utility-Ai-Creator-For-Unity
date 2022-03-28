@@ -1,0 +1,186 @@
+ConsiderationLogComponent {
+    /*background-color: rgba(204, 51, 0, 0.1);*/
+}
+
+LoggerComponent > TemplateContainer > VisualElement > #Header {
+    /*margin-top: 4px;*/
+    min-height: 108px;
+    margin: 8px;
+}
+
+AgentLogComponent {
+    margin: 8px;
+    padding: 3px;
+}
+
+AiLogComponent {
+    margin-top: 8px;
+    padding: 3px;
+}
+
+    AiLogComponent:hover {
+/*        border-radius: 0px;
+        border-width: 1px;
+        border-color: rgb(200, 200, 200);*/
+    }
+
+AiLogComponent > TemplateContainer > #Body > TemplateContainer {
+    flex-direction: column;
+}
+
+#UCSContainer {
+    flex-direction: row;
+}
+
+#BucketContainer {
+    flex-direction: row;
+}
+
+UCSLogComponent {
+    margin: 8px;
+    padding: 3px;
+    max-width: 500px;
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: rgb(70, 70, 70);
+}
+
+    UCSLogComponent:hover {
+        border-radius: 0px;
+        border-width: 1px;
+        border-color: rgb(170, 170, 170);
+    }
+
+    UCSLogComponent > #Title-Label {
+        -unity-font-style: bold;
+        margin-bottom: 3px;
+    }
+
+BucketLogComponent {
+    margin: 8px;
+    padding: 3px;
+    max-width: 500px;
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: rgb(70, 70, 70);
+}
+
+    BucketLogComponent:hover {
+        border-radius: 0px;
+        border-width: 1px;
+        border-color: rgb(170, 170, 170);
+    }
+
+DecisionLogComponent {
+    margin: 8px;
+    padding: 3px;
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: rgb(70, 70, 70);
+}
+
+    DecisionLogComponent:hover {
+        border-radius: 0px;
+        border-width: 1px;
+        border-color: rgb(140, 140, 140);
+    }
+
+ConsiderationLogComponent {
+    margin: 8px;
+    padding: 3px;
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: rgb(70, 70, 70);
+}
+
+    ConsiderationLogComponent:hover {
+        border-radius: 0px;
+        border-width: 1px;
+        border-color: rgb(110, 110, 110);
+    }
+
+ResponseCurveLogComponent {
+    margin: 8px;
+    padding: 3px;
+}
+
+ResponseCurveLogComponent:hover {
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: rgb(90, 90, 90);
+}
+
+AgentActionLogComponent {
+    margin: 8px;
+    padding: 3px;
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: rgb(70, 70, 70);
+}
+
+    AgentActionLogComponent:hover {
+        border-radius: 0px;
+        border-width: 1px;
+        border-color: rgb(110, 110, 110);
+    }
+
+AgentActionLogComponent > TemplateContainer > #Body{
+    flex-grow: 0;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 600px;
+    justify-content: flex-start;
+}
+
+ScoreLogComponent{
+    padding: 3px;
+}
+
+ScoreLogComponent:hover {
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: rgb(90, 90, 90);
+}
+
+ParameterLogComponent {
+    /*margin: 8px;*/
+    padding: 3px;
+    -unity-font-style: italic;
+}
+
+ParameterLogComponent:hover {
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: rgb(90, 90, 90);
+}
+
+
+
+LoggerComponent > TemplateContainer > VisualElement > #Body > VisualElement > VisualElement > #unity-content-container {
+    /*flex-direction: row;*/
+    /*justify-content: space-between;*/
+    /*background-color: red;*/
+}
+
+#IdentifierContainer{
+    -unity-font-style: bold;
+    padding-bottom: 3px;
+    white-space: pre;
+}
+
+#TypeContainer {
+    -unity-font-style: italic;
+    font-size: 10px;
+    margin-bottom: 1px;
+}
+
+#Body {
+}
+
+#ActionsContainer{
+    min-height: 64px;
+}
+
+#ActionsContainer > #ButtonContainer{
+    min-height: 24px;
+}

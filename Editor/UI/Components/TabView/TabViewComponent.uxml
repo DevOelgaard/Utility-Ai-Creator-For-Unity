@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 0;">
+        <ui:VisualElement name="Tabs" style="flex-direction: row; justify-content: space-around; background-color: rgb(89, 89, 89);" />
+        <ui:VisualElement name="TabContent" />
+    </ui:VisualElement>
+</ui:UXML>

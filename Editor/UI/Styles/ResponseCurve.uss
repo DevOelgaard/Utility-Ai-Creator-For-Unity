@@ -1,0 +1,20 @@
+﻿#Segment {
+    flex-shrink: 1;
+    max-width: 48px;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+#Segment > FloatFieldMinMax {
+    flex-shrink: 1;
+    flex-grow: 0;
+/*    max-width: 0px;
+    width: 0px;*/
+    flex-direction: column-reverse;
+    align-items: center;
+} 
+
+ResponseFunctionComponent > TemplateContainer {
+    justify-content: space-between;
+    flex-grow: 1;
+}

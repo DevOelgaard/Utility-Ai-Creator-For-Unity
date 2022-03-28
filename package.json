@@ -1,0 +1,23 @@
+{
+  "name": "net.devoe.ai.uas",
+  "version": "1.0.1",
+  "displayName": "Utility Ai System",
+  "description": "An editor tool for creating complex Utility Ais with a minimum of coding.",
+  "unity": "2021.2",
+  "author": {
+    "name": "Henrik Thue \u00d8lgaard",
+    "email": "developeroelgaard@gmail.com"
+  },
+  "keywords": [
+    "ai",
+    "utility ai",
+    "editor tool"
+  ],
+  "type": "tool",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "2.0.2",
+    "com.unity.editorcoroutines": "1.0.0"
+  },
+  "unityRelease": "10f1",
+  "hideInEditor": false
+}

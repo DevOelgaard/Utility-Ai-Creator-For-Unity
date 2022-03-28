@@ -46,6 +46,7 @@ public abstract class RestoreAble
 public class RestoreState
 {
     public string FileName;
+    public string TypeString;
 
     public RestoreState()
     {
@@ -54,5 +55,6 @@ public class RestoreState
     public RestoreState(RestoreAble o)
     {
         FileName = TypeDescriptor.GetClassName(o);
+        TypeString = o.GetType().ToString();
     }
 }

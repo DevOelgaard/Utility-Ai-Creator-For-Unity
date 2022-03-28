@@ -5,11 +5,7 @@ using UnityEngine;
 
 internal class JSONPersister : IPersister
 {
-    //public string GetExtension()
-    //{
-    //    return ".json";
-    //}
-
+    private string json;
     public T LoadObject<T>(string path)
     {
         try
@@ -22,7 +18,7 @@ internal class JSONPersister : IPersister
             if (!File.Exists(path)) return default(T);
 
             
-            var json = File.ReadAllText(path);
+            json = File.ReadAllText(path);
             var deserialized = JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Auto

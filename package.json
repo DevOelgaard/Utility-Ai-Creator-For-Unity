@@ -1,6 +1,6 @@
 {
   "name": "net.devoe.ai.uas",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "displayName": "Utility Ai System",
   "description": "An editor tool for creating complex Utility Ais with a minimum of coding.",
   "unity": "2021.2",
@@ -18,6 +18,8 @@
     "com.unity.nuget.newtonsoft-json": "2.0.2",
     "com.unity.editorcoroutines": "1.0.0"
   },
+  "documentationUrl": "https://github.com/DevOelgaard/UnityUtilityAiSystem/tree/master",
+  "changelogUrl": "https://github.com/DevOelgaard/UnityUtilityAiSystem/commits/master",
   "unityRelease": "10f1",
   "hideInEditor": false
 }

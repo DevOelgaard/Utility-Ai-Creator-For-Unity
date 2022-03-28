@@ -27,7 +27,7 @@ public class ParameterEnum: Parameter
     {
         base.RestoreInternal(s, restoreDebug);
         var state = s as ParameterEnumState;
-        EnumType = Type.GetType(state.EnumType);
+        EnumType = state.EnumType;
         Value = Enum.Parse(EnumType, state.CurrentEnumSelection);
     }
 }
@@ -35,7 +35,7 @@ public class ParameterEnum: Parameter
 public class ParameterEnumState : ParameterState
 {
     public string CurrentEnumSelection;
-    public string EnumType;
+    public Type EnumType;
 
     public ParameterEnumState()
     {
@@ -44,6 +44,6 @@ public class ParameterEnumState : ParameterState
     public ParameterEnumState(string name, Enum currentSelection, Type t, ParameterEnum p): base(name, currentSelection, p)
     {
         CurrentEnumSelection = currentSelection.ToString();
-        EnumType = t.ToString();
+        EnumType = t;
     }
 }

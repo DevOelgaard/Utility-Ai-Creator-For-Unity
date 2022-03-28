@@ -9,8 +9,8 @@ using UnityEngine;
 public class Parameter: RestoreAble
 {
     public string Name;
-    private object v;
-    public object Value { 
+    protected object v;
+    public virtual object Value { 
         get => v;
         set
         {
@@ -19,7 +19,7 @@ public class Parameter: RestoreAble
         }
     }
 
-    public ParameterEnum ParameterEnum;
+    public ParameterTypes ParameterEnum;
 
     public IObservable<object> OnValueChange => valueChanged;
     private Subject<object> valueChanged = new Subject<object>();
@@ -29,7 +29,7 @@ public class Parameter: RestoreAble
         Name = "";
     }
 
-    public Parameter(string name, object value, ParameterEnum pEnum = ParameterEnum.None)
+    public Parameter(string name, object value, ParameterTypes pEnum = ParameterTypes.None)
     {
         Name = name;
         Value = value;

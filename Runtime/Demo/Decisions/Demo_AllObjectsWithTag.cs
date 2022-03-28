@@ -15,7 +15,7 @@ internal class Demo_AllObjectsWithTag : Decision
     {
         return new List<Parameter>()
         {
-            new Parameter("Tag", "Target", ParameterEnum.Tag)
+            new Parameter("Tag", "Target", ParameterTypes.Tag)
         };
     }
 

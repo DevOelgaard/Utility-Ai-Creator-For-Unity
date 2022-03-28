@@ -13,7 +13,7 @@ public static class Consts
     //internal const string File_PlayAi = Path_MainFolder + "Ai/Playable" + "." + FileExtension_UasTemplateCollection;
     internal const string File_UASTemplateService_AutoSave = Path_MainFolder + "Saves/AutoSave" + "." + FileExtension_UasTemplateCollection;
     internal const string File_UASTemplateService_BackUp = Path_MainFolder + "Saves/backup" + "." + FileExtension_UasTemplateCollection;
-    internal const string File_UASTemplateServicel_Playable = Path_MainFolder + "Saves/AutoSave" + "." + FileExtension_UasTemplateCollection;
+    internal const string File_UASTemplateServicel_Playable = Path_MainFolder + "Saves/Playable" + "." + FileExtension_UasTemplateCollection;
 
     internal const string File_MainSavePath = Path_MainFolder + "Persistence/";
 

@@ -33,7 +33,7 @@ internal class Cooldown : Consideration
     {
         return new List<Parameter>()
         {
-            new Parameter("Cooldowm Time MS", 1000f)
+            new Parameter("Cooldowm Time MS", 1000f),
         };
     }
 

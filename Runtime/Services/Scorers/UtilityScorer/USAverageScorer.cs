@@ -14,6 +14,7 @@ public class USAverageScorer : IUtilityScorer
             return 0;
 
         var sum = 0f;
+        var amountOfScorers = 0;
         foreach (var consideration in considerations)
         {
             var score = consideration.CalculateScore(context);
@@ -23,9 +24,19 @@ public class USAverageScorer : IUtilityScorer
             {
                 return score;
             }
+            if (consideration.IsScorer)
+            {
+                amountOfScorers++;
+            }
             sum += score;
         }
-        return sum / considerations.Count;
+        if(amountOfScorers <= 0) // Only ConsiderationsBools have been calculated. If they failed they would have returned false
+        {
+            return 1;
+        } else
+        {
+            return sum / amountOfScorers;
+        }
     }
 
     public string GetDescription() => description;

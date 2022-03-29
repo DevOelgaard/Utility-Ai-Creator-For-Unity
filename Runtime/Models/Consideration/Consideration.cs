@@ -8,7 +8,7 @@ using System.Linq;
 public abstract class Consideration : AiObjectModel
 {
     private CompositeDisposable paramaterDisposables = new CompositeDisposable();
-
+    public bool IsScorer { get; protected set; } = true;
     public List<Parameter> Parameters;
     private ResponseCurve currentResponseCurve;
     public ResponseCurve CurrentResponseCurve

@@ -20,7 +20,7 @@ public class ParameterComponent: VisualElement
     internal void UpdateUi(Parameter parameter)
     {
         disposables.Clear();
-
+        Clear();
         if (parameter.GetType() == typeof(ParameterEnum))
         {
             var p = parameter as ParameterEnum;

@@ -108,12 +108,13 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
 
     private void AddCopy(string name)
     {
-        T element = templates.Values.FirstOrDefault(t => t.Name == name) as T;
+        //T element = templates.Values.FirstOrDefault(t => t.Name == name) as T;
 
-        if (element == null)
-        {
-            element = AssetDatabaseService.GetInstanceOfType<T>(name);
-        }
+        //if (element == null)
+        //{
+        //    element = AssetDatabaseService.GetInstanceOfType<T>(name);
+        //}
+        var element = AssetDatabaseService.GetInstanceOfType<T>(name);
 
         element = (T)element.Clone();
         AddElement(element);

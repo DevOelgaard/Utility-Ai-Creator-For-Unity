@@ -116,7 +116,7 @@ internal class UASTemplateService: RestoreAble
         {
             perstistAPI.SaveObjectPath(this, Consts.File_UASTemplateService_BackUp);
         }
-        Debug.Log("Autosave completed in: " + sw.ElapsedMilliseconds + "ms");
+        //Debug.Log("Autosave completed in: " + sw.ElapsedMilliseconds + "ms");
     }
 
 

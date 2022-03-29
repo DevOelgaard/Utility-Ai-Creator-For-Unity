@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 public class AiContext
 {
     public IAgent Agent;
-    internal AgentAction CurrentAction;
+    //internal AgentAction CurrentAction;
     private Dictionary<string, object> contextStringKey = new Dictionary<string, object>();
     private Dictionary<AiContextKey, object> contextEnumKey = new Dictionary<AiContextKey, object>();
     internal IUtilityScorer UtilityScorer = new USAverageScorer();

@@ -103,7 +103,7 @@ internal class ConsiderationComponent : AiObjectComponent
     private void SetParameters()
     {
         //Debug.LogWarning("This could be more effective by using a pool");
-        //parametersContainer.Clear();
+        parametersContainer.Clear();
 
         minParamComp.UpdateUi(considerationModel.MinFloat);
         maxParamComp.UpdateUi(considerationModel.MaxFloat);

@@ -24,8 +24,6 @@ internal class Demo_AllObjectsWithTag : Decision
         var targets = GameObject.FindGameObjectsWithTag((string)Parameters[0].Value);
         GameObject selectedTarget = null;
         var highestUtility = 0f;
-        var address = GetContextAddress(context);
-
         if (targets == null)
         {
             return 0f;
@@ -33,7 +31,7 @@ internal class Demo_AllObjectsWithTag : Decision
         {
             foreach(var target in targets)
             {
-                context.SetContext(address+AiContextKey.CurrentTargetGameObject, target);
+                context.SetContext(AiContextKey.CurrentTargetGameObject.ToString(), target, this);
                 var utility = context.UtilityScorer.CalculateUtility(Considerations.Values, context);
                 if (utility > highestUtility)
                 {
@@ -46,7 +44,7 @@ internal class Demo_AllObjectsWithTag : Decision
                 return 0f;
             } else
             {
-                context.SetContext(address + AiContextKey.CurrentTargetGameObject, selectedTarget);
+                context.SetContext(AiContextKey.CurrentTargetGameObject.ToString(), selectedTarget, this);
                 return highestUtility;
             }
         }

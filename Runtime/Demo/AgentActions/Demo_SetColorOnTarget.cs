@@ -57,9 +57,7 @@ internal class Demo_SetColorOnTarget : AgentAction
 
     private Renderer GetTargetRenderer(AiContext context)
     {
-        var address = context.LastSelectedDecision.GetContextAddress(context);
-        //Debug.Log("Address: " + address);
-        var target = context.GetContext<GameObject>((address + AiContextKey.CurrentTargetGameObject));
+        var target = context.GetContext<GameObject>(AiContextKey.CurrentTargetGameObject.ToString(), context.LastSelectedDecision);
         return target.GetComponent<Renderer>();
     }
 }

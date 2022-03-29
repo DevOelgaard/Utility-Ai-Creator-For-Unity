@@ -31,7 +31,6 @@ internal class Demo_ActOnTarget : AgentAction
 
     private GameObject GetTarget(AiContext context)
     {
-        var address = context.LastSelectedDecision.GetContextAddress(context);
-        return context.GetContext<GameObject>((address + AiContextKey.CurrentTargetGameObject));
+        return context.GetContext<GameObject>(AiContextKey.CurrentTargetGameObject.ToString(), context.LastSelectedDecision);
     }
 }

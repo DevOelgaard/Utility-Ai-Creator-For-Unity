@@ -21,7 +21,6 @@ internal class ConsiderationNearestTarget : Consideration
         if (context.CurrentEvalutedDecision != null)
         {
             address = context.CurrentEvalutedDecision.GetContextAddress(context);
-
         }
         else
         {

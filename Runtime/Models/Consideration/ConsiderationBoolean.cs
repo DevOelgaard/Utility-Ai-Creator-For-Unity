@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /// CalculateBaseScore should return <=0 for false otherwise true
 /// The score from this does not count towards the decision/buckets Score
 /// </summary>
-internal abstract class ConsiderationBoolean : Consideration
+public abstract class ConsiderationBoolean : Consideration
 {
     public ConsiderationBoolean(): base()
     {

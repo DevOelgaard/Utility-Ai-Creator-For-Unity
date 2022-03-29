@@ -12,13 +12,13 @@ public class AiContext
     private Dictionary<string, object> contextStringKey = new Dictionary<string, object>();
     //private Dictionary<AiContextKey, object> contextEnumKey = new Dictionary<AiContextKey, object>();
     internal IUtilityScorer UtilityScorer = new USAverageScorer();
-    internal List<AgentAction> LastActions = new List<AgentAction>();
-    internal Decision LastSelectedDecision;
-    internal Decision CurrentEvalutedDecision;
-    internal Bucket LastSelectedBucket;
-    internal Bucket CurrentEvaluatedBucket;
-    internal TickMetaData TickMetaData;
-         
+    public List<AgentAction> LastActions = new List<AgentAction>();
+    public Decision LastSelectedDecision { get; internal set; }
+    public Decision CurrentEvalutedDecision { get; internal set; }
+    public Bucket LastSelectedBucket { get; internal set; }
+    public Bucket CurrentEvaluatedBucket { get; internal set; }
+    public TickMetaData TickMetaData { get; internal set; }
+
     public AiContext()
     {
     }

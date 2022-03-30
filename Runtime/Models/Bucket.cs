@@ -49,6 +49,15 @@ public class Bucket : UtilityContainer
         return context.UtilityScorer.CalculateUtility(Considerations.Values, context) * Convert.ToSingle(Weight.Value);
     }
 
+    public override void SetContextAddress(string address)
+    {
+        base.SetContextAddress(address);
+        foreach (var d in Decisions.Values)
+        {
+            d.SetContextAddress(ContextAddress+ "D" + Decisions.Values.IndexOf(d));
+        }
+    }
+
     protected override void UpdateInfo()
     {
         base.UpdateInfo();
@@ -62,7 +71,9 @@ public class Bucket : UtilityContainer
         {
             Info = new InfoModel();
         }
+        SetContextAddress(ContextAddress);
     }
+
 
     internal override RestoreState GetState()
     {
@@ -105,12 +116,6 @@ public class Bucket : UtilityContainer
         base.ClearSubscriptions();
         decisionSub?.Dispose();
     }
-
-    //internal override void SaveToFile(string path, IPersister persister)
-    //{
-    //    var state = GetState();
-    //    persister.SaveObject(state, path);
-    //}
 }
 
 [Serializable]

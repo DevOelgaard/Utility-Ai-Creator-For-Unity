@@ -17,7 +17,7 @@ public abstract class AiObjectModel: RestoreAble
     private Subject<InfoModel> onInfoChanged = new Subject<InfoModel>();
 
     public List<ScoreModel> ScoreModels = new List<ScoreModel>();
-
+    public string ContextAddress { get; protected set; }
     protected AiObjectModel()
     {
         UpdateInfo();
@@ -31,9 +31,9 @@ public abstract class AiObjectModel: RestoreAble
     {
         return Name + " (" + this.GetType().ToString() + ")";
     }
-    internal virtual string GetContextAddress(AiContext context)
+    public virtual string GetContextAddress(AiContext context)
     {
-        return Name;
+        return ContextAddress;
     }
 
     public virtual string GetNameFormat(string name)
@@ -95,6 +95,11 @@ public abstract class AiObjectModel: RestoreAble
             info = value;
             onInfoChanged.OnNext(info);
         } 
+    }
+
+    public virtual void SetContextAddress(string address)
+    {
+        ContextAddress = address;
     }
 
     protected virtual void ClearSubscriptions()

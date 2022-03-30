@@ -6,6 +6,9 @@ using UniRxExtension;
 [Serializable]
 public abstract class UtilityContainer : AiObjectModel
 {
+    protected int index { get; set; }
+   
+    protected string ContextAdress = "";
     private IDisposable considerationSub;
     private ReactiveListNameSafe<Consideration> considerations = new ReactiveListNameSafe<Consideration>();
     internal ReactiveListNameSafe<Consideration> Considerations
@@ -49,6 +52,20 @@ public abstract class UtilityContainer : AiObjectModel
         UpdateInfo();
         considerationSub = considerations.OnValueChanged
             .Subscribe(_ => UpdateInfo());
+    }
+
+    internal virtual void SetIndex(int value)
+    {
+        index = value;
+        ContextAdress = index.ToString();
+    }
+    public override void SetContextAddress(string address)
+    {
+        base.SetContextAddress(address);
+        foreach(var c in Considerations.Values)
+        {
+            c.SetContextAddress(ContextAddress + "C" + Considerations.Values.IndexOf(c));
+        }
     }
 
     protected virtual float CalculateUtility(AiContext context)

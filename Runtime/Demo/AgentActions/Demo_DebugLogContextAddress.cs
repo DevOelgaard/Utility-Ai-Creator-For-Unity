@@ -17,6 +17,6 @@ internal class Demo_DebugLogContextAddress : AgentAction
 
     public override void OnGoing(AiContext context)
     {
-        Debug.Log(context.LastSelectedDecision.GetContextAddress(context) + "." + GetContextAddress(context));
+        Debug.Log(GetContextAddress(context));
     }
 }

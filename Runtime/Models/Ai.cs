@@ -71,6 +71,11 @@ public class Ai: AiObjectModel
         {
             Info = new InfoModel();
         }
+
+        foreach(var b in Buckets.Values)
+        {
+            b.SetContextAddress("B" + Buckets.Values.IndexOf(b));
+        }
     }
 
     internal override RestoreState GetState()

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UniRxExtension;
 using UniRx;
 
@@ -30,6 +26,12 @@ public class Decision: UtilityContainer
         }
     }
 
+    internal override void SetIndex(int value)
+    {
+        index = value;
+        ContextAdress = "D" + index;
+    }
+
     public override string GetNameFormat(string name)
     {
         return name;
@@ -49,6 +51,14 @@ public class Decision: UtilityContainer
         return new List<Parameter>();
     }
 
+    public override void SetContextAddress(string address)
+    {
+        base.SetContextAddress(address);
+        foreach(var a in AgentActions.Values)
+        {
+            a.SetContextAddress(ContextAddress + "A" + AgentActions.Values.IndexOf(a));
+        }
+    }
 
     protected override void UpdateInfo()
     {
@@ -65,11 +75,7 @@ public class Decision: UtilityContainer
         {
             Info = new InfoModel();
         }
-    }
-
-    internal override string GetContextAddress(AiContext context)
-    {
-        return context.CurrentEvaluatedBucket.Name + Name;
+        SetContextAddress(ContextAddress);
     }
 
     internal override RestoreState GetState()

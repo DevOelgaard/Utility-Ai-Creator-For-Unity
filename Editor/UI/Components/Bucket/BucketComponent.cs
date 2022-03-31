@@ -56,6 +56,10 @@ internal class BucketComponent : AiObjectComponent
         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UIBucket Init");
         sw.Restart();
         considerationCollections.SetElements(bucket.Considerations);
+        considerationCollections
+            .OnSortClicked
+            .Subscribe(_ => bucket.SortConsiderations())
+            .AddTo(disposables);
         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UIBucket considerationCollections");
         sw.Restart();
         decisionCollections.SetElements(bucket.Decisions);

@@ -9,9 +9,9 @@ public class AiContext
 {
     public IAgent Agent;
     //internal AgentAction CurrentAction;
-    private Dictionary<string, object> contextStringKey = new Dictionary<string, object>();
+    private Dictionary<object, object> contextStringKey = new Dictionary<object, object>();
     //private Dictionary<AiContextKey, object> contextEnumKey = new Dictionary<AiContextKey, object>();
-    internal IUtilityScorer UtilityScorer = new USAverageScorer();
+    public IUtilityScorer UtilityScorer = new USAverageScorer();
     public List<AgentAction> LastActions = new List<AgentAction>();
     public Decision LastSelectedDecision { get; internal set; }
     public Decision CurrentEvalutedDecision { get; internal set; }
@@ -28,7 +28,7 @@ public class AiContext
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public T GetContext<T>(string key, UtilityContainer container = null)
+    public T GetContext<T>(object key, UtilityContainer container = null)
     {
         if (container != null)
         {
@@ -48,7 +48,7 @@ public class AiContext
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public void SetContext(string key, object value, UtilityContainer container = null)
+    public void SetContext(object key, object value, UtilityContainer container = null)
     {
         if (container != null)
         {
@@ -68,7 +68,7 @@ public class AiContext
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public void RemoveContext(string key, UtilityContainer container = null)
+    public void RemoveContext(object key, UtilityContainer container = null)
     {
         if (container != null)
         {

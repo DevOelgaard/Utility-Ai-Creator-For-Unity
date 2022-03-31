@@ -54,6 +54,10 @@ internal class DecisionComponent : AiObjectComponent
             .AddTo(disposables);
 
         considerationCollections.SetElements(decision.Considerations);
+        considerationCollections
+            .OnSortClicked
+            .Subscribe(_ => decision.SortConsiderations())
+            .AddTo(disposables);
         agentActionCollection.SetElements(decision.AgentActions);
         SetParameters();
         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateInternal Decision");

@@ -10,6 +10,7 @@ public abstract class Consideration : AiObjectModel
     private CompositeDisposable paramaterDisposables = new CompositeDisposable();
     public bool IsScorer { get; protected set; } = true;
     public bool IsModifier { get; protected set; } = false;
+    public bool IsSetter { get; protected set; } = false;
     public List<Parameter> Parameters;
     private ResponseCurve currentResponseCurve;
     public ResponseCurve CurrentResponseCurve

@@ -31,6 +31,9 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
     private List<AiObjectComponent> expandedList = new List<AiObjectComponent>();
     private List<MainWindowFoldedComponent> foldedList = new List<MainWindowFoldedComponent>();
 
+    public IObservable<bool> OnSortClicked => onSortClicked;
+    private Subject<bool> onSortClicked = new Subject<bool>();
+
     public CollectionComponent(ReactiveList<AiObjectModel> templates, string tempLabel, string elementsLabel, string dropDownLabel = "Templates")
     {
         root = AssetDatabaseService.GetTemplateContainer(GetType());
@@ -67,10 +70,11 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
             sortCollectionButton.text = Consts.Text_Button_SortByPerformance;
             sortCollectionButton.RegisterCallback<MouseUpEvent>(evt =>
             {
-                var cast = collection as ReactiveList<Consideration>;
-                var sortedList = cast.Values.OrderBy(c => c.PerformanceTag).ToList();
-                cast.Clear();
-                cast.Add(sortedList);
+                onSortClicked.OnNext(true);
+                //var cast = collection as ReactiveList<Consideration>;
+                //var sortedList = cast.Values.OrderBy(c => c.PerformanceTag).ToList();
+                //cast.Clear();
+                //cast.Add(sortedList);
             });
         }
         else if (t == typeof(ReactiveList<Bucket>))

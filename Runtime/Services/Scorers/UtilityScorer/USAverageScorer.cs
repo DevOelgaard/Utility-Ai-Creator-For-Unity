@@ -37,14 +37,13 @@ public class USAverageScorer : IUtilityScorer
                     modifier = score;
                 }
             }
-
         }
         if(amountOfScorers <= 0) // Only ConsiderationsBools have been calculated. If they failed they would have returned false
         {
             return 1;
         } else
         {
-            return (sum / amountOfScorers)*modifier;
+            return (sum / amountOfScorers) * modifier;
         }
     }
 

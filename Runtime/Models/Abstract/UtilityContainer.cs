@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UniRx;
 using UniRxExtension;
+using System.Linq;
 
 [Serializable]
 public abstract class UtilityContainer : AiObjectModel
@@ -82,6 +83,66 @@ public abstract class UtilityContainer : AiObjectModel
             LastCalculatedUtility = -1;
         }
         return LastCalculatedUtility;
+    }
+
+    public void SortConsiderations()
+    {
+        var setterList = new List<Consideration>();
+        var performanceLists = new Dictionary<PerformanceTag, List<Consideration>>();
+        var result = new List<Consideration>();
+        foreach(var consideration in Considerations.Values)
+        {
+            if (consideration.IsSetter)
+            {
+                setterList.Add(consideration);
+            }
+            else
+            {
+                if (!performanceLists.ContainsKey(consideration.PerformanceTag))
+                {
+                    performanceLists.Add(consideration.PerformanceTag, new List<Consideration>());
+                }
+                performanceLists[consideration.PerformanceTag].Add(consideration);
+            }
+        }
+        setterList = setterList.OrderBy(c => c.PerformanceTag).ToList();
+        foreach(var consideration in setterList)
+        {
+            result.Add(consideration);
+        }
+
+        foreach(PerformanceTag pTag in Enum.GetValues(typeof(PerformanceTag)))
+        {
+            if (!performanceLists.ContainsKey(pTag))
+            {
+                continue;
+            }
+
+            var booleans = new List<Consideration>();
+            var nonBooleans = new List<Consideration>();
+            foreach(var consideration in performanceLists[pTag])
+            {
+                if (!consideration.IsScorer && !consideration.IsModifier)
+                {
+                    booleans.Add(consideration);
+                } else
+                {
+                    nonBooleans.Add(consideration);
+                }
+            }
+            booleans = booleans.OrderBy(c => c.PerformanceTag).ToList();
+            nonBooleans = nonBooleans.OrderBy(c => c.PerformanceTag).ToList();
+            foreach(var consideration in booleans)
+            {
+                result.Add(consideration);
+            }
+            foreach(var consideration in nonBooleans)
+            {
+                result.Add(consideration);
+            }
+        }
+
+        Considerations.ChangeAll(result);
     }
 
     protected override void ClearSubscriptions()

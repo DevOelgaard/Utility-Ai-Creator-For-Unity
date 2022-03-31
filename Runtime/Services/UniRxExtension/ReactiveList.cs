@@ -51,6 +51,12 @@ namespace UniRxExtension
             onValueChanged.OnNext(Values);
         }
 
+        public virtual void ChangeAll(List<T> elements)
+        {
+            List = elements;
+            onValueChanged.OnNext(Values);
+        }
+
         public void Clear()
         {
             List = new List<T>();

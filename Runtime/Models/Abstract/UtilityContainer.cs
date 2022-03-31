@@ -12,7 +12,7 @@ public abstract class UtilityContainer : AiObjectModel
     protected string ContextAdress = "";
     private IDisposable considerationSub;
     private ReactiveListNameSafe<Consideration> considerations = new ReactiveListNameSafe<Consideration>();
-    internal ReactiveListNameSafe<Consideration> Considerations
+    public ReactiveListNameSafe<Consideration> Considerations
     {
         get => considerations;
         set

@@ -43,13 +43,13 @@ TabViewComponent {
     margin-bottom: 8px;
     min-height: 16px;
 }
-
+/*
 #TabContent {
     padding: 8px;
     border-radius: 0px;
     border-width: 1px;
     border-color: rgb(90, 90, 90);
-}
+}*/
 
 #Left {
     width: 80px;
@@ -59,16 +59,16 @@ TabViewComponent {
     width: 35px;
 }
 
-#Center {
+/*#Center {*/
     /*color:rebeccapurple;*/
-    margin: 2px;
-    padding: 8px;
+    /*margin: 2px;
+    padding: 8px;*/
     /*padding-top: 8px;
     padding-bottom: 8px;*/
-    border-radius: 0px;
+    /*border-radius: 0px;
     border-width: 1px;
     border-color: rgb(90, 90, 90);
-}
+}*/
 
 #ScoreContainer {
     flex-direction: column;

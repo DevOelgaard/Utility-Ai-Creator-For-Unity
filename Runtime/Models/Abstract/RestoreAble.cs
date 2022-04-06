@@ -26,12 +26,15 @@ public abstract class RestoreAble
         }
     }
     public Type DerivedType;
-
     protected RestoreAble()
     {
         DerivedType = GetType();
     }
 
+    public virtual string GetTypeDescription()
+    {
+        return DerivedType.ToString();
+    }
 
     protected RestoreAble(RestoreAble original)
     {

@@ -10,4 +10,10 @@ public abstract class ConsiderationModifier: Consideration
     {
         IsModifier = true;
     }
+
+    public override string GetTypeDescription()
+    {
+        return "Consideration Modifier";
+    }
+
 }

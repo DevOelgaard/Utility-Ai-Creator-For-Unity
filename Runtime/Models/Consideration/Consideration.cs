@@ -67,27 +67,10 @@ public abstract class Consideration : AiObjectModel
         SetMinMaxForCurves();
     }
 
-    //protected Consideration(Consideration original): base(original)
-    //{
-    //    Parameters = new List<Parameter>();
-    //    foreach(var p in original.Parameters)
-    //    {
-    //        var clone = new Parameter(p.Name,p.Value);
-    //        Parameters.Add(clone);
-    //    }
-
-    //    ScoreModels = new List<ScoreModel>();
-    //    foreach(var sm in original.ScoreModels)
-    //    {
-    //        var clone = new ScoreModel(sm.Name, 0);
-    //        ScoreModels.Add(clone);
-    //    }
-    //    PerformanceTag = original.PerformanceTag;
-    //    MinFloat = new Parameter(original.MinFloat.Name,original.MinFloat.Value);
-    //    MaxFloat = new Parameter(original.MaxFloat.Name,original.MaxFloat.Value);
-
-    //    CurrentResponseCurve = new ResponseCurve(original.CurrentResponseCurve);
-    //}
+    public override string GetTypeDescription()
+    {
+        return "Consideration";
+    }
 
     internal override AiObjectModel Clone()
     {

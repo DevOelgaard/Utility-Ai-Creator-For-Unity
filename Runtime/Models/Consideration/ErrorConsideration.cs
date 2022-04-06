@@ -16,4 +16,9 @@ internal class ErrorConsideration : Consideration
     {
         return new List<Parameter>();
     }
+
+    public override string GetTypeDescription()
+    {
+        return "Error Consideration";
+    }
 }

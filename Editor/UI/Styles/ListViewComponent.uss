@@ -2,3 +2,18 @@
     /*margin: 8px;*/
     /*color: green;*/
 }
+
+#Center {
+    margin: 8px;
+    padding: 3px;
+    /*max-width: 500px;*/
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: rgb(70, 70, 70);
+}
+
+    #Center:hover {
+        border-radius: 0px;
+        border-width: 1px;
+        border-color: rgb(100, 100, 100);
+    }

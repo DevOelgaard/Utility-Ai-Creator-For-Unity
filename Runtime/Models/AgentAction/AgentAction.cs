@@ -28,6 +28,10 @@ public abstract class AgentAction: AiObjectModel
         return new List<Parameter>();
     }
 
+    public override string GetTypeDescription()
+    {
+        return "Agent Action";
+    }
     internal override AiObjectModel Clone()
     {
         var clone = (Consideration)Activator.CreateInstance(GetType(), this);

@@ -40,7 +40,7 @@ internal class MainWindowFoldedComponent : VisualElement
         disposables.Clear();
         this.model = model;
 
-        typeLabel.text = model.GetType().ToString();
+        typeLabel.text = model.GetTypeDescription();
         nameLabel.text = model.Name;
         descriptionLabel.text = model.Description;
 

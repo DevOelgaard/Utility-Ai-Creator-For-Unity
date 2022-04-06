@@ -163,7 +163,6 @@ public static class AssetDatabaseService
 
     public static T GetInstanceOfType<T>(string typeName)
     {
-        var result = new List<T>();
         var assemblies = GetAssemblies();
         foreach (var assemblie in assemblies)
         {
@@ -179,6 +178,23 @@ public static class AssetDatabaseService
         }
         return default(T);
     }
+
+    //public static object GetInstanceOfType(Type type)
+    //{
+    //    var assemblies = GetAssemblies();
+    //    foreach (var assemblie in assemblies)
+    //    {
+    //        var types = assemblie.GetTypes();
+
+    //        if (type != null)
+    //        {
+    //            var instance = InstantiaterService.Instance.CreateInstance(type);
+
+    //            return instance;
+    //        }
+    //    }
+    //    return null;
+    //}
 
     private static System.Reflection.Assembly[] GetAssemblies()
     {

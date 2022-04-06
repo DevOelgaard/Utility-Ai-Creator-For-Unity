@@ -18,12 +18,24 @@ public abstract class AiObjectModel: RestoreAble
 
     public List<ScoreModel> ScoreModels = new List<ScoreModel>();
     public string ContextAddress { get; protected set; }
-    protected AiObjectModel()
+    protected AiObjectModel(): base()
     {
         UpdateInfo();
     }
 
+    protected AiObjectModel(AiObjectModel original): base(original)
+    {
+        MetaData = new AiObjectMetaData();
+        Name = original.Name;
+        Description = original.Description;
+        HelpText = original.HelpText;
+    }
+
     protected virtual void UpdateInfo() { }
+    protected override string GetFileName()
+    {
+        return Name;
+    }
 
     internal abstract AiObjectModel Clone();
 

@@ -37,11 +37,25 @@ public class Bucket : UtilityContainer
         Weight = new Parameter("Weight", 1f);
     }
 
+    public Bucket(Bucket original): base(original)
+    {
+        Decisions = new ReactiveListNameSafe<Decision>();
+        foreach(var d in original.Decisions.Values)
+        {
+            var clone = new Decision(d);
+            Decisions.Add(d);
+        }
+        decisionSub?.Dispose();
+        UpdateInfo();
+        decisionSub = decisions.OnValueChanged
+            .Subscribe(_ => UpdateInfo());
+
+        Weight = new Parameter(original.Weight.Name, original.Weight.Value);
+    }
+
     internal override AiObjectModel Clone()
     {
-        var state = GetState();
-        var clone = Restore<Bucket>(state);
-        return clone;
+        return new Bucket(this);
     }
 
     protected override float CalculateUtility(AiContext context)
@@ -79,35 +93,34 @@ public class Bucket : UtilityContainer
     {
         return new BucketState(Name, Description, Decisions.Values, Considerations.Values, Weight, this);
     }
-    protected override void RestoreInternal(RestoreState state, bool restoreDebug = false)
+    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
     {
-        var stateCast = (BucketState)state;
-        Name = stateCast.Name;
-        Description = stateCast.Description;
+        var state = (BucketState)s;
+        Name = state.Name;
+        Description = state.Description;
 
         Decisions = new ReactiveListNameSafe<Decision>();
-        var decisions = new List<Decision>();
-        foreach (var d in stateCast.Decisions)
-        {
-            var decision = Restore<Decision>(d, restoreDebug);
-            decisions.Add(decision);
-        }
-        Decisions.Add(decisions);
-
+        var decisions = RestoreAbleService.GetAiObjects<Decision>(CurrentDirectory + Consts.FolderName_Decisions, restoreDebug);
+        Decisions.Add(RestoreAbleService.SortByName(state.Decisions, decisions));//var decisions = new List<Decision>();
+        
         Considerations = new ReactiveListNameSafe<Consideration>();
-        var considerations = new List<Consideration>();
-        foreach (var c in stateCast.Considerations)
-        {
-            var consideration = Restore<Consideration>(c, restoreDebug);
-            considerations.Add(consideration);
-        }
-        Considerations.Add(considerations);
+        var considerations = RestoreAbleService.GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
+        Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
 
-        Weight = Restore<Parameter>(stateCast.Weight);
+        var weightState = PersistenceAPI.Instance.LoadObjectsPath<ParameterState>(CurrentDirectory + Consts.FolderName_Weight).FirstOrDefault();
+        if(weightState.LoadedObject == null)
+        {
+            Weight = new Parameter(weightState.ErrorMessage, weightState.Exception.ToString());
+        }
+        else
+        {
+            Weight = Restore<Parameter>(weightState.LoadedObject);
+        }
+
 
         if (restoreDebug)
         {
-            LastCalculatedUtility = stateCast.LastCalculatedUtility;
+            LastCalculatedUtility = state.LastCalculatedUtility;
         }
     }
 
@@ -116,6 +129,25 @@ public class Bucket : UtilityContainer
         base.ClearSubscriptions();
         decisionSub?.Dispose();
     }
+
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    {
+        persister.SaveObject(state, path + "." + Consts.FileExtension_Bucket);
+        foreach(var d in Decisions.Values)
+        {
+            var subPath = path + "/" + Consts.FolderName_Decisions;
+            d.SaveToFile(subPath, persister);
+        }
+
+        foreach (var c in Considerations.Values)
+        {
+            var subPath = path + "/" + Consts.FolderName_Considerations;
+            c.SaveToFile(subPath, persister);
+        }
+
+        var wSubPath = path + "/" + Consts.FolderName_Weight;
+        Weight.SaveToFile(wSubPath, persister);
+    }
 }
 
 [Serializable]
@@ -123,10 +155,10 @@ public class BucketState: RestoreState
 {
     public string Name;
     public string Description;
-    public List<DecisionState> Decisions;
-    public List<ConsiderationState> Considerations;
-    public ParameterState Weight;
     public float LastCalculatedUtility;
+
+    public List<string> Decisions;
+    public List<string> Considerations;
 
     public BucketState(): base()
     {
@@ -136,21 +168,9 @@ public class BucketState: RestoreState
     {
         this.Name = name;
         this.Description = description;
-        this.Decisions = new List<DecisionState>();
-        foreach (var d in decisions)
-        {
-            var state = d.GetState() as DecisionState;
-            Decisions.Add(state);
-        }
-
-        this.Considerations = new List<ConsiderationState>();
-        foreach (var c in considerations)
-        {
-            var state = c.GetState() as ConsiderationState;
-            Considerations.Add(state);
-        }
-
-        this.Weight = weight.GetState() as ParameterState;
+        
+        Decisions = RestoreAbleService.NamesToList(decisions);
+        Considerations = RestoreAbleService.NamesToList(considerations);
         LastCalculatedUtility = o.LastCalculatedUtility;
     }
 }

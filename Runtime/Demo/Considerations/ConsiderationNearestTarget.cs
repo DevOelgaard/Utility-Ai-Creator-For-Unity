@@ -14,6 +14,16 @@ internal class ConsiderationNearestTarget : Consideration
         HelpText = "The parent must set a " + AiContextKey.CurrentTargetGameObject + " for it to evaluate";
     }
 
+    public ConsiderationNearestTarget(ConsiderationNearestTarget original): base(original)
+    {
+
+    }
+
+    internal override AiObjectModel Clone()
+    {
+        return new ConsiderationNearestTarget(this);
+    }
+
     protected override float CalculateBaseScore(AiContext context)
     {
         var agent = (AgentMono)context.Agent;
@@ -39,4 +49,6 @@ internal class ConsiderationNearestTarget : Consideration
     {
         return new List<Parameter>();
     }
+
+
 }

@@ -41,12 +41,13 @@ internal class InstantiaterService
         }
         else
         {
-            var activator = (ObjectActivator)GetDelegate(t);
-            var sw2 = new System.Diagnostics.Stopwatch();
-            sw2.Start();
-            instance = activator();
-            TimerService.Instance.LogCall(sw2.ElapsedMilliseconds, "Activator");
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "Total Create Instance");
+            instance = Activator.CreateInstance(t);
+            //var activator = (ObjectActivator)GetDelegate(t);
+            //var sw2 = new System.Diagnostics.Stopwatch();
+            //sw2.Start();
+            //instance = activator();
+            //TimerService.Instance.LogCall(sw2.ElapsedMilliseconds, "Activator");
+            //TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "Total Create Instance");
         }
         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, t.ToString());
         return instance;

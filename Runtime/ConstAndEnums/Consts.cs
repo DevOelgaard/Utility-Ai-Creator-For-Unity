@@ -10,10 +10,31 @@ public static class Consts
     internal const string MenuName = "Utility Ai System/";
     internal const string Path_MainFolder = "Assets/UAS/bin/";
     internal const string File_TickerSettings = Path_MainFolder + "Settings/TickerSettings" + "." + FileExtension_TickerSettings;
+    internal const string ProjectSettingsPath = Path_MainFolder + "Settings/ProjectSettings." + FileExtension_ProjectSettings;
+
+
     //internal const string File_PlayAi = Path_MainFolder + "Ai/Playable" + "." + FileExtension_UasTemplateCollection;
-    internal const string File_UASTemplateService_AutoSave = Path_MainFolder + "Saves/AutoSave" + "." + FileExtension_UasTemplateCollection;
-    internal const string File_UASTemplateService_BackUp = Path_MainFolder + "Saves/backup" + "." + FileExtension_UasTemplateCollection;
-    internal const string File_UASTemplateServicel_Playable = Path_MainFolder + "Saves/Playable" + "." + FileExtension_UasTemplateCollection;
+    internal const string File_UASTemplateService_AutoSave = Path_MainFolder + "Saves/AutoSave" + "." + FileExtension_UasProject;
+    internal const string File_UASTemplateService_BackUp = Path_MainFolder + "Saves/backup" + "." + FileExtension_UasProject;
+    internal const string File_UASTemplateServicel_Playable = Path_MainFolder + "Saves/Playable" + "." + FileExtension_UasProject;
+
+    // Folder Names
+    internal const string FolderName_Parameters = "Parameters/";
+    internal const string FolderName_ResponseFunctions = "ResponseFunctions/";
+    internal const string FolderName_Segments = "Segments/";
+    internal const string FolderName_ResponseCurves = "ResponseCurves/";
+    internal const string FolderName_AgentActions = "AgentActions/";
+    internal const string FolderName_Considerations = "Considerations/";
+    internal const string FolderName_Decisions = "Decisions/";
+    internal const string FolderName_Buckets = "Buckets/";
+    internal const string FolderName_BucketSelectors = "BucketSelector/";
+    internal const string FolderName_DecisionSelectors = "DecisionSelectors/";
+    internal const string FolderName_Ais = "Ais/";
+    internal const string FolderName_TickerModes = "TickerModes/";
+    internal const string FolderName_Weight = "Weight/";
+    internal const string FolderName_MinParameter = "Min/";
+    internal const string FolderName_MaxParameter = "Max/";
+
 
     internal const string File_MainSavePath = Path_MainFolder + "Persistence/";
 
@@ -55,6 +76,7 @@ public static class Consts
     public const string Window_AiInspector_Name = "Runtime Inspector";
     public const string Window_AiTickerManager_Name = "Settings";
     public const string Window_Logger_Name = "Logger";
+    public const string Window_SelectProject_Name = "Select Project";
 
 
     // Ticker Modes
@@ -64,21 +86,34 @@ public static class Consts
 
 
     // File extensions
-    public const string FileExtension_AgentAction = "action";
-    public const string FileExtension_Consideration = "consideration";
-    public const string FileExtension_Decision = "decision";
-    public const string FileExtension_Bucket = "bucket";
-    public const string FileExtension_UAI = "uai";
-    public const string FileExtension_UasTemplateCollection = "uaiproj";
-    public const string FileExtension_RestoreAbleCollection = "collection";
+    public const string FileExtension_UasProject = "uasproj";
+    public const string FileExtension_UAI = "uasuai";
+    public const string FileExtension_Bucket = "uasbuc";
+    public const string FileExtension_Decision = "uasdec";
+    public const string FileExtension_Consideration = "uascons";
+    public const string FileExtension_AgentAction = "uasact";
+    public const string FileExtension_ResponseCurve = "uasrcrv";
+    public const string FileExtension_ResponseFunction= "uasrfunc";
+    public const string FileExtension_Parameter = "uasparam";
+    public const string FileExtension_TickerSettings = "uasttset";
+    public const string FileExtension_TickerModes = "uastmod";
+    public const string FileExtension_UtilityContainerSelector = "uasucs";
+    public const string FileExtension_RestoreAbleCollection = "uascol";
+    public const string FileExtension_AiTicker = "uastick";
+    public const string FileExtension_ProjectSettings = "uaspset";
 
     public const string FileExtension_JSON = ".json";
 
-    public const string FileExtension_TickerSettings = "setting";
 
-    public static readonly string[] FileExtensions =
+    public static readonly string[] FileExtensionsFilters =
     {
-        "Ai Objects", "*" + FileExtension_JSON,
+        "UAS Objects", "uas*",
+        "Project", FileExtension_UasProject,
+        "Ais", FileExtension_UAI,
+        "Buckets", FileExtension_Bucket,
+        "Decisions", FileExtension_Decision,
+        "Considerations", FileExtension_Consideration,
+        "Response Curves", FileExtension_ResponseCurve,
         "Ticker Settings", FileExtension_TickerSettings,
         "All Files", "*",
     };

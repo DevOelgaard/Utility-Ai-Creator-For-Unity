@@ -27,9 +27,29 @@ public class ResponseCurve: AiObjectModel
     public ResponseCurve()
     {
         var firstFunction = new LinearFunction();
-        //var firstFunction = AssetDatabaseService.GetInstancesOfType<ResponseFunction>().First(r => r.Name.Contains("Linear"));
         ResponseFunctions = new List<ResponseFunction>();
         AddResponseFunction(firstFunction);
+    }
+
+    public ResponseCurve(ResponseCurve original): base(original)
+    {
+        ResponseFunctions = new List<ResponseFunction>();
+        foreach(var rf in original.ResponseFunctions)
+        {
+            var clone = new ResponseFunction(rf);
+            ResponseFunctions.Add(clone);
+        }
+
+        Segments = new List<Parameter>();
+        foreach(var s in original.Segments)
+        {
+            var clone = new Parameter(s.Name,s.Value);
+            Segments.Add(clone);
+        }
+        MinX = original.MinX;
+        MaxX = original.MaxX;
+        MinY = original.MinY;
+        MaxY = original.MaxY;
     }
 
     protected ResponseCurve(string name, float minY = 0.0f, float maxY = 1.0f)
@@ -158,30 +178,33 @@ public class ResponseCurve: AiObjectModel
         MaxY = state.MaxY;
         MinX = state.MinX;
         MaxX = state.MaxX;
-        Segments = new List<Parameter>();
-        foreach (var p in state.Segments)
-        {
-            var parameter = Parameter.Restore<Parameter>(p, restoreDebug);
-            Segments.Add(parameter);
-        }
+
+        Segments = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Segments, restoreDebug);
+        Segments = Segments.OrderBy(s => Convert.ToSingle(s.Value)).ToList();
 
         ResponseFunctions = new List<ResponseFunction>();
-        foreach(var rf in state.ResponseFunctions)
+        var responseFunctionStates = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ResponseFunctionState>(CurrentDirectory + Consts.FolderName_ResponseFunctions, typeof(ResponseFunction));
+        foreach (var rf in responseFunctionStates)
         {
-            var func = Restore<ResponseFunction>(rf, restoreDebug);
-            ResponseFunctions.Add(func);
+            if (rf.LoadedObject == null)
+            {
+                var error = new ResponseFunction();
+                error.Parameters.Add(new Parameter(rf.ErrorMessage, rf.Exception.ToString()));
+                ResponseFunctions.Add(error);
+            }
+            else
+            {
+                var func = Restore<ResponseFunction>(rf.LoadedObject, restoreDebug);
+                ResponseFunctions.Add(func);
+            }
         }
+        ResponseFunctions = ResponseFunctions.OrderBy(rf => rf.RCIndex).ToList();
     }
     internal override RestoreState GetState()
     {
         return new ResponseCurveState(Name, MinY, MaxY, Segments, this);
     }
 
-    internal override void SaveToFile(string path, IPersister persister)
-    {
-        var state = GetState();
-        persister.SaveObject(state, path);
-    }
 
     private float GetSegmentMin(float x)
     {
@@ -266,9 +289,24 @@ public class ResponseCurve: AiObjectModel
 
     internal override AiObjectModel Clone()
     {
-        var state = GetState();
-        var clone = ResponseFunction.Restore<ResponseCurve>(state);
-        return clone;
+        return new ResponseCurve(this);
+    }
+
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    {
+        persister.SaveObject(state, path + "." + Consts.FileExtension_ResponseCurve);
+        foreach (var parameter in Segments)
+        {
+            var subPath = path + "/" + Consts.FolderName_Segments;
+            parameter.SaveToFile(subPath, persister);
+        }
+
+        foreach(var rf in ResponseFunctions)
+        {
+            rf.RCIndex = ResponseFunctions.IndexOf(rf);
+            var subPath = path + "/" + Consts.FolderName_ResponseFunctions;
+            rf.SaveToFile(subPath, persister);
+        }
     }
 
     ~ResponseCurve()
@@ -289,8 +327,9 @@ public class ResponseCurveState: RestoreState
     public float MaxY;
     public float MinX;
     public float MaxX;
-    public List<ParameterState> Segments;
-    public List<ResponseFunctionState> ResponseFunctions;
+
+    public List<string> segments;
+
 
     public ResponseCurveState(): base()
     {
@@ -304,16 +343,5 @@ public class ResponseCurveState: RestoreState
         MaxY = maxY;
         MinX = responseCurveModel.MinX;
         MaxX = responseCurveModel.MaxX;
-        Segments = new List<ParameterState>();
-        foreach(var parameter in segments)
-        {
-            Segments.Add(parameter.GetState() as ParameterState);
-        }
-        ResponseFunctions = new List<ResponseFunctionState>();
-        foreach(var rf in responseCurveModel.ResponseFunctions)
-        {
-            ResponseFunctions.Add(rf.GetState() as ResponseFunctionState);
-        }
-
     }
 }

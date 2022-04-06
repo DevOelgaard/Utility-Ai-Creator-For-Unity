@@ -7,6 +7,19 @@ using UnityEngine;
 
 internal class Demo_WriteTickCount : AgentAction
 {
+    public Demo_WriteTickCount(): base()
+    {
+    }
+
+    public Demo_WriteTickCount(AgentAction original) : base(original)
+    {
+    }
+
+    internal override AiObjectModel Clone()
+    {
+        return new Demo_WriteTickCount(this);
+    }
+
     protected override List<Parameter> GetParameters()
     {
         var result = new List<Parameter>();

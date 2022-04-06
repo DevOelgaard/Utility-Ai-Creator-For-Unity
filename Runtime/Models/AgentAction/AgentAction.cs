@@ -6,15 +6,29 @@ using System.Linq;
 public abstract class AgentAction: AiObjectModel
 {
     public List<Parameter> Parameters;
-    private string namePostfix;
+    //private string namePostfix;
 
     protected AgentAction()
     {
         Parameters = new List<Parameter>(GetParameters());
-        namePostfix = " (" + TypeDescriptor.GetClassName(this) + ")";
     }
 
-    protected abstract List<Parameter> GetParameters();
+    protected AgentAction(AgentAction original): base(original)
+    {
+        Parameters = new List<Parameter>();
+        foreach (var s in original.Parameters)
+        {
+            var clone = new Parameter(s.Name, s.Value);
+            Parameters.Add(clone);
+        }
+    }
+
+    protected virtual List<Parameter> GetParameters()
+    {
+        return new List<Parameter>();
+    }
+
+
 
     public virtual void OnStart(AiContext context) { }
     public virtual void OnGoing(AiContext context) { }
@@ -23,13 +37,6 @@ public abstract class AgentAction: AiObjectModel
     public override string GetNameFormat(string name)
     {
         return name;
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        var state = GetState();
-        var clone = Restore<AgentAction>(state);
-        return clone;
     }
 
     internal override RestoreState GetState()
@@ -42,36 +49,28 @@ public abstract class AgentAction: AiObjectModel
         var state = (AgentActionState)s;
         Name = state.Name;
         Description = state.Description;
-        Parameters = new List<Parameter>();
-        foreach (var p in state.Parameters)
-        {
-            var parameter = Parameter.Restore<Parameter>(p, restoreDebug);
-            Parameters.Add(parameter);
-        }
-        if (this.GetType() == typeof(Demo_DebugLogParameter))
-        {
-            var p = Parameters.FirstOrDefault(p => p.Name == "Only OnGoing");
-            if (p == null)
-            {
-                Parameters.Add(new Parameter("Only OnGoing", true));
-            }
-        }
-        
+
+        var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
     }
 
-    internal override void SaveToFile(string path, IPersister persister)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        var state = GetState();
-        persister.SaveObject(state, path);
+        persister.SaveObject(state, path + "." + Consts.FileExtension_AgentAction);
+        foreach (var p in Parameters)
+        {
+            var subPath = path + "/" + Consts.FolderName_Parameters;
+            p.SaveToFile(subPath, persister);
+        }
     }
 }
 
 [Serializable]
 public class AgentActionState: RestoreState
 {
-    public List<ParameterState> Parameters;
     public string Name;
     public string Description;
+    public List<string> Parameters;
 
     public AgentActionState(): base()
     {
@@ -81,11 +80,7 @@ public class AgentActionState: RestoreState
     {
         Name = name;
         Description = description;
+        Parameters = RestoreAbleService.NamesToList(parameters);
 
-        Parameters = new List<ParameterState>();
-        foreach (var parameter in parameters)
-        {
-            Parameters.Add(parameter.GetState() as ParameterState);
-        }
     }
 }

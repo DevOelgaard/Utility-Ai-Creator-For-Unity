@@ -40,6 +40,11 @@ internal class TickerModeDesiredFrameRate : TickerMode
         };
     }
 
+    protected override string GetFileName()
+    {
+        return "DesiredFrameRate";
+    }
+
     internal override void Tick(List<IAgent> agents, TickMetaData metaData)
     {
         if (elapsedTime < SampelTimeInSeconds)

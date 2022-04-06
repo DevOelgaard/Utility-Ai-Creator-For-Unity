@@ -33,16 +33,17 @@ internal class AiTicker: RestoreAble
     private Subject<int> onTickCountChanged = new Subject<int>();
     
     internal AiTickerSettingsModel Settings = new AiTickerSettingsModel();
-    private PersistenceAPI persistenceAPI = new PersistenceAPI(new JSONPersister());
+    private PersistenceAPI persistenceAPI => PersistenceAPI.Instance;
 
     internal AiTicker()
     {
         var loadedState = persistenceAPI.LoadObjectPath<AiTickerSettingsState>(Consts.File_TickerSettings);
-        if (loadedState != null)
+        if (loadedState.LoadedObject != null)
         {
-            Settings = Restore<AiTickerSettingsModel>(loadedState);
+            Settings = Restore<AiTickerSettingsModel>(loadedState.LoadedObject);
         } else
         {
+            Debug.LogWarning("Failed to load AiTicker settings Error: " + loadedState.ErrorMessage + " Exception: " + loadedState.Exception.ToString());
             Reload();
         }
 
@@ -65,6 +66,11 @@ internal class AiTicker: RestoreAble
     internal void Stop()
     {
         disposables.Clear();
+    }
+
+    protected override string GetFileName()
+    {
+        return "AiTicker";
     }
 
     internal void TickAgent(IAgent agent)
@@ -134,10 +140,9 @@ internal class AiTicker: RestoreAble
         return new AiTickerState(Settings, this);
     }
 
-    internal override void SaveToFile(string path, IPersister persister)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        var state = GetState();
-        persister.SaveObject(state, path);
+        persister.SaveObject(state, path + "." + Consts.FileExtension_AiTicker);
     }
 
     internal void Reload()
@@ -152,7 +157,7 @@ internal class AiTicker: RestoreAble
 
     internal void Save()
     {
-        persistenceAPI.SaveObjectPath(Settings, Consts.File_TickerSettings);
+        persistenceAPI.SaveObjectPath(Settings, Consts.File_TickerSettings, "TickerSettings");
 
     }
 

@@ -7,7 +7,24 @@ using UnityEngine;
 
 internal class Demo_TimeIntensive : AgentAction
 {
+
+
+
     private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+
+    public Demo_TimeIntensive(Demo_TimeIntensive original) : base(original)
+    {
+    }
+
+    public Demo_TimeIntensive() : base()
+    {
+    }
+
+    internal override AiObjectModel Clone()
+    {
+        return new Demo_TimeIntensive(this);
+    }
+
     protected override List<Parameter> GetParameters()
     {
         return new List<Parameter>() { 

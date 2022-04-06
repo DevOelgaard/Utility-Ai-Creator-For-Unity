@@ -15,4 +15,5 @@ internal class ConstsEditor
     internal const string Button_TickAgent_Text = "Tick Agent";
 
     public const int ResponseCurve_Steps = 1000;
+
 }

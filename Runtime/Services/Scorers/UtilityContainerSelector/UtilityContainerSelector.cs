@@ -26,14 +26,25 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
         return new UCSState(Parameters, this);
     }
 
-    protected override void RestoreInternal(RestoreState state, bool restoreDebug = false)
+    protected override string GetFileName()
     {
-        var s = state as UCSState;
-        Parameters = new List<Parameter>();
-        foreach(var pS in s.Parameters)
+        return GetName();
+    }
+
+    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    {
+        var state = s as UCSState;
+        var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+    }
+
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    {
+        persister.SaveObject(state, path + "." + Consts.FileExtension_UtilityContainerSelector);
+        foreach (var parameter in Parameters.Where(p => p != null))
         {
-            var p = Restore<Parameter>(pS);
-            Parameters.Add(p);
+            var subPath = path + "/" + Consts.FolderName_Parameters;
+            parameter.SaveToFile(subPath, persister);
         }
     }
 }
@@ -41,18 +52,13 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
 [Serializable]
 public class UCSState: RestoreState
 {
-    public List<ParameterState> Parameters;
-
+    public List<string> Parameters;
     public UCSState()
     {
     }
 
     public UCSState(List<Parameter> parameters, UtilityContainerSelector ucs): base(ucs)
     {
-        Parameters = new List<ParameterState>();
-        foreach(var p in parameters)
-        {
-            Parameters.Add((ParameterState)p.GetState());
-        }
+        Parameters = RestoreAbleService.NamesToList(ucs.Parameters);
     }
 }

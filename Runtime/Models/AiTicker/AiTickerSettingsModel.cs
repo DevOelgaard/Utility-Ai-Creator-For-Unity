@@ -23,17 +23,29 @@ public class AiTickerSettingsModel: RestoreAble
 
     internal List<TickerMode> TickerModes;
 
-
+    protected override string GetFileName()
+    {
+        return "AiTickerSettings";
+    }
 
     protected override void RestoreInternal(RestoreState state, bool restoreDebug = false)
     {
         var s = state as AiTickerSettingsState;
         TickerMode = Restore<TickerMode>(s.TickerMode);
         TickerModes = new List<TickerMode>();
-        foreach(var t in s.TickerModes)
+        var modeStates = PersistenceAPI.Instance.LoadObjectsPathWithFilters<TickerModeState>(CurrentDirectory + Consts.FolderName_TickerModes, typeof(TickerMode));
+        foreach(var mode in modeStates)
         {
-            var tickerM = Restore<TickerMode>(t, restoreDebug);
-            TickerModes.Add(tickerM);
+            if(mode.LoadedObject == null)
+            {
+                var tm = new TickerModeUnrestricted();
+                tm.Description = mode.ErrorMessage + "Exception: " + mode.Exception.ToString();
+            }
+            else
+            {
+                var tickerMode = Restore<TickerMode>(mode.LoadedObject, restoreDebug);
+                TickerModes.Add(tickerMode);
+            }
         }
     }
     internal override RestoreState GetState()
@@ -41,10 +53,14 @@ public class AiTickerSettingsModel: RestoreAble
         return new AiTickerSettingsState(TickerMode, TickerModes, this);
     }
 
-    internal override void SaveToFile(string path, IPersister persister)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        var state = GetState();
-        persister.SaveObject(state, path);
+        persister.SaveObject(state, path + Consts.FileExtension_TickerSettings);
+        foreach(var mode in TickerModes)
+        {
+            var subPath = path + "/" + Consts.FolderName_TickerModes;
+            mode.SaveToFile(subPath, persister);
+        }
     }
 }
 
@@ -52,7 +68,6 @@ public class AiTickerSettingsModel: RestoreAble
 public class AiTickerSettingsState: RestoreState
 {
     public TickerModeState TickerMode;
-    public List<TickerModeState> TickerModes;
 
     public AiTickerSettingsState()
     {
@@ -61,12 +76,6 @@ public class AiTickerSettingsState: RestoreState
     public AiTickerSettingsState(TickerMode tickerMode, List<TickerMode> tickerModes, AiTickerSettingsModel o) : base(o)
     {
         TickerMode = tickerMode.GetState() as TickerModeState;
-        TickerModes = new List<TickerModeState>();
-        foreach(var tickerM in tickerModes)
-        {
-            var t = tickerM.GetState() as TickerModeState;
-            TickerModes.Add(t);
-        }
     }
 }
 

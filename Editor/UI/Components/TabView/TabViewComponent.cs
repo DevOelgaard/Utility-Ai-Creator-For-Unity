@@ -61,6 +61,7 @@ internal class TabViewComponent : VisualElement
     private void Deselect(int index)
     {
         //if (index != selectedIndex) return;
+        if (contents.Count <= index || index < 0) return;
         contents[index].style.display = DisplayStyle.None;
         tabs[index].styleSheets.Remove(selectedStyle);
     }

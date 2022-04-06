@@ -36,6 +36,12 @@ public class Parameter: RestoreAble
         ParameterEnum = pEnum;
     }
 
+
+    protected override string GetFileName()
+    {
+        return Name;
+    }
+
     internal override RestoreState GetState()
     {
         return new ParameterState(Name, v, this);
@@ -54,10 +60,9 @@ public class Parameter: RestoreAble
         }
     }
 
-    internal override void SaveToFile(string path, IPersister persister)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        var state = GetState();
-        persister.SaveObject(state, path);
+        persister.SaveObject(state, path + "." + Consts.FileExtension_Parameter);
     }
 }
 

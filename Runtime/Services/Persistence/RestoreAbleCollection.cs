@@ -23,6 +23,11 @@ public class RestoreAbleCollection: RestoreAble
         return new RestoreAbleCollectionState(Models, Type, this);
     }
 
+    protected override string GetFileName()
+    {
+        return "RestoreableCollection";
+    }
+
 
     protected override void RestoreInternal(RestoreState state, bool restoreDebug = false)
     {
@@ -35,9 +40,8 @@ public class RestoreAbleCollection: RestoreAble
         Type = Type.GetType(s.TypeString);
     }
 
-    internal override void SaveToFile(string path, IPersister persister)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        var state = GetState() as RestoreAbleCollectionState;
         persister.SaveObject(state, path);
     }
 }

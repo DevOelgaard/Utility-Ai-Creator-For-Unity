@@ -55,6 +55,27 @@ public abstract class UtilityContainer : AiObjectModel
             .Subscribe(_ => UpdateInfo());
     }
 
+    public UtilityContainer(UtilityContainer original): base(original)
+    {
+        Considerations = new ReactiveListNameSafe<Consideration>();
+        foreach(var c in original.Considerations.Values)
+        {
+            var clone = c.Clone() as Consideration;
+            Considerations.Add(clone);
+        }
+
+        ScoreModels = new List<ScoreModel>();
+        foreach (var sm in original.ScoreModels)
+        {
+            var clone = new ScoreModel(sm.Name, 0);
+            ScoreModels.Add(clone);
+        }
+        considerationSub?.Dispose();
+        UpdateInfo();
+        considerationSub = considerations.OnValueChanged
+            .Subscribe(_ => UpdateInfo());
+    }
+
     internal virtual void SetIndex(int value)
     {
         index = value;

@@ -8,7 +8,6 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UniRx;
-using MoreLinq;
 
 internal class AiTickerSettingsWindow: EditorWindow
 {

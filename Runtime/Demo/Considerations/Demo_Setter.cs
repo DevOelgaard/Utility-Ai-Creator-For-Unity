@@ -14,6 +14,15 @@ public class Demo_Setter : Consideration
         //HelpText = "";
     }
 
+    public Demo_Setter(Demo_Setter original) : base(original)
+    {
+    }
+
+    internal override AiObjectModel Clone()
+    {
+        return new Demo_Setter(this);
+    }
+
     protected override float CalculateBaseScore(AiContext context)
     {
         throw new NotImplementedException();

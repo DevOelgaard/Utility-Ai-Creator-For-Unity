@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-internal interface IPersister
+public interface IPersister
 {
     void SaveObject<T>(T o, string path);
-    T LoadObject<T>(string path);
-    //string GetExtension();
+    ObjectMetaData<T> LoadObject<T>(string path);
+    List<ObjectMetaData<T>> LoadObjects<T>(string folderPath, string filter);
 }

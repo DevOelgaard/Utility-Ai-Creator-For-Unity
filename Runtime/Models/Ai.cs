@@ -55,6 +55,24 @@ public class Ai: AiObjectModel
             .Subscribe(_ => UpdateInfo());
     }
 
+    public Ai(Ai original): base(original)
+    {
+        Buckets = new ReactiveListNameSafe<Bucket>();
+        foreach(var b in original.Buckets.Values)
+        {
+            var clone = new Bucket(b);
+            Buckets.Add(clone);
+        }
+        bucketSub?.Dispose();
+        UpdateInfo();
+        bucketSub = buckets.OnValueChanged
+            .Subscribe(_ => UpdateInfo());
+
+        playableSub?.Dispose();
+        playableSub = OnIsPlayableChanged
+            .Subscribe(_ => UpdateInfo());
+    }
+
     protected override void UpdateInfo()
     {
         
@@ -80,77 +98,16 @@ public class Ai: AiObjectModel
 
     internal override RestoreState GetState()
     {
-        return new UAIModelState(Name, Description, Buckets.Values, this);
+        return new AiState(Name, Description, Buckets.Values, this);
     }
 
     internal override AiObjectModel Clone()
     {
-        var state = GetState();
-        var clone = Restore<Ai>(state);
-        return clone;
+        return new Ai(this);
     }
 
-    protected override void RestoreInternal(RestoreState s, bool restoreLog = false)
-    {
-        var state = (UAIModelState)s;
-        Name = state.Name;
-        Description = state.Description;
-        IsPLayable = state.IsPLayable;
 
-        Buckets = new ReactiveListNameSafe<Bucket>();
-        var buckets = new List<Bucket>();
-        foreach(var bS in state.Buckets)
-        {
-            var b = Bucket.Restore<Bucket>(bS, restoreLog);
-            buckets.Add(b);
-        }
-        Buckets.Add(buckets);
 
-        BucketSelectors = new List<UtilityContainerSelector>();
-        foreach(var bS in state.BucketSelectors)
-        {
-            var ucs = Restore<UtilityContainerSelector>(bS, restoreLog);
-            BucketSelectors.Add(ucs);
-        }
-
-        CurrentBucketSelector = BucketSelectors
-            .FirstOrDefault(d => d.GetName() == state.CurrentBucketSelectorName);
-
-        if (CurrentBucketSelector == null)
-        {
-            CurrentBucketSelector = BucketSelectors.FirstOrDefault();
-        }
-
-        DecisionSelectors = new List<UtilityContainerSelector>();
-        foreach(var ds in state.DecisionSelectors)
-        {
-            var ucs = Restore<UtilityContainerSelector>(ds, restoreLog);
-            DecisionSelectors.Add(ucs);
-        }
-        CurrentDecisionSelector = DecisionSelectors
-            .FirstOrDefault(d => d.GetName() == state.CurrentDecisionSelectorName);
-
-        if (CurrentDecisionSelector == null)
-        {
-            CurrentDecisionSelector = DecisionSelectors.FirstOrDefault();
-        }
-
-        var utilityScorers = AssetDatabaseService.GetInstancesOfType<IUtilityScorer>();
-        UtilityScorer = utilityScorers
-            .FirstOrDefault(u => u.GetName() == state.USName);
-
-        if (UtilityScorer == null)
-        {
-            //Debug.LogWarning("No Utility Scorer found");
-            UtilityScorer = utilityScorers.FirstOrDefault();
-        }
-    }
-
-    internal override void SaveToFile(string path, IPersister persister)
-    {
-        var state = GetState();
-        persister.SaveObject(state, path);
-    }
 
     private UtilityContainerSelector currentBucketSelector;
     public UtilityContainerSelector CurrentBucketSelector
@@ -237,52 +194,96 @@ public class Ai: AiObjectModel
         bucketSub?.Dispose();
         playableSub?.Dispose();
     }
+
+    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    {
+        var state = (AiState)s;
+        Name = state.Name;
+        Description = state.Description;
+        IsPLayable = state.IsPLayable;
+
+        Buckets = new ReactiveListNameSafe<Bucket>();
+        var buckets = RestoreAbleService.GetAiObjects<Bucket>(CurrentDirectory + Consts.FolderName_Buckets, restoreDebug);
+        Buckets.Add(RestoreAbleService.SortByName(state.Buckets, buckets));
+
+
+        BucketSelectors = RestoreAbleService.GetUCS(CurrentDirectory + Consts.FolderName_BucketSelectors, restoreDebug);
+        CurrentBucketSelector = BucketSelectors
+            .FirstOrDefault(d => d.GetName() == state.CurrentBucketSelectorName);
+
+        if (CurrentBucketSelector == null)
+        {
+            CurrentBucketSelector = BucketSelectors.FirstOrDefault();
+        }
+
+        DecisionSelectors = RestoreAbleService.GetUCS(CurrentDirectory + Consts.FolderName_DecisionSelectors, restoreDebug);
+        CurrentDecisionSelector = DecisionSelectors
+            .FirstOrDefault(d => d.GetName() == state.CurrentDecisionSelectorName);
+
+        if (CurrentDecisionSelector == null)
+        {
+            CurrentDecisionSelector = DecisionSelectors.FirstOrDefault();
+        }
+
+        var utilityScorers = AssetDatabaseService.GetInstancesOfType<IUtilityScorer>();
+        UtilityScorer = utilityScorers
+            .FirstOrDefault(u => u.GetName() == state.USName);
+
+        if (UtilityScorer == null)
+        {
+            UtilityScorer = utilityScorers.FirstOrDefault();
+        }
+    }
+
+
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    {
+        persister.SaveObject(state, path + "." + Consts.FileExtension_UAI);
+        foreach(var b in Buckets.Values)
+        {
+            var subPath = path + "/" + Consts.FolderName_Buckets;
+            b.SaveToFile(subPath,persister);
+        }
+
+        foreach(var bs in BucketSelectors)
+        {
+            var subPath = path + "/" + Consts.FolderName_BucketSelectors;
+            bs.SaveToFile(subPath, persister);
+        }
+
+        foreach (var ds in DecisionSelectors)
+        {
+            var subPath = path + "/" + Consts.FolderName_DecisionSelectors;
+            ds.SaveToFile(subPath, persister);
+        }
+    }
 }
 
-public class UAIModelState: RestoreState
+public class AiState: RestoreState
 {
     public string Name;
     public string Description;
     public bool IsPLayable;
-    public List<BucketState> Buckets = new List<BucketState>();
     public string CurrentBucketSelectorName;
     public string CurrentDecisionSelectorName;
-    public List<UCSState> BucketSelectors;
-    public List<UCSState> DecisionSelectors;
     public string USName;
 
-    public UAIModelState() : base()
+    public List<string> Buckets;
+
+    public AiState() : base()
     {
     }
 
-    public UAIModelState(string name, string description, List<Bucket> buckets, Ai model): base(model)
+    public AiState(string name, string description, List<Bucket> buckets, Ai model): base(model)
     {
         Name = name;
         Description = description;
         IsPLayable = model.IsPLayable;
-        Buckets = new List<BucketState>();
-        foreach(var b in buckets)
-        {
-            var bS = b.GetState() as BucketState;
-            Buckets.Add(bS);
-        }
+        
+        Buckets = RestoreAbleService.NamesToList(buckets);
 
         CurrentBucketSelectorName = model.CurrentBucketSelector.GetName();
         CurrentDecisionSelectorName = model.CurrentDecisionSelector.GetName();
-
-        BucketSelectors = new List<UCSState>();
-        foreach(var ucs in model.BucketSelectors)
-        {
-            var bS = ucs.GetState() as UCSState;
-            BucketSelectors.Add(bS);
-        }
-
-        DecisionSelectors = new List<UCSState>();
-        foreach(var ucs in model.DecisionSelectors)
-        {
-            var dS = ucs.GetState() as UCSState;
-            DecisionSelectors.Add(dS);
-        }
 
         USName = model.UtilityScorer.GetName();
     }

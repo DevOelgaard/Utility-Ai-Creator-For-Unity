@@ -7,6 +7,20 @@ using UnityEngine;
 
 internal class Demo_DebugLogContextAddress : AgentAction
 {
+
+    public Demo_DebugLogContextAddress(Demo_DebugLogContextAddress original) : base(original)
+    {
+    }
+
+    public Demo_DebugLogContextAddress() : base()
+    {
+    }
+
+    internal override AiObjectModel Clone()
+    {
+        return new Demo_DebugLogContextAddress(this);
+    }
+
     protected override List<Parameter> GetParameters()
     {
         return new List<Parameter>()

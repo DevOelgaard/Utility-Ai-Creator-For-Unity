@@ -4,8 +4,7 @@ using UniRxExtension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MoreLinq;
-using UnityEditor;
+using System.IO;
 
 internal class UASTemplateService: RestoreAble
 {
@@ -25,8 +24,7 @@ internal class UASTemplateService: RestoreAble
     private bool autoSaveLoaded = false;
 
     private static UASTemplateService instance;
-
-    internal UASTemplateService()
+    public UASTemplateService()
     {
         Init(true);
     }
@@ -34,6 +32,7 @@ internal class UASTemplateService: RestoreAble
 
     private void Init(bool restore)
     {
+        Debug.Log("Init UAS TEmplate");
         AIs = new ReactiveListNameSafe<AiObjectModel>();
         Buckets = new ReactiveListNameSafe<AiObjectModel>();
         Decisions = new ReactiveListNameSafe<AiObjectModel>();
@@ -56,74 +55,70 @@ internal class UASTemplateService: RestoreAble
                 .AddTo(subscriptions);
         }
 
-        if (restore)
-        {
-            LoadAutoSave();
-        }
+        //if (restore)
+        //{
+        //    LoadCurrentProject();
+        //}
     }
 
-    internal void LoadAutoSave(bool backup = false)
+    internal void LoadCurrentProject(bool backup = false)
     {
-        var sw = new System.Diagnostics.Stopwatch();
-        var sw2 = new System.Diagnostics.Stopwatch();
-        var sw3 = new System.Diagnostics.Stopwatch();
-        sw.Start();
-        sw2.Start();
-        var perstistAPI = new PersistenceAPI(new JSONPersister());
+        ClearCollectionNoNotify();
+        Debug.Log("Loading Current project");
+        var perstistAPI = PersistenceAPI.Instance;
         UASTemplateServiceState state;
         if (!backup)
         {
-            if (autoSaveLoaded) return;
-            state = perstistAPI.LoadObjectPath<UASTemplateServiceState>(Consts.File_UASTemplateService_AutoSave + Consts.FileExtension_JSON);
+            state = perstistAPI.LoadObjectPath<UASTemplateServiceState>(ProjectSettingsService.Instance.GetCurrentProjectPath()).LoadedObject;
             autoSaveLoaded = true;
         }
         else
         {
-            state = perstistAPI.LoadObjectPath<UASTemplateServiceState>(Consts.File_UASTemplateService_BackUp + Consts.FileExtension_JSON);
+            state = perstistAPI.LoadObjectPath<UASTemplateServiceState>(Consts.File_UASTemplateService_BackUp + Consts.FileExtension_JSON).LoadedObject;
         }
-        TimerService.Instance.LogCall(sw2.ElapsedMilliseconds, "UAS State");
         if (state == null)
         {
-            Debug.LogWarning("No playmode found");
-            //LoadCollectionsFromFile();
+            ClearCollectionNotify();
         }
+
         else
         {
             try
             {
-                sw3.Start();
                 Restore(state);
-                //TimerService.Instance.LogCall(sw3.ElapsedMilliseconds, "UAS Restore UASTemp");
-
             }
             catch (Exception ex)
             {
-                Debug.LogWarning("UASTemplateService Restore failed: " + ex);
+                throw new Exception("UAS Template Service Restore Failed : ", ex);
+                //Debug.LogWarning("UASTemplateService Restore failed: " + ex);
             }
         }
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Total Load");
     }
 
-    internal void AutoSave(bool backup = false)
+    internal void Save(bool backup = false)
     {
         var sw = new System.Diagnostics.Stopwatch();
         sw.Start();
-        var perstistAPI = new PersistenceAPI(new JSONPersister());
+        var perstistAPI = PersistenceAPI.Instance;
         if (!backup)
         {
-            perstistAPI.SaveObjectPath(this, Consts.File_UASTemplateService_AutoSave);
+            perstistAPI.SaveDestructiveObjectPath(this, ProjectSettingsService.Instance.GetCurrentProjectDirectory(), ProjectSettingsService.Instance.GetCurrentProjectName(true));
         } else
         {
-            perstistAPI.SaveObjectPath(this, Consts.File_UASTemplateService_BackUp);
+            perstistAPI.SaveObjectPath(this, Consts.File_UASTemplateService_BackUp, "BackUp");
         }
         //Debug.Log("Autosave completed in: " + sw.ElapsedMilliseconds + "ms");
     }
 
+    protected override string GetFileName()
+    {
+        return "UASProject";
+    }
 
     internal void Reset()
     {
         subscriptions.Clear();
-        ClearCollections();
+        ClearCollectionNoNotify();
         Init(false);
     }
 
@@ -232,26 +227,57 @@ internal class UASTemplateService: RestoreAble
         return new UASTemplateServiceState(collectionsByLabel, AIs, Buckets, Decisions, Considerations, AgentActions, this);
     }
 
-    internal override void SaveToFile(string path, IPersister persister)
+    protected override void InternalSaveToFile(string path, IPersister destructivePerister, RestoreState state)
     {
-        var state = GetState();
-        persister.SaveObject(state, path);
-    }
+        var directoryPath = Path.GetDirectoryName(path);
+        if (!path.Contains(Consts.FileExtension_UasProject))
+        {
+            path += "." + Consts.FileExtension_UasProject;
+        }
+        destructivePerister.SaveObject(state, path) ;
 
+        // Guard if saving destructively. Should only happen for Project level
+        var persister = new JSONPersister();
+        foreach(Ai a in AIs.Values)
+        {
+            var subPath = directoryPath + "/" + Consts.FolderName_Ais;
+            a.SaveToFile(subPath, persister);
+        }
+
+        foreach (Bucket b in Buckets.Values)
+        {
+            var subPath = directoryPath + "/" + Consts.FolderName_Buckets;
+            b.SaveToFile(subPath, persister);
+        }
+
+        foreach (Decision d in Decisions.Values)
+        {
+            var subPath = directoryPath + "/" + Consts.FolderName_Decisions;
+            d.SaveToFile(subPath, persister);
+        }
+
+        foreach (Consideration c in Considerations.Values)
+        {
+            var subPath = directoryPath + "/" + Consts.FolderName_Considerations;
+            c.SaveToFile(subPath, persister);
+        }
+
+        foreach (AgentAction aa in AgentActions.Values)
+        {
+            var subPath = directoryPath + "/" + Consts.FolderName_AgentActions;
+            aa.SaveToFile(subPath, persister);
+        }
+
+        foreach (ResponseCurve rc in ResponseCurves.Values)
+        {
+            var subPath = directoryPath + "/" + Consts.FolderName_ResponseCurves;
+            rc.SaveToFile(subPath, persister);
+        }
+    }
+     
     internal void Restore(UASTemplateServiceState state)
     {
         RestoreInternal(state, false);
-
-        //try
-        //{
-        //    RestoreInternal(state,false);
-        //}
-        //catch (Exception ex)
-        //{
-        //    Debug.LogWarning("UASTemplateService Restore failed: " + ex);
-        //}
-
-        //RestoreInternal(state);
     }
 
     internal void Add(AiObjectModel model)
@@ -266,9 +292,18 @@ internal class UASTemplateService: RestoreAble
         collection.Remove(model);
     }
 
-    private void ClearCollections() {
-        var sw = new System.Diagnostics.Stopwatch();
-        sw.Start();
+    private void ClearCollectionNotify()
+    {
+        subscriptions?.Clear();
+        AIs?.Clear();
+        Buckets?.Clear();
+        Decisions?.Clear();
+        Considerations?.Clear();
+        AgentActions?.Clear();
+        ResponseCurves?.Clear();
+    }
+
+    private void ClearCollectionNoNotify() {
         subscriptions?.Clear();
         AIs?.ClearNoNotify();
         Buckets?.ClearNoNotify();
@@ -276,7 +311,6 @@ internal class UASTemplateService: RestoreAble
         Considerations?.ClearNoNotify();
         AgentActions?.ClearNoNotify();
         ResponseCurves?.ClearNoNotify();
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "Clear Collection");
     }
 
     private ReactiveList<AiObjectModel> GetCollection(AiObjectModel model)
@@ -313,103 +347,43 @@ internal class UASTemplateService: RestoreAble
 
     protected override void RestoreInternal(RestoreState s, bool restoreDebug)
     {
-        var sw = new System.Diagnostics.Stopwatch();
-        sw.Start();
-        ClearCollections();
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore UAS");
-        sw.Restart();
+        ClearCollectionNotify();
         var state = (UASTemplateServiceState)s;
         if (state == null)
         {
             return;
         }
-        var ais = new List<Ai>();
-        foreach (var aState in state.AIs)
-        {
-            sw.Restart();
-            var ai = Ai.Restore<Ai>(aState, restoreDebug);
-            ais.Add(ai);
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore AIS");
-            sw.Restart();
-        }
-        AIs.Add(ais);
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore AIs.Add");
-        sw.Restart();
+        var directory = ProjectSettingsService.Instance.GetCurrentProjectDirectory();
+        
+        var ais = RestoreAbleService.GetAiObjects<Ai>(directory + Consts.FolderName_Ais, restoreDebug);
+        AIs.Add(RestoreAbleService.SortByName(state.AIs, ais));
 
-        var buckets = new List<Bucket>();
-        foreach (var bState in state.Buckets)
-        {
-            var bucket = Bucket.Restore<Bucket>(bState, restoreDebug);
-            buckets.Add(bucket);
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore Buckets");
-            sw.Restart();
-        }
-        Buckets.Add(buckets);
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore Buckets.Add");
-        sw.Restart();
+        var buckets = RestoreAbleService.GetAiObjects<Bucket>(directory + Consts.FolderName_Buckets, restoreDebug);
+        Buckets.Add(RestoreAbleService.SortByName(state.Buckets, buckets));
 
-        var decisions = new List<Decision>();
-        foreach (var d in state.Decisions)
-        {
-            var decision = Decision.Restore<Decision>(d, restoreDebug);
-            decisions.Add(decision);
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore Decisions");
-            sw.Restart();
-        }
-        Decisions.Add(decisions);
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore Decisions.Add");
-        sw.Restart();
+        var decisions = RestoreAbleService.GetAiObjects<Decision>(directory + Consts.FolderName_Decisions, restoreDebug);
+        Decisions.Add(RestoreAbleService.SortByName(state.Decisions, decisions));
 
-        var considerations = new List<Consideration>();
-        foreach (var c in state.Considerations)
-        {
-            var consideration = Consideration.Restore<Consideration>(c, restoreDebug);
-            considerations.Add(consideration);
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore Considerations");
-            sw.Restart();
-        }
-        Considerations.Add(considerations);
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore Considerations.Add");
-        sw.Restart();
+        var considerations = RestoreAbleService.GetAiObjects<Consideration>(directory + Consts.FolderName_Considerations, restoreDebug);
+        Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
 
-        var agentActions = new List<AgentAction>();
-        foreach (var a in state.AgentActions)
-        {
-            var action = AgentAction.Restore<AgentAction>(a, restoreDebug);
-            agentActions.Add(action);
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore AgentActions");
-            sw.Restart();
-        }
-        AgentActions.Add(agentActions);
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore AgentActions.Add");
-        sw.Restart();
+        var agentActions = RestoreAbleService.GetAiObjects<AgentAction>(directory + Consts.FolderName_AgentActions, restoreDebug);
+        AgentActions.Add(RestoreAbleService.SortByName(state.AgentActions, agentActions));
 
-        var responseCurves = new List<ResponseCurve>();
-        foreach (var r in state.ResponseCurves)
-        {
-            var responseCurve = Restore<ResponseCurve>(r, restoreDebug);
-            responseCurves.Add(responseCurve);
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore ResponseCurves");
-            sw.Restart();
-        }
-        ResponseCurves.Add(responseCurves);
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UAS Restore ResponseCurves.Add");
-        sw.Restart();
+        var responseCurves = RestoreAbleService.GetAiObjects<ResponseCurve>(directory + Consts.FolderName_ResponseCurves,restoreDebug);
+        ResponseCurves.Add(RestoreAbleService.SortByName(state.ResponseCurves, responseCurves));
     }
-
 }
 
 [Serializable]
 public class UASTemplateServiceState : RestoreState
 {
-    public List<UAIModelState> AIs;
-    public List<BucketState> Buckets;
-    public List<DecisionState> Decisions;
-    public List<ConsiderationState> Considerations;
-    public List<AgentActionState> AgentActions;
-    public List<ResponseCurveState> ResponseCurves;
-    public string TestStrign = "";
-    public string InternalTestString = "";
+    public List<string> AIs;
+    public List<string> Buckets;
+    public List<string> Decisions;
+    public List<string> Considerations;
+    public List<string> AgentActions;
+    public List<string> ResponseCurves;
     public UASTemplateServiceState() : base()
     {
     }
@@ -419,57 +393,24 @@ public class UASTemplateServiceState : RestoreState
         ReactiveList<AiObjectModel> buckets, ReactiveList<AiObjectModel> decisions,
         ReactiveList<AiObjectModel> considerations, ReactiveList<AiObjectModel> agentActions, UASTemplateService model) : base(model)
     {
-        AIs = new List<UAIModelState>();
-        foreach (Ai ai in aiS.Values)
-        {
-            var a = ai.GetState() as UAIModelState;
-            AIs.Add(a);
-        }
+        AIs = RestoreAbleService.NamesToList(aiS.Values);
 
-        Buckets = new List<BucketState>();
-        foreach (Bucket bucket in buckets.Values)
-        {
-            var b = bucket.GetState() as BucketState;
-            Buckets.Add(b);
-        }
+        Buckets = RestoreAbleService.NamesToList(buckets.Values);
 
-        Decisions = new List<DecisionState>();
-        foreach (Decision decision in decisions.Values)
-        {
-            var d = decision.GetState() as DecisionState;
-            Decisions.Add(d);
-        }
+        Decisions = RestoreAbleService.NamesToList(decisions.Values);
 
-        Considerations = new List<ConsiderationState>();
-        foreach (Consideration consideration in considerations.Values)
-        {
-            var c = consideration.GetState() as ConsiderationState;
-            Considerations.Add(c);
-        }
+        Considerations = RestoreAbleService.NamesToList(considerations.Values);
 
-        AgentActions = new List<AgentActionState>();
-        foreach (AgentAction action in agentActions.Values)
-        {
-            var a = action.GetState() as AgentActionState;
-            AgentActions.Add(a);
-        }
+        AgentActions = RestoreAbleService.NamesToList(agentActions.Values);
 
-        ResponseCurves = new List<ResponseCurveState>();
-        {
-            foreach(ResponseCurve rc in model.ResponseCurves.Values)
-            {
-                var r = rc.GetState() as ResponseCurveState;
-                ResponseCurves.Add(r);
-            }
-        }
+        ResponseCurves = RestoreAbleService.NamesToList(model.ResponseCurves.Values);
     }
 
     internal static UASTemplateServiceState LoadFromFile()
     {
         Debug.Log("Change this");
-        var p = new PersistenceAPI(new JSONPersister());
+        var p = PersistenceAPI.Instance;
         var state = p.LoadObjectPanel<UASTemplateServiceState>();
-        return state;
-        //return (UASState)PersistenceAPI.LoadJson<UASState>(Consts.File_MainSavePath + Consts.FileName_UASModelJson);
+        return state.LoadedObject;
     }
 }

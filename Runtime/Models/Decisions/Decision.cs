@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UniRxExtension;
 using UniRx;
+using System.Linq;
 
 public class Decision: UtilityContainer
 {
@@ -46,6 +47,27 @@ public class Decision: UtilityContainer
             .Subscribe(_ => UpdateInfo());
     }
 
+    public Decision(Decision original): base(original)
+    {
+        Parameters = new List<Parameter>();
+        foreach (var s in original.Parameters)
+        {
+            var clone = new Parameter(s.Name, s.Value);
+            Parameters.Add(clone);
+        }
+        agentActionSub?.Dispose();
+
+        AgentActions = new ReactiveListNameSafe<AgentAction>();
+        foreach(var a in original.AgentActions.Values)
+        {
+            var clone = a.Clone() as AgentAction;
+            AgentActions.Add(clone);
+        }
+        UpdateInfo();
+        agentActionSub = agentActions.OnValueChanged
+            .Subscribe(_ => UpdateInfo());
+    }
+
     protected virtual List<Parameter> GetParameters()
     {
         return new List<Parameter>();
@@ -83,17 +105,10 @@ public class Decision: UtilityContainer
         return new DecisionState(Name, Description, AgentActions.Values, Considerations.Values, Parameters, this);
     }
 
-    internal override void SaveToFile(string path, IPersister persister)
-    {
-        var state = GetState();
-        persister.SaveObject(state, path);
-    }
 
     internal override AiObjectModel Clone()
     {
-        var state = GetState();
-        var clone = Restore<Decision>(state);
-        return clone;
+        return new Decision(this);
     }
 
 
@@ -104,22 +119,15 @@ public class Decision: UtilityContainer
         Description = state.Description;
 
         AgentActions = new ReactiveListNameSafe<AgentAction>();
-        var agentActions = new List<AgentAction>();
-        foreach (var a in state.AgentActions)
-        {
-            var action = AgentAction.Restore<AgentAction>(a, restoreDebug);
-            agentActions.Add(action);
-        }
-        AgentActions.Add(agentActions);
+        var agentActions = RestoreAbleService.GetAiObjects<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions, restoreDebug);
+        AgentActions.Add(RestoreAbleService.SortByName(state.AgentActions, agentActions));
 
         Considerations = new ReactiveListNameSafe<Consideration>();
-        var considerations = new List<Consideration>();
-        foreach (var c in state.Considerations)
-        {
-            var consideration = Consideration.Restore<Consideration>(c, restoreDebug);
-            considerations.Add(consideration);
-        }
-        Considerations.Add(considerations);
+        var considerations = RestoreAbleService.GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
+        Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
+
+        var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
 
         if (restoreDebug)
         {
@@ -133,6 +141,28 @@ public class Decision: UtilityContainer
         agentActionSub?.Dispose();
     }
 
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    {
+        persister.SaveObject(state, path + "." + Consts.FileExtension_Decision);
+        foreach(var aa in AgentActions.Values)
+        {
+            var subPath = path + "/" + Consts.FolderName_AgentActions;
+            aa.SaveToFile(subPath, persister);
+        }
+
+        foreach(var c in Considerations.Values)
+        {
+            var subPath = path + "/" + Consts.FolderName_Considerations;
+            c.SaveToFile(subPath, persister);
+        }
+
+        foreach(var p in Parameters)
+        {
+            var subPath = path + "/" + Consts.FolderName_Parameters;
+            p.SaveToFile(subPath, persister);
+        }
+    }
+
 }
 
 [Serializable]
@@ -140,10 +170,12 @@ public class DecisionState: RestoreState
 {
     public string Name;
     public string Description;
-    public List<AgentActionState> AgentActions;
-    public List<ConsiderationState> Considerations;
-    public List<ParameterState> Parameters;
     public float LastCalculatedUtility;
+
+    public List<string> Considerations;
+    public List<string> AgentActions;
+    public List<string> Parameters;
+
     public DecisionState() : base()
     {
     }
@@ -152,27 +184,11 @@ public class DecisionState: RestoreState
     {
         Name = name;
         Description = description;
-
-        AgentActions = new List<AgentActionState>();
-        foreach (AgentAction action in agentActions)
-        {
-            var a = action.GetState() as AgentActionState;
-            AgentActions.Add(a);
-        }
-
-        Considerations = new List<ConsiderationState>();
-        foreach (Consideration consideration in considerations)
-        {
-            var c = consideration.GetState() as ConsiderationState;
-            Considerations.Add(c);
-        }
-
-        Parameters = new List<ParameterState>();
-        foreach (var parameter in parameters)
-        {
-            Parameters.Add(parameter.GetState() as ParameterState);
-        }
         LastCalculatedUtility = o.LastCalculatedUtility;
+        Considerations = RestoreAbleService.NamesToList(considerations);
+        AgentActions = RestoreAbleService.NamesToList(agentActions);
+        Parameters = RestoreAbleService.NamesToList(parameters);
+
     }
 
 }

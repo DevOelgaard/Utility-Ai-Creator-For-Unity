@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UniRx;
 using System.Linq;
 using UnityEditor.UIElements;
+using System.IO;
 
 internal class TemplateManager : EditorWindow
 {
@@ -28,10 +29,11 @@ internal class TemplateManager : EditorWindow
 
     private AiObjectComponent  currentMainWindowComponent;
     private AiObjectModel selectedModel;
-    private PersistenceAPI persistenceAPI = new PersistenceAPI(new JSONPersister());
+    private PersistenceAPI persistenceAPI => PersistenceAPI.Instance;
 
     private Dictionary<AiObjectModel, AiObjectComponent> componentsByModels = new Dictionary<AiObjectModel, AiObjectComponent>();
     private Toolbar toolbar;
+    private bool autoSave = true;
     private AiObjectModel SelectedModel
     {
         get => selectedModel;
@@ -61,13 +63,14 @@ internal class TemplateManager : EditorWindow
         {
             if (evt.newValue == null) return;
             AddNewAiObject(evt.newValue);
-            addElementPopup.value = null;
+            addElementPopup.SetValueWithoutNotify(null);
         });
 
         var AddElementPopupContainer = root.Q<VisualElement>("AddElementPopupContainer");
         AddElementPopupContainer.Add(addElementPopup);
         InitToolbarFile();
         InitToolbarDebug();
+
 
         rightPanel = root.Q<VisualElement>("right-panel");
 
@@ -94,65 +97,107 @@ internal class TemplateManager : EditorWindow
         UpdateLeftPanel();
     }
 
+
+    void OnEnable()
+    {
+        autoSave = true;
+        UASTemplateService.Instance.LoadCurrentProject();
+        var mws = MainWindowService.Instance;
+        mws.OnUpdateStateChanged
+            .Subscribe(state =>
+            {
+                var projectName = ProjectSettingsService.Instance.GetCurrentProjectName();
+                this.titleContent.text = state ? projectName + " - Loading" : projectName;
+            })
+            .AddTo(disposables);
+        mws.Start();
+    }
+
     private void InitToolbarFile()
     {
         var menu = new ToolbarMenu();
         menu.text = "File";
 
-        menu.menu.AppendAction("Save Project", _ =>
+        menu.menu.AppendAction("New Project", _ =>
         {
-            persistenceAPI.SaveObjectPanel(uASTemplateService);
+            uASTemplateService.Save();
+            ProjectSettingsService.Instance.CreateProject();
+            uASTemplateService.LoadCurrentProject();
+            UpdateLeftPanel();
+            rightPanel.Clear();
+
         });
 
-        menu.menu.AppendAction("Load Project", _ =>
+        menu.menu.AppendAction("Save", _ =>
         {
-            var uasState = persistenceAPI.LoadObjectPanel<UASTemplateServiceState>();
-            uASTemplateService.Restore(uasState);
+            //ProjectSettingsService.Instance.CreateProject();
+            uASTemplateService.Save();
+        });
+
+        menu.menu.AppendAction("Save As", _ =>
+        {
+            //uASTemplateService.Save();
+            ProjectSettingsService.Instance.CreateProject();
+            uASTemplateService.Save();
+        });
+
+        menu.menu.AppendAction("Open Project", _ =>
+        {
+            uASTemplateService.Save();
+            ProjectSettingsService.Instance.LoadProject();
+            uASTemplateService.LoadCurrentProject();
             UpdateLeftPanel();
+            rightPanel.Clear();
         });
 
         menu.menu.AppendAction("Export File(s)", _ =>
         {
             var saveObjects = new List<RestoreAble>();
             selectedObjects.ForEach(pair => saveObjects.Add(pair.Key));
-            var type = MainWindowService.Instance.GetTypeFromString(dropDown.value);
-            var restoreAble = new RestoreAbleCollection(saveObjects, type);
-            persistenceAPI.SaveObjectPanel(restoreAble);
+            persistenceAPI.SaveObjectsPanel(saveObjects);
         });
 
         menu.menu.AppendAction("Import File(s)", _ =>
         {
-            var state = persistenceAPI.LoadObjectPanel<RestoreAbleCollectionState>(Consts.FileExtensions);
-            if (state == null || state == default)
+            var s = persistenceAPI.LoadFilePanel<RestoreState>(Consts.FileExtensionsFilters);
+            s.LoadedObject.FolderLocation = Path.GetDirectoryName(s.Path) + @"\";
+            if(s == null)
             {
                 return;
             }
-            var loadedCollection = RestoreAbleCollection.Restore<RestoreAbleCollection>(state);
-            var toCollection = uASTemplateService
-                .GetCollection(loadedCollection.Type);
-            var castlist = loadedCollection.Models.Cast<AiObjectModel>();
-            toCollection.Add(castlist);
+            var t = s.StateType;
+
+            var toCollection = uASTemplateService.GetCollection(s.ModelType);
+            var restored = RestoreAble.Restore(s.LoadedObject, s.ModelType);
+            toCollection.Add(restored as AiObjectModel);
+
         });
 
         menu.menu.AppendAction("Load Autosave", _ =>
         {
-            uASTemplateService.LoadAutoSave();
+            uASTemplateService.LoadCurrentProject();
             UpdateLeftPanel();
         });
 
         menu.menu.AppendAction("Save Backup", _ =>
         {
-            uASTemplateService.AutoSave(true);
+            uASTemplateService.Save(true);
         });
 
         menu.menu.AppendAction("Load Backup", _ =>
         {
-            uASTemplateService.LoadAutoSave(true);
+            uASTemplateService.LoadCurrentProject(true);
         });
 
         menu.menu.AppendAction("Close", _ =>
         {
             //var wnd = GetWindow<TemplateManager>();
+            this.Close();
+        });
+
+        menu.menu.AppendAction("Close No Save", _ =>
+        {
+            autoSave = false;
             this.Close();
         });
 
@@ -179,18 +224,6 @@ internal class TemplateManager : EditorWindow
 
     }
 
-    void OnEnable()
-    {
-        var mws = MainWindowService.Instance;
-        mws.OnUpdateStateChanged
-            .Subscribe(state =>
-            {
-                //var wnd = GetWindow<TemplateManager>();
-                this.titleContent.text = state ? Consts.Window_TemplateManager_Name + " - Loading" : Consts.Window_TemplateManager_Name;
-            })
-            .AddTo(disposables);
-        mws.Start();
-    }
 
     private void UpdateButtons()
     {
@@ -231,8 +264,15 @@ internal class TemplateManager : EditorWindow
         foreach(var element in toDelete)
         {
             uASTemplateService.Remove(element);
+            if (componentsByModels.ContainsKey(element))
+            {
+                var component = componentsByModels[element];
+                rightPanel.Remove(component);
+                componentsByModels.Remove(element);
+            }
         }
-        selectedModel = null;
+
+        SelectedModel = null;
     }
 
     private void InitDropdown()
@@ -251,13 +291,19 @@ internal class TemplateManager : EditorWindow
         dropDown.value = dropDownChoices[0];
         dropDown.RegisterCallback<ChangeEvent<string>>(evt =>
         {
-            rightPanel.Clear();
+            if(currentMainWindowComponent != null)
+            {
+                currentMainWindowComponent.style.display = DisplayStyle.None;
+            }
+
             UpdateLeftPanel(evt.newValue);
         });
     }
 
     public void UpdateLeftPanel(string label = "")
     {
+        titleContent.text = ProjectSettingsService.Instance.GetCurrentProjectName();
+
         if (String.IsNullOrEmpty(label))
         {
             label = dropDown.value;
@@ -277,15 +323,11 @@ internal class TemplateManager : EditorWindow
         addElementPopup.choices = namesFromFiles
             .Where(t => !t.Name.Contains("Mock") && !t.Name.Contains("Stub"))
             .Select(t => t.Name)
+            .OrderBy(t => t)
             .ToList();
 
         LoadModels(models.Values);
         UpdateButtons();
-
-        if (SelectedModel?.GetType() != type)
-        {
-            rightPanel.Clear();
-        }
     }
 
     private void LoadModels(List<AiObjectModel> models)
@@ -437,14 +479,28 @@ internal class TemplateManager : EditorWindow
 
     ~TemplateManager()
     {
-        uASTemplateService.AutoSave();
+        uASTemplateService.Save();
         ClearSubscriptions();
+    }
+
+    private void OnDisable()
+    {
+        OnClose();
     }
 
     void OnDestroy()
     {
+        OnClose();
+    }
+
+    private void OnClose()
+    {
         WindowOpener.WindowPosition = this.position;
-        uASTemplateService.AutoSave();
+        if (autoSave)
+        {
+            uASTemplateService.Save();
+            ProjectSettingsService.Instance.SaveSettings();
+        }
         ClearSubscriptions();
     }
 

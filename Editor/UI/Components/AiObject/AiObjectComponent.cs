@@ -73,7 +73,7 @@ internal abstract class AiObjectComponent : VisualElement
         var sw = new System.Diagnostics.Stopwatch();
         sw.Start();
         Model = model;
-        typeLabel.text = Model.GetType().ToString();
+        typeLabel.text = Model.DerivedType.ToString();
         nameTextField.value = model.Name;
         descriptionTextField.value = model.Description;
         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui Init");

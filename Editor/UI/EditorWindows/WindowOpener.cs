@@ -24,6 +24,21 @@ internal class WindowOpener: EditorWindow
     [MenuItem(Consts.MenuName + Consts.Window_TemplateManager_Name)]
     internal static void OpenTemplateManager()
     {
+        if (string.IsNullOrEmpty(ProjectSettingsService.Instance.GetCurrentProjectDirectory()))
+        {
+            var wnd = GetWindow<SelectProjectWindow>();
+            wnd.titleContent = new GUIContent(Consts.Window_SelectProject_Name);
+            wnd.SetOnComplete(OpenTemplateManagerPriv);
+            wnd.Show();
+            wnd.position = WindowPosition;
+        } else
+        {
+            OpenTemplateManagerPriv();
+        }
+    }
+
+    private static void OpenTemplateManagerPriv()
+    {
         TemplateManager wnd = GetWindow<TemplateManager>();
         wnd.titleContent = new GUIContent(Consts.Window_TemplateManager_Name);
         wnd.Show();

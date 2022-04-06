@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
-public abstract class ResponseFunction: AiObjectModel
+public class ResponseFunction: AiObjectModel
 {
+    public int RCIndex = -1;
     private Parameter max;
     protected Parameter Max
     {
@@ -40,6 +38,16 @@ public abstract class ResponseFunction: AiObjectModel
         Parameters.Add(new Parameter("Max", 1f));
     }
 
+    public ResponseFunction(ResponseFunction original): base(original)
+    {
+        Parameters = new List<Parameter>();
+        foreach (var s in original.Parameters)
+        {
+            var clone = new Parameter(s.Name, s.Value);
+            Parameters.Add(clone);
+        }
+    }
+
     protected virtual List<Parameter> GetParameters()
     {
         return new List<Parameter>();
@@ -69,33 +77,23 @@ public abstract class ResponseFunction: AiObjectModel
         return x;
     }
 
-    protected abstract float CalculateResponseInternal(float x);
+    protected virtual float CalculateResponseInternal(float x)
+    {
+        return float.MinValue;
+    }
 
     protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
     {
         var state = (ResponseFunctionState)s;
         Name = state.Name;
-        Parameters = new List<Parameter>();
-        foreach (var p in state.Parameters)
-        {
-            var parameter = Parameter.Restore<Parameter>(p, restoreDebug);
-            Parameters.Add(parameter);
-        }
-        if (Parameters.FirstOrDefault(p => p.Name == "Inverse") == null)
-        {
-            Parameters.Add(new Parameter("Inverse", false));
-        }
-        if (Parameters.FirstOrDefault(p => p.Name == "Max") == null)
-        {
-            Parameters.Add(new Parameter("Max", 1f));
-        }
+
+        var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
     }
 
     internal override AiObjectModel Clone()
     {
-        var state = GetState();
-        var clone = ResponseFunction.Restore<ResponseFunction>(state);
-        return clone;
+        return new ResponseFunction(this);
     }
 
     internal override RestoreState GetState()
@@ -103,10 +101,14 @@ public abstract class ResponseFunction: AiObjectModel
         return new ResponseFunctionState(this);
     }
 
-    internal override void SaveToFile(string path, IPersister persister)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        var state = GetState();
-        persister.SaveObject(state, path);
+        persister.SaveObject(state, path + "." + Consts.FileExtension_ResponseFunction);
+        foreach(var parameter in Parameters)
+        {
+            var subPath = path +"/" + Consts.FolderName_Parameters;
+            parameter.SaveToFile(subPath, persister);
+        }
     }
 }
 
@@ -115,7 +117,8 @@ public class ResponseFunctionState : RestoreState
 {
     public string Name;
     public string Description;
-    public List<ParameterState> Parameters;
+    public int RcIndex;
+    public List<string> Parameters;
 
     public ResponseFunctionState() : base()
     {
@@ -125,10 +128,8 @@ public class ResponseFunctionState : RestoreState
     {
         Name = responseFunction.Name;
         Description = responseFunction.Description;
-        Parameters = new List<ParameterState>();
-        foreach (var parameter in responseFunction.Parameters)
-        {
-            Parameters.Add(parameter.GetState() as ParameterState);
-        }
+        RcIndex = responseFunction.RCIndex;
+        Parameters = RestoreAbleService.NamesToList(responseFunction.Parameters);
+
     }
 }

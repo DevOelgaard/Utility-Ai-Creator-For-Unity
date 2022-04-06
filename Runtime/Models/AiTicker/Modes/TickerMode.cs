@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,10 @@ public abstract class TickerMode: RestoreAble
     }
 
 
+    protected override string GetFileName()
+    {
+        return TypeDescriptor.GetClassName(this);
+    }
 
     internal abstract List<Parameter> GetParameters();
     internal abstract void Tick(List<IAgent> agents, TickMetaData metaData);
@@ -31,22 +36,22 @@ public abstract class TickerMode: RestoreAble
         return new TickerModeState(Name, Description, Parameters, this);
     }
 
-    internal override void SaveToFile(string path, IPersister persister)
+    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
     {
-        var state = GetState();
-        persister.SaveObject(state, path);
+        var state = s as TickerModeState;
+        Name = Enum.Parse<AiTickerMode>(state.Name);
+        Description = state.Description;
+        var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
     }
 
-    protected override void RestoreInternal(RestoreState state, bool restoreDebug = false)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        var s = state as TickerModeState;
-        Name = Enum.Parse<AiTickerMode>(s.Name);
-        Description = s.Description;
-        Parameters = new List<Parameter>();
-        foreach (var p in s.Parameters)
+        persister.SaveObject(state, path+"." + Consts.FileExtension_TickerModes);
+        foreach (var parameter in Parameters)
         {
-            var parameter = Restore<Parameter>(p, restoreDebug);
-            Parameters.Add(parameter);  
+            var subPath = path + "/" + Consts.FolderName_Parameters;
+            parameter.SaveToFile(subPath, persister);
         }
     }
 }
@@ -56,7 +61,8 @@ public class TickerModeState: RestoreState
 {
     public string Name;
     public string Description;
-    public List<ParameterState> Parameters;
+    public List<string> Parameters;
+
 
     public TickerModeState()
     {
@@ -66,11 +72,6 @@ public class TickerModeState: RestoreState
     {
         Name = name.ToString();
         Description = description;
-        Parameters = new List<ParameterState>();
-        foreach(var parameter in parameters)
-        {
-            var pS = parameter.GetState() as ParameterState;
-            Parameters.Add(pS);
-        }
+        Parameters = RestoreAbleService.NamesToList(parameters);
     }
 }

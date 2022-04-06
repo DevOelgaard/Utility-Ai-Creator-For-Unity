@@ -12,10 +12,19 @@ internal class Demo_AgentCycleColors : AgentAction
     private Renderer renderer;
     private int currentColorIndex = 0;
 
-    public Demo_AgentCycleColors()
+    public Demo_AgentCycleColors() : base()
     {
         //id = nextId;
         //nextId++;
+    }
+
+    public Demo_AgentCycleColors(Demo_AgentCycleColors original) : base(original)
+    {
+    }
+
+    internal override AiObjectModel Clone()
+    {
+        return new Demo_AgentCycleColors(this);
     }
 
     protected override List<Parameter> GetParameters()

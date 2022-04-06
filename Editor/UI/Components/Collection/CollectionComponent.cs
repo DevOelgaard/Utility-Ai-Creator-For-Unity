@@ -98,9 +98,11 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
     private void InitAddCopyPopup()
     {
         var namesFromFiles = AssetDatabaseService.GetActivateableTypes(typeof(T));
+
         addCopyPopup.choices = namesFromFiles
             .Where(t => !t.Name.Contains("Mock") && !t.Name.Contains("Stub"))
             .Select(t => t.Name)
+            .OrderBy(t => t)
             .ToList();
 
 
@@ -118,10 +120,17 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
         //{
         //    element = AssetDatabaseService.GetInstanceOfType<T>(name);
         //}
-        var element = AssetDatabaseService.GetInstanceOfType<T>(name);
+        var existingElement = templates.Values.FirstOrDefault(t => t.Name == name);
+        if(existingElement != null)
+        {
+            var c =  existingElement.Clone();
+            AddElement(c as T);
 
-        element = (T)element.Clone();
-        AddElement(element);
+        } else
+        {
+            var element = AssetDatabaseService.GetInstanceOfType<T>(name);
+            AddElement(element);
+        }
     }
 
     internal void AddElement(T element)

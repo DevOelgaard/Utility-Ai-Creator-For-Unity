@@ -15,9 +15,4 @@ public abstract class ConsiderationBoolean : Consideration
     {
         IsScorer = false;
     }
-
-    public ConsiderationBoolean(ConsiderationBoolean o): base(o)
-    {
-
-    }
 }

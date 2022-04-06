@@ -48,7 +48,7 @@ public abstract class Consideration : AiObjectModel
     public Parameter MinFloat = new Parameter("Min", 0f);
     public Parameter MaxFloat = new Parameter("Max", 1f);
 
-    protected Consideration()
+    protected Consideration() : base()
     {
         Parameters =  new List<Parameter>(GetParameters());
         ScoreModels = new List<ScoreModel>();
@@ -67,26 +67,51 @@ public abstract class Consideration : AiObjectModel
         SetMinMaxForCurves();
     }
 
-    protected Consideration(Consideration original): base(original)
+    //protected Consideration(Consideration original): base(original)
+    //{
+    //    Parameters = new List<Parameter>();
+    //    foreach(var p in original.Parameters)
+    //    {
+    //        var clone = new Parameter(p.Name,p.Value);
+    //        Parameters.Add(clone);
+    //    }
+
+    //    ScoreModels = new List<ScoreModel>();
+    //    foreach(var sm in original.ScoreModels)
+    //    {
+    //        var clone = new ScoreModel(sm.Name, 0);
+    //        ScoreModels.Add(clone);
+    //    }
+    //    PerformanceTag = original.PerformanceTag;
+    //    MinFloat = new Parameter(original.MinFloat.Name,original.MinFloat.Value);
+    //    MaxFloat = new Parameter(original.MaxFloat.Name,original.MaxFloat.Value);
+
+    //    CurrentResponseCurve = new ResponseCurve(original.CurrentResponseCurve);
+    //}
+
+    internal override AiObjectModel Clone()
     {
-        Parameters = new List<Parameter>();
-        foreach(var p in original.Parameters)
+        var clone = (Consideration)Activator.CreateInstance(GetType());
+        clone.Parameters = new List<Parameter>();
+        foreach (var p in this.Parameters)
         {
-            var clone = new Parameter(p.Name,p.Value);
-            Parameters.Add(clone);
+            var c = new Parameter(p.Name, p.Value);
+            clone.Parameters.Add(c);
         }
 
-        ScoreModels = new List<ScoreModel>();
-        foreach(var sm in original.ScoreModels)
+        clone.ScoreModels = new List<ScoreModel>();
+        foreach (var sm in this.ScoreModels)
         {
-            var clone = new ScoreModel(sm.Name, 0);
-            ScoreModels.Add(clone);
+            var c = new ScoreModel(sm.Name, 0);
+            clone.ScoreModels.Add(c);
         }
-        PerformanceTag = original.PerformanceTag;
-        MinFloat = new Parameter(original.MinFloat.Name,original.MinFloat.Value);
-        MaxFloat = new Parameter(original.MaxFloat.Name,original.MaxFloat.Value);
 
-        CurrentResponseCurve = new ResponseCurve(original.CurrentResponseCurve);
+        clone.PerformanceTag = this.PerformanceTag;
+        clone.MinFloat = new Parameter(this.MinFloat.Name, this.MinFloat.Value);
+        clone.MaxFloat = new Parameter(this.MaxFloat.Name, this.MaxFloat.Value);
+
+        clone.CurrentResponseCurve = new ResponseCurve(this.CurrentResponseCurve);
+        return clone;
     }
 
     private void SetMinMaxForCurves()

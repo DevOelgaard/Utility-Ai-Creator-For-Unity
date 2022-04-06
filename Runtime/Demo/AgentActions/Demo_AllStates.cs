@@ -7,18 +7,8 @@ using UnityEngine;
 
 internal class Demo_AllStates : AgentAction
 {
-
-    public Demo_AllStates(Demo_AllStates original) : base(original)
-    {
-    }
-
     public Demo_AllStates() : base()
     {
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new Demo_AllStates(this);
     }
 
     protected override List<Parameter> GetParameters()

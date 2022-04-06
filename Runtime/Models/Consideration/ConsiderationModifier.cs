@@ -10,8 +10,4 @@ public abstract class ConsiderationModifier: Consideration
     {
         IsModifier = true;
     }
-
-    protected ConsiderationModifier(ConsiderationModifier original) : base(original)
-    {
-    }
 }

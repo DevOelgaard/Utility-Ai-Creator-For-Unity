@@ -8,17 +8,8 @@ using UnityEngine;
 internal class Demo_DebugLogParameter : AgentAction
 {
 
-    public Demo_DebugLogParameter(Demo_DebugLogParameter original) : base(original)
-    {
-    }
-
     public Demo_DebugLogParameter() : base()
     {
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new Demo_DebugLogParameter(this);
     }
 
     private bool OnlyOngoing => (bool)Parameters.First(p => p.Name == "Only OnGoing").Value;

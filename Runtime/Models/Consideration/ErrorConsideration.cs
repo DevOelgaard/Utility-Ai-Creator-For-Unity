@@ -12,18 +12,8 @@ internal class ErrorConsideration : Consideration
         //Description = "";
         //HelpText = "";
     }
-
-    public ErrorConsideration(ErrorConsideration original) : base(original)
-    {
-    }
-
     protected override List<Parameter> GetParameters()
     {
         return new List<Parameter>();
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new ErrorConsideration(this);
     }
 }

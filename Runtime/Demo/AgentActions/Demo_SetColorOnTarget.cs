@@ -12,15 +12,6 @@ internal class Demo_SetColorOnTarget : AgentAction
         HelpText = "The parent must set a " + AiContextKey.CurrentTargetGameObject + " for it to act on";
     }
 
-    public Demo_SetColorOnTarget(Demo_SetColorOnTarget original) : base(original)
-    {
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new Demo_SetColorOnTarget(this);
-    }
-
     protected override List<Parameter> GetParameters()
     {
         return new List<Parameter>()

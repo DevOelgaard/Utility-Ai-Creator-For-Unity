@@ -18,15 +18,6 @@ internal class Demo_AgentCycleColors : AgentAction
         //nextId++;
     }
 
-    public Demo_AgentCycleColors(Demo_AgentCycleColors original) : base(original)
-    {
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new Demo_AgentCycleColors(this);
-    }
-
     protected override List<Parameter> GetParameters()
     {
         return new List<Parameter>()

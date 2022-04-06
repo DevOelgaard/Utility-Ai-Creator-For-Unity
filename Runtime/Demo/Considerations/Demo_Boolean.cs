@@ -12,17 +12,6 @@ public class Demo_Boolean : ConsiderationBoolean
         //Description = "";
         //HelpText = "";
     }
-
-    public Demo_Boolean(Demo_Boolean o): base(o)
-    {
-
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new Demo_Boolean(this);
-    }
-
     protected override float CalculateBaseScore(AiContext context)
     {
         throw new NotImplementedException();

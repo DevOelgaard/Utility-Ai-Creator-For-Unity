@@ -8,4 +8,5 @@ internal class AiObjectMetaData
 {
     public int LastTickSelected;
     public int LastTickEvaluated;
+    public Type Type;
 }

@@ -8,10 +8,6 @@ public class Stub_Consideration_IT : Consideration
 {
     public float ReturnValue;
 
-    public Stub_Consideration_IT(Stub_Consideration_IT original) : base(original)
-    {
-    }
-
     public Stub_Consideration_IT(float returnValue, List<Parameter> parameters, float min = 0f, float max = 1f)
     {
         ReturnValue = returnValue;
@@ -21,12 +17,6 @@ public class Stub_Consideration_IT : Consideration
         MinFloat.Value = min;
         MaxFloat.Value = max;
     }
-
-    internal override AiObjectModel Clone()
-    {
-        return new Stub_Consideration_IT(this);
-    }
-
 
     protected override float CalculateBaseScore(AiContext context)
     {

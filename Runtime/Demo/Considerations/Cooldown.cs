@@ -18,16 +18,6 @@ internal class Cooldown : Consideration
             .Subscribe(_ => cooldownTime = Convert.ToSingle(Parameters[0].Value) / 1000f);
     }
 
-    public Cooldown(Cooldown original): base(original)
-    {
-
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new Cooldown(this);
-    }
-
     protected override float CalculateBaseScore(AiContext context)
     {
         if(Time.time - context.CurrentEvalutedDecision.LastSelectedTickMetaData.TickTime < cooldownTime)

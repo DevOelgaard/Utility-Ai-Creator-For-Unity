@@ -6,17 +6,8 @@ using System.Threading.Tasks;
 
 internal class DoNotReapeatDecision : Consideration
 {
-    public DoNotReapeatDecision(DoNotReapeatDecision original) : base(original)
-    {
-    }
-
     public DoNotReapeatDecision(): base()
     {
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new DoNotReapeatDecision(this);
     }
 
     protected override float CalculateBaseScore(AiContext context)

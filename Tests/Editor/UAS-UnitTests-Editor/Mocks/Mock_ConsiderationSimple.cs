@@ -12,14 +12,6 @@ public class Mock_ConsiderationSimple : Consideration
     {
     }
 
-    public Mock_ConsiderationSimple(Mock_ConsiderationSimple original) : base(original)
-    {
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new Mock_ConsiderationSimple(this);
-    }
     protected override float CalculateBaseScore(AiContext context)
     {
         return ReturnValue;

@@ -13,6 +13,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
 {
     private CompositeDisposable subscriptions = new CompositeDisposable();
     private CompositeDisposable listViewSubscriptions = new CompositeDisposable();
+    private CompositeDisposable nameChangeSubscriptions = new CompositeDisposable();
     private IDisposable collectionUpdatedSub;
 
     private TemplateContainer root;
@@ -59,7 +60,21 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
 
         this.templates = templates;
         this.templates.OnValueChanged
-            .Subscribe(_ => InitAddCopyPopup())
+            .Subscribe(temps =>
+            {
+                InitAddCopyPopup();
+                nameChangeSubscriptions.Clear();
+                foreach(var t in temps)
+                {
+                    t
+                    .OnNameChanged
+                    .Subscribe(t =>
+                    {
+                        InitAddCopyPopup();
+                    })
+                    .AddTo(nameChangeSubscriptions);
+                }
+            })
             .AddTo(subscriptions);
 
         InitAddCopyPopup();
@@ -71,10 +86,6 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
             sortCollectionButton.RegisterCallback<MouseUpEvent>(evt =>
             {
                 onSortClicked.OnNext(true);
-                //var cast = collection as ReactiveList<Consideration>;
-                //var sortedList = cast.Values.OrderBy(c => c.PerformanceTag).ToList();
-                //cast.Clear();
-                //cast.Add(sortedList);
             });
         }
         else if (t == typeof(ReactiveList<Bucket>))
@@ -86,7 +97,6 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
                 var sortedList = cast.Values.OrderByDescending(b => b.Weight.Value).ToList();
                 cast.Clear();
                 cast.Add(sortedList);
-                //sortedList.ForEach(c => cast.Add(c));
             });
         }
         else
@@ -230,6 +240,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
         collectionUpdatedSub?.Dispose();
         listViewSubscriptions.Clear();
         subscriptions.Clear();
+        nameChangeSubscriptions?.Clear();
     }
 
     ~CollectionComponent()

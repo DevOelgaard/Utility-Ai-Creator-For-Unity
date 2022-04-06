@@ -13,18 +13,8 @@ internal class ErrorAction : AgentAction
         //HelpText = "";
     }
 
-    public ErrorAction(ErrorAction original) : base(original)
-    {
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new ErrorAction(this);
-    }
-
     protected override List<Parameter> GetParameters()
     {
         return new List<Parameter>();
     }
-
 }

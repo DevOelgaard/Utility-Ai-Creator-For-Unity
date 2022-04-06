@@ -26,6 +26,7 @@ public abstract class AiObjectModel: RestoreAble
     protected AiObjectModel(AiObjectModel original): base(original)
     {
         MetaData = new AiObjectMetaData();
+        MetaData.Type = GetType();
         Name = original.Name;
         Description = original.Description;
         HelpText = original.HelpText;

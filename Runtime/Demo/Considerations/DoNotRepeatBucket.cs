@@ -6,17 +6,8 @@ using System.Threading.Tasks;
 
 internal class DoNotRepeatBucket : Consideration
 {
-    public DoNotRepeatBucket(DoNotRepeatBucket original) : base(original)
-    {
-    }
-
     public DoNotRepeatBucket(): base()
     {
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new DoNotRepeatBucket(this);
     }
 
     protected override float CalculateBaseScore(AiContext context)

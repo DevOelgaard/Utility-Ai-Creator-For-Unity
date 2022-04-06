@@ -11,14 +11,6 @@ internal class Demo_ActOnTarget : AgentAction
     {
     }
 
-    public Demo_ActOnTarget(AgentAction original) : base(original)
-    {
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new Demo_ActOnTarget(this);
-    }
     protected override List<Parameter> GetParameters()
     {
         return new List<Parameter>();

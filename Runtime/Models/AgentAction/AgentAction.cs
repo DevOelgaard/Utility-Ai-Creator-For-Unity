@@ -13,22 +13,32 @@ public abstract class AgentAction: AiObjectModel
         Parameters = new List<Parameter>(GetParameters());
     }
 
-    protected AgentAction(AgentAction original): base(original)
-    {
-        Parameters = new List<Parameter>();
-        foreach (var s in original.Parameters)
-        {
-            var clone = new Parameter(s.Name, s.Value);
-            Parameters.Add(clone);
-        }
-    }
+    //protected AgentAction(AgentAction original): base(original)
+    //{
+    //    Parameters = new List<Parameter>();
+    //    foreach (var s in original.Parameters)
+    //    {
+    //        var clone = new Parameter(s.Name, s.Value);
+    //        Parameters.Add(clone);
+    //    }
+    //}
 
     protected virtual List<Parameter> GetParameters()
     {
         return new List<Parameter>();
     }
 
-
+    internal override AiObjectModel Clone()
+    {
+        var clone = (Consideration)Activator.CreateInstance(GetType(), this);
+        clone.Parameters = new List<Parameter>();
+        foreach (var s in this.Parameters)
+        {
+            var c = new Parameter(s.Name, s.Value);
+            clone.Parameters.Add(c);
+        }
+        return clone;
+    }
 
     public virtual void OnStart(AiContext context) { }
     public virtual void OnGoing(AiContext context) { }

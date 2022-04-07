@@ -34,7 +34,7 @@ public abstract class AgentAction: AiObjectModel
     }
     protected override AiObjectModel InternalClone()
     {
-        var clone = (AgentAction)Activator.CreateInstance(GetType(), this);
+        var clone = (AgentAction)Activator.CreateInstance(GetType());
         clone.Parameters = new List<Parameter>();
         foreach (var s in this.Parameters)
         {

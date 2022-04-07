@@ -257,7 +257,7 @@ public class ResponseCurve: AiObjectModel
         clone.Segments = new List<Parameter>();
         foreach (var s in Segments)
         {
-            var pClone = new Parameter(s.Name, s.Value);
+            var pClone = s.Clone();
             clone.Segments.Add(pClone);
         }
         clone.MinX = MinX;

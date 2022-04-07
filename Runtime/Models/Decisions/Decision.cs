@@ -55,7 +55,7 @@ public class Decision: UtilityContainer
         clone.Parameters = new List<Parameter>();
         foreach (var s in Parameters)
         {
-            var sClone = new Parameter(s.Name, s.Value);
+            var sClone = s.Clone();
             clone.Parameters.Add(sClone);
         }
         

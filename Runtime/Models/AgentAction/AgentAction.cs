@@ -38,7 +38,7 @@ public abstract class AgentAction: AiObjectModel
         clone.Parameters = new List<Parameter>();
         foreach (var s in this.Parameters)
         {
-            var c = new Parameter(s.Name, s.Value);
+            var c = s.Clone();
             clone.Parameters.Add(c);
         }
         return clone;

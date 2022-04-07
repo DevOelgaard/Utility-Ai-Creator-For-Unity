@@ -36,6 +36,14 @@ public class Parameter: RestoreAble
         ParameterEnum = pEnum;
     }
 
+    public virtual Parameter Clone()
+    {
+        var clone = (Parameter)Activator.CreateInstance(GetType());
+        clone.Name = Name;
+        clone.Value = Value;
+        clone.ParameterEnum = ParameterEnum;
+        return clone;
+    }
 
     protected override string GetFileName()
     {

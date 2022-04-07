@@ -71,6 +71,14 @@ internal class ProjectSettingsService
         SaveSettings();
     }
 
+    internal void SaveProjectAs()
+    {
+        var path = EditorUtility.SaveFilePanel("New Project", "", "New Project", Consts.FileExtension_UasProject);
+        SetProjectPath(path);
+        UASTemplateService.Instance.Save();
+        UASTemplateService.Instance.LoadCurrentProject();
+    }
+
     internal void LoadProject()
     {
         var filtes = new string[8];

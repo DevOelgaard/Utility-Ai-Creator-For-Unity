@@ -51,7 +51,7 @@ public class Bucket : UtilityContainer
         clone.decisionSub = clone.decisions.OnValueChanged
             .Subscribe(_ => clone.UpdateInfo());
 
-        clone.Weight = new Parameter(Weight.Name, Weight.Value);
+        clone.Weight = Weight.Clone();
         return clone;
     }
 

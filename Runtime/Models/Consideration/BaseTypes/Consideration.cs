@@ -78,7 +78,7 @@ public abstract class Consideration : AiObjectModel
         clone.Parameters = new List<Parameter>();
         foreach (var p in this.Parameters)
         {
-            var c = new Parameter(p.Name, p.Value);
+            var c = p.Clone();
             clone.Parameters.Add(c);
         }
 
@@ -90,8 +90,8 @@ public abstract class Consideration : AiObjectModel
         }
 
         clone.PerformanceTag = this.PerformanceTag;
-        clone.MinFloat = new Parameter(this.MinFloat.Name, this.MinFloat.Value);
-        clone.MaxFloat = new Parameter(this.MaxFloat.Name, this.MaxFloat.Value);
+        clone.MinFloat = MinFloat.Clone();
+        clone.MaxFloat = MaxFloat.Clone();
 
         clone.CurrentResponseCurve = (ResponseCurve)CurrentResponseCurve.Clone();
         return clone;

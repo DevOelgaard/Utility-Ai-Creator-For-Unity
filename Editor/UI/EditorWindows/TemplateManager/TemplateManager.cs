@@ -144,8 +144,9 @@ internal class TemplateManager : EditorWindow
         menu.menu.AppendAction("Save As", _ =>
         {
             //uASTemplateService.Save();
-            ProjectSettingsService.Instance.CreateProject();
-            uASTemplateService.Save();
+            ProjectSettingsService.Instance.SaveProjectAs();
+            UpdateLeftPanel();
+            rightPanel.Clear();
         });
 
         menu.menu.AppendAction("Open Project", _ =>

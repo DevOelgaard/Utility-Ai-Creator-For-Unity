@@ -30,6 +30,17 @@ public class ParameterEnum: Parameter
         EnumType = state.EnumType;
         Value = Enum.Parse(EnumType, state.CurrentEnumSelection);
     }
+
+    public override Parameter Clone()
+    {
+        var clone = (ParameterEnum)Activator.CreateInstance(GetType());
+        clone.Name = Name;
+        clone.Value = Value;
+        clone.ParameterEnum = ParameterEnum;
+        clone.EnumType = EnumType;
+        return clone;
+
+    }
 }
 
 public class ParameterEnumState : ParameterState

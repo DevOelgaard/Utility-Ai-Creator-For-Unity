@@ -44,7 +44,7 @@ public abstract class ResponseFunction: AiObjectModel
         clone.Parameters = new List<Parameter>();
         foreach (var s in Parameters)
         {
-            var pClone = new Parameter(s.Name, s.Value);
+            var pClone = s.Clone();
             clone.Parameters.Add(pClone);
         }
 

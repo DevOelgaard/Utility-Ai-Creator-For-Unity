@@ -106,9 +106,6 @@ public class Ai: AiObjectModel
         return new Ai(this);
     }
 
-
-
-
     private UtilityContainerSelector currentBucketSelector;
     public UtilityContainerSelector CurrentBucketSelector
     {

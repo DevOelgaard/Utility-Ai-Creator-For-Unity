@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 public class AiContext
 {
     public IAgent Agent;
-    //internal AgentAction CurrentAction;
     private Dictionary<object, object> contextStringKey = new Dictionary<object, object>();
-    //private Dictionary<AiContextKey, object> contextEnumKey = new Dictionary<AiContextKey, object>();
     public IUtilityScorer UtilityScorer = new USAverageScorer();
     public List<AgentAction> LastActions = new List<AgentAction>();
     public Decision LastSelectedDecision { get; internal set; }
@@ -79,51 +77,4 @@ public class AiContext
             contextStringKey.Remove(key);
         }
     }
-
-    ///// <summary>
-    ///// Use this if you have defined the needed Enum in AiContextKey otherwise use the string version
-    ///// </summary>
-    ///// <param name="key"></param>
-    ///// <returns></returns>
-    //public T GetContext<T>(AiContextKey key)
-    //{
-    //    if (contextEnumKey.ContainsKey(key))
-    //    {
-    //        return (T)contextEnumKey[key];
-    //    }
-    //    else
-    //    {
-    //        return default;
-    //    }
-    //}
-
-    ///// <summary>
-    ///// Use this if you have defined the needed Enum in AiContextKey otherwise use the string version
-    ///// </summary>
-    ///// <param name="key"></param>
-    ///// <returns></returns>
-    //public void SetContext(AiContextKey key, object value)
-    //{
-    //    if (!contextEnumKey.ContainsKey(key))
-    //    {
-    //        contextEnumKey.Add(key, value);
-    //    }
-    //    else
-    //    {
-    //        contextEnumKey[key] = value;
-    //    }
-    //}
-
-    ///// <summary>
-    ///// Use this if you have defined the needed Enum in AiContextKey otherwise use the string version
-    ///// </summary>
-    ///// <param name="key"></param>
-    ///// <returns></returns>
-    //public void RemoveContext(AiContextKey key)
-    //{
-    //    if (contextEnumKey.ContainsKey(key))
-    //    {
-    //        contextEnumKey.Remove(key);
-    //    }
-    //}
 }

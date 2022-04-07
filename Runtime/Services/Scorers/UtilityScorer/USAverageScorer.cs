@@ -15,8 +15,7 @@ public class USAverageScorer : IUtilityScorer
 
         var sum = 0f;
         var amountOfScorers = 0;
-        var modifier = 1f;
-        foreach (var consideration in considerations)
+        foreach (var consideration in considerations.Where(c => !c.IsModifier))
         {
             var score = consideration.CalculateScore(context);
             
@@ -30,20 +29,13 @@ public class USAverageScorer : IUtilityScorer
                 amountOfScorers++;
                 sum += score;
             }
-            if (consideration.IsModifier)
-            {
-                if (score > modifier)
-                {
-                    modifier = score;
-                }
-            }
         }
         if(amountOfScorers <= 0) // Only ConsiderationsBools have been calculated. If they failed they would have returned false
         {
             return 1;
         } else
         {
-            return (sum / amountOfScorers) * modifier;
+            return (sum / amountOfScorers);
         }
     }
 

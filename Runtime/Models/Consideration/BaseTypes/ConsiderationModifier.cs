@@ -9,6 +9,7 @@ public abstract class ConsiderationModifier: Consideration
     public ConsiderationModifier(): base()
     {
         IsModifier = true;
+        HelpText = "Sets the weight of the current Utility Container to the returned value only the last modifier is valid.";
     }
 
     public override string GetTypeDescription()

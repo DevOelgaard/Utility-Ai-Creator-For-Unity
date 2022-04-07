@@ -137,6 +137,24 @@ public class Decision: UtilityContainer
         }
     }
 
+    protected override float CalculateUtility(AiContext context)
+    {
+        var modifier = float.NaN;
+        foreach(var cons in Considerations.Values.Where(c => c.IsModifier))
+        {
+            modifier = cons.CalculateScore(context);
+        }
+        if(modifier == float.NaN)
+        {
+            var parent = context.CurrentEvaluatedBucket;
+            return base.CalculateUtility(context) * Convert.ToSingle(parent.Weight.Value);
+        } 
+        else
+        {
+            return base.CalculateUtility(context) * modifier;
+        }
+    }
+
     protected override void ClearSubscriptions()
     {
         base.ClearSubscriptions();
@@ -164,7 +182,6 @@ public class Decision: UtilityContainer
             p.SaveToFile(subPath, persister);
         }
     }
-
 }
 
 [Serializable]

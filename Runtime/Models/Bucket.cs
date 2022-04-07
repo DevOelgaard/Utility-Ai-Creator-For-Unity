@@ -57,7 +57,19 @@ public class Bucket : UtilityContainer
 
     protected override float CalculateUtility(AiContext context)
     {
-        return context.UtilityScorer.CalculateUtility(Considerations.Values, context) * Convert.ToSingle(Weight.Value);
+        var modifier = float.NaN;
+        foreach (var cons in Considerations.Values.Where(c => c.IsModifier))
+        {
+            modifier = cons.CalculateScore(context);
+        }
+        if (modifier == float.NaN)
+        {
+            return base.CalculateUtility(context) * Convert.ToSingle(Weight.Value);
+        }
+        else
+        {
+            return base.CalculateUtility(context) * modifier;
+        }
     }
 
     public override void SetContextAddress(string address)

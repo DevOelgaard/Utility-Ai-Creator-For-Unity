@@ -95,6 +95,8 @@ internal class TemplateManager : EditorWindow
 
         InitDropdown();
         UpdateLeftPanel();
+
+
     }
 
 

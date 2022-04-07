@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Use this to set the weight of a certain Utility container
+/// I.e: The agent must continue to eat untill full so the weight is set higher than normal
+/// but still lower than the decision to defend himself
+/// </summary>
 public abstract class ConsiderationModifier: Consideration
 {
     public ConsiderationModifier(): base()

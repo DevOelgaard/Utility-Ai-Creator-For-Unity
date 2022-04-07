@@ -5,11 +5,11 @@
             <ui:VisualElement name="IdentifierContainer" style="flex-grow: 1;">
                 <ui:VisualElement name="NameIdentifier" style="flex-direction: row;">
                     <ui:Label text="Name: " display-tooltip-when-elided="true" name="Identifier-Label" style="flex-grow: 0;" />
-                    <ui:Label text="Some Name" display-tooltip-when-elided="true" name="Value-Label" style="flex-grow: 1;" />
+                    <ui:Label text="Some Name" display-tooltip-when-elided="true" name="Value-Label" style="flex-grow: 1; white-space: normal;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="DescriptionIdentifier" style="flex-direction: row;">
                     <ui:Label text="Description: " display-tooltip-when-elided="true" name="Identifier-Label" style="flex-grow: 0;" />
-                    <ui:Label text="Some long description about the object" display-tooltip-when-elided="true" name="Value-Label" style="flex-grow: 1;" />
+                    <ui:Label text="Some long description about the objectælk dsfælgk dsælgk dsælgk dælfg ksdfglæ kdsfægl kdæslfgk dlæsfgk ædflgk ældkfglæ kdfglæ kdsfglæ kdfgæ " display-tooltip-when-elided="true" name="Value-Label" style="flex-grow: 1; white-space: normal;" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="ScoreContainer" style="min-width: 64px; flex-direction: column;" />

@@ -20,6 +20,7 @@ public abstract class AiObjectModel: RestoreAble
     public string ContextAddress { get; protected set; }
     protected AiObjectModel(): base()
     {
+        Name = StringService.SpaceBetweenUpperCase(GetType().ToString());
         UpdateInfo();
     }
 

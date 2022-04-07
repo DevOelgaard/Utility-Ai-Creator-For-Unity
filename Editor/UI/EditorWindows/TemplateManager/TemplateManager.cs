@@ -62,7 +62,7 @@ internal class TemplateManager : EditorWindow
         addElementPopup.RegisterCallback<ChangeEvent<string>>(evt =>
         {
             if (evt.newValue == null) return;
-            AddNewAiObject(evt.newValue);
+            AddNewAiObject(StringService.RemoveWhiteSpaces(evt.newValue));
             addElementPopup.SetValueWithoutNotify(null);
         });
 
@@ -348,19 +348,7 @@ internal class TemplateManager : EditorWindow
     private void UpdateAddElementPopup()
     {
         var type = MainWindowService.Instance.GetTypeFromString(dropDown.value);
-        var namesFromFiles = AssetDatabaseService.GetActivateableTypes(type);
-        var choices = namesFromFiles
-            .Where(t => !t.Name.Contains("Mock") && !t.Name.Contains("Stub"))
-            .Select(t => t.Name)
-            .OrderBy(t => t)
-            .ToList();
-
-        if (!UASTemplateService.Instance.IncludeDemos)
-        {
-            choices = choices.Where(t => !t.Contains("Demo")).ToList();
-        }
-
-        addElementPopup.choices = choices;
+        addElementPopup.choices = AddCopyService.GetChoices(type);
     }
 
     private void LoadModels(List<AiObjectModel> models)

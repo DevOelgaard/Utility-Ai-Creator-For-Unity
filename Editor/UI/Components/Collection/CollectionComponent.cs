@@ -54,7 +54,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
         addCopyPopup.RegisterCallback<ChangeEvent<string>>(evt =>
         {
             if (evt.newValue == null) return;
-            AddCopy(evt.newValue);
+            AddCopy(StringService.RemoveWhiteSpaces(evt.newValue));
             addCopyPopup.value = null;
         });
 
@@ -114,18 +114,18 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
 
     private void InitAddCopyPopup()
     {
-        var namesFromFiles = AssetDatabaseService.GetActivateableTypes(typeof(T));
-        var choices = namesFromFiles
-            .Where(t => !t.Name.Contains("Mock") && !t.Name.Contains("Stub"))
-            .Select(t => t.Name)
-            .OrderBy(t => t)
-            .ToList();
+        //var namesFromFiles = AssetDatabaseService.GetActivateableTypes(typeof(T));
+        //var choices = namesFromFiles
+        //    .Where(t => !t.Name.Contains("Mock") && !t.Name.Contains("Stub"))
+        //    .Select(t => t.Name)
+        //    .OrderBy(t => t)
+        //    .ToList();
 
-        if (!UASTemplateService.Instance.IncludeDemos)
-        {
-            choices = choices.Where(t => !t.Contains("Demo")).ToList();
-        }
-        addCopyPopup.choices = choices;
+        //if (!UASTemplateService.Instance.IncludeDemos)
+        //{
+        //    choices = choices.Where(t => !t.Contains("Demo")).ToList();
+        //}
+        addCopyPopup.choices = AddCopyService.GetChoices(typeof(T));
 
         foreach(var template in templates.Values)
         {

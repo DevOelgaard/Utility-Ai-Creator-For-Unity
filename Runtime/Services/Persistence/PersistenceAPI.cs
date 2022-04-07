@@ -118,20 +118,31 @@ internal class PersistenceAPI
         var filter = FileExtensionService.GetFileExtensionFromType(t);
 
         var result = LoadObjectsPath<T>(folderPath, filter);
-
-        var subDirectories = Directory.GetDirectories(folderPath);
-        foreach(var subDirectory in subDirectories)
+        try
         {
-            var tempResults = LoadObjectsPath<T>(subDirectory, filter);
-            foreach(var tempResult in tempResults)
+            var subDirectories = Directory.GetDirectories(folderPath);
+            foreach (var subDirectory in subDirectories)
             {
-                result.Add(tempResult);
+                var tempResults = LoadObjectsPath<T>(subDirectory, filter);
+                foreach (var tempResult in tempResults)
+                {
+                    result.Add(tempResult);
+                }
+            }
+        } catch (Exception ex)
+        {
+            if (ex.GetType() == typeof(DirectoryNotFoundException))
+            {
+                return result;
+            }
+            else
+            {
+                throw ex;
             }
         }
+
         return result;
     }
-
-
 
     internal ObjectMetaData<T> LoadFilePanel<T>(string[] filters)
     {
@@ -143,8 +154,6 @@ internal class PersistenceAPI
     {
         return persister.LoadObject<T>(path);
     }
-
-
 }
 
 public class ObjectMetaData<T>

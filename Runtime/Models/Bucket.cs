@@ -37,25 +37,22 @@ public class Bucket : UtilityContainer
         Weight = new Parameter("Weight", 1f);
     }
 
-    public Bucket(Bucket original): base(original)
+    protected override AiObjectModel InternalClone()
     {
-        Decisions = new ReactiveListNameSafe<Decision>();
-        foreach(var d in original.Decisions.Values)
+        var clone = (Bucket)Activator.CreateInstance(GetType());
+        clone.Decisions = new ReactiveListNameSafe<Decision>();
+        foreach (var d in Decisions.Values)
         {
-            var clone = new Decision(d);
-            Decisions.Add(d);
+            var dClone = d.Clone() as Decision;
+            clone.Decisions.Add(dClone);
         }
-        decisionSub?.Dispose();
-        UpdateInfo();
-        decisionSub = decisions.OnValueChanged
-            .Subscribe(_ => UpdateInfo());
+        clone.decisionSub?.Dispose();
+        clone.UpdateInfo();
+        clone.decisionSub = clone.decisions.OnValueChanged
+            .Subscribe(_ => clone.UpdateInfo());
 
-        Weight = new Parameter(original.Weight.Name, original.Weight.Value);
-    }
-
-    internal override AiObjectModel Clone()
-    {
-        return new Bucket(this);
+        clone.Weight = new Parameter(Weight.Name, Weight.Value);
+        return clone;
     }
 
     protected override float CalculateUtility(AiContext context)

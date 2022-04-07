@@ -170,7 +170,8 @@ internal class ResponseCurveLCComponent : VisualElement
 
         if (template != null)
         {
-            UpdateUi((ResponseCurve)template.Clone());
+            var clone = (ResponseCurve)template.Clone();
+            UpdateUi(clone);
         } else
         {
             UpdateUi(AssetDatabaseService.GetInstanceOfType<ResponseCurve>(name));

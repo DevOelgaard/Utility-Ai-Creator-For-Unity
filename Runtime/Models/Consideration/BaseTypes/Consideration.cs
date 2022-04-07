@@ -72,7 +72,7 @@ public abstract class Consideration : AiObjectModel
         return "Consideration";
     }
 
-    internal override AiObjectModel Clone()
+    protected override AiObjectModel InternalClone()
     {
         var clone = (Consideration)Activator.CreateInstance(GetType());
         clone.Parameters = new List<Parameter>();
@@ -93,7 +93,7 @@ public abstract class Consideration : AiObjectModel
         clone.MinFloat = new Parameter(this.MinFloat.Name, this.MinFloat.Value);
         clone.MaxFloat = new Parameter(this.MaxFloat.Name, this.MaxFloat.Value);
 
-        clone.CurrentResponseCurve = new ResponseCurve(this.CurrentResponseCurve);
+        clone.CurrentResponseCurve = (ResponseCurve)CurrentResponseCurve.Clone();
         return clone;
     }
 

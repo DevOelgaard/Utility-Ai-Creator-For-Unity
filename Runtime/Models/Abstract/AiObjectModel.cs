@@ -26,11 +26,7 @@ public abstract class AiObjectModel: RestoreAble
 
     protected AiObjectModel(AiObjectModel original): base(original)
     {
-        MetaData = new AiObjectMetaData();
-        MetaData.Type = GetType();
-        Name = original.Name;
-        Description = original.Description;
-        HelpText = original.HelpText;
+
     }
 
     protected virtual void UpdateInfo() { }
@@ -39,8 +35,23 @@ public abstract class AiObjectModel: RestoreAble
         return Name;
     }
 
-    internal abstract AiObjectModel Clone();
+    protected abstract AiObjectModel InternalClone();
 
+    protected virtual void SetBaseClone(AiObjectModel clone)
+    {
+        clone.MetaData = new AiObjectMetaData();
+        clone.MetaData.Type = GetType();
+        clone.Name = Name;
+        clone.Description = Description;
+        clone.HelpText = HelpText;
+    }
+
+    internal AiObjectModel Clone()
+    {
+        var clone = InternalClone();
+        SetBaseClone(clone);
+        return clone;
+    }
     internal virtual string GetUiName()
     {
         return Name + " (" + this.GetType().ToString() + ")";

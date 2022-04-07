@@ -31,26 +31,11 @@ public class ResponseCurve: AiObjectModel
         AddResponseFunction(firstFunction);
     }
 
-    public ResponseCurve(ResponseCurve original): base(original)
-    {
-        ResponseFunctions = new List<ResponseFunction>();
-        foreach(var rf in original.ResponseFunctions)
-        {
-            var clone = new ResponseFunction(rf);
-            ResponseFunctions.Add(clone);
-        }
+    //public ResponseCurve(ResponseCurve original): base(original)
+    //{
 
-        Segments = new List<Parameter>();
-        foreach(var s in original.Segments)
-        {
-            var clone = new Parameter(s.Name,s.Value);
-            Segments.Add(clone);
-        }
-        MinX = original.MinX;
-        MaxX = original.MaxX;
-        MinY = original.MinY;
-        MaxY = original.MaxY;
-    }
+    //}
+
 
     protected ResponseCurve(string name, float minY = 0.0f, float maxY = 1.0f)
     {
@@ -256,9 +241,31 @@ public class ResponseCurve: AiObjectModel
         }
     }
 
-    internal override AiObjectModel Clone()
+    protected override AiObjectModel InternalClone()
     {
-        return new ResponseCurve(this);
+        var clone = new ResponseCurve();
+        clone.Name = Name;
+        clone.Description = Description;
+
+        clone.ResponseFunctions = new List<ResponseFunction>();
+        foreach (var rf in ResponseFunctions)
+        {
+            var rfClone = (ResponseFunction)rf.Clone();
+            clone.ResponseFunctions.Add(rfClone);
+        }
+
+        clone.Segments = new List<Parameter>();
+        foreach (var s in Segments)
+        {
+            var pClone = new Parameter(s.Name, s.Value);
+            clone.Segments.Add(pClone);
+        }
+        clone.MinX = MinX;
+        clone.MaxX = MaxX;
+        clone.MinY = MinY;
+        clone.MaxY = MaxY;
+
+        return clone;
     }
 
     protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
@@ -314,7 +321,7 @@ public class ResponseCurve: AiObjectModel
         {
             if (rf.LoadedObject == null)
             {
-                var error = new ResponseFunction();
+                var error = new Error_ResponseFunction();
                 error.Parameters.Add(new Parameter(rf.ErrorMessage, rf.Exception.ToString()));
                 ResponseFunctions.Add(error);
             }

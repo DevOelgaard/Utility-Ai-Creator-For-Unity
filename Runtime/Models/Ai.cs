@@ -60,7 +60,7 @@ public class Ai: AiObjectModel
         Buckets = new ReactiveListNameSafe<Bucket>();
         foreach(var b in original.Buckets.Values)
         {
-            var clone = new Bucket(b);
+            var clone = b.Clone() as Bucket;
             Buckets.Add(clone);
         }
         bucketSub?.Dispose();
@@ -101,7 +101,7 @@ public class Ai: AiObjectModel
         return new AiState(Name, Description, Buckets.Values, this);
     }
 
-    internal override AiObjectModel Clone()
+    protected override AiObjectModel InternalClone()
     {
         return new Ai(this);
     }

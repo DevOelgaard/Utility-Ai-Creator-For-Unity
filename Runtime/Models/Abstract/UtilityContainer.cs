@@ -55,25 +55,27 @@ public abstract class UtilityContainer : AiObjectModel
             .Subscribe(_ => UpdateInfo());
     }
 
-    public UtilityContainer(UtilityContainer original): base(original)
+    protected override void SetBaseClone(AiObjectModel c)
     {
-        Considerations = new ReactiveListNameSafe<Consideration>();
-        foreach(var c in original.Considerations.Values)
+        var clone = c as UtilityContainer;
+        base.SetBaseClone(clone);
+        clone.Considerations = new ReactiveListNameSafe<Consideration>();
+        foreach (var cons in Considerations.Values)
         {
-            var clone = c.Clone() as Consideration;
-            Considerations.Add(clone);
+            var cClone = cons.Clone() as Consideration;
+            clone.Considerations.Add(cClone);
         }
 
-        ScoreModels = new List<ScoreModel>();
-        foreach (var sm in original.ScoreModels)
+        clone.ScoreModels = new List<ScoreModel>();
+        foreach (var sm in ScoreModels)
         {
-            var clone = new ScoreModel(sm.Name, 0);
-            ScoreModels.Add(clone);
+            var smClone = new ScoreModel(sm.Name, 0);
+            clone.ScoreModels.Add(smClone);
         }
-        considerationSub?.Dispose();
-        UpdateInfo();
-        considerationSub = considerations.OnValueChanged
-            .Subscribe(_ => UpdateInfo());
+        clone.considerationSub?.Dispose();
+        clone.UpdateInfo();
+        clone.considerationSub = clone.considerations.OnValueChanged
+            .Subscribe(_ => clone.UpdateInfo());
     }
 
     internal virtual void SetIndex(int value)

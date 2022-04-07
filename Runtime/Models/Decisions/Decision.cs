@@ -47,25 +47,30 @@ public class Decision: UtilityContainer
             .Subscribe(_ => UpdateInfo());
     }
 
-    public Decision(Decision original): base(original)
-    {
-        Parameters = new List<Parameter>();
-        foreach (var s in original.Parameters)
-        {
-            var clone = new Parameter(s.Name, s.Value);
-            Parameters.Add(clone);
-        }
-        agentActionSub?.Dispose();
 
-        AgentActions = new ReactiveListNameSafe<AgentAction>();
-        foreach(var a in original.AgentActions.Values)
+
+    protected override AiObjectModel InternalClone()
+    {
+        var clone = (Decision)Activator.CreateInstance(GetType());
+        clone.Parameters = new List<Parameter>();
+        foreach (var s in Parameters)
         {
-            var clone = a.Clone() as AgentAction;
-            AgentActions.Add(clone);
+            var sClone = new Parameter(s.Name, s.Value);
+            clone.Parameters.Add(sClone);
         }
-        UpdateInfo();
-        agentActionSub = agentActions.OnValueChanged
-            .Subscribe(_ => UpdateInfo());
+        
+        clone.agentActionSub?.Dispose();
+        clone.AgentActions = new ReactiveListNameSafe<AgentAction>();
+        foreach (var a in AgentActions.Values)
+        {
+            var aClone = a.Clone() as AgentAction;
+            clone.AgentActions.Add(aClone);
+        }
+        clone.UpdateInfo();
+        clone.agentActionSub = clone.agentActions.OnValueChanged
+            .Subscribe(_ => clone.UpdateInfo());
+
+        return clone;
     }
 
     protected virtual List<Parameter> GetParameters()
@@ -106,10 +111,7 @@ public class Decision: UtilityContainer
     }
 
 
-    internal override AiObjectModel Clone()
-    {
-        return new Decision(this);
-    }
+
 
 
     protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)

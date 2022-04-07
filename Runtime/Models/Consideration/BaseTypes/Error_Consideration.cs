@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-internal class ErrorConsideration : Consideration
+internal class Error_Consideration : Consideration
 {
-    public ErrorConsideration() : base()
+    public Error_Consideration() : base()
     {
         //Name = "";
         //Description = "";

@@ -12,7 +12,7 @@ internal static class AddCopyService
     {
         var namesFromFiles = AssetDatabaseService.GetActivateableTypes(t);
         var tempChoices = namesFromFiles
-            .Where(t => !t.Name.Contains("Mock") && !t.Name.Contains("Stub"))
+            .Where(t => !t.Name.Contains("Mock") && !t.Name.Contains("Stub") && !t.Name.Contains("Error_"))
             .Select(t => t.Name)
             .OrderBy(t => t)
             .ToList();

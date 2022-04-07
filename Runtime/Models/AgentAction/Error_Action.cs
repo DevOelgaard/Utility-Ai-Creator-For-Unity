@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-internal class ErrorAction : AgentAction
+internal class Error_Action : AgentAction
 {
-    public ErrorAction() : base()
+    public Error_Action() : base()
     {
         //Name = "";
         //Description = "";

@@ -32,7 +32,7 @@ public abstract class AgentAction: AiObjectModel
     {
         return "Agent Action";
     }
-    internal override AiObjectModel Clone()
+    protected override AiObjectModel InternalClone()
     {
         var clone = (Consideration)Activator.CreateInstance(GetType(), this);
         clone.Parameters = new List<Parameter>();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class ResponseFunction: AiObjectModel
+public abstract class ResponseFunction: AiObjectModel
 {
     public int RCIndex = -1;
     private Parameter max;
@@ -22,7 +22,7 @@ public class ResponseFunction: AiObjectModel
         .FirstOrDefault(p => p.Name == "Inverse" && p.Value.GetType() == typeof(bool))
         .Value; 
 
-    public ResponseFunction()
+    protected ResponseFunction()
     {
         Parameters = GetParameters();
         Parameters.Add(new Parameter("Inverse", false));
@@ -38,14 +38,17 @@ public class ResponseFunction: AiObjectModel
         Parameters.Add(new Parameter("Max", 1f));
     }
 
-    public ResponseFunction(ResponseFunction original): base(original)
+    protected override AiObjectModel InternalClone()
     {
-        Parameters = new List<Parameter>();
-        foreach (var s in original.Parameters)
+        var clone = (ResponseFunction)Activator.CreateInstance(GetType());
+        clone.Parameters = new List<Parameter>();
+        foreach (var s in Parameters)
         {
-            var clone = new Parameter(s.Name, s.Value);
-            Parameters.Add(clone);
+            var pClone = new Parameter(s.Name, s.Value);
+            clone.Parameters.Add(pClone);
         }
+
+        return clone;
     }
 
     protected virtual List<Parameter> GetParameters()
@@ -63,11 +66,9 @@ public class ResponseFunction: AiObjectModel
         {
             result = CalculateResponseInternal(x);
         }
-        //result = Normalize(result, prevResult, Convert.ToSingle(Max.Value));
         var factor = Convert.ToSingle(Max.Value) / maxY;
         result *= factor;
         return result + prevResult;
-        //return Normalize(result,minY,maxY);
     }
 
     private float Normalize(float value, float min, float max)
@@ -77,10 +78,7 @@ public class ResponseFunction: AiObjectModel
         return x;
     }
 
-    protected virtual float CalculateResponseInternal(float x)
-    {
-        return float.MinValue;
-    }
+    protected abstract float CalculateResponseInternal(float x);
 
     protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
     {
@@ -91,10 +89,7 @@ public class ResponseFunction: AiObjectModel
         Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
     }
 
-    internal override AiObjectModel Clone()
-    {
-        return new ResponseFunction(this);
-    }
+
 
     internal override RestoreState GetState()
     {

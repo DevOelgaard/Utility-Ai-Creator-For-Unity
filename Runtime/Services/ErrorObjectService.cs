@@ -10,12 +10,12 @@ internal static class ErrorObjectService
     {
         if (t.IsAssignableFrom(typeof(Consideration)))
         {
-            return new ErrorConsideration();
+            return new Error_Consideration();
         }
 
         if (t.IsAssignableFrom(typeof(AgentAction)))
         {
-            return new ErrorAction();
+            return new Error_Action();
         }
 
         else return (AiObjectModel)InstantiaterService.Instance.CreateInstance(t);

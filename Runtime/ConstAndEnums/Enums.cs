@@ -24,3 +24,9 @@ public enum ParameterTypes
     None,
     Tag,
 }
+
+public enum UtilityContainerTypes
+{
+    Bucket,
+    Decision,
+}

@@ -103,18 +103,29 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
         {
             sortCollectionButton.style.display = DisplayStyle.None;
         }
+
+        UASTemplateService.Instance.OnIncludeDemosChanged
+            .Subscribe(value =>
+            {
+                InitAddCopyPopup();
+            })
+            .AddTo(subscriptions);
     }
 
     private void InitAddCopyPopup()
     {
         var namesFromFiles = AssetDatabaseService.GetActivateableTypes(typeof(T));
-
-        addCopyPopup.choices = namesFromFiles
+        var choices = namesFromFiles
             .Where(t => !t.Name.Contains("Mock") && !t.Name.Contains("Stub"))
             .Select(t => t.Name)
             .OrderBy(t => t)
             .ToList();
 
+        if (!UASTemplateService.Instance.IncludeDemos)
+        {
+            choices = choices.Where(t => !t.Contains("Demo")).ToList();
+        }
+        addCopyPopup.choices = choices;
 
         foreach(var template in templates.Values)
         {

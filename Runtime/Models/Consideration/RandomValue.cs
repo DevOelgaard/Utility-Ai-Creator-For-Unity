@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
-internal class DoNotRepeatBucket : Consideration
+internal class RandomValue : Consideration
 {
-    public DoNotRepeatBucket(): base()
+    public RandomValue(): base()
     {
     }
 
     protected override float CalculateBaseScore(AiContext context)
     {
-        return context.LastSelectedBucket == context.CurrentEvaluatedBucket ? 0 : 1;
+        return UnityEngine.Random.Range(Convert.ToSingle(MinFloat.Value), Convert.ToSingle(MaxFloat.Value));
     }
 
     protected override List<Parameter> GetParameters()

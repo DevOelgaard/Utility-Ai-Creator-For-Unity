@@ -8,6 +8,7 @@ using System.IO;
 
 internal class UASTemplateService: RestoreAble
 {
+
     private CompositeDisposable subscriptions = new CompositeDisposable();
     private Dictionary<string, ReactiveList<AiObjectModel>> collectionsByLabel = new Dictionary<string, ReactiveList<AiObjectModel>>();
 
@@ -23,6 +24,19 @@ internal class UASTemplateService: RestoreAble
 
     private bool autoSaveLoaded = false;
 
+    private bool includeDemos = true;
+    public bool IncludeDemos
+    {
+        get => includeDemos;
+        set
+        {
+            includeDemos = value; 
+            onIncludeDemosChanged?.OnNext(value);
+        }
+    }
+    public IObservable<bool> OnIncludeDemosChanged => onIncludeDemosChanged;
+    private Subject<bool> onIncludeDemosChanged = new Subject<bool>();
+
     private static UASTemplateService instance;
     public UASTemplateService()
     {
@@ -32,7 +46,6 @@ internal class UASTemplateService: RestoreAble
 
     private void Init(bool restore)
     {
-        Debug.Log("Init UAS TEmplate");
         AIs = new ReactiveListNameSafe<AiObjectModel>();
         Buckets = new ReactiveListNameSafe<AiObjectModel>();
         Decisions = new ReactiveListNameSafe<AiObjectModel>();
@@ -64,7 +77,6 @@ internal class UASTemplateService: RestoreAble
     internal void LoadCurrentProject(bool backup = false)
     {
         ClearCollectionNoNotify();
-        Debug.Log("Loading Current project");
         var perstistAPI = PersistenceAPI.Instance;
         UASTemplateServiceState state;
         if (!backup)

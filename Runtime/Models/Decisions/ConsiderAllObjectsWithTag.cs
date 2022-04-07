@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-internal class Demo_AllObjectsWithTag : Decision
+internal class ConsiderAllObjectsWithTag : Decision
 {
-    public Demo_AllObjectsWithTag() : base()
+    public ConsiderAllObjectsWithTag() : base()
     {
     }
 

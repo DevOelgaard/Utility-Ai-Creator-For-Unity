@@ -70,7 +70,7 @@ internal class TemplateManager : EditorWindow
         AddElementPopupContainer.Add(addElementPopup);
         InitToolbarFile();
         InitToolbarDebug();
-
+        InitToolbarDemos();
 
         rightPanel = root.Q<VisualElement>("right-panel");
 
@@ -96,7 +96,12 @@ internal class TemplateManager : EditorWindow
         InitDropdown();
         UpdateLeftPanel();
 
-
+        UASTemplateService.Instance.OnIncludeDemosChanged
+            .Subscribe(value =>
+            {
+                UpdateAddElementPopup();
+            })
+            .AddTo(disposables);
     }
 
 
@@ -204,6 +209,8 @@ internal class TemplateManager : EditorWindow
         });
 
         toolbar.Add(menu);
+
+
     }
 
     private void InitToolbarDebug()
@@ -223,7 +230,19 @@ internal class TemplateManager : EditorWindow
             InstantiaterService.Instance.Reset();
         });
         toolbar.Add(menu);
+    }
 
+    private void InitToolbarDemos()
+    {
+        var includeDemos = new ToolbarToggle();
+        includeDemos.text = "include Demo Files";
+
+        includeDemos.RegisterCallback<ChangeEvent<bool>>(evt =>
+        {
+            UASTemplateService.Instance.IncludeDemos = evt.newValue;
+        });
+        toolbar.Add(includeDemos);
+        includeDemos.SetValueWithoutNotify(UASTemplateService.Instance.IncludeDemos);
     }
 
 
@@ -319,17 +338,29 @@ internal class TemplateManager : EditorWindow
             .Subscribe(values => LoadModels(values));
 
         MainWindowService.Instance.PreloadComponents(models);
-        var type = MainWindowService.Instance.GetTypeFromString(label);
-        var namesFromFiles = AssetDatabaseService.GetActivateableTypes(type);
 
-        addElementPopup.choices = namesFromFiles
+        UpdateAddElementPopup();
+
+        LoadModels(models.Values);
+        UpdateButtons();
+    }
+
+    private void UpdateAddElementPopup()
+    {
+        var type = MainWindowService.Instance.GetTypeFromString(dropDown.value);
+        var namesFromFiles = AssetDatabaseService.GetActivateableTypes(type);
+        var choices = namesFromFiles
             .Where(t => !t.Name.Contains("Mock") && !t.Name.Contains("Stub"))
             .Select(t => t.Name)
             .OrderBy(t => t)
             .ToList();
 
-        LoadModels(models.Values);
-        UpdateButtons();
+        if (!UASTemplateService.Instance.IncludeDemos)
+        {
+            choices = choices.Where(t => !t.Contains("Demo")).ToList();
+        }
+
+        addElementPopup.choices = choices;
     }
 
     private void LoadModels(List<AiObjectModel> models)

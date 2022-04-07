@@ -15,7 +15,6 @@ internal class Demo_DebugLogContextAddress : AgentAction
     {
         return new List<Parameter>()
         {
-            //new Parameter("Output: ", "")
         };
     }
 

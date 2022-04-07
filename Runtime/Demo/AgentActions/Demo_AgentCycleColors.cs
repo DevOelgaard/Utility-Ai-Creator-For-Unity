@@ -7,8 +7,6 @@ using UnityEngine;
 
 internal class Demo_AgentCycleColors : AgentAction
 {
-    //private static int nextId = 0;
-    //private int id;
     private Renderer renderer;
     private int currentColorIndex = 0;
 
@@ -32,15 +30,11 @@ internal class Demo_AgentCycleColors : AgentAction
 
     public override void OnStart(AiContext context)
     {
-        //Debug.Log("ID: " + id + " Start: Time: " + context.TickMetaData.TickTime);
-
         CycleColor(context);
     }
 
     public override void OnGoing(AiContext context)
     {
-        //Debug.Log("ID: " + id + " OnGoing: Time: " + context.TickMetaData.TickTime);
-
         CycleColor(context);
     }
 

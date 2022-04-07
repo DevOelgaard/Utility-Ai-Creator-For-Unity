@@ -62,7 +62,7 @@ public class ResponseCurve: AiObjectModel
         ResponseFunctions = new List<ResponseFunction>();
         AddResponseFunction(firstFunction);
     }
-
+    
     public void AddResponseFunction(ResponseFunction newFunction)
     {
         var previouseFunction = ResponseFunctions.LastOrDefault();

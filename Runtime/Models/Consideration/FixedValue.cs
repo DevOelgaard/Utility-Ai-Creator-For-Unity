@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnityEngine;
 
-internal class Demo_ConsiderationRandomValue : Consideration
+internal class FixedValue : Consideration
 {
-    public Demo_ConsiderationRandomValue(): base()
+
+    public FixedValue(): base()
     {
     }
 
     protected override float CalculateBaseScore(AiContext context)
     {
-        return UnityEngine.Random.Range(Convert.ToSingle(MinFloat.Value), Convert.ToSingle(MaxFloat.Value));
+        return Convert.ToSingle(Parameters[0].Value);
     }
 
     protected override List<Parameter> GetParameters()
     {
-        return new List<Parameter>();
+        return new List<Parameter>()
+        {
+            new Parameter("Return value", (float)0.5f)
+        };
     }
 }

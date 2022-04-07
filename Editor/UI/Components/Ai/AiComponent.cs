@@ -31,7 +31,6 @@ internal class AiComponent : AiObjectComponent
         root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);
         Body.Clear();
         Body.Add(root);
-        styleSheets.Add(StylesService.GetStyleSheet("AiObjectComponent"));
         collectionsContainer = root.Q<VisualElement>("CollectionsContainer");
         playAbleHelpBox = new HelpBox("Not set to playable!", HelpBoxMessageType.Warning);
         tabView = new TabViewComponent();

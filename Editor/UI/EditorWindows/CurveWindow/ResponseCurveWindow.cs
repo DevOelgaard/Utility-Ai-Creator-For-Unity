@@ -7,18 +7,18 @@ using UnityEditor;
 
 internal class ResponseCurveWindow: EditorWindow
 {
-    private ResponseCurveLCComponent responseCurveComponent;
+    internal ResponseCurveLCComponent ResponseCurveComponent { get; private set; }
 
     internal void CreateGUI()
     {
-        responseCurveComponent = new ResponseCurveLCComponent();
-        rootVisualElement.Add(responseCurveComponent);
+        ResponseCurveComponent = new ResponseCurveLCComponent();
+        rootVisualElement.Add(ResponseCurveComponent);
 
     }
 
     internal void UpdateUi(ResponseCurve response, bool showSelecttion = true)
     {
-        responseCurveComponent.UpdateUi(response, showSelecttion);
+        ResponseCurveComponent.UpdateUi(response, showSelecttion);
     }
 
 

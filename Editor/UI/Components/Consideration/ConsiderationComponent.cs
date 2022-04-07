@@ -12,6 +12,7 @@ using UnityEngine;
 internal class ConsiderationComponent : AiObjectComponent 
 {
     private CompositeDisposable minMaxSubs = new CompositeDisposable();
+    private CompositeDisposable rcDisposable = new CompositeDisposable();
     private TemplateContainer root;
     private Consideration considerationModel;
     private ScoreComponent baseScore => ScoreComponents[0];
@@ -24,8 +25,6 @@ internal class ConsiderationComponent : AiObjectComponent
     private ParameterComponent maxParamComp;
     private FloatFieldMinMax minField;
     private FloatFieldMinMax maxField;
-
-    private ResponseCurveLCComponent responseCurveLCComponent;
 
     private TabViewComponent tabView;
     private Button responseCurveTab;
@@ -49,16 +48,25 @@ internal class ConsiderationComponent : AiObjectComponent
         root.Add(tabView);
 
         responseCurveButton = new LineChartButton();
+        responseCurveButton.name = "ResponseCurveButton";
         responseCurveButton.RegisterCallback<MouseUpEvent>(evt =>
         {
             responseCurveWindow = WindowOpener.OpenResponseCurve();
             if (considerationModel != null)
             {
                 responseCurveWindow.UpdateUi(considerationModel.CurrentResponseCurve);
+
+                rcDisposable.Clear();
+                responseCurveWindow.ResponseCurveComponent.OnResponseCurveChanged
+                    .Subscribe(curve =>
+                    {
+                        considerationModel.CurrentResponseCurve = curve;
+                        responseCurveButton.UpdateUi(considerationModel.CurrentResponseCurve);
+                    })
+                    .AddTo(rcDisposable);
             }
         });
 
-        responseCurveLCComponent = new ResponseCurveLCComponent();
         //curveContainer.Add(responseCurveLCComponent);
         tabView.AddTabGroup("Parameters", parametersContainer);
         tabView.AddTabGroup("Response Curve", responseCurveButton);
@@ -83,7 +91,6 @@ internal class ConsiderationComponent : AiObjectComponent
         considerationModel.NormalizedScoreChanged
             .Subscribe(score => normalizedScore.UpdateScore(score))
             .AddTo(modelInfoChangedDisposable);
-
 
         performanceTag.Init(PerformanceTag.Normal);
         performanceTag.value = considerationModel.PerformanceTag;
@@ -144,5 +151,6 @@ internal class ConsiderationComponent : AiObjectComponent
     ~ConsiderationComponent()
     {
         minMaxSubs.Clear();
+        rcDisposable.Clear();
     }
 }

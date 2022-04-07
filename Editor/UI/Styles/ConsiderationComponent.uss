@@ -104,7 +104,3 @@ AgentComponent > TemplateContainer > #Footer {
     height: 24px;
     min-height: 24px;
 }
-
-#ResponseCurveButton{
-    height: 64px;
-}

@@ -30,6 +30,7 @@ internal abstract class AiObjectComponent : VisualElement
     {
         var root = AssetDatabaseService.GetTemplateContainer(typeof(AiObjectComponent ).FullName);
         Add(root);
+        styleSheets.Add(StylesService.GetStyleSheet("AiObjectComponent"));
 
         typeLabel = root.Q<Label>("Type-Label");
         nameTextField = this.Q<TextField>("Name-TextField");

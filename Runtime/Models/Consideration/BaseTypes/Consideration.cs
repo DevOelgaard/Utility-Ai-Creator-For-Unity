@@ -23,7 +23,7 @@ public abstract class Consideration : AiObjectModel
             }
             return currentResponseCurve; 
         }
-        protected set
+        set
         {
             currentResponseCurve = value;
             onResponseCurveChanged.OnNext(currentResponseCurve);

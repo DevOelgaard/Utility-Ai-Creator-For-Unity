@@ -14,6 +14,8 @@ internal class ResponseCurveLCComponent : VisualElement
     private CompositeDisposable responseCurveDisposables = new CompositeDisposable();
     private ResponseCurve responseCurve;
     private LineChartComponent lineChart;
+    internal IObservable<ResponseCurve> OnResponseCurveChanged => onResponseCurveChanged;
+    private Subject<ResponseCurve> onResponseCurveChanged = new Subject<ResponseCurve>();
 
     private float min => Convert.ToSingle(responseCurve.MinX);
     private float max => Convert.ToSingle(responseCurve.MaxX);
@@ -58,7 +60,7 @@ internal class ResponseCurveLCComponent : VisualElement
     internal void UpdateUi(ResponseCurve responseCurve, bool showSelection = true)
     {
         this.responseCurve = responseCurve;
-
+        onResponseCurveChanged.OnNext(this.responseCurve);
         if (showSelection)
         {
             header.Add(curveDropdown);

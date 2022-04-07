@@ -63,7 +63,7 @@ public class ResponseFunction: AiObjectModel
         {
             result = CalculateResponseInternal(x);
         }
-        result = Normalize(result, prevResult, Convert.ToSingle(Max.Value));
+        //result = Normalize(result, prevResult, Convert.ToSingle(Max.Value));
         var factor = Convert.ToSingle(Max.Value) / maxY;
         result *= factor;
         return result + prevResult;

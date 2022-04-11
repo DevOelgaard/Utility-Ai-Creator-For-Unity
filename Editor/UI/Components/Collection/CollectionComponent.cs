@@ -54,7 +54,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
         addCopyPopup.RegisterCallback<ChangeEvent<string>>(evt =>
         {
             if (evt.newValue == null) return;
-            AddCopy(StringService.RemoveWhiteSpaces(evt.newValue));
+            AddCopy(evt.newValue);
             addCopyPopup.value = null;
         });
 

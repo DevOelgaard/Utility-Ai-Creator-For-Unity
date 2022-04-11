@@ -5,7 +5,7 @@ using System.Linq;
 
 public abstract class AgentAction: AiObjectModel
 {
-    public List<Parameter> Parameters;
+    // public List<Parameter> Parameters;
     //private string namePostfix;
 
     protected AgentAction()

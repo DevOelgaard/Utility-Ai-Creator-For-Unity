@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public abstract class AiObjectModel: RestoreAble
 {
     internal AiObjectMetaData MetaData = new AiObjectMetaData();
-    protected CompositeDisposable Disposables = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
+    public List<Parameter> Parameters = new List<Parameter>();
     public string HelpText { get; protected set; }
     public IObservable<string> OnNameChanged => onNameChanged;
     private Subject<string> onNameChanged = new Subject<string>();
@@ -17,7 +18,7 @@ public abstract class AiObjectModel: RestoreAble
     private Subject<InfoModel> onInfoChanged = new Subject<InfoModel>();
 
     public List<ScoreModel> ScoreModels = new List<ScoreModel>();
-    public string ContextAddress { get; protected set; }
+    public string ContextAddress { get; private set; }
     protected AiObjectModel(): base()
     {
         Name = StringService.SpaceBetweenUpperCase(GetType().ToString());
@@ -129,7 +130,7 @@ public abstract class AiObjectModel: RestoreAble
 
     protected virtual void ClearSubscriptions()
     {
-        Disposables.Clear();
+        disposables.Clear();
     }
 
     ~AiObjectModel()

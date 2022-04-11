@@ -8,7 +8,6 @@ public class Decision: UtilityContainer
 {
     private IDisposable agentActionSub;
     private ReactiveListNameSafe<AgentAction> agentActions = new ReactiveListNameSafe<AgentAction>();
-    public List<Parameter> Parameters;
     public TickMetaData LastSelectedTickMetaData;
 
     public ReactiveListNameSafe<AgentAction> AgentActions

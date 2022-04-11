@@ -1,8 +1,3 @@
-#Container {
-    /*margin: 8px;*/
-    /*color: green;*/
-}
-
 #Center {
     margin: 8px;
     padding: 3px;

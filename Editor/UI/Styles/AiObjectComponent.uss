@@ -1,5 +1,9 @@
-AiComponent > TemplateContainer > VisualElement > #Header {
-    min-height: 64px;
+/*AiComponent > TemplateContainer > VisualElement > #Header {*/
+/*    min-height: 84px;*/
+/*}*/
+
+#AiObjectHeader {
+    min-height: 84px;
 }
 
 DropdownDescriptionComponent {
@@ -10,9 +14,6 @@ CollectionComponent {
     margin-top: 8px;
     margin-left: 12px;
     flex-grow: 1;
-/*    border-radius: 5px;
-    border-width: 2px;
-    border-color: rgb(33, 33, 33);*/
 }
 
 #Type-Label {
@@ -60,14 +61,14 @@ TabViewComponent {
 }
 
 /*#Center {*/
-    /*color:rebeccapurple;*/
-    /*margin: 2px;
-    padding: 8px;*/
-    /*padding-top: 8px;
-    padding-bottom: 8px;*/
-    /*border-radius: 0px;
-    border-width: 1px;
-    border-color: rgb(90, 90, 90);
+/*color:rebeccapurple;*/
+/*margin: 2px;
+padding: 8px;*/
+/*padding-top: 8px;
+padding-bottom: 8px;*/
+/*border-radius: 0px;
+border-width: 1px;
+border-color: rgb(90, 90, 90);
 }*/
 
 #ScoreContainer {
@@ -96,9 +97,9 @@ UCSComponent > TemplateContainer > #ParametersContainer {
     align-items: flex-start;
 }
 
-ListViewComponent > TemplateContainer > VisualElement > #Center:hover {
-    
-}
+/*ListViewComponent > TemplateContainer > VisualElement > #Center:hover {*/
+/*    */
+/*}*/
 
 AgentComponent > TemplateContainer > #Footer {
     height: 24px;
@@ -107,4 +108,17 @@ AgentComponent > TemplateContainer > #Footer {
 
 #ResponseCurveButton{
     height: 64px;
+}
+
+#TypeDescriptionLabel{
+    -unity-font-style: italic;
+    font-size: 10px;
+}
+
+
+
+#FoldedFooterLabel{
+    -unity-font-style: italic;
+    font-size: 10px;
+    margin-right: 8px;
 }

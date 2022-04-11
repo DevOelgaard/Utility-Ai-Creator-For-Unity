@@ -84,27 +84,37 @@ internal class ConsiderationComponent : AiObjectComponent
         sw.Start();
         ClearSubscriptions();
         considerationModel = model as Consideration;
-        considerationModel.BaseScoreChanged
-            .Subscribe(score => baseScore.UpdateScore(score))
-            .AddTo(modelInfoChangedDisposable);
-
-        considerationModel.NormalizedScoreChanged
-            .Subscribe(score => normalizedScore.UpdateScore(score))
-            .AddTo(modelInfoChangedDisposable);
-
-        performanceTag.Init(PerformanceTag.Normal);
-        performanceTag.value = considerationModel.PerformanceTag;
-        performanceTag.RegisterCallback<ChangeEvent<Enum>>(evt =>
+        if (considerationModel != null)
         {
-            considerationModel.PerformanceTag = (PerformanceTag)evt.newValue;
-        });
+            considerationModel.BaseScoreChanged
+                .Subscribe(score => baseScore.UpdateScore(score))
+                .AddTo(modelInfoChangedDisposable);
 
-        SetParameters();
-        responseCurveWindow?.UpdateUi(considerationModel.CurrentResponseCurve);
-        responseCurveButton.UpdateUi(considerationModel.CurrentResponseCurve);
+            considerationModel.NormalizedScoreChanged
+                .Subscribe(score => normalizedScore.UpdateScore(score))
+                .AddTo(modelInfoChangedDisposable);
+
+            considerationModel.OnResponseCurveChanged
+                .Subscribe(curve =>
+                {
+                    responseCurveButton.UpdateUi(curve);
+                })
+                .AddTo(modelInfoChangedDisposable);
+
+            performanceTag.Init(PerformanceTag.Normal);
+            performanceTag.value = considerationModel.PerformanceTag;
+            performanceTag.RegisterCallback<ChangeEvent<Enum>>(evt =>
+            {
+                considerationModel.PerformanceTag = (PerformanceTag) evt.newValue;
+            });
+
+            SetParameters();
+            responseCurveWindow?.UpdateUi(considerationModel.CurrentResponseCurve);
+            responseCurveButton.UpdateUi(considerationModel.CurrentResponseCurve);
+        }
+
         //responseCurveLCComponent.UpdateUi(considerationModel.CurrentResponseCurve);
         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateInternal Consideration");
-
     }
 
     private void SetParameters()

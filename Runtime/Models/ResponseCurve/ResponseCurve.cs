@@ -10,13 +10,13 @@ using UniRx;
 // https://forum.unity.com/threads/draw-a-line-from-a-to-b.698618/
 public class ResponseCurve: AiObjectModel
 {
-    private Dictionary<Parameter, IDisposable> segmentDisposables = new Dictionary<Parameter, IDisposable>();
+    private readonly Dictionary<Parameter, IDisposable> segmentDisposables = new Dictionary<Parameter, IDisposable>();
     private float minY = 0.0f;
     private float maxY = 1.0f;
     private float minX = 0.0f;
     private float maxX = 1.0f;
 
-    public List<ResponseFunction> ResponseFunctions = new List<ResponseFunction>();
+    public List<ResponseFunction> ResponseFunctions;
     public List<Parameter> Segments = new List<Parameter>();
 
     public IObservable<bool> OnParametersChanged => onParametersChanged;

@@ -17,7 +17,7 @@ public abstract class ResponseFunction: AiObjectModel
             return max;
         }
     }
-    public List<Parameter> Parameters;
+    // public List<Parameter> Parameters;
     private bool Inverse => (bool)Parameters
         .FirstOrDefault(p => p.Name == "Inverse" && p.Value.GetType() == typeof(bool))
         .Value; 

@@ -20,7 +20,7 @@ internal class FixedValue : Consideration
     {
         return new List<Parameter>()
         {
-            new Parameter("Return value", (float)0.5f)
+            new Parameter("Return value", (float)1f)
         };
     }
 }

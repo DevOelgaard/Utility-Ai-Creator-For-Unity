@@ -192,6 +192,7 @@ internal class ResponseCurveLCComponent : VisualElement
         }
 
         lineChart?.DrawCurve(points, min, max);
+        onResponseCurveChanged.OnNext(responseCurve);
     }
 
     ~ResponseCurveLCComponent(){

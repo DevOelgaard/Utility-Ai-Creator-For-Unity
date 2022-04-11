@@ -11,7 +11,7 @@ public abstract class Consideration : AiObjectModel
     public bool IsScorer { get; protected set; } = true;
     public bool IsModifier { get; protected set; } = false;
     public bool IsSetter { get; protected set; } = false;
-    public List<Parameter> Parameters;
+    // public List<Parameter> Parameters;
     private ResponseCurve currentResponseCurve;
     public ResponseCurve CurrentResponseCurve
     {

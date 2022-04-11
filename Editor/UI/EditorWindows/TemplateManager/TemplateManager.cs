@@ -25,13 +25,13 @@ internal class TemplateManager : EditorWindow
     private PopupField<string> addElementPopup;
     private List<string> dropDownChoices;
     private DropdownField dropDown;
-    private UASTemplateService uASTemplateService => UASTemplateService.Instance;
+    private UasTemplateService uASTemplateService => UasTemplateService.Instance;
 
     private AiObjectComponent  currentMainWindowComponent;
     private AiObjectModel selectedModel;
     private PersistenceAPI persistenceAPI => PersistenceAPI.Instance;
 
-    private Dictionary<AiObjectModel, AiObjectComponent> componentsByModels = new Dictionary<AiObjectModel, AiObjectComponent>();
+    private readonly Dictionary<AiObjectModel, AiObjectComponent> componentsByModels = new Dictionary<AiObjectModel, AiObjectComponent>();
     private Toolbar toolbar;
     private bool autoSave = true;
     private AiObjectModel SelectedModel
@@ -66,8 +66,8 @@ internal class TemplateManager : EditorWindow
             addElementPopup.SetValueWithoutNotify(null);
         });
 
-        var AddElementPopupContainer = root.Q<VisualElement>("AddElementPopupContainer");
-        AddElementPopupContainer.Add(addElementPopup);
+        var addElementPopupContainer = root.Q<VisualElement>("AddElementPopupContainer");
+        addElementPopupContainer.Add(addElementPopup);
         InitToolbarFile();
         InitToolbarDebug();
         InitToolbarDemos();
@@ -96,7 +96,7 @@ internal class TemplateManager : EditorWindow
         InitDropdown();
         UpdateLeftPanel();
 
-        UASTemplateService.Instance.OnIncludeDemosChanged
+        UasTemplateService.Instance.OnIncludeDemosChanged
             .Subscribe(value =>
             {
                 UpdateAddElementPopup();
@@ -108,7 +108,7 @@ internal class TemplateManager : EditorWindow
     void OnEnable()
     {
         autoSave = true;
-        UASTemplateService.Instance.LoadCurrentProject();
+        UasTemplateService.Instance.LoadCurrentProject(true);
         var mws = MainWindowService.Instance;
         mws.OnUpdateStateChanged
             .Subscribe(state =>
@@ -122,14 +122,14 @@ internal class TemplateManager : EditorWindow
 
     private void InitToolbarFile()
     {
-        var menu = new ToolbarMenu();
-        menu.text = "File";
+        var menu = new ToolbarMenu
+        {
+            text = "File"
+        };
 
         menu.menu.AppendAction("New Project", _ =>
         {
-            uASTemplateService.Save();
-            ProjectSettingsService.Instance.CreateProject();
-            uASTemplateService.LoadCurrentProject();
+            PopUpService.AskToSaveIfProjectNotSavedThenCreateNew();
             UpdateLeftPanel();
             rightPanel.Clear();
 
@@ -137,13 +137,11 @@ internal class TemplateManager : EditorWindow
 
         menu.menu.AppendAction("Save", _ =>
         {
-            //ProjectSettingsService.Instance.CreateProject();
             uASTemplateService.Save();
         });
 
         menu.menu.AppendAction("Save As", _ =>
         {
-            //uASTemplateService.Save();
             ProjectSettingsService.Instance.SaveProjectAs();
             UpdateLeftPanel();
             rightPanel.Clear();
@@ -151,11 +149,8 @@ internal class TemplateManager : EditorWindow
 
         menu.menu.AppendAction("Open Project", _ =>
         {
-            uASTemplateService.Save();
-            ProjectSettingsService.Instance.LoadProject();
-            uASTemplateService.LoadCurrentProject();
-            UpdateLeftPanel();
-            rightPanel.Clear();
+            uASTemplateService.Save(true);
+            PopUpService.AskToSaveIfProjectNotSavedThenSelectProjectToLoad();
         });
 
         menu.menu.AppendAction("Export File(s)", _ =>
@@ -169,10 +164,6 @@ internal class TemplateManager : EditorWindow
         {
             var s = persistenceAPI.LoadFilePanel<RestoreState>(Consts.FileExtensionsFilters);
             s.LoadedObject.FolderLocation = Path.GetDirectoryName(s.Path) + @"\";
-            if(s == null)
-            {
-                return;
-            }
             var t = s.StateType;
 
             var toCollection = uASTemplateService.GetCollection(s.ModelType);
@@ -181,39 +172,37 @@ internal class TemplateManager : EditorWindow
 
         });
 
-        menu.menu.AppendAction("Load Autosave", _ =>
+        menu.menu.AppendAction("Load Current Project - TEST", _ =>
         {
             uASTemplateService.LoadCurrentProject();
             UpdateLeftPanel();
         });
 
-        menu.menu.AppendAction("Save Backup", _ =>
+        menu.menu.AppendAction("Save Backup - TEST", _ =>
         {
             uASTemplateService.Save(true);
         });
 
-        menu.menu.AppendAction("Load Backup", _ =>
+        menu.menu.AppendAction("Load Backup - TEST", _ =>
         {
             uASTemplateService.LoadCurrentProject(true);
         });
 
-        menu.menu.AppendAction("Close", _ =>
+        menu.menu.AppendAction("Exit", _ =>
         {
             //var wnd = GetWindow<TemplateManager>();
             this.Close();
         });
 
-        menu.menu.AppendAction("Close No Save", _ =>
+        menu.menu.AppendAction("Close No Save - TEST", _ =>
         {
             autoSave = false;
             this.Close();
         });
 
         toolbar.Add(menu);
-
-
     }
-
+    
     private void InitToolbarDebug()
     {
         var menu = new ToolbarMenu();
@@ -240,10 +229,10 @@ internal class TemplateManager : EditorWindow
 
         includeDemos.RegisterCallback<ChangeEvent<bool>>(evt =>
         {
-            UASTemplateService.Instance.IncludeDemos = evt.newValue;
+            UasTemplateService.Instance.IncludeDemos = evt.newValue;
         });
         toolbar.Add(includeDemos);
-        includeDemos.SetValueWithoutNotify(UASTemplateService.Instance.IncludeDemos);
+        includeDemos.SetValueWithoutNotify(UasTemplateService.Instance.IncludeDemos);
     }
 
 
@@ -501,7 +490,7 @@ internal class TemplateManager : EditorWindow
 
     ~TemplateManager()
     {
-        uASTemplateService.Save();
+        uASTemplateService.Save(true);
         ClearSubscriptions();
     }
 
@@ -520,7 +509,7 @@ internal class TemplateManager : EditorWindow
         WindowOpener.WindowPosition = this.position;
         if (autoSave)
         {
-            uASTemplateService.Save();
+            uASTemplateService.Save(true);
             ProjectSettingsService.Instance.SaveSettings();
         }
         ClearSubscriptions();

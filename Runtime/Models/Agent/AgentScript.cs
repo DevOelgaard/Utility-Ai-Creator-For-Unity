@@ -29,7 +29,7 @@ public abstract class AgentScript : IAgent
     public AgentScript()
     {
         model.Name = SetAgentName();
-        var ai = UASTemplateService.Instance.GetAiByName(DefaultAiName);
+        var ai = UasTemplateService.Instance.GetAiByName(DefaultAiName);
         SetAi(ai);
         AgentManager.Instance.Register(this);
     }

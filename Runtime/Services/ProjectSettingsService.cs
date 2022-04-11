@@ -8,19 +8,13 @@ using UnityEditor;
 
 internal class ProjectSettingsService
 {
-    private ProjectSettingsModel model;
-    private IPersister persister;
+    private readonly ProjectSettingsModel model;
+    private readonly IPersister persister;
     private ProjectSettingsService()
     {
-        persister = new JSONPersister();
+        persister = new JsonPersister();
         var loaded = persister.LoadObject<ProjectSettingsModel>(Consts.ProjectSettingsPath);
-        if (loaded.Success)
-        {
-            model = loaded.LoadedObject;
-        } else
-        {
-            model = new ProjectSettingsModel();
-        }
+        model = loaded.Success ? loaded.LoadedObject : new ProjectSettingsModel();
     }
 
     internal string GetCurrentProjectDirectory()
@@ -29,9 +23,13 @@ internal class ProjectSettingsService
         {
             return "";
         }
-        var dírectory = new DirectoryInfo(System.IO.Path.GetDirectoryName(model.CurrentProjectPath)).FullName+"/";
-        return dírectory;
-        //return Path.GetDirectoryName(model.CurrentProjectPath+"/");
+        var directory = new DirectoryInfo(System.IO.Path.GetDirectoryName(model.CurrentProjectPath) ?? string.Empty).FullName+"/";
+        return directory;
+    }
+
+    internal string GetBackupDirectory()
+    {
+        return new DirectoryInfo(System.IO.Path.GetDirectoryName(GetProjectBackupPath()) ?? string.Empty).FullName+"/";
     }
 
     internal string GetCurrentProjectName(bool includeExtension = false) 
@@ -55,7 +53,18 @@ internal class ProjectSettingsService
         return model.CurrentProjectPath;
     }
 
-    internal void SetProjectPath(string path)
+    internal string GetDirectory(string path)
+    {
+        if (string.IsNullOrEmpty(path)) return path;
+        return new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName+"/";
+    }
+    
+    public string GetProjectBackupPath()
+    {
+        return Consts.FileUasProjectBackUp + GetCurrentProjectName(true);
+    }
+
+    private void SetProjectPath(string path)
     {
         model.CurrentProjectPath = path;
         SaveSettings();
@@ -66,8 +75,8 @@ internal class ProjectSettingsService
         var path = EditorUtility.SaveFilePanel("New Project", "", "New Project", Consts.FileExtension_UasProject);
 
         SetProjectPath(path);
-        UASTemplateService.Instance.Reset();
-        UASTemplateService.Instance.Save();
+        UasTemplateService.Instance.Reset();
+        UasTemplateService.Instance.Save();
         SaveSettings();
     }
 
@@ -75,8 +84,8 @@ internal class ProjectSettingsService
     {
         var path = EditorUtility.SaveFilePanel("New Project", "", "New Project", Consts.FileExtension_UasProject);
         SetProjectPath(path);
-        UASTemplateService.Instance.Save();
-        UASTemplateService.Instance.LoadCurrentProject();
+        UasTemplateService.Instance.Save();
+        UasTemplateService.Instance.LoadCurrentProject();
     }
 
     internal void LoadProject()
@@ -94,19 +103,40 @@ internal class ProjectSettingsService
 
     internal static ProjectSettingsService Instance
     {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new ProjectSettingsService();
-            }
-            return instance;
-        }
+        get { return _instance ??= new ProjectSettingsService(); }
     }
-    private static ProjectSettingsService instance;
+    private static ProjectSettingsService _instance;
 
     internal void SaveSettings()
     {
         persister.SaveObject(model, Consts.ProjectSettingsPath);
+    }
+
+    
+    // https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/how-to-compare-the-contents-of-two-folders-linq
+    internal bool ProjectSaved()
+    {
+        // Current Project Directory
+        var cpd = GetCurrentProjectDirectory();
+        //Back Up Directory
+        var bud = GetBackupDirectory();
+
+        if (string.IsNullOrEmpty(cpd) || string.IsNullOrEmpty(bud))
+        {
+            return false;
+        }
+        var cpdInfo = new DirectoryInfo(cpd);
+        var budInfo = new DirectoryInfo(bud);
+
+        var fileComparer = new FileComparer();
+
+        var cpdFiles = cpdInfo.GetFiles("*.uas*", SearchOption.AllDirectories)
+            .Where(f => !f.Name.EndsWith(".meta"))
+            .ToList();
+        var budFiles = budInfo.GetFiles("*.uas*", SearchOption.AllDirectories)
+            .Where(f => !f.Name.EndsWith(".meta"))
+            .ToList();
+
+        return cpdFiles.SequenceEqual(budFiles, fileComparer);
     }
 }

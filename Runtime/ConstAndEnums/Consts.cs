@@ -8,15 +8,15 @@ public static class Consts
 {
     // Paths
     internal const string MenuName = "Utility Ai System/";
-    internal const string Path_MainFolder = "Assets/UAS/bin/";
-    internal const string File_TickerSettings = Path_MainFolder + "Settings/TickerSettings" + "." + FileExtension_TickerSettings;
-    internal const string ProjectSettingsPath = Path_MainFolder + "Settings/ProjectSettings." + FileExtension_ProjectSettings;
+    internal const string PathMainFolder = "Assets/UAS/bin/";
+    internal const string FileTickerSettings = PathMainFolder + "Settings/TickerSettings" + "." + FileExtension_TickerSettings;
+    internal const string ProjectSettingsPath = PathMainFolder + "Settings/ProjectSettings." + FileExtension_ProjectSettings;
 
 
     //internal const string File_PlayAi = Path_MainFolder + "Ai/Playable" + "." + FileExtension_UasTemplateCollection;
-    internal const string File_UASTemplateService_AutoSave = Path_MainFolder + "Saves/AutoSave" + "." + FileExtension_UasProject;
-    internal const string File_UASTemplateService_BackUp = Path_MainFolder + "Saves/backup" + "." + FileExtension_UasProject;
-    internal const string File_UASTemplateServicel_Playable = Path_MainFolder + "Saves/Playable" + "." + FileExtension_UasProject;
+    internal const string File_UASTemplateService_AutoSave = PathMainFolder + "Saves/AutoSave" + "." + FileExtension_UasProject;
+    internal const string FileUasProjectBackUp = PathMainFolder + "BackUp/";
+    internal const string File_UASTemplateServicel_Playable = PathMainFolder + "Saves/Playable" + "." + FileExtension_UasProject;
 
     // Folder Names
     internal const string FolderName_Parameters = "Parameters/";
@@ -36,7 +36,7 @@ public static class Consts
     internal const string FolderName_MaxParameter = "Max/";
 
 
-    internal const string File_MainSavePath = Path_MainFolder + "Persistence/";
+    internal const string File_MainSavePath = PathMainFolder + "Persistence/";
 
     // Labels
     internal const string Label_MainWindowModel = "MainWindowModel";

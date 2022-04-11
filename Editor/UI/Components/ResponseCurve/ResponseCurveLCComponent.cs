@@ -156,7 +156,7 @@ internal class ResponseCurveLCComponent : VisualElement
             .Select(e => e.Name)
             .ToList();
 
-        foreach(var template in UASTemplateService.Instance.ResponseCurves.Values)
+        foreach(var template in UasTemplateService.Instance.ResponseCurves.Values)
         {
             curveDropdown.choices.Add(template.Name);
         }
@@ -164,7 +164,7 @@ internal class ResponseCurveLCComponent : VisualElement
 
     private void ChangeResponseCurve(string name)
     {
-        var template = UASTemplateService
+        var template = UasTemplateService
             .Instance
             .ResponseCurves
             .Values

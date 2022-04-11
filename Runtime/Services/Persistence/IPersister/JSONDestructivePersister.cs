@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-internal class JSONDestructivePersister: JSONPersister
+internal class JSONDestructivePersister: JsonPersister
 {
     protected override void CreateFile(string path)
     {

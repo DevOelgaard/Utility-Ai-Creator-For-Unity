@@ -156,7 +156,7 @@ internal class FileExtensionService
             start = Consts.FileExtension_UAI;
         }
 
-        if (type.IsAssignableFrom(typeof(UASTemplateService)))
+        if (type.IsAssignableFrom(typeof(UasTemplateService)))
         {
             start = Consts.FileExtension_UasProject;
         }
@@ -171,7 +171,7 @@ internal class FileExtensionService
 
     internal static string GetFileExtensionFromType(Type type)
     {
-        if (type.IsAssignableFrom(typeof(UASTemplateService)))
+        if (type.IsAssignableFrom(typeof(UasTemplateService)))
         {
             return Consts.FileExtension_UasProject;
         }

@@ -78,7 +78,7 @@ internal static class RestoreAbleService
         {
             if (s.LoadedObject == null)
             {
-                Debug.Log("Creating error file typeof(T): " + typeof(T) + " s.ModelType: " + s.ModelType + " TType: " + s.TType);
+                Debug.Log("Creating error file typeof(T): " + typeof(T) + " s.ModelType: " + s.ModelType + " TType: " + s.type);
                 var error = (T)ErrorObjectService.GetErrorObject(s.ModelType);
                 error.Name = s.ErrorMessage;
                 error.Description = "Exception: " + s.Exception.ToString();

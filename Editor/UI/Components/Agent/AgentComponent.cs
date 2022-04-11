@@ -18,7 +18,7 @@ internal class AgentComponent: RightPanelComponent<IAgent>
     private Button tickAllButton;
     private Button applyToAllButton;
     private IAgent agent;
-    private UASTemplateService uasTemplateService;
+    private UasTemplateService uasTemplateService;
 
     internal AgentComponent()
     {
@@ -32,7 +32,7 @@ internal class AgentComponent: RightPanelComponent<IAgent>
         aiComponent = new AiComponent();
         body.Add(aiComponent);
 
-        uasTemplateService = UASTemplateService.Instance;
+        uasTemplateService = UasTemplateService.Instance;
         aiDropdown.label = "AIs";
         tickAgent = new Button();
         tickAgent.text = "TEST-Tick-Agent";
@@ -71,7 +71,7 @@ internal class AgentComponent: RightPanelComponent<IAgent>
         {
             if (agent.Ai.Name != evt.newValue)
             {
-                agent.Ai = UASTemplateService.Instance.GetAiByName(evt.newValue);
+                agent.Ai = UasTemplateService.Instance.GetAiByName(evt.newValue);
                 UpdateAiComponent();
             }
         });

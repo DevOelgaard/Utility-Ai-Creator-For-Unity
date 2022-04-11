@@ -5,7 +5,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
-internal class JSONPersister : IPersister
+internal class JsonPersister : IPersister
 {
     private string json;
     public ObjectMetaData<T> LoadObject<T>(string path)
@@ -14,9 +14,11 @@ internal class JSONPersister : IPersister
         {
             if (!File.Exists(path))
             {
-                var res = new ObjectMetaData<T>(default(T), path);
-                res.ErrorMessage = "File Doesn't exist";
-                res.Success = false;
+                var res = new ObjectMetaData<T>(default(T), path)
+                {
+                    ErrorMessage = "File Doesn't exist",
+                    Success = false
+                };
                 return res;
             }
             
@@ -30,10 +32,12 @@ internal class JSONPersister : IPersister
         } catch(Exception ex)
         {
             Debug.LogWarning("Loading failed: " + ex.ToString());
-            var result = new ObjectMetaData<T>(default(T), path);
-            result.ErrorMessage = "Loading failed at: " + path;
-            result.Exception = ex;
-            result.Success = false;
+            var result = new ObjectMetaData<T>(default(T), path)
+            {
+                ErrorMessage = "Loading failed at: " + path,
+                Exception = ex,
+                Success = false
+            };
             return result;
         }
     }
@@ -42,14 +46,12 @@ internal class JSONPersister : IPersister
     {
         try
         {
-            var result = new List<ObjectMetaData<T>>();
-            var fileNames = Directory.GetFiles(folderPath, filter);
-            foreach (var file in fileNames.Where(f => !f.Contains("meta")))
-            {
-                var t = LoadObject<T>(file);
-                result.Add(t);
-            }
-            return result;
+            var fileNames = Directory
+                .GetFiles(folderPath, filter);
+            return fileNames
+                .Where(f => !f.Contains("meta"))
+                .Select(LoadObject<T>)
+                .ToList();
         }
         catch
         {
@@ -78,7 +80,7 @@ internal class JSONPersister : IPersister
     protected virtual void CreateFile(string path)
     {
         
-        var directory = new DirectoryInfo(System.IO.Path.GetDirectoryName(path)).FullName;
+        var directory = new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName;
         var fileName = Path.GetFileName(path);
         if (!Directory.Exists(directory))
         {

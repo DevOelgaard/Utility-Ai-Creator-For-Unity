@@ -104,7 +104,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
             sortCollectionButton.style.display = DisplayStyle.None;
         }
 
-        UASTemplateService.Instance.OnIncludeDemosChanged
+        UasTemplateService.Instance.OnIncludeDemosChanged
             .Subscribe(value =>
             {
                 InitAddCopyPopup();

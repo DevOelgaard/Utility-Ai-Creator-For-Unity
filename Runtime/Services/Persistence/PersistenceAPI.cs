@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
@@ -9,20 +10,20 @@ using UnityEngine.UIElements;
 internal class PersistenceAPI
 {
     private IPersister persister;
-    private IPersister destructivePersister;
+    private readonly IPersister destructivePersister;
 
     internal static PersistenceAPI Instance
     {
         get
         {
-            if(instance == null)
+            if(_instance == null)
             {
-                instance = new PersistenceAPI(new JSONPersister());
+                _instance = new PersistenceAPI(new JsonPersister());
             }
-            return instance;
+            return _instance;
         }
     }
-    private static PersistenceAPI instance;
+    private static PersistenceAPI _instance;
 
     private PersistenceAPI(IPersister persister)
     {
@@ -30,22 +31,20 @@ internal class PersistenceAPI
         this.destructivePersister = new JSONDestructivePersister();
     }
 
-    internal void SetPersister(IPersister persister)
+    internal void SetPersister(IPersister p)
     {
-        this.persister = persister;
+        this.persister = p;
     }
 
     internal void SaveObjectPanel(RestoreAble o)
     {
         var extension = FileExtensionService.GetExtension(o);
         var path = EditorUtility.SaveFilePanel("Save object", "", "name", extension);
-        if (path == null || path.Length == 0)
+        if (string.IsNullOrEmpty(path))
         {
             return;
         }
         SaveObjectPath(o, Path.GetDirectoryName(path) + @"\", Path.GetFileName(path));
-        //o.SaveToFile();
-        //persister.SaveObject(o, path);
     }
 
     internal void SaveObjectsPanel(List<RestoreAble> restoreables)
@@ -57,9 +56,6 @@ internal class PersistenceAPI
         }
     }
 
-
-
-
     internal void SaveObjectPath(RestoreAble o, string path, string fileName)
     {
         o.SaveToFile(path, persister, fileName);
@@ -68,12 +64,6 @@ internal class PersistenceAPI
     internal void SaveDestructiveObjectPath(RestoreAble o, string path, string fileName)
     {
         o.SaveToFile(path, destructivePersister, fileName);
-    }
-
-
-    internal void SaveDestructivelyPath(RestoreAble o, string path)
-    {
-
     }
 
     internal ObjectMetaData<T> LoadObjectPanel<T>()
@@ -104,7 +94,13 @@ internal class PersistenceAPI
 
     internal List<ObjectMetaData<T>> LoadObjectsPath<T>(string folderPath, string filter = "") where T: RestoreState
     {
-        return persister.LoadObjects<T>(folderPath, "*"+filter);
+        var results = persister.LoadObjects<T>(folderPath, "*"+filter);
+        foreach (var result in results)
+        {
+            result.LoadedObject.FolderLocation = folderPath;
+        }
+
+        return results;
     }
 
     internal List<ObjectMetaData<T>> LoadObjectsPathWithFilters<T>(string folderPath, Type t) where T : RestoreState
@@ -121,14 +117,9 @@ internal class PersistenceAPI
         try
         {
             var subDirectories = Directory.GetDirectories(folderPath);
-            foreach (var subDirectory in subDirectories)
-            {
-                var tempResults = LoadObjectsPath<T>(subDirectory, filter);
-                foreach (var tempResult in tempResults)
-                {
-                    result.Add(tempResult);
-                }
-            }
+            result
+                .AddRange(subDirectories
+                    .SelectMany(subDirectory => LoadObjectsPath<T>(subDirectory, filter)));
         } catch (Exception ex)
         {
             if (ex.GetType() == typeof(DirectoryNotFoundException))
@@ -137,7 +128,7 @@ internal class PersistenceAPI
             }
             else
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -150,7 +141,7 @@ internal class PersistenceAPI
         return LoadFilePath<T>(path);
     }
 
-    internal ObjectMetaData<T> LoadFilePath<T>(string path)
+    private ObjectMetaData<T> LoadFilePath<T>(string path)
     {
         return persister.LoadObject<T>(path);
     }
@@ -159,11 +150,11 @@ internal class PersistenceAPI
 public class ObjectMetaData<T>
 {
     public bool Success = true;
-    public Type StateType;
-    public Type ModelType;
-    public T LoadedObject;
-    public Type TType;
-    public string Path;
+    public readonly Type StateType;
+    public readonly Type ModelType;
+    public readonly T LoadedObject;
+    public readonly Type type;
+    public readonly string Path;
     public string ErrorMessage;
     public Exception Exception;
 
@@ -171,7 +162,7 @@ public class ObjectMetaData<T>
     {
         StateType = FileExtensionService.GetStateFromFileName(path);
         ModelType = FileExtensionService.GetTypeFromFileName(path);
-        TType = typeof(T);
+        type = typeof(T);
         LoadedObject = o;
         Path = path;
     }

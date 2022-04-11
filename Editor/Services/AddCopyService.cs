@@ -17,7 +17,7 @@ internal static class AddCopyService
             .OrderBy(t => t)
             .ToList();
 
-        if (!UASTemplateService.Instance.IncludeDemos)
+        if (!UasTemplateService.Instance.IncludeDemos)
         {
             tempChoices = tempChoices.Where(t => !t.Contains("Demo")).ToList();
         }

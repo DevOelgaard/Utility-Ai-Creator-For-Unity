@@ -6,10 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-internal class UASTemplateService: RestoreAble
+internal class UasTemplateService: RestoreAble
 {
-
-    private CompositeDisposable subscriptions = new CompositeDisposable();
+    private readonly CompositeDisposable subscriptions = new CompositeDisposable();
     private Dictionary<string, ReactiveList<AiObjectModel>> collectionsByLabel = new Dictionary<string, ReactiveList<AiObjectModel>>();
 
     public ReactiveListNameSafe<AiObjectModel> AIs;
@@ -20,9 +19,10 @@ internal class UASTemplateService: RestoreAble
     public ReactiveListNameSafe<AiObjectModel> ResponseCurves;
 
     public IObservable<ReactiveList<AiObjectModel>> OnCollectionChanged => onCollectionChanged;
-    private Subject<ReactiveList<AiObjectModel>> onCollectionChanged = new Subject<ReactiveList<AiObjectModel>>();
+    private readonly Subject<ReactiveList<AiObjectModel>> onCollectionChanged = new Subject<ReactiveList<AiObjectModel>>();
 
     private bool autoSaveLoaded = false;
+    private string projectDirectory;
 
     private bool includeDemos = true;
     public bool IncludeDemos
@@ -35,10 +35,11 @@ internal class UASTemplateService: RestoreAble
         }
     }
     public IObservable<bool> OnIncludeDemosChanged => onIncludeDemosChanged;
-    private Subject<bool> onIncludeDemosChanged = new Subject<bool>();
+    private readonly Subject<bool> onIncludeDemosChanged = new Subject<bool>();
 
-    private static UASTemplateService instance;
-    public UASTemplateService()
+    private static UasTemplateService _instance;
+
+    private UasTemplateService()
     {
         Init(true);
     }
@@ -53,51 +54,52 @@ internal class UASTemplateService: RestoreAble
         AgentActions = new ReactiveListNameSafe<AiObjectModel>();
         ResponseCurves = new ReactiveListNameSafe<AiObjectModel>();
 
-        collectionsByLabel = new Dictionary<string, ReactiveList<AiObjectModel>>();
-        collectionsByLabel.Add(Consts.Label_UAIModel, AIs);
-        collectionsByLabel.Add(Consts.Label_BucketModel, Buckets);
-        collectionsByLabel.Add(Consts.Label_DecisionModel, Decisions);
-        collectionsByLabel.Add(Consts.Label_ConsiderationModel, Considerations);
-        collectionsByLabel.Add(Consts.Label_AgentActionModel, AgentActions);
-        collectionsByLabel.Add(Consts.Label_ResponseCurve, ResponseCurves);
-
-        foreach(var collection in collectionsByLabel)
+        collectionsByLabel = new Dictionary<string, ReactiveList<AiObjectModel>>
         {
-            collection.Value.OnValueChanged
-                .Subscribe(col => onCollectionChanged.OnNext(collection.Value))
+            {Consts.Label_UAIModel, AIs},
+            {Consts.Label_BucketModel, Buckets},
+            {Consts.Label_DecisionModel, Decisions},
+            {Consts.Label_ConsiderationModel, Considerations},
+            {Consts.Label_AgentActionModel, AgentActions},
+            {Consts.Label_ResponseCurve, ResponseCurves}
+        };
+
+        foreach(var (key, value) in collectionsByLabel)
+        {
+            value.OnValueChanged
+                .Subscribe(col => onCollectionChanged.OnNext(value))
                 .AddTo(subscriptions);
         }
-
-        //if (restore)
-        //{
-        //    LoadCurrentProject();
-        //}
     }
+    
+    
 
     internal void LoadCurrentProject(bool backup = false)
     {
+        var loadPath = backup
+            ? ProjectSettingsService.Instance.GetProjectBackupPath()
+            : ProjectSettingsService.Instance.GetCurrentProjectPath();
+        projectDirectory = ProjectSettingsService.Instance.GetDirectory(loadPath);
+
+        if (string.IsNullOrEmpty(projectDirectory))
+        {
+            return;
+        }
+        
         ClearCollectionNoNotify();
         var perstistAPI = PersistenceAPI.Instance;
-        UASTemplateServiceState state;
-        if (!backup)
-        {
-            state = perstistAPI.LoadObjectPath<UASTemplateServiceState>(ProjectSettingsService.Instance.GetCurrentProjectPath()).LoadedObject;
-            autoSaveLoaded = true;
-        }
-        else
-        {
-            state = perstistAPI.LoadObjectPath<UASTemplateServiceState>(Consts.File_UASTemplateService_BackUp + Consts.FileExtension_JSON).LoadedObject;
-        }
+        
+        var state = perstistAPI.LoadObjectPath<UASTemplateServiceState>(loadPath).LoadedObject;
         if (state == null)
         {
             ClearCollectionNotify();
         }
-
         else
         {
             try
             {
                 Restore(state);
+                Save(true);
             }
             catch (Exception ex)
             {
@@ -117,9 +119,8 @@ internal class UASTemplateService: RestoreAble
             perstistAPI.SaveDestructiveObjectPath(this, ProjectSettingsService.Instance.GetCurrentProjectDirectory(), ProjectSettingsService.Instance.GetCurrentProjectName(true));
         } else
         {
-            perstistAPI.SaveObjectPath(this, Consts.File_UASTemplateService_BackUp, "BackUp");
+            perstistAPI.SaveDestructiveObjectPath(this, ProjectSettingsService.Instance.GetBackupDirectory(), ProjectSettingsService.Instance.GetCurrentProjectName(true));
         }
-        //Debug.Log("Autosave completed in: " + sw.ElapsedMilliseconds + "ms");
     }
 
     protected override string GetFileName()
@@ -134,15 +135,15 @@ internal class UASTemplateService: RestoreAble
         Init(false);
     }
 
-    internal static UASTemplateService Instance
+    internal static UasTemplateService Instance
     {
         get
         {
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = new UASTemplateService();
+                _instance = new UasTemplateService();
             }
-            return instance;
+            return _instance;
         }
     }
 
@@ -229,7 +230,7 @@ internal class UASTemplateService: RestoreAble
         subscriptions.Clear();
     }
 
-    ~UASTemplateService()
+    ~UasTemplateService()
     {
         subscriptions.Clear();
     }
@@ -249,7 +250,7 @@ internal class UASTemplateService: RestoreAble
         destructivePerister.SaveObject(state, path) ;
 
         // Guard if saving destructively. Should only happen for Project level
-        var persister = new JSONPersister();
+        var persister = new JsonPersister();
         foreach(Ai a in AIs.Values)
         {
             var subPath = directoryPath + "/" + Consts.FolderName_Ais;
@@ -365,24 +366,24 @@ internal class UASTemplateService: RestoreAble
         {
             return;
         }
-        var directory = ProjectSettingsService.Instance.GetCurrentProjectDirectory();
+        // var directory = ProjectSettingsService.Instance.GetCurrentProjectDirectory();
         
-        var ais = RestoreAbleService.GetAiObjects<Ai>(directory + Consts.FolderName_Ais, restoreDebug);
+        var ais = RestoreAbleService.GetAiObjects<Ai>(projectDirectory + Consts.FolderName_Ais, restoreDebug);
         AIs.Add(RestoreAbleService.SortByName(state.AIs, ais));
 
-        var buckets = RestoreAbleService.GetAiObjects<Bucket>(directory + Consts.FolderName_Buckets, restoreDebug);
+        var buckets = RestoreAbleService.GetAiObjects<Bucket>(projectDirectory + Consts.FolderName_Buckets, restoreDebug);
         Buckets.Add(RestoreAbleService.SortByName(state.Buckets, buckets));
 
-        var decisions = RestoreAbleService.GetAiObjects<Decision>(directory + Consts.FolderName_Decisions, restoreDebug);
+        var decisions = RestoreAbleService.GetAiObjects<Decision>(projectDirectory + Consts.FolderName_Decisions, restoreDebug);
         Decisions.Add(RestoreAbleService.SortByName(state.Decisions, decisions));
 
-        var considerations = RestoreAbleService.GetAiObjects<Consideration>(directory + Consts.FolderName_Considerations, restoreDebug);
+        var considerations = RestoreAbleService.GetAiObjects<Consideration>(projectDirectory + Consts.FolderName_Considerations, restoreDebug);
         Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
 
-        var agentActions = RestoreAbleService.GetAiObjects<AgentAction>(directory + Consts.FolderName_AgentActions, restoreDebug);
+        var agentActions = RestoreAbleService.GetAiObjects<AgentAction>(projectDirectory + Consts.FolderName_AgentActions, restoreDebug);
         AgentActions.Add(RestoreAbleService.SortByName(state.AgentActions, agentActions));
 
-        var responseCurves = RestoreAbleService.GetAiObjects<ResponseCurve>(directory + Consts.FolderName_ResponseCurves,restoreDebug);
+        var responseCurves = RestoreAbleService.GetAiObjects<ResponseCurve>(projectDirectory + Consts.FolderName_ResponseCurves,restoreDebug);
         ResponseCurves.Add(RestoreAbleService.SortByName(state.ResponseCurves, responseCurves));
     }
 }
@@ -403,7 +404,7 @@ public class UASTemplateServiceState : RestoreState
     internal UASTemplateServiceState(
         Dictionary<string, ReactiveList<AiObjectModel>> collectionsByLabel, ReactiveList<AiObjectModel> aiS,
         ReactiveList<AiObjectModel> buckets, ReactiveList<AiObjectModel> decisions,
-        ReactiveList<AiObjectModel> considerations, ReactiveList<AiObjectModel> agentActions, UASTemplateService model) : base(model)
+        ReactiveList<AiObjectModel> considerations, ReactiveList<AiObjectModel> agentActions, UasTemplateService model) : base(model)
     {
         AIs = RestoreAbleService.NamesToList(aiS.Values);
 

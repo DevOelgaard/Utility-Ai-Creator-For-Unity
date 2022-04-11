@@ -63,7 +63,7 @@ internal abstract class AiObjectComponent : VisualElement
         SaveToTemplate.RegisterCallback<MouseUpEvent>(evt =>
         {
             var clone = Model.Clone();
-            UASTemplateService.Instance.Add(clone);
+            UasTemplateService.Instance.Add(clone);
         });
 
         SetFooter();

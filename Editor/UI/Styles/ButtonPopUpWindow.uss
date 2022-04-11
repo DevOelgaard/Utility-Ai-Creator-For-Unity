@@ -1,0 +1,8 @@
+#Text{
+    margin: 12px;
+    -unity-text-align: middle-center;
+}
+
+#ButtonContainer{
+    margin: 12px;
+}

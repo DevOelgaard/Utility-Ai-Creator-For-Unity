@@ -77,14 +77,8 @@ public abstract class RestoreAble
             return;
         }
         var state = GetState();
-        state.FolderLocation = path;
-        if(fileName == null)
-        {
-            FileName = GetFileName();
-        } else
-        {
-            FileName = fileName;
-        }
+        // state.FolderLocation = path;
+        FileName = fileName ?? GetFileName();
         path = path + "/" + FileName;
 
         InternalSaveToFile(path, persister, state);

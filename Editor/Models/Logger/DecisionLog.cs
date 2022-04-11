@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ internal class DecisionLog: AiObjectLog
     {
         var result = new DecisionLog();
         result = SetBasics(result, decision, tick) as DecisionLog;
+        Debug.Assert(result != null, nameof(result) + " != null");
         result.Score = decision.ScoreModels.First().Value;
 
         result.Considerations = new List<ConsiderationLog>();

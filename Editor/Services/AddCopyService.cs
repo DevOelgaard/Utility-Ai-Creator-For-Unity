@@ -12,23 +12,19 @@ internal static class AddCopyService
     {
         var namesFromFiles = AssetDatabaseService.GetActivateableTypes(t);
         var tempChoices = namesFromFiles
-            .Where(t => !t.Name.Contains("Mock") && !t.Name.Contains("Stub") && !t.Name.Contains("Error_"))
-            .Select(t => t.Name)
-            .OrderBy(t => t)
+            .Where(type => !type.Name.Contains("Mock") && !type.Name.Contains("Stub") && !type.Name.Contains("Error_"))
+            .Select(type => type.Name)
+            .OrderBy(type => type)
             .ToList();
 
         if (!UasTemplateService.Instance.IncludeDemos)
         {
-            tempChoices = tempChoices.Where(t => !t.Contains("Demo")).ToList();
+            tempChoices = tempChoices.Where(type => !type.Contains("Demo")).ToList();
         }
 
-        var choices = new List<string>();
-        foreach(var c in tempChoices)
-        {
-            choices.Add(StringService.SpaceBetweenUpperCase(c));
-        }
-
-        return choices;
+        return tempChoices
+            .Select(StringService.SpaceBetweenUpperCase)
+            .ToList();
     }
 
 

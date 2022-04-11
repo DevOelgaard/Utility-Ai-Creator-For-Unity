@@ -114,17 +114,6 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
 
     private void InitAddCopyPopup()
     {
-        //var namesFromFiles = AssetDatabaseService.GetActivateableTypes(typeof(T));
-        //var choices = namesFromFiles
-        //    .Where(t => !t.Name.Contains("Mock") && !t.Name.Contains("Stub"))
-        //    .Select(t => t.Name)
-        //    .OrderBy(t => t)
-        //    .ToList();
-
-        //if (!UASTemplateService.Instance.IncludeDemos)
-        //{
-        //    choices = choices.Where(t => !t.Contains("Demo")).ToList();
-        //}
         addCopyPopup.choices = AddCopyService.GetChoices(typeof(T));
 
         foreach(var template in templates.Values)
@@ -133,15 +122,14 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
         }
     }
 
-    private void AddCopy(string name)
+    private void AddCopy(string aiObjectName)
     {
-        //T element = templates.Values.FirstOrDefault(t => t.Name == name) as T;
-
-        //if (element == null)
-        //{
-        //    element = AssetDatabaseService.GetInstanceOfType<T>(name);
-        //}
-        var existingElement = templates.Values.FirstOrDefault(t => t.Name == name);
+        var whiteSpaceName = StringService.SpaceBetweenUpperCase(aiObjectName);
+        var noWhiteSpace = StringService.RemoveWhiteSpaces(aiObjectName);
+        var existingElement =
+            templates.Values.FirstOrDefault(t =>
+                t.Name == aiObjectName || t.Name == whiteSpaceName || t.Name == noWhiteSpace); 
+        
         if(existingElement != null)
         {
             var c =  existingElement.Clone();
@@ -149,7 +137,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
 
         } else
         {
-            var element = AssetDatabaseService.GetInstanceOfType<T>(name);
+            var element = AssetDatabaseService.GetInstanceOfType<T>(noWhiteSpace);
             AddElement(element);
         }
     }

@@ -20,5 +20,6 @@
   },
   "documentationUrl": "https://github.com/DevOelgaard/UnityUtilityAiSystem/tree/master",
   "changelogUrl": "https://github.com/DevOelgaard/UnityUtilityAiSystem/commits/master",
-  "unityRelease": "10f1"
+  "unityRelease": "10f1",
+  "hideInEditor": false
 }

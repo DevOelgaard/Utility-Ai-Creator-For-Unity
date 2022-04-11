@@ -130,13 +130,24 @@ internal class ProjectSettingsService
 
         var fileComparer = new FileComparer();
 
-        var cpdFiles = cpdInfo.GetFiles("*.uas*", SearchOption.AllDirectories)
-            .Where(f => !f.Name.EndsWith(".meta"))
-            .ToList();
-        var budFiles = budInfo.GetFiles("*.uas*", SearchOption.AllDirectories)
-            .Where(f => !f.Name.EndsWith(".meta"))
-            .ToList();
-
-        return cpdFiles.SequenceEqual(budFiles, fileComparer);
+        try
+        {
+            var cpdFiles = cpdInfo.GetFiles("*.uas*", SearchOption.AllDirectories)
+                .Where(f => !f.Name.EndsWith(".meta"))
+                .ToList();
+            var budFiles = budInfo.GetFiles("*.uas*", SearchOption.AllDirectories)
+                .Where(f => !f.Name.EndsWith(".meta"))
+                .ToList();
+            
+            return cpdFiles.SequenceEqual(budFiles, fileComparer);
+        }
+        catch (Exception e)
+        {
+            if (e.GetType() == typeof(DirectoryNotFoundException))
+            {
+                return false;
+            }
+            throw;
+        }
     }
 }

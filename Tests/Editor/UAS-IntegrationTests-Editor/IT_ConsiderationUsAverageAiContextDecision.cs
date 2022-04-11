@@ -16,8 +16,10 @@ public class IT_ConsiderationUsAverageAiContextDecision
     {
         decision = new Decision();
         uSAverage = new USAverageScorer();
-        aIContext = new AiContext();
-        aIContext.UtilityScorer = uSAverage;
+        aIContext = new AiContext
+        {
+            UtilityScorer = uSAverage
+        };
     }
 
     [TestCase(0,10)]
@@ -26,10 +28,10 @@ public class IT_ConsiderationUsAverageAiContextDecision
         var considerations = CreateUniformConsiderations(numberOfConsiderations, calculatedScore);
         
         decision.Considerations.Add(considerations);
-        //foreach(var c in considerations)
-        //{
-        //    decision.Considerations.Add(c);
-        //}
+        foreach(var c in considerations)
+        {
+            decision.Considerations.Add(c);
+        }
 
         var result = decision.GetUtility(aIContext);
 

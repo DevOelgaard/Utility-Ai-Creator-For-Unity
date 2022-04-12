@@ -7,7 +7,7 @@ using System.Linq;
 public class IT_ConsiderationUsAverageAiContextDecision
 {
     private Decision decision;
-    private USAverageScorer uSAverage;
+    private UsAverageScorer uSAverage;
     private AiContext aIContext;
     
     
@@ -15,7 +15,7 @@ public class IT_ConsiderationUsAverageAiContextDecision
     public void SetUp()
     {
         decision = new Decision();
-        uSAverage = new USAverageScorer();
+        uSAverage = new UsAverageScorer();
         aIContext = new AiContext
         {
             UtilityScorer = uSAverage

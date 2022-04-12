@@ -8,7 +8,7 @@ using UnityEngine;
 public class IT_ConsiderationUsAverageAiContextDecisionBucketUcsHighest
 {
     private UCSHighestScore ucsHighestScore;
-    private USAverageScorer uSAverage;
+    private UsAverageScorer uSAverage;
     private AiContext aIContext;
     private List<Bucket> buckets;
     private List<Decision> decisions;
@@ -21,7 +21,7 @@ public class IT_ConsiderationUsAverageAiContextDecisionBucketUcsHighest
     public void SetUp()
     {
         ucsHighestScore = new UCSHighestScore();
-        uSAverage = new USAverageScorer();
+        uSAverage = new UsAverageScorer();
         aIContext = new AiContext();
         aIContext.UtilityScorer = uSAverage;
         buckets = CreateBucketsWithDecisions(numberOfBuckets, numberOfDecisions, numberOfConsiderations);

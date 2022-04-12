@@ -9,14 +9,14 @@ using System;
 [TestFixture]
 public class UT_USAverageScorer
 {
-    private USAverageScorer uut;
+    private UsAverageScorer uut;
 
     private List<Consideration> mock_Considerations;
 
     [SetUp]
     public void SetUp()
     {
-        uut = new USAverageScorer();
+        uut = new UsAverageScorer();
 
         mock_Considerations = new List<Consideration>();
     }

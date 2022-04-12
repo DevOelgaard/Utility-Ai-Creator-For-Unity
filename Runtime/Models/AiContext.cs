@@ -9,7 +9,7 @@ public class AiContext
 {
     public IAgent Agent;
     private Dictionary<object, object> contextStringKey = new Dictionary<object, object>();
-    public IUtilityScorer UtilityScorer = new USAverageScorer();
+    public IUtilityScorer UtilityScorer = new UsAverageScorer();
     public List<AgentAction> LastActions = new List<AgentAction>();
     public Decision LastSelectedDecision { get; internal set; }
     public Decision CurrentEvalutedDecision { get; internal set; }

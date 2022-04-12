@@ -30,8 +30,6 @@ internal class AiTicker: RestoreAble
         } 
     }
 
-
-
     public IObservable<int> OnTickCountChanged => onTickCountChanged;
     private readonly Subject<int> onTickCountChanged = new Subject<int>();
     
@@ -46,10 +44,10 @@ internal class AiTicker: RestoreAble
             Settings = Restore<AiTickerSettingsModel>(loadedState.LoadedObject);
         } else
         {
-            Debug.LogWarning("Failed to load AiTicker settings Error: " + loadedState.ErrorMessage + " Exception: " + loadedState.Exception.ToString());
+            Debug.LogWarning("Failed to load AiTicker settings Error: " + loadedState.ErrorMessage + " Exception: " + loadedState.Exception?.ToString());
             Reload();
         }
-
+        
         if (Debug.isDebugBuild)
         {
             if (Settings.AutoRun)
@@ -59,6 +57,7 @@ internal class AiTicker: RestoreAble
         }
     }
 
+    
     internal void Start()
     {
         Observable.IntervalFrame(1)

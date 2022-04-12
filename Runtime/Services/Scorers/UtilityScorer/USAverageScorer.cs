@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class USAverageScorer : IUtilityScorer
+public class UsAverageScorer : IUtilityScorer
 {
     private string name = Consts.Name_USAverageScore;
     private string description = Consts.Description_USAverageScore;

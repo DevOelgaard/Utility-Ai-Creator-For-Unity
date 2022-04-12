@@ -9,7 +9,7 @@ public class IT_ConsiderationUsAverageAiContextDecisionBucketUcsHighestDSE
 {
     private DecisionScoreEvaluator dSE;
     private UCSHighestScore ucsHighestScore;
-    private USAverageScorer uSAverage;
+    private UsAverageScorer uSAverage;
     private AiContext aIContext;
     private List<Bucket> buckets;
     private int numberOfBuckets = 3;
@@ -21,7 +21,7 @@ public class IT_ConsiderationUsAverageAiContextDecisionBucketUcsHighestDSE
     {
         ucsHighestScore = new UCSHighestScore();
         dSE = new DecisionScoreEvaluator();
-        uSAverage = new USAverageScorer();
+        uSAverage = new UsAverageScorer();
         aIContext = new AiContext();
         aIContext.UtilityScorer = uSAverage;
         buckets = CreateBucketsWithDecisions(numberOfBuckets, numberOfDecisions, numberOfConsiderations);

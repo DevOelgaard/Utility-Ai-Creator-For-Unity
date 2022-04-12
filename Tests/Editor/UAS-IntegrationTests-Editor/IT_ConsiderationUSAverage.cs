@@ -6,12 +6,12 @@ using System;
 [TestFixture]
 public class IT_01ConsiderationUSAverage
 {
-    private USAverageScorer uut;
+    private UsAverageScorer uut;
 
     [SetUp]
     public void SetUp()
     {
-        uut = new USAverageScorer();
+        uut = new UsAverageScorer();
     }
 
     [TestCase(1, 1)]

@@ -9,14 +9,14 @@ using UniRx;
 public class IT_ConsiderationUsAverageAiContextDecisionBucket
 {
     private Bucket bucket;
-    private USAverageScorer uSAverage;
+    private UsAverageScorer uSAverage;
     private AiContext aIContext;
 
     [SetUp]
     public void SetUp()
     {
         bucket = new Bucket();
-        uSAverage = new USAverageScorer();
+        uSAverage = new UsAverageScorer();
         aIContext = new AiContext();
         aIContext.UtilityScorer = uSAverage;
     }

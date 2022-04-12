@@ -159,7 +159,8 @@ internal class PersistenceAPI
             path = new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName;
         }
         var directories = Directory.GetDirectories(path);
-        foreach (var d in directories)
+        
+        foreach (var d in directories.Where((d => !d.Contains("."))))
         {
             RemoveEmptyFolders(d);
             if (Directory.GetFiles(d).Length == 0 &&

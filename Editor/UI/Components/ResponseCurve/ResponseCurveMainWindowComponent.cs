@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 internal class ResponseCurveMainWindowComponent : AiObjectComponent 
 {
-    private ResponseCurveLCComponent responseCurveLCComponent;
+    private readonly ResponseCurveLcComponent responseCurveLcComponent;
     public ResponseCurveMainWindowComponent() : base()
     {
-        responseCurveLCComponent = new ResponseCurveLCComponent();
+        responseCurveLcComponent = new ResponseCurveLcComponent();
         Body.Clear();
-        Body.Add(responseCurveLCComponent);
+        Body.Add(responseCurveLcComponent);
     }
 
     protected override void UpdateInternal(AiObjectModel model)
@@ -19,7 +19,7 @@ internal class ResponseCurveMainWindowComponent : AiObjectComponent
         var sw = new System.Diagnostics.Stopwatch();
         sw.Start();
         var m = model as ResponseCurve;
-        responseCurveLCComponent.UpdateUi(m);
+        responseCurveLcComponent.UpdateUi(m);
         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateInternal ResponseCurve");
 
     }

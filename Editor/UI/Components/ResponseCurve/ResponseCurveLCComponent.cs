@@ -8,7 +8,7 @@ using UniRx;
 using UnityEngine;
 using UnityEditor.UIElements;
 
-internal class ResponseCurveLCComponent : VisualElement
+internal class ResponseCurveLcComponent : VisualElement
 {
     private CompositeDisposable funcitonDisposables = new CompositeDisposable();
     private CompositeDisposable responseCurveDisposables = new CompositeDisposable();
@@ -29,9 +29,10 @@ internal class ResponseCurveLCComponent : VisualElement
     private VisualElement footer;
     private IntegerField resolution;
     private Button addFunctionButton;
+    private Button saveTemplateButton;
     private DropdownField curveDropdown;
 
-    public ResponseCurveLCComponent()
+    public ResponseCurveLcComponent()
     {
         var root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);
         Add(root);
@@ -42,7 +43,7 @@ internal class ResponseCurveLCComponent : VisualElement
         functionsContainer = root.Q<VisualElement>("FunctionsContainer");
         footer = root.Q<VisualElement>("Footer");
         addFunctionButton = root.Q<Button>("AddFunctionButton");
-
+        saveTemplateButton = root.Q<Button>("SaveTemplateButton");
         lineChart = new LineChartComponent();
         curveContainer.Add(lineChart);
 
@@ -54,17 +55,22 @@ internal class ResponseCurveLCComponent : VisualElement
                 .GetFirstInstanceOfType<ResponseFunction>();
             responseCurve.AddResponseFunction(function);
         });
-
+        
+        saveTemplateButton.RegisterCallback<MouseUpEvent>(evt =>
+        {
+            var clone = responseCurve.Clone();
+            UasTemplateService.Instance.Add(clone);
+        });
     }
 
-    internal void UpdateUi(ResponseCurve responseCurve, bool showSelection = true)
+    internal void UpdateUi(ResponseCurve rCurve, bool showSelection = true)
     {
-        this.responseCurve = responseCurve;
+        responseCurve = rCurve;
         onResponseCurveChanged.OnNext(this.responseCurve);
         if (showSelection)
         {
             header.Add(curveDropdown);
-            curveDropdown.SetValueWithoutNotify(responseCurve.Name);
+            curveDropdown.SetValueWithoutNotify(rCurve.Name);
 
             InitCurveDropdown();
             curveDropdown.RegisterCallback<ChangeEvent<string>>(evt =>
@@ -80,14 +86,14 @@ internal class ResponseCurveLCComponent : VisualElement
         }
 
         responseCurveDisposables.Clear();
-        responseCurve.OnFunctionsChanged
+        rCurve.OnFunctionsChanged
             .Subscribe(_ =>
             {
                 UpdateFunctions();
             })
             .AddTo(responseCurveDisposables);
 
-        responseCurve
+        rCurve
             .OnParametersChanged
             .Subscribe(_ =>
             {
@@ -195,7 +201,7 @@ internal class ResponseCurveLCComponent : VisualElement
         onResponseCurveChanged.OnNext(responseCurve);
     }
 
-    ~ResponseCurveLCComponent(){
+    ~ResponseCurveLcComponent(){
         funcitonDisposables.Clear();
         responseCurveDisposables.Clear();
     }

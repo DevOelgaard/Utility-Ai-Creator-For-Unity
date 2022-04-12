@@ -6,7 +6,8 @@
         <ui:VisualElement name="CurveContainer" style="flex-grow: 1;" />
         <ui:ScrollView name="FunctionsContainer" mode="Horizontal" />
     </ui:VisualElement>
-    <ui:VisualElement name="Footer" style="flex-direction: row;">
+    <ui:VisualElement name="Footer" style="flex-direction: row; justify-content: space-between;">
         <ui:Button text="Add Function" display-tooltip-when-elided="true" name="AddFunctionButton" vertical-scroller-visibility="Hidden" />
+        <ui:Button text="Save Template" display-tooltip-when-elided="true" name="SaveTemplateButton" />
     </ui:VisualElement>
 </ui:UXML>

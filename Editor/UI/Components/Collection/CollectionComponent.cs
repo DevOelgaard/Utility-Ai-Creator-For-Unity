@@ -33,7 +33,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
     private List<MainWindowFoldedComponent> foldedList = new List<MainWindowFoldedComponent>();
 
     public IObservable<bool> OnSortClicked => onSortClicked;
-    private Subject<bool> onSortClicked = new Subject<bool>();
+    private readonly Subject<bool> onSortClicked = new Subject<bool>();
 
     public CollectionComponent(ReactiveList<AiObjectModel> templates, string tempLabel, string elementsLabel, string dropDownLabel = "Templates")
     {

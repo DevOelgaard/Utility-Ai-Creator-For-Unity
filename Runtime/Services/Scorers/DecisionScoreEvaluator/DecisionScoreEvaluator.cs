@@ -68,8 +68,8 @@ public class DecisionScoreEvaluator: IDecisionScoreEvaluator
                 return new List<AgentAction>();
                 //throw new Exception("No valid decision. Add a \"fall back\" decision (Ie. Idle), which always scores >0");
             }
-            var bestAction = NextActions(bestBucket.Decisions.Values, context, ai);
-            if (bestAction == null)
+            var nextActions = NextActions(bestBucket.Decisions.Values, context, ai);
+            if (nextActions == null || nextActions.Count == 0)
             {
                 // No valid decision in most valid bucket
                 // Recursive selection to find valid decision in next most valid bucket
@@ -79,7 +79,7 @@ public class DecisionScoreEvaluator: IDecisionScoreEvaluator
             {
                 context.LastSelectedBucket = bestBucket;
                 bestBucket.MetaData.LastTickSelected = context.TickMetaData.TickCount;
-                return bestAction;
+                return nextActions;
             }
         }
     }

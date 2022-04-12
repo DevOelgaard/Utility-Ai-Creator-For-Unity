@@ -16,7 +16,7 @@ internal class MainWindowFoldedComponent : VisualElement
     private Label nameLabel;
     private Label descriptionLabel;
     private VisualElement scoreContainer;
-    private VisualElement labelContainer;
+    private LabelContainerComponent labelContainer;
     private VisualElement footer;
     private ScoreComponent baseScore;
     private AiObjectModel model;
@@ -33,11 +33,13 @@ internal class MainWindowFoldedComponent : VisualElement
         nameLabel = this.Q<VisualElement>("NameIdentifier").Q<Label>("Value-Label");
         descriptionLabel = this.Q<VisualElement>("DescriptionIdentifier").Q<Label>("Value-Label");
         scoreContainer = this.Q<VisualElement>("ScoreContainer");
-        labelContainer = this.Q<VisualElement>("LabelContainer");
         footer = this.Q<VisualElement>("Footer");
         var identifierContainer = this.Q<VisualElement>("IdentifierContainer");
         InfoComponent = new InfoComponent();
         identifierContainer.Add(InfoComponent);
+        var lc = this.Q<VisualElement>("LabelContainer");
+        labelContainer = new LabelContainerComponent();
+        lc.Add(labelContainer);
     }
 
     internal void UpdateUi(AiObjectModel aiObjectModel)
@@ -61,11 +63,6 @@ internal class MainWindowFoldedComponent : VisualElement
             .AddTo(disposables);
 
         scoreContainer.Clear();
-        // foreach(var scoreModel in aiObjectModel.ScoreModels)
-        // {
-        //     var scoreComponent = new ScoreComponent(scoreModel);
-        //     scoreContainer.Add(scoreComponent);
-        // }
         if (aiObjectModel.GetType() == typeof(Bucket) || aiObjectModel.GetType().IsAssignableFrom(typeof(Bucket)))
         {
             var b = aiObjectModel as Bucket;
@@ -124,36 +121,25 @@ internal class MainWindowFoldedComponent : VisualElement
 
     private void SetLabels()
     {
-        labelContainer.Clear();
+        labelContainer.ClearLabels();
         if (model.GetType().IsSubclassOf(typeof(Consideration)) || model.GetType() == typeof(Consideration))
         {
             if (model is not Consideration cons) return;
         
             if (cons.IsModifier)
             {
-                labelContainer.Add(new Label
-                {
-                    name = "TypeDescriptionLabel",
-                    text = "Modifier"
-                });
+                labelContainer.AddLabel("Modifier");
             }
             
             if (cons.IsSetter)
             {
-                labelContainer.Add(new Label
-                {
-                    name = "TypeDescriptionLabel",
-                    text = "Setter"
-                });
+                labelContainer.AddLabel("Setter");
+
             }
             
             if (cons.IsScorer)
             {
-                labelContainer.Add(new Label
-                {
-                    name = "TypeDescriptionLabel",
-                    text = "Scorer"
-                });
+                labelContainer.AddLabel("Scorer");
             }
         }
     }

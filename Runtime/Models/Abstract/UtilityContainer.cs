@@ -112,7 +112,6 @@ public abstract class UtilityContainer : AiObjectModel
     {
         var setterList = new List<Consideration>();
         var performanceLists = new Dictionary<PerformanceTag, List<Consideration>>();
-        var result = new List<Consideration>();
         foreach(var consideration in Considerations.Values)
         {
             if (consideration.IsSetter)
@@ -129,10 +128,7 @@ public abstract class UtilityContainer : AiObjectModel
             }
         }
         setterList = setterList.OrderBy(c => c.PerformanceTag).ToList();
-        foreach(var consideration in setterList)
-        {
-            result.Add(consideration);
-        }
+        var result = setterList.ToList();
 
         foreach(PerformanceTag pTag in Enum.GetValues(typeof(PerformanceTag)))
         {
@@ -145,7 +141,7 @@ public abstract class UtilityContainer : AiObjectModel
             var nonBooleans = new List<Consideration>();
             foreach(var consideration in performanceLists[pTag])
             {
-                if (!consideration.IsScorer && !consideration.IsModifier)
+                if (consideration.GetType().IsSubclassOf(typeof(ConsiderationBoolean)))
                 {
                     booleans.Add(consideration);
                 } else
@@ -155,14 +151,8 @@ public abstract class UtilityContainer : AiObjectModel
             }
             booleans = booleans.OrderBy(c => c.PerformanceTag).ToList();
             nonBooleans = nonBooleans.OrderBy(c => c.PerformanceTag).ToList();
-            foreach(var consideration in booleans)
-            {
-                result.Add(consideration);
-            }
-            foreach(var consideration in nonBooleans)
-            {
-                result.Add(consideration);
-            }
+            result.AddRange(booleans);
+            result.AddRange(nonBooleans);
         }
 
         Considerations.ChangeAll(result);

@@ -23,6 +23,8 @@ internal abstract class AiObjectComponent : VisualElement
     protected Button SaveToTemplate;
     protected HelpBox HelpBox;
     protected VisualElement HelpBoxContainer;
+    private LabelContainerComponent labelContainer;
+
 
     internal List<ScoreComponent> ScoreComponents = new List<ScoreComponent>();
 
@@ -65,6 +67,9 @@ internal abstract class AiObjectComponent : VisualElement
             var clone = Model.Clone();
             UasTemplateService.Instance.Add(clone);
         });
+        var lc = this.Q<VisualElement>("LabelContainer");
+        labelContainer = new LabelContainerComponent();
+        lc.Add(labelContainer);
 
         SetFooter();
     }
@@ -73,6 +78,7 @@ internal abstract class AiObjectComponent : VisualElement
     {
         var sw = new System.Diagnostics.Stopwatch();
         sw.Start();
+        SetLabels();
         Model = model;
         typeLabel.text = Model.GetTypeDescription();
         nameTextField.value = model.Name;
@@ -118,8 +124,32 @@ internal abstract class AiObjectComponent : VisualElement
     {
         InfoComponent = new InfoComponent();
         Footer.Add(InfoComponent);
+    }
+    
+    private void SetLabels()
+    {
+        labelContainer.ClearLabels();
+        if (Model == null) return;
+        if (Model.GetType().IsSubclassOf(typeof(Consideration)) || Model.GetType() == typeof(Consideration))
+        {
+            if (Model is not Consideration cons) return;
+        
+            if (cons.IsModifier)
+            {
+                labelContainer.AddLabel("Modifier");
+            }
+            
+            if (cons.IsSetter)
+            {
+                labelContainer.AddLabel("Setter");
 
-
+            }
+            
+            if (cons.IsScorer)
+            {
+                labelContainer.AddLabel("Scorer");
+            }
+        }
     }
 
     //internal void Close()

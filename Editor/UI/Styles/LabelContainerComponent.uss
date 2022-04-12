@@ -1,0 +1,9 @@
+﻿#LabelContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+#TypeDescriptionLabel{
+    -unity-font-style: italic;
+    font-size: 10px;
+}

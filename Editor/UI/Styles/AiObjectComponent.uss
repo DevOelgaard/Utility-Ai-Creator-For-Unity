@@ -108,10 +108,7 @@ AgentComponent > TemplateContainer > #Footer {
     height: 64px;
 }
 
-#TypeDescriptionLabel{
-    -unity-font-style: italic;
-    font-size: 10px;
-}
+
 
 
 

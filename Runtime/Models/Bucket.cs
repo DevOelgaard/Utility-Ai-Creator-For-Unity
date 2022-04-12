@@ -62,7 +62,7 @@ public class Bucket : UtilityContainer
         {
             modifier = cons.CalculateScore(context);
         }
-        if (modifier == float.NaN)
+        if (float.IsNaN(modifier))
         {
             return base.CalculateUtility(context) * Convert.ToSingle(Weight.Value);
         }

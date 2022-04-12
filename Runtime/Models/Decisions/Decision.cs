@@ -110,9 +110,6 @@ public class Decision: UtilityContainer
     }
 
 
-
-
-
     protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
     {
         var state = (DecisionState)s;
@@ -120,8 +117,8 @@ public class Decision: UtilityContainer
         Description = state.Description;
 
         AgentActions = new ReactiveListNameSafe<AgentAction>();
-        var agentActions = RestoreAbleService.GetAiObjects<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions, restoreDebug);
-        AgentActions.Add(RestoreAbleService.SortByName(state.AgentActions, agentActions));
+        var restoredAgentActions = RestoreAbleService.GetAiObjects<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions, restoreDebug);
+        AgentActions.Add(RestoreAbleService.SortByName(state.AgentActions, restoredAgentActions));
 
         Considerations = new ReactiveListNameSafe<Consideration>();
         var considerations = RestoreAbleService.GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
@@ -143,7 +140,7 @@ public class Decision: UtilityContainer
         {
             modifier = cons.CalculateScore(context);
         }
-        if(modifier == float.NaN)
+        if(float.IsNaN(modifier))
         {
             var parent = context.CurrentEvaluatedBucket;
             return base.CalculateUtility(context) * Convert.ToSingle(parent.Weight.Value);

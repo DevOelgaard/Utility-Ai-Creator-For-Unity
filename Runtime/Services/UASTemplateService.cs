@@ -70,6 +70,11 @@ internal class UasTemplateService: RestoreAble
                 .Subscribe(col => onCollectionChanged.OnNext(value))
                 .AddTo(subscriptions);
         }
+
+        if (restore)
+        {
+            LoadCurrentProject(true);
+        }
     }
     
     

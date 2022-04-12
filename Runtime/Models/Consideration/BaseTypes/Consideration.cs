@@ -7,7 +7,7 @@ using System.Linq;
 
 public abstract class Consideration : AiObjectModel
 {
-    private CompositeDisposable paramaterDisposables = new CompositeDisposable();
+    private readonly CompositeDisposable parameterDisposables = new CompositeDisposable();
     public bool IsScorer { get; protected set; } = true;
     public bool IsModifier { get; protected set; } = false;
     public bool IsSetter { get; protected set; } = false;
@@ -58,11 +58,11 @@ public abstract class Consideration : AiObjectModel
 
         MinFloat.OnValueChange
             .Subscribe(_ => CurrentResponseCurve.MinX = Convert.ToSingle(MinFloat.Value))
-            .AddTo(paramaterDisposables);
+            .AddTo(parameterDisposables);
 
         MaxFloat.OnValueChange
             .Subscribe(_ => CurrentResponseCurve.MaxX = Convert.ToSingle(MaxFloat.Value))
-            .AddTo(paramaterDisposables);
+            .AddTo(parameterDisposables);
 
         SetMinMaxForCurves();
     }
@@ -117,10 +117,8 @@ public abstract class Consideration : AiObjectModel
     {
         return new List<Parameter>();
     }
-    protected virtual float CalculateBaseScore(AiContext context)
-    {
-        return float.MinValue;
-    }
+
+    protected abstract float CalculateBaseScore(AiContext context);
 
     public virtual float CalculateScore(AiContext context)
     {
@@ -198,15 +196,15 @@ public abstract class Consideration : AiObjectModel
         Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
 
         PerformanceTag = (PerformanceTag)state.PerformanceTag;
-        paramaterDisposables.Clear();
+        parameterDisposables.Clear();
 
         MinFloat.OnValueChange
             .Subscribe(_ => CurrentResponseCurve.MinX = Convert.ToSingle(MinFloat.Value))
-            .AddTo(paramaterDisposables);
+            .AddTo(parameterDisposables);
 
         MaxFloat.OnValueChange
             .Subscribe(_ => CurrentResponseCurve.MaxX = Convert.ToSingle(MaxFloat.Value))
-            .AddTo(paramaterDisposables);
+            .AddTo(parameterDisposables);
 
         SetMinMaxForCurves();
         
@@ -242,7 +240,7 @@ public abstract class Consideration : AiObjectModel
 
     ~Consideration()
     {
-        paramaterDisposables.Clear();
+        parameterDisposables.Clear();
     }
 }
 

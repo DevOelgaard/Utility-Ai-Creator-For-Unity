@@ -1,3 +1,8 @@
+#Left {
+    width: 80px;
+    min-width: 80px;
+}
+
 #Center {
     margin: 8px;
     padding: 3px;

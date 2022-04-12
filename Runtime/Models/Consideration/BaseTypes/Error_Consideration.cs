@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-internal class Error_Consideration : Consideration
+internal sealed class Error_Consideration : Consideration
 {
     public Error_Consideration() : base()
     {
@@ -12,9 +12,15 @@ internal class Error_Consideration : Consideration
         //Description = "";
         //HelpText = "";
     }
+
     protected override List<Parameter> GetParameters()
     {
         return new List<Parameter>();
+    }
+
+    protected override float CalculateBaseScore(AiContext context)
+    {
+        return -1;
     }
 
     public override string GetTypeDescription()

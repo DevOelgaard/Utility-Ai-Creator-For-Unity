@@ -86,26 +86,39 @@ internal class MainWindowFoldedComponent : VisualElement
         if (model.GetType().IsSubclassOf(typeof(Consideration)) || model.GetType() == typeof(Consideration))
         {
             var cons = model as Consideration;
-            footer.Add(new Label()
+            var minLabel = new Label()
             {
                 text = cons.MinFloat.Name + ": " + cons.MinFloat.Value,
                 name = "FoldedFooterLabel"
-            });
-            
-            footer.Add(new Label()
+            };
+            footer.Add(minLabel);
+            cons.MinFloat.OnValueChange
+                .Subscribe(_ => minLabel.text = cons.MinFloat.Name + ": " + cons.MinFloat.Value)
+                .AddTo(disposables);
+
+            var maxLabel = new Label()
             {
                 text = cons.MaxFloat.Name + ": " + cons.MaxFloat.Value,
                 name = "FoldedFooterLabel"
-            });
+            };
+            footer.Add(maxLabel);
+            cons.MinFloat.OnValueChange
+                .Subscribe(_ => maxLabel.text = cons.MaxFloat.Name + ": " + cons.MaxFloat.Value)
+                .AddTo(disposables);
+
         }
 
         foreach (var parameter in model.Parameters)
         {
-            footer.Add(new Label()
+            var pLabel = new Label()
             {
                 text = parameter.Name + ": " + parameter.Value.ToString(),
                 name = "FoldedFooterLabel"
-            });
+            };
+            footer.Add(pLabel);
+            parameter.OnValueChange
+                .Subscribe(_ => pLabel.text = parameter.Name + ": " + parameter.Value)
+                .AddTo(disposables);
         }
     }
 

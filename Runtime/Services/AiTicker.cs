@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniRx;
 using UnityEditor;
-using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 internal class AiTicker: RestoreAble
 {
@@ -29,13 +30,15 @@ internal class AiTicker: RestoreAble
         } 
     }
 
+
+
     public IObservable<int> OnTickCountChanged => onTickCountChanged;
-    private Subject<int> onTickCountChanged = new Subject<int>();
+    private readonly Subject<int> onTickCountChanged = new Subject<int>();
     
     internal AiTickerSettingsModel Settings = new AiTickerSettingsModel();
     private PersistenceAPI persistenceAPI => PersistenceAPI.Instance;
 
-    internal AiTicker()
+    private AiTicker()
     {
         var loadedState = persistenceAPI.LoadObjectPath<AiTickerSettingsState>(Consts.FileTickerSettings);
         if (loadedState.LoadedObject != null)
@@ -109,8 +112,10 @@ internal class AiTicker: RestoreAble
         if (!EditorApplication.isPlaying) return;
         if (EditorApplication.isPaused) return;
         TickCount++;
-        var metaData = new TickMetaData();
-        metaData.TickCount = TickCount;
+        var metaData = new TickMetaData
+        {
+            TickCount = TickCount
+        };
         Settings.TickerMode
             .Tick(agentManager
                 .Model

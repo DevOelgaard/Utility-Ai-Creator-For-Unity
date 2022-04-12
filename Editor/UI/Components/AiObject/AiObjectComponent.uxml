@@ -1,7 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <ui:VisualElement style="justify-content: space-between; flex-grow: 1;">
         <ui:VisualElement name="AiObjectHeader" style="height: auto; flex-direction: column;">
-            <ui:Label text="Label" display-tooltip-when-elided="true" name="Type-Label" style="font-size: 10px; -unity-font-style: italic;" />
+            <ui:VisualElement name="TypeHeader">
+                <ui:Label text="Label" display-tooltip-when-elided="true" name="Type-Label" style="font-size: 10px; -unity-font-style: italic;" />
+                <ui:VisualElement name="LabelContainer" />
+            </ui:VisualElement>
             <ui:VisualElement name="HorizontalContainer" style="flex-direction: row; flex-grow: 1;">
                 <ui:VisualElement name="Identifier" style="flex-direction: column; min-height: 64px; flex-grow: 1;">
                     <ui:TextField picking-mode="Ignore" label="Name" value="filler text" text="filler text" name="Name-TextField" />

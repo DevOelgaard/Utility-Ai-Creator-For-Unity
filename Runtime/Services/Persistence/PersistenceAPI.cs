@@ -28,7 +28,7 @@ internal class PersistenceAPI
     private PersistenceAPI(IPersister persister)
     {
         this.persister = persister;
-        this.destructivePersister = new JSONDestructivePersister();
+        this.destructivePersister = new JsonDestructivePersister();
     }
 
     internal void SetPersister(IPersister p)
@@ -83,8 +83,12 @@ internal class PersistenceAPI
 
     internal ObjectMetaData<T> LoadObjectPath<T>(string path)
     {
-        return persister.LoadObject<T>(path);
+        var result = persister.LoadObject<T>(path);
+        RemoveEmptyFolders(path);
+        return result;
     }
+
+
 
     internal List<ObjectMetaData<T>> LoadObjectsPanel<T>(string startPath, string filter = "") where T : RestoreState
     {
@@ -144,6 +148,26 @@ internal class PersistenceAPI
     private ObjectMetaData<T> LoadFilePath<T>(string path)
     {
         return persister.LoadObject<T>(path);
+    }
+
+    //https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories
+    private void RemoveEmptyFolders(string path)
+    {
+        
+        if (path.Contains("."))
+        {
+            path = new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName;
+        }
+        var directories = Directory.GetDirectories(path);
+        foreach (var d in directories)
+        {
+            RemoveEmptyFolders(d);
+            if (Directory.GetFiles(d).Length == 0 &&
+                Directory.GetDirectories(d).Length == 0)
+            {
+                Directory.Delete(d,false);
+            }
+        }
     }
 }
 

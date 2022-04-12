@@ -79,7 +79,6 @@ internal class JsonPersister : IPersister
 
     protected virtual void CreateFile(string path)
     {
-        
         var directory = new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName;
         var fileName = Path.GetFileName(path);
         if (!Directory.Exists(directory))

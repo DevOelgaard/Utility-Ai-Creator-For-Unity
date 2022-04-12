@@ -5,16 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-internal class JSONDestructivePersister: JsonPersister
+internal class JsonDestructivePersister: JsonPersister
 {
     protected override void CreateFile(string path)
     {
-        var directory = new DirectoryInfo(System.IO.Path.GetDirectoryName(path)).FullName;
+        var directory = new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName;
         var fileName = Path.GetFileName(path);
         
         if (Directory.Exists(directory))
         {
-            Directory.Delete(directory, true);
+            var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
+            foreach (var file in files.Where(f => !f.Contains(".meta")))
+            {
+                File.Delete(file);
+            }
+            // Directory.Delete(directory, true);
         }
         Directory.CreateDirectory(directory);
 

@@ -55,29 +55,27 @@ internal class AgentComponent: RightPanelComponent<IAgent>
         applyToAllButton.RegisterCallback<MouseUpEvent>(evt =>
         {
             AgentManager.Instance.GetAgentsByIdentifier(agent.TypeIdentifier).Values
-                .ForEach(a =>
-                {
-                    if (a != agent)
-                    {
-                        var aiClone = agent.Ai.Clone() as Ai;
-                        a.SetAi(aiClone);
-                    }
-                });
+                .ForEach(SetAgentAiAsCurrentAgentsAi);
 
         });
         footer.Add(applyToAllButton);
 
         aiDropdown.RegisterCallback<ChangeEvent<string>>(evt =>
         {
-            if (agent.Ai.Name != evt.newValue)
-            {
-                agent.Ai = UasTemplateService.Instance.GetAiByName(evt.newValue);
-                UpdateAiComponent();
-            }
+            if (agent.Ai.Name == evt.newValue) return;
+            agent.Ai = UasTemplateService.Instance.GetAiByName(evt.newValue);
+            UpdateAiComponent();
         });
     }
 
-    internal override void UpateUi(IAgent element)
+    private async void SetAgentAiAsCurrentAgentsAi(IAgent a)
+    {
+        if (a == agent) return;
+        var aiClone = await agent.Ai.CloneAsync();
+        a.SetAi(aiClone as Ai);
+    }
+
+    internal override void UpdateUi(IAgent element)
     {
         var sw = new System.Diagnostics.Stopwatch();
         sw.Start();

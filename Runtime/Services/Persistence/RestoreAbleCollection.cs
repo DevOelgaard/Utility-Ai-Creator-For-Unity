@@ -29,27 +29,31 @@ public class RestoreAbleCollection: RestoreAble
     }
 
 
-    protected override void RestoreInternal(RestoreState state, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
     {
-        var s = state as RestoreAbleCollectionState;
-        Models = new List<RestoreAble>();
-        s.States.ForEach(e =>
+        var task = Task.Factory.StartNew(() =>
         {
-            Models.Add(Restore<RestoreAble>(e, restoreDebug));
+            var s = state as RestoreAbleCollectionState;
+            Models = new List<RestoreAble>();
+            s.States.ForEach(e =>
+            {
+                Models.Add(Restore<RestoreAble>(e, restoreDebug));
+            });
+            Type = Type.GetType(s.TypeString);
         });
-        Type = Type.GetType(s.TypeString);
+        await task;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
     {
-        persister.SaveObject(state, path);
+        destructivePersister.SaveObject(state, path);
     }
 }
 
 public class RestoreAbleCollectionState: RestoreState
 {
-    public List<RestoreState> States;
-    public string TypeString;
+    public readonly List<RestoreState> States;
+    // public string TypeString;
 
     public RestoreAbleCollectionState()
     {

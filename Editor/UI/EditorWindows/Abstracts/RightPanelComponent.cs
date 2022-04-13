@@ -2,5 +2,5 @@
 
 internal abstract class RightPanelComponent<T>: VisualElement
 {
-    internal abstract void UpateUi(T element);
+    internal abstract void UpdateUi(T element);
 }

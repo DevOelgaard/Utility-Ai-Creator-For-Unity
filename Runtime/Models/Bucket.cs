@@ -102,35 +102,39 @@ public class Bucket : UtilityContainer
     {
         return new BucketState(Name, Description, Decisions.Values, Considerations.Values, Weight, this);
     }
-    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var state = (BucketState)s;
-        Name = state.Name;
-        Description = state.Description;
+        var task = Task.Factory.StartNew(() =>
+        {
+            var state = (BucketState)s;
+            Name = state.Name;
+            Description = state.Description;
 
-        Decisions = new ReactiveListNameSafe<Decision>();
-        var decisions = RestoreAbleService.GetAiObjects<Decision>(CurrentDirectory + Consts.FolderName_Decisions, restoreDebug);
-        Decisions.Add(RestoreAbleService.SortByName(state.Decisions, decisions));//var decisions = new List<Decision>();
+            Decisions = new ReactiveListNameSafe<Decision>();
+            var decisionsLocal = RestoreAbleService.GetAiObjects<Decision>(CurrentDirectory + Consts.FolderName_Decisions, restoreDebug);
+            Decisions.Add(RestoreAbleService.SortByName(state.Decisions, decisionsLocal));
         
-        Considerations = new ReactiveListNameSafe<Consideration>();
-        var considerations = RestoreAbleService.GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
-        Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
+            Considerations = new ReactiveListNameSafe<Consideration>();
+            var considerations = RestoreAbleService.GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
+            Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
 
-        var weightState = PersistenceAPI.Instance.LoadObjectsPath<ParameterState>(CurrentDirectory + Consts.FolderName_Weight).FirstOrDefault();
-        if(weightState.LoadedObject == null)
-        {
-            Weight = new Parameter(weightState.ErrorMessage, weightState.Exception.ToString());
-        }
-        else
-        {
-            Weight = Restore<Parameter>(weightState.LoadedObject);
-        }
+            var weightState = PersistenceAPI.Instance.LoadObjectsPath<ParameterState>(CurrentDirectory + Consts.FolderName_Weight).FirstOrDefault();
+            if(weightState.LoadedObject == null)
+            {
+                Weight = new Parameter(weightState.ErrorMessage, weightState.Exception.ToString());
+            }
+            else
+            {
+                Weight = Restore<Parameter>(weightState.LoadedObject);
+            }
 
 
-        if (restoreDebug)
-        {
-            LastCalculatedUtility = state.LastCalculatedUtility;
-        }
+            if (restoreDebug)
+            {
+                LastCalculatedUtility = state.LastCalculatedUtility;
+            }
+        });
+        await task;
     }
 
     protected override void ClearSubscriptions()
@@ -139,23 +143,23 @@ public class Bucket : UtilityContainer
         decisionSub?.Dispose();
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_Bucket);
+        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_Bucket);
         foreach(var d in Decisions.Values)
         {
             var subPath = path + "/" + Consts.FolderName_Decisions;
-            d.SaveToFile(subPath, persister);
+            d.SaveToFile(subPath, destructivePersister);
         }
 
         foreach (var c in Considerations.Values)
         {
             var subPath = path + "/" + Consts.FolderName_Considerations;
-            c.SaveToFile(subPath, persister);
+            c.SaveToFile(subPath, destructivePersister);
         }
 
         var wSubPath = path + "/" + Consts.FolderName_Weight;
-        Weight.SaveToFile(wSubPath, persister);
+        Weight.SaveToFile(wSubPath, destructivePersister);
     }
 }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniRxExtension;
 using UnityEngine;
 
 internal static class RestoreAbleService
@@ -130,11 +131,18 @@ internal static class RestoreAbleService
             }
             else
             {
-                var ucs = UtilityContainerSelector.Restore<UtilityContainerSelector>(bs.LoadedObject, restoreDebug);
+                var ucs = RestoreAble.Restore<UtilityContainerSelector>(bs.LoadedObject, restoreDebug);
                 result.Add(ucs);
             }
         }
         return result;
     }
-
+    
+    internal static void LoadObjectsAndSortToCollection<T>(string path, List<string> namesOrdered, 
+        ReactiveList<AiObjectModel> collection, bool restoreDebug) where T: AiObjectModel
+    {
+        var aiObjects = GetAiObjects<T>(path, restoreDebug);
+        var sorted = SortByName(namesOrdered, aiObjects);
+        collection.Add(sorted);
+    }
 }

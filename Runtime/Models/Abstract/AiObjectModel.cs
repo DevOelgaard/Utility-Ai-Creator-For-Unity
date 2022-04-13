@@ -1,6 +1,7 @@
 ﻿using System;
 using UniRx;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public abstract class AiObjectModel: RestoreAble
 {
@@ -9,13 +10,13 @@ public abstract class AiObjectModel: RestoreAble
     public List<Parameter> Parameters = new List<Parameter>();
     public string HelpText { get; protected set; }
     public IObservable<string> OnNameChanged => onNameChanged;
-    private Subject<string> onNameChanged = new Subject<string>();
+    private readonly Subject<string> onNameChanged = new Subject<string>();
 
     public IObservable<string> OnDescriptionChanged => onDescriptionChanged;
-    private Subject<string> onDescriptionChanged = new Subject<string>();
+    private readonly Subject<string> onDescriptionChanged = new Subject<string>();
 
     internal IObservable<InfoModel> OnInfoChanged => onInfoChanged;
-    private Subject<InfoModel> onInfoChanged = new Subject<InfoModel>();
+    private readonly Subject<InfoModel> onInfoChanged = new Subject<InfoModel>();
 
     public List<ScoreModel> ScoreModels = new List<ScoreModel>();
     public string ContextAddress { get; private set; }
@@ -23,11 +24,6 @@ public abstract class AiObjectModel: RestoreAble
     {
         Name = StringService.SpaceBetweenUpperCase(GetType().ToString());
         UpdateInfo();
-    }
-
-    protected AiObjectModel(AiObjectModel original): base(original)
-    {
-
     }
 
     protected virtual void UpdateInfo() { }
@@ -46,10 +42,18 @@ public abstract class AiObjectModel: RestoreAble
         clone.Description = Description;
         clone.HelpText = HelpText;
     }
-
+    
     internal AiObjectModel Clone()
     {
         var clone = InternalClone();
+        SetBaseClone(clone);
+        return clone;
+    }
+
+    internal async Task<AiObjectModel> CloneAsync()
+    {
+        var clone = await Task.Run(InternalClone);
+        // var clone = InternalClone();
         SetBaseClone(clone);
         return clone;
     }
@@ -62,9 +66,9 @@ public abstract class AiObjectModel: RestoreAble
         return ContextAddress;
     }
 
-    public virtual string GetNameFormat(string name)
+    protected virtual string GetNameFormat(string currentName)
     {
-        return name;
+        return currentName;
     }
 
     protected class MainWindowModelState

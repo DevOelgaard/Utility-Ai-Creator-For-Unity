@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UniRxExtension;
 using UniRx;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class Decision: UtilityContainer
 {
@@ -32,7 +33,7 @@ public class Decision: UtilityContainer
         ContextAdress = "D" + index;
     }
 
-    public override string GetNameFormat(string name)
+    protected override string GetNameFormat(string name)
     {
         return name;
     }
@@ -110,27 +111,36 @@ public class Decision: UtilityContainer
     }
 
 
-    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var state = (DecisionState)s;
-        Name = state.Name;
-        Description = state.Description;
-
-        AgentActions = new ReactiveListNameSafe<AgentAction>();
-        var restoredAgentActions = RestoreAbleService.GetAiObjects<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions, restoreDebug);
-        AgentActions.Add(RestoreAbleService.SortByName(state.AgentActions, restoredAgentActions));
-
-        Considerations = new ReactiveListNameSafe<Consideration>();
-        var considerations = RestoreAbleService.GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
-        Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
-
-        var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
-
-        if (restoreDebug)
+        var task = Task.Factory.StartNew(() =>
         {
-            LastCalculatedUtility = state.LastCalculatedUtility;
-        }
+            var state = (DecisionState) s;
+            Name = state.Name;
+            Description = state.Description;
+
+            AgentActions = new ReactiveListNameSafe<AgentAction>();
+            var restoredAgentActions =
+                RestoreAbleService.GetAiObjects<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions,
+                    restoreDebug);
+            AgentActions.Add(RestoreAbleService.SortByName(state.AgentActions, restoredAgentActions));
+
+            Considerations = new ReactiveListNameSafe<Consideration>();
+            var considerations =
+                RestoreAbleService.GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations,
+                    restoreDebug);
+            Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
+
+            var parameters =
+                RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+            Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+
+            if (restoreDebug)
+            {
+                LastCalculatedUtility = state.LastCalculatedUtility;
+            }
+        });
+        await task;
     }
 
     protected override float CalculateUtility(AiContext context)
@@ -157,25 +167,25 @@ public class Decision: UtilityContainer
         agentActionSub?.Dispose();
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_Decision);
+        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_Decision);
         foreach(var aa in AgentActions.Values)
         {
             var subPath = path + "/" + Consts.FolderName_AgentActions;
-            aa.SaveToFile(subPath, persister);
+            aa.SaveToFile(subPath, destructivePersister);
         }
 
         foreach(var c in Considerations.Values)
         {
             var subPath = path + "/" + Consts.FolderName_Considerations;
-            c.SaveToFile(subPath, persister);
+            c.SaveToFile(subPath, destructivePersister);
         }
 
         foreach(var p in Parameters)
         {
             var subPath = path + "/" + Consts.FolderName_Parameters;
-            p.SaveToFile(subPath, persister);
+            p.SaveToFile(subPath, destructivePersister);
         }
     }
 }

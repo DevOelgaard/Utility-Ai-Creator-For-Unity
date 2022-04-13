@@ -28,38 +28,44 @@ public class AiTickerSettingsModel: RestoreAble
         return "AiTickerSettings";
     }
 
-    protected override void RestoreInternal(RestoreState state, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
     {
-        var s = state as AiTickerSettingsState;
-        TickerMode = Restore<TickerMode>(s.TickerMode);
-        TickerModes = new List<TickerMode>();
-        var modeStates = PersistenceAPI.Instance.LoadObjectsPathWithFilters<TickerModeState>(CurrentDirectory + Consts.FolderName_TickerModes, typeof(TickerMode));
-        foreach(var mode in modeStates)
+        var task = Task.Factory.StartNew(() =>
         {
-            if(mode.LoadedObject == null)
+            var s = state as AiTickerSettingsState;
+            TickerMode = Restore<TickerMode>(s.TickerMode);
+            TickerModes = new List<TickerMode>();
+            var modeStates = PersistenceAPI.Instance.LoadObjectsPathWithFilters<TickerModeState>(CurrentDirectory + Consts.FolderName_TickerModes, typeof(TickerMode));
+            foreach(var mode in modeStates)
             {
-                var tm = new TickerModeUnrestricted();
-                tm.Description = mode.ErrorMessage + "Exception: " + mode.Exception.ToString();
+                if(mode.LoadedObject == null)
+                {
+                    var tm = new TickerModeUnrestricted
+                    {
+                        Description = mode.ErrorMessage + "Exception: " + mode.Exception.ToString()
+                    };
+                }
+                else
+                {
+                    var tickerModeLocal = Restore<TickerMode>(mode.LoadedObject, restoreDebug);
+                    TickerModes.Add(tickerModeLocal);
+                }
             }
-            else
-            {
-                var tickerMode = Restore<TickerMode>(mode.LoadedObject, restoreDebug);
-                TickerModes.Add(tickerMode);
-            }
-        }
+        });
+        await task;
     }
     internal override RestoreState GetState()
     {
         return new AiTickerSettingsState(TickerMode, TickerModes, this);
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
     {
-        persister.SaveObject(state, path + Consts.FileExtension_TickerSettings);
+        destructivePersister.SaveObject(state, path + Consts.FileExtension_TickerSettings);
         foreach(var mode in TickerModes)
         {
             var subPath = path + "/" + Consts.FolderName_TickerModes;
-            mode.SaveToFile(subPath, persister);
+            mode.SaveToFile(subPath, destructivePersister);
         }
     }
 }

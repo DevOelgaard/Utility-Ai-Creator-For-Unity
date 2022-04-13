@@ -23,12 +23,17 @@ public class ParameterEnum: Parameter
         return new ParameterEnumState(Name, CurrentSelction, EnumType, this);
     }
 
-    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        base.RestoreInternal(s, restoreDebug);
-        var state = s as ParameterEnumState;
-        EnumType = state.EnumType;
-        Value = Enum.Parse(EnumType, state.CurrentEnumSelection);
+        await base.RestoreInternalAsync(s, restoreDebug);
+
+        var task = Task.Factory.StartNew(() =>
+        {
+            var state = s as ParameterEnumState;
+            EnumType = state.EnumType;
+            Value = Enum.Parse(EnumType, state.CurrentEnumSelection);
+        });
+        await task;
     }
 
     public override Parameter Clone()

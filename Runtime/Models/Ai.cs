@@ -23,29 +23,26 @@ public class Ai: AiObjectModel
         }
     }
     internal IObservable<bool> OnIsPlayableChanged => onIsPlayableChanged;
-    private Subject<bool> onIsPlayableChanged = new Subject<bool> ();
+    private readonly Subject<bool> onIsPlayableChanged = new Subject<bool> ();
     private ReactiveListNameSafe<Bucket> buckets = new ReactiveListNameSafe<Bucket>();
     public ReactiveListNameSafe<Bucket> Buckets
     {
         get => buckets;
-        set
+        private set
         {
             buckets = value;
             bucketSub?.Dispose();
 
-            if (buckets != null)
-            {
-                UpdateInfo();
-                bucketSub = buckets.OnValueChanged
-                    .Subscribe(_ => UpdateInfo());
-            }
+            if (buckets == null) return;
+            UpdateInfo();
+            bucketSub = buckets.OnValueChanged
+                .Subscribe(_ => UpdateInfo());
         }
     }
-    internal AiContext Context = new AiContext();
+    internal readonly AiContext Context = new AiContext();
 
     public Ai(): base()
     {
-        bucketSub?.Dispose();
         UpdateInfo();
         bucketSub = buckets.OnValueChanged
             .Subscribe(_ => UpdateInfo());
@@ -54,23 +51,23 @@ public class Ai: AiObjectModel
         playableSub = OnIsPlayableChanged
             .Subscribe(_ => UpdateInfo());
     }
-
-    public Ai(Ai original): base(original)
+    protected override AiObjectModel InternalClone()
     {
-        Buckets = new ReactiveListNameSafe<Bucket>();
-        foreach(var b in original.Buckets.Values)
+        var clone = (Ai) Activator.CreateInstance(GetType());
+        clone.Buckets = new ReactiveListNameSafe<Bucket>();
+        foreach (var c in Buckets.Values.Select(b => b.Clone() as Bucket))
         {
-            var clone = b.Clone() as Bucket;
-            Buckets.Add(clone);
+            clone.Buckets.Add(c);
         }
-        bucketSub?.Dispose();
-        UpdateInfo();
-        bucketSub = buckets.OnValueChanged
-            .Subscribe(_ => UpdateInfo());
+        clone.bucketSub?.Dispose();
+        clone.UpdateInfo();
+        clone.bucketSub = clone.buckets.OnValueChanged
+            .Subscribe(_ => clone.UpdateInfo());
 
-        playableSub?.Dispose();
-        playableSub = OnIsPlayableChanged
-            .Subscribe(_ => UpdateInfo());
+        clone.playableSub?.Dispose();
+        clone.playableSub = clone.OnIsPlayableChanged
+            .Subscribe(_ => clone.UpdateInfo());
+        return clone;
     }
 
     protected override void UpdateInfo()
@@ -101,10 +98,7 @@ public class Ai: AiObjectModel
         return new AiState(Name, Description, Buckets.Values, this);
     }
 
-    protected override AiObjectModel InternalClone()
-    {
-        return new Ai(this);
-    }
+
 
     private UtilityContainerSelector currentBucketSelector;
     public UtilityContainerSelector CurrentBucketSelector
@@ -192,66 +186,68 @@ public class Ai: AiObjectModel
         playableSub?.Dispose();
     }
 
-    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
         var state = (AiState)s;
         Name = state.Name;
         Description = state.Description;
         IsPLayable = state.IsPLayable;
 
-        Buckets = new ReactiveListNameSafe<Bucket>();
-        var buckets = RestoreAbleService.GetAiObjects<Bucket>(CurrentDirectory + Consts.FolderName_Buckets, restoreDebug);
-        Buckets.Add(RestoreAbleService.SortByName(state.Buckets, buckets));
-
-
-        BucketSelectors = RestoreAbleService.GetUCS(CurrentDirectory + Consts.FolderName_BucketSelectors, restoreDebug);
-        CurrentBucketSelector = BucketSelectors
-            .FirstOrDefault(d => d.GetName() == state.CurrentBucketSelectorName);
-
-        if (CurrentBucketSelector == null)
+        var task = Task.Factory.StartNew(() =>
         {
-            CurrentBucketSelector = BucketSelectors.FirstOrDefault();
-        }
+            Buckets = new ReactiveListNameSafe<Bucket>();
+            var bucketsLocal = RestoreAbleService.GetAiObjects<Bucket>(CurrentDirectory + Consts.FolderName_Buckets, restoreDebug);
+            Buckets.Add(RestoreAbleService.SortByName(state.Buckets, bucketsLocal));
 
-        DecisionSelectors = RestoreAbleService.GetUCS(CurrentDirectory + Consts.FolderName_DecisionSelectors, restoreDebug);
-        CurrentDecisionSelector = DecisionSelectors
-            .FirstOrDefault(d => d.GetName() == state.CurrentDecisionSelectorName);
+            BucketSelectors = RestoreAbleService.GetUCS(CurrentDirectory + Consts.FolderName_BucketSelectors, restoreDebug);
+            CurrentBucketSelector = BucketSelectors
+                .FirstOrDefault(d => d.GetName() == state.CurrentBucketSelectorName);
 
-        if (CurrentDecisionSelector == null)
-        {
-            CurrentDecisionSelector = DecisionSelectors.FirstOrDefault();
-        }
+            if (CurrentBucketSelector == null)
+            {
+                CurrentBucketSelector = BucketSelectors.FirstOrDefault();
+            }
 
-        var utilityScorers = AssetDatabaseService.GetInstancesOfType<IUtilityScorer>();
-        UtilityScorer = utilityScorers
-            .FirstOrDefault(u => u.GetName() == state.USName);
+            DecisionSelectors = RestoreAbleService.GetUCS(CurrentDirectory + Consts.FolderName_DecisionSelectors, restoreDebug);
+            CurrentDecisionSelector = DecisionSelectors
+                .FirstOrDefault(d => d.GetName() == state.CurrentDecisionSelectorName);
 
-        if (UtilityScorer == null)
-        {
-            UtilityScorer = utilityScorers.FirstOrDefault();
-        }
+            if (CurrentDecisionSelector == null)
+            {
+                CurrentDecisionSelector = DecisionSelectors.FirstOrDefault();
+            }
+
+            var utilityScorers = AssetDatabaseService.GetInstancesOfType<IUtilityScorer>();
+            UtilityScorer = utilityScorers
+                .FirstOrDefault(u => u.GetName() == state.USName);
+
+            if (UtilityScorer == null)
+            {
+                UtilityScorer = utilityScorers.FirstOrDefault();
+            }
+        });
+        await task;
     }
 
-
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_UAI);
+        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_UAI);
         foreach(var b in Buckets.Values)
         {
             var subPath = path + "/" + Consts.FolderName_Buckets;
-            b.SaveToFile(subPath,persister);
+            b.SaveToFile(subPath,destructivePersister);
         }
 
         foreach(var bs in BucketSelectors)
         {
             var subPath = path + "/" + Consts.FolderName_BucketSelectors;
-            bs.SaveToFile(subPath, persister);
+            bs.SaveToFile(subPath, destructivePersister);
         }
 
         foreach (var ds in DecisionSelectors)
         {
             var subPath = path + "/" + Consts.FolderName_DecisionSelectors;
-            ds.SaveToFile(subPath, persister);
+            ds.SaveToFile(subPath, destructivePersister);
         }
     }
 }

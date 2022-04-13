@@ -4,6 +4,7 @@ using UnityEngine;
 using System.ComponentModel;
 using UniRx;
 using System.Linq;
+using System.Threading.Tasks;
 
 public abstract class Consideration : AiObjectModel
 {
@@ -103,7 +104,7 @@ public abstract class Consideration : AiObjectModel
         CurrentResponseCurve.MaxX = Convert.ToSingle(MaxFloat.Value);
     }
 
-    public override string GetNameFormat(string name)
+    protected override string GetNameFormat(string name)
     {
         return name;
     }
@@ -150,69 +151,73 @@ public abstract class Consideration : AiObjectModel
         return 1;
     }
 
-    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
+        var task = Task.Factory.StartNew(() =>
+        {
+            var state = (ConsiderationState)s;
+            Name = state.Name;
+            Description = state.Description;
 
-        var state = (ConsiderationState)s;
-        Name = state.Name;
-        Description = state.Description;
-
-        var minState = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory+ Consts.FolderName_MinParameter, typeof(Parameter)).FirstOrDefault();
-        if (minState.LoadedObject == null)
-        {
-            MinFloat = new Parameter(minState.ErrorMessage, minState.Exception.ToString());
-        }
-        else
-        {
-            MinFloat = Restore<Parameter>(minState.LoadedObject);
-        }
-
-        var maxState = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory + Consts.FolderName_MaxParameter, typeof(Parameter)).FirstOrDefault();
-        if (maxState.LoadedObject == null)
-        {
-            MaxFloat = new Parameter(maxState.ErrorMessage, maxState.Exception.ToString());
-        }
-        else
-        {
-            MaxFloat = Restore<Parameter>(maxState.LoadedObject);
-        }
-
-        var responseCurveState = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ResponseCurveState>(CurrentDirectory + Consts.FolderName_ResponseCurves, typeof(ResponseCurve)).FirstOrDefault();
-        if (responseCurveState != null)
-        {
-            if (responseCurveState.LoadedObject == null)
+            var minState = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory+ Consts.FolderName_MinParameter, typeof(Parameter)).FirstOrDefault();
+            if (minState.LoadedObject == null)
             {
-                var error = (ResponseCurve)InstantiaterService.Instance.CreateInstance(responseCurveState.ModelType);
-                error.Name = responseCurveState.ErrorMessage;
-                error.Description = "Exception: " + responseCurveState.Exception.ToString();
-                CurrentResponseCurve = error;
-            } else
-            {
-                CurrentResponseCurve = Restore<ResponseCurve>(responseCurveState.LoadedObject);
+                MinFloat = new Parameter(minState.ErrorMessage, minState.Exception.ToString());
             }
-        }
+            else
+            {
+                MinFloat = Restore<Parameter>(minState.LoadedObject);
+            }
 
-        var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+            var maxState = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory + Consts.FolderName_MaxParameter, typeof(Parameter)).FirstOrDefault();
+            if (maxState.LoadedObject == null)
+            {
+                MaxFloat = new Parameter(maxState.ErrorMessage, maxState.Exception.ToString());
+            }
+            else
+            {
+                MaxFloat = Restore<Parameter>(maxState.LoadedObject);
+            }
 
-        PerformanceTag = (PerformanceTag)state.PerformanceTag;
-        parameterDisposables.Clear();
+            var responseCurveState = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ResponseCurveState>(CurrentDirectory + Consts.FolderName_ResponseCurves, typeof(ResponseCurve)).FirstOrDefault();
+            if (responseCurveState != null)
+            {
+                if (responseCurveState.LoadedObject == null)
+                {
+                    var error = (ResponseCurve)InstantiaterService.Instance.CreateInstance(responseCurveState.ModelType);
+                    error.Name = responseCurveState.ErrorMessage;
+                    error.Description = "Exception: " + responseCurveState.Exception.ToString();
+                    CurrentResponseCurve = error;
+                } else
+                {
+                    CurrentResponseCurve = Restore<ResponseCurve>(responseCurveState.LoadedObject);
+                }
+            }
 
-        MinFloat.OnValueChange
-            .Subscribe(_ => CurrentResponseCurve.MinX = Convert.ToSingle(MinFloat.Value))
-            .AddTo(parameterDisposables);
+            var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+            Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
 
-        MaxFloat.OnValueChange
-            .Subscribe(_ => CurrentResponseCurve.MaxX = Convert.ToSingle(MaxFloat.Value))
-            .AddTo(parameterDisposables);
+            PerformanceTag = (PerformanceTag)state.PerformanceTag;
+            parameterDisposables.Clear();
 
-        SetMinMaxForCurves();
-        
-        if (restoreDebug)
-        {
-            BaseScore = state.BaseScore;
-            NormalizedScore = state.NormalizedScore;
-        }
+            MinFloat.OnValueChange
+                .Subscribe(_ => CurrentResponseCurve.MinX = Convert.ToSingle(MinFloat.Value))
+                .AddTo(parameterDisposables);
+
+            MaxFloat.OnValueChange
+                .Subscribe(_ => CurrentResponseCurve.MaxX = Convert.ToSingle(MaxFloat.Value))
+                .AddTo(parameterDisposables);
+
+            SetMinMaxForCurves();
+            
+            if (restoreDebug)
+            {
+                BaseScore = state.BaseScore;
+                NormalizedScore = state.NormalizedScore;
+            }
+
+        });
+        await task;
     }
 
     internal override RestoreState GetState()
@@ -220,21 +225,21 @@ public abstract class Consideration : AiObjectModel
         return new ConsiderationState(Name,Description,Parameters, CurrentResponseCurve, MinFloat, MaxFloat, this);
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_Consideration);
+        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_Consideration);
         foreach (var parameter in Parameters)
         {
             var subPath = path + "/" + Consts.FolderName_Parameters;
-            parameter.SaveToFile(subPath, persister);
+            parameter.SaveToFile(subPath, destructivePersister);
         }
         var rcPath = path + "/" + Consts.FolderName_ResponseCurves;
-        CurrentResponseCurve.SaveToFile(rcPath, persister);
+        CurrentResponseCurve.SaveToFile(rcPath, destructivePersister);
 
         var minPath = path + "/" + Consts.FolderName_MinParameter;
-        MinFloat.SaveToFile(minPath, persister);
+        MinFloat.SaveToFile(minPath, destructivePersister);
         var maxPath = path + "/" + Consts.FolderName_MaxParameter;
-        MaxFloat.SaveToFile(maxPath, persister);
+        MaxFloat.SaveToFile(maxPath, destructivePersister);
     }
 
 

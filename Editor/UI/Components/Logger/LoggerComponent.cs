@@ -145,7 +145,7 @@ internal class LoggerComponent : RightPanelComponent<IAgent>
         this.state.OnEnter(agent);
     }
 
-    internal override void UpateUi(IAgent element)
+    internal override void UpdateUi(IAgent element)
     {
         this.agent = element;
         state.UpdateUi(agent);

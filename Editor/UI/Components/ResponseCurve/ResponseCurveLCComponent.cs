@@ -56,11 +56,13 @@ internal class ResponseCurveLcComponent : VisualElement
             responseCurve.AddResponseFunction(function);
         });
         
-        saveTemplateButton.RegisterCallback<MouseUpEvent>(evt =>
-        {
-            var clone = responseCurve.Clone();
-            UasTemplateService.Instance.Add(clone);
-        });
+        saveTemplateButton.RegisterCallback<MouseUpEvent>(SaveTemplate);
+    }
+
+    private async void SaveTemplate(MouseUpEvent evt)
+    {
+        var clone = await responseCurve.CloneAsync();
+        UasTemplateService.Instance.Add(clone);
     }
 
     internal void UpdateUi(ResponseCurve rCurve, bool showSelection = true)
@@ -73,11 +75,7 @@ internal class ResponseCurveLcComponent : VisualElement
             curveDropdown.SetValueWithoutNotify(rCurve.Name);
 
             InitCurveDropdown();
-            curveDropdown.RegisterCallback<ChangeEvent<string>>(evt =>
-            {
-                if (evt.newValue == null || evt.newValue == default) return;
-                ChangeResponseCurve(evt.newValue);
-            });
+            curveDropdown.RegisterCallback<ChangeEvent<string>>(OnCurveDropdownValueChanged);
         }
         else
         {
@@ -102,6 +100,12 @@ internal class ResponseCurveLcComponent : VisualElement
             .AddTo(responseCurveDisposables);
 
         UpdateFunctions();
+    }
+
+    private async void OnCurveDropdownValueChanged(ChangeEvent<string> evt)
+    {
+        if (evt.newValue is null or null) return;
+        await ChangeResponseCurve(evt.newValue);
     }
 
     private void UpdateFunctions()
@@ -168,21 +172,21 @@ internal class ResponseCurveLcComponent : VisualElement
         }
     }
 
-    private void ChangeResponseCurve(string name)
+    private async Task ChangeResponseCurve(string responseCurveName)
     {
         var template = UasTemplateService
             .Instance
             .ResponseCurves
             .Values
-            .FirstOrDefault(e => e.Name == name);
+            .FirstOrDefault(e => e.Name == responseCurveName);
 
         if (template != null)
         {
-            var clone = (ResponseCurve)template.Clone();
+            var clone = await template.CloneAsync() as ResponseCurve;
             UpdateUi(clone);
         } else
         {
-            UpdateUi(AssetDatabaseService.GetInstanceOfType<ResponseCurve>(name));
+            UpdateUi(AssetDatabaseService.GetInstanceOfType<ResponseCurve>(responseCurveName));
         }
     }
 

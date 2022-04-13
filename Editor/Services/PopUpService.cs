@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,32 +8,41 @@ using UnityEngine.UIElements;
 public class PopUpService: EditorWindow
 {
         private static ButtonPopUpWindow ButtonPopUp => GetWindow<ButtonPopUpWindow>();
-        public static void AskToSaveIfProjectNotSavedThenSelectProjectToLoad()
+        public static async Task AskToSaveIfProjectNotSavedThenSelectProjectToLoad()
         {
-                InitWithThreeButtonsThenAction(LoadProject);
+                await InitWithThreeButtonsThenAction(LoadProject);
         }
         
-        public static void AskToSaveIfProjectNotSavedThenCreateNew()
+        public static async Task AskToSaveIfProjectNotSavedThenCreateNew()
         {
-                InitWithThreeButtonsThenAction(CreateNewProject);
+                await InitWithThreeButtonsThenAction(CreateNewProject);
         }
 
-        private static void InitWithThreeButtonsThenAction(Action action)
+        private static async Task InitWithThreeButtonsThenAction(Func<Task> task)
         {
                 if (ProjectSettingsService.Instance.ProjectSaved())
                 {
-                        action.Invoke();
+                        await task.Invoke();
                         return;
                 }
 
-                var saveButton = new Button(() =>
+                async void Save()
                 {
                         UasTemplateService.Instance.Save();
-                        action.Invoke();
-                });
-                saveButton.text = "Save";
+                        await task.Invoke();
+                }
 
-                var noSaveButton = new Button(action)
+                var saveButton = new Button(Save)
+                {
+                        text = "Save"
+                };
+
+                async void RunTask()
+                {
+                        await task.Invoke();
+                }
+
+                var noSaveButton = new Button(RunTask)
                 {
                         text = "Don't Save"
                 };
@@ -59,19 +69,17 @@ public class PopUpService: EditorWindow
                 ButtonPopUp.position = new Rect(centerPosition, size);
         }
 
-        private static void LoadProject()
+        private static async Task LoadProject()
         {
-                ProjectSettingsService.Instance.LoadProject();
-                UasTemplateService.Instance.LoadCurrentProject();
-
-                var tmpManager = GetWindow<TemplateManager>();
-                tmpManager.UpdateLeftPanel();
                 ButtonPopUp.Close();
+                ProjectSettingsService.Instance.LoadProject();
+                await UasTemplateService.Instance.LoadCurrentProject();
         }
 
-        private static void CreateNewProject()
+        private static async Task CreateNewProject()
         {
-                ProjectSettingsService.Instance.CreateProject();
-                UasTemplateService.Instance.LoadCurrentProject();
+                ButtonPopUp.Close();
+                await ProjectSettingsService.Instance.CreateProject();
+                await UasTemplateService.Instance.LoadCurrentProject();
         }
 }

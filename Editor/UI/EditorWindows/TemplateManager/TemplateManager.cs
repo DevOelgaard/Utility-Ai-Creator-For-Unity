@@ -7,6 +7,8 @@ using UniRx;
 using System.Linq;
 using UnityEditor.UIElements;
 using System.IO;
+using System.Threading.Tasks;
+using UniRxExtension;
 
 internal class TemplateManager : EditorWindow
 {
@@ -102,8 +104,11 @@ internal class TemplateManager : EditorWindow
                 UpdateAddElementPopup();
             })
             .AddTo(disposables);
-    }
 
+        activeCollectionChangedSub = UasTemplateService.Instance
+            .OnCollectionChanged
+            .Subscribe(UpdateLeftPanelIfActiveCollectionChanged);
+    }
 
     void OnEnable()
     {
@@ -127,13 +132,7 @@ internal class TemplateManager : EditorWindow
             text = "File"
         };
 
-        menu.menu.AppendAction("New Project", _ =>
-        {
-            PopUpService.AskToSaveIfProjectNotSavedThenCreateNew();
-            UpdateLeftPanel();
-            rightPanel.Clear();
-
-        });
+        menu.menu.AppendAction("New Project", NewProject);
 
         menu.menu.AppendAction("Save", _ =>
         {
@@ -147,11 +146,7 @@ internal class TemplateManager : EditorWindow
             rightPanel.Clear();
         });
 
-        menu.menu.AppendAction("Open Project", _ =>
-        {
-            uASTemplateService.Save(true);
-            PopUpService.AskToSaveIfProjectNotSavedThenSelectProjectToLoad();
-        });
+        menu.menu.AppendAction("Open Project", OpenProject);
 
         menu.menu.AppendAction("Export File(s)", _ =>
         {
@@ -199,10 +194,23 @@ internal class TemplateManager : EditorWindow
             autoSave = false;
             this.Close();
         });
-
+        
         toolbar.Add(menu);
     }
-    
+
+    private async void OpenProject(DropdownMenuAction _)
+    {
+        uASTemplateService.Save(true);
+        await PopUpService.AskToSaveIfProjectNotSavedThenSelectProjectToLoad();
+    }
+
+    private async void NewProject(DropdownMenuAction _)
+    {
+        await PopUpService.AskToSaveIfProjectNotSavedThenCreateNew();
+        UpdateLeftPanel();
+        rightPanel.Clear();
+    }
+
     private void InitToolbarDebug()
     {
         var menu = new ToolbarMenu();
@@ -242,45 +250,41 @@ internal class TemplateManager : EditorWindow
         deleteButton.SetEnabled(SelectedModel != null);
     }
 
-    private void AddNewAiObject(string name)
+    private void AddNewAiObject(string aiObjectName)
     {
-        var aiObject = AssetDatabaseService.GetInstanceOfType<AiObjectModel>(name);
+        var aiObject = AssetDatabaseService.GetInstanceOfType<AiObjectModel>(aiObjectName);
         uASTemplateService.Add(aiObject);
         ModelSelected(aiObject);
     }
 
-    private void CopySelectedElements()
+    private async void CopySelectedElements()
     {
-        var clones = new List<AiObjectModel>();
-        foreach (var element in selectedObjects)
+        var tasks = selectedObjects
+            .Select(selected => Task.Run(selected.Key.Clone))
+            .ToList();
+
+        await Task.WhenAll(tasks);
+        foreach (var task in tasks)
         {
-            var clone = element.Key.Clone();
-            clones.Add(clone);
-        }
-        foreach(var clone in clones)
-        {
-            uASTemplateService.Add(clone);
+            uASTemplateService.Add(task.Result);
         }
 
-        SelectedModel = clones[0];
+        SelectedModel = tasks[0].Result;
     }
 
     private void DeleteSelectedElements()
     {
-        var toDelete = new List<AiObjectModel>();
-        foreach(var element in selectedObjects)
-        {
-            toDelete.Add(element.Key);
-        }
+        var toDelete = selectedObjects
+            .Select(element => element.Key)
+            .ToList();
+        
         foreach(var element in toDelete)
         {
             uASTemplateService.Remove(element);
-            if (componentsByModels.ContainsKey(element))
-            {
-                var component = componentsByModels[element];
-                rightPanel.Remove(component);
-                componentsByModels.Remove(element);
-            }
+            if (!componentsByModels.ContainsKey(element)) continue;
+            var component = componentsByModels[element];
+            rightPanel.Remove(component);
+            componentsByModels.Remove(element);
         }
 
         SelectedModel = null;
@@ -311,21 +315,21 @@ internal class TemplateManager : EditorWindow
         });
     }
 
-    public void UpdateLeftPanel(string label = "")
+    private void UpdateLeftPanel(string label = "")
     {
         titleContent.text = ProjectSettingsService.Instance.GetCurrentProjectName();
 
-        if (String.IsNullOrEmpty(label))
+        if (string.IsNullOrEmpty(label))
         {
             label = dropDown.value;
         }
         var models = uASTemplateService.GetCollection(label);
         if (models == null) return;
 
-        activeCollectionChangedSub?.Dispose();
-        activeCollectionChangedSub = models
-            .OnValueChanged
-            .Subscribe(values => LoadModels(values));
+        // activeCollectionChangedSub?.Dispose();
+        // activeCollectionChangedSub = models
+        //     .OnValueChanged
+        //     .Subscribe(LoadModels);
 
         MainWindowService.Instance.PreloadComponents(models);
 
@@ -333,6 +337,14 @@ internal class TemplateManager : EditorWindow
 
         LoadModels(models.Values);
         UpdateButtons();
+    }
+
+    private void UpdateLeftPanelIfActiveCollectionChanged(ReactiveList<AiObjectModel> modifiedList)
+    {
+        var activeCollection = uASTemplateService.GetCollection(dropDown.value);
+        if (modifiedList != activeCollection) return;
+        
+        UnityMainThreadService.InvokeActionOnMainThread(() => LoadModels(modifiedList.Values));
     }
 
     private void UpdateAddElementPopup()

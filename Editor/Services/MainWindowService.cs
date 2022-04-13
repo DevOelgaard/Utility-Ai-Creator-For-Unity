@@ -49,32 +49,20 @@ internal class MainWindowService
     private IEnumerator UpdatePoolsCoroutine()
     {
         onUpdateStateChanged.OnNext(true);
-        var sw = new System.Diagnostics.Stopwatch();
-        sw.Start();
         updatingPool = true;
         foreach (var kv in typeAndInitAmountList)
         {
-            sw.Restart();
-              
             if (!componentsByType.ContainsKey(kv.Key))
             {
                 componentsByType.Add(kv.Key, new Queue<AiObjectComponent>());
             }
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "MWS create Queue");
-            sw.Restart();
             var queue = componentsByType[kv.Key];
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "MWS get Queue");
-            sw.Restart();
             if (queue.Count < 5)
             {
                 for (var i = 0; i < kv.Value; i++)
                 {
                     var component = GetComponent(kv.Key);
-                    TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "MWS GetComponent " + kv.Key);
-                    sw.Restart();
                     queue.Enqueue(component);
-                    TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "MWS Enqueue");
-                    sw.Restart();
                     yield return null;
                 }
             }
@@ -84,8 +72,6 @@ internal class MainWindowService
             for (var i = 0; i < poolSize; i++)
             {
                 mainFoldedComponentPool.Enqueue(new MainWindowFoldedComponent());
-                TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "MWS mainFoldedComponentPool");
-                sw.Restart();
                 yield return null;
             }
         }

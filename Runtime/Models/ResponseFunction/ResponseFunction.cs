@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 public abstract class ResponseFunction: AiObjectModel
 {
@@ -80,13 +81,18 @@ public abstract class ResponseFunction: AiObjectModel
 
     protected abstract float CalculateResponseInternal(float x);
 
-    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var state = (ResponseFunctionState)s;
-        Name = state.Name;
+        var task = Task.Factory.StartNew(() =>
+        {
+            var state = (ResponseFunctionState) s;
+            Name = state.Name;
 
-        var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+            var parameters =
+                RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+            Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+        });
+        await task;
     }
 
 
@@ -96,13 +102,13 @@ public abstract class ResponseFunction: AiObjectModel
         return new ResponseFunctionState(this);
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_ResponseFunction);
+        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_ResponseFunction);
         foreach(var parameter in Parameters)
         {
             var subPath = path +"/" + Consts.FolderName_Parameters;
-            parameter.SaveToFile(subPath, persister);
+            parameter.SaveToFile(subPath, destructivePersister);
         }
     }
 }

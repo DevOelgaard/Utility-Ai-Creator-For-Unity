@@ -178,7 +178,7 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
 
     private void SelectedElementChanged()
     {
-        rightPanelComponent.UpateUi(SelectedElement);
+        rightPanelComponent.UpdateUi(SelectedElement);
         if (elements.Count <= 0) return;
         var buttons = buttonContainer.Query<Button>().ToList();
         buttons.ForEach(b => b.styleSheets.Remove(buttonSelectedStyle));

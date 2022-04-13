@@ -55,22 +55,27 @@ public class Parameter: RestoreAble
         return new ParameterState(Name, v, this);
     }
 
-    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var state = (ParameterState)s;
-        Name = state.Name;
-        if(state.ValueType == "UnityEngine.Color")
+        var task = Task.Factory.StartNew(() =>
         {
-            v = new Color(state.RGBA[0],state.RGBA[1],state.RGBA[2],state.RGBA[3]);
-        } else
-        {
-            v = state.Value;
-        }
+            var state = (ParameterState) s;
+            Name = state.Name;
+            if (state.ValueType == "UnityEngine.Color")
+            {
+                v = new Color(state.RGBA[0], state.RGBA[1], state.RGBA[2], state.RGBA[3]);
+            }
+            else
+            {
+                v = state.Value;
+            }
+        });
+        await task;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_Parameter);
+        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_Parameter);
     }
 }
 

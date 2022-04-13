@@ -36,22 +36,27 @@ public abstract class TickerMode: RestoreAble
         return new TickerModeState(Name, Description, Parameters, this);
     }
 
-    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var state = s as TickerModeState;
-        Name = Enum.Parse<AiTickerMode>(state.Name);
-        Description = state.Description;
-        var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+        var task = Task.Factory.StartNew(() =>
+        {
+            var state = s as TickerModeState;
+            Name = Enum.Parse<AiTickerMode>(state.Name);
+            Description = state.Description;
+            var parameters =
+                RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+            Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+        });
+        await task;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
     {
-        persister.SaveObject(state, path+"." + Consts.FileExtension_TickerModes);
+        destructivePersister.SaveObject(state, path+"." + Consts.FileExtension_TickerModes);
         foreach (var parameter in Parameters)
         {
             var subPath = path + "/" + Consts.FolderName_Parameters;
-            parameter.SaveToFile(subPath, persister);
+            parameter.SaveToFile(subPath, destructivePersister);
         }
     }
 }

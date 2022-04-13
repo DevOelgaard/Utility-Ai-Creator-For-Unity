@@ -237,7 +237,7 @@ internal class FileExtensionService
             return Consts.FileExtension_TickerSettings;
         }
 
-        if (type.IsAssignableFrom(typeof(UASTemplateServiceState)))
+        if (type.IsAssignableFrom(typeof(UasTemplateServiceState)))
         {
             return Consts.FileExtension_UasProject;
         }

@@ -60,9 +60,9 @@ public abstract class UtilityContainer : AiObjectModel
         var clone = c as UtilityContainer;
         base.SetBaseClone(clone);
         clone.Considerations = new ReactiveListNameSafe<Consideration>();
-        foreach (var cons in Considerations.Values)
+        foreach (var cClone in Considerations.Values
+                     .Select(cons => cons.Clone() as Consideration))
         {
-            var cClone = cons.Clone() as Consideration;
             clone.Considerations.Add(cClone);
         }
 

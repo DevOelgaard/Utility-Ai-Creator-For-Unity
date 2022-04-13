@@ -20,7 +20,7 @@ internal abstract class AiObjectComponent : VisualElement
     protected VisualElement Body;
     protected VisualElement Footer;
     protected InfoComponent InfoComponent;
-    protected Button SaveToTemplate;
+    protected Button SaveToTemplateButton;
     protected HelpBox HelpBox;
     protected VisualElement HelpBoxContainer;
     private LabelContainerComponent labelContainer;
@@ -61,17 +61,19 @@ internal abstract class AiObjectComponent : VisualElement
         Header = this.Q<VisualElement>("Header");
         Body = this.Q<VisualElement>("Body");
         Footer = this.Q<VisualElement>("Footer");
-        SaveToTemplate = this.Q<Button>("SaveToTemplate-Button");
-        SaveToTemplate.RegisterCallback<MouseUpEvent>(evt =>
-        {
-            var clone = Model.Clone();
-            UasTemplateService.Instance.Add(clone);
-        });
+        SaveToTemplateButton = this.Q<Button>("SaveToTemplate-Button");
+        SaveToTemplateButton.RegisterCallback<MouseUpEvent>(SaveToTemplate);
         var lc = this.Q<VisualElement>("LabelContainer");
         labelContainer = new LabelContainerComponent();
         lc.Add(labelContainer);
 
         SetFooter();
+    }
+
+    private async void SaveToTemplate(MouseUpEvent evt)
+    {
+        var clone = await Model.CloneAsync();
+        UasTemplateService.Instance.Add(clone);
     }
 
     internal void UpdateUi(AiObjectModel model)

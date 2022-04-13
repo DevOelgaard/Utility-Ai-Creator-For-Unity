@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 public abstract class AgentAction: AiObjectModel
 {
@@ -48,9 +49,9 @@ public abstract class AgentAction: AiObjectModel
     public virtual void OnGoing(AiContext context) { }
     public virtual void OnEnd(AiContext context) { }
 
-    public override string GetNameFormat(string name)
+    protected override string GetNameFormat(string currentName)
     {
-        return name;
+        return currentName;
     }
 
     internal override RestoreState GetState()
@@ -58,23 +59,28 @@ public abstract class AgentAction: AiObjectModel
         return new AgentActionState(Parameters, Name, Description, this);
     }
 
-    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var state = (AgentActionState)s;
-        Name = state.Name;
-        Description = state.Description;
+        var task = Task.Factory.StartNew(() =>
+        {
+            var state = (AgentActionState)s;
+            Name = state.Name;
+            Description = state.Description;
 
-        var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+            var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+            Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+        });
+
+        await task;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_AgentAction);
+        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_AgentAction);
         foreach (var p in Parameters)
         {
             var subPath = path + "/" + Consts.FolderName_Parameters;
-            p.SaveToFile(subPath, persister);
+            p.SaveToFile(subPath, destructivePersister);
         }
     }
 }

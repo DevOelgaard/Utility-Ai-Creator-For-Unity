@@ -31,20 +31,25 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
         return GetName();
     }
 
-    protected override void RestoreInternal(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var state = s as UCSState;
-        var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+        var task = Task.Factory.StartNew(() =>
+        {
+            var state = s as UCSState;
+            var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+            Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+
+        });
+        await task;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_UtilityContainerSelector);
+        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_UtilityContainerSelector);
         foreach (var parameter in Parameters.Where(p => p != null))
         {
             var subPath = path + "/" + Consts.FolderName_Parameters;
-            parameter.SaveToFile(subPath, persister);
+            parameter.SaveToFile(subPath, destructivePersister);
         }
     }
 }

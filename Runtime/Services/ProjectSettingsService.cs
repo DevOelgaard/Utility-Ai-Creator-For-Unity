@@ -70,22 +70,22 @@ internal class ProjectSettingsService
         SaveSettings();
     }
 
-    internal void CreateProject()
+    internal async Task CreateProject()
     {
         var path = EditorUtility.SaveFilePanel("New Project", "", "New Project", Consts.FileExtension_UasProject);
 
         SetProjectPath(path);
-        UasTemplateService.Instance.Reset();
+        await UasTemplateService.Instance.Reset();
         UasTemplateService.Instance.Save();
         SaveSettings();
     }
 
-    internal void SaveProjectAs()
+    internal async Task SaveProjectAs()
     {
         var path = EditorUtility.SaveFilePanel("New Project", "", "New Project", Consts.FileExtension_UasProject);
         SetProjectPath(path);
         UasTemplateService.Instance.Save();
-        UasTemplateService.Instance.LoadCurrentProject();
+        await UasTemplateService.Instance.LoadCurrentProject();
     }
 
     internal void LoadProject()

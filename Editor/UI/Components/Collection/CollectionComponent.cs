@@ -51,12 +51,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
         addCopyPopup = new PopupField<string>("Add " + tempLabel);
         dropdownContainer.Add(addCopyPopup);
 
-        addCopyPopup.RegisterCallback<ChangeEvent<string>>(evt =>
-        {
-            if (evt.newValue == null) return;
-            AddCopy(evt.newValue);
-            addCopyPopup.value = null;
-        });
+        addCopyPopup.RegisterCallback<ChangeEvent<string>>(OnAddCopyValueChanged);
 
         this.templates = templates;
         this.templates.OnValueChanged
@@ -112,6 +107,13 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
             .AddTo(subscriptions);
     }
 
+    private async void OnAddCopyValueChanged(ChangeEvent<string> evt)
+    {
+        if (evt.newValue == null) return;
+        await AddCopy(evt.newValue);
+        addCopyPopup.value = null;
+    }
+
     private void InitAddCopyPopup()
     {
         addCopyPopup.choices = AddCopyService.GetChoices(typeof(T));
@@ -122,7 +124,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
         }
     }
 
-    private void AddCopy(string aiObjectName)
+    private async Task AddCopy(string aiObjectName)
     {
         var whiteSpaceName = StringService.SpaceBetweenUpperCase(aiObjectName);
         var noWhiteSpace = StringService.RemoveWhiteSpaces(aiObjectName);
@@ -132,7 +134,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
         
         if(existingElement != null)
         {
-            var c =  existingElement.Clone();
+            var c = await existingElement.CloneAsync();
             AddElement(c as T);
 
         } else

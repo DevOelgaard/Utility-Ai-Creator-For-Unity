@@ -184,7 +184,7 @@ public abstract class Consideration : AiObjectModel
             {
                 if (responseCurveState.LoadedObject == null)
                 {
-                    var error = (ResponseCurve)InstantiaterService.Instance.CreateInstance(responseCurveState.ModelType);
+                    var error = (ResponseCurve)InstantiaterService.CreateInstance(responseCurveState.ModelType);
                     error.Name = responseCurveState.ErrorMessage;
                     error.Description = "Exception: " + responseCurveState.Exception.ToString();
                     CurrentResponseCurve = error;

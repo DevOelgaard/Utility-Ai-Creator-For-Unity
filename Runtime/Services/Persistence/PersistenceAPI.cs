@@ -64,6 +64,7 @@ internal class PersistenceAPI
     internal void SaveDestructiveObjectPath(RestoreAble o, string path, string fileName)
     {
         o.SaveToFile(path, destructivePersister, fileName);
+        CleanUp(path);
     }
 
     internal ObjectMetaData<T> LoadObjectPanel<T>()
@@ -84,11 +85,9 @@ internal class PersistenceAPI
     internal ObjectMetaData<T> LoadObjectPath<T>(string path)
     {
         var result = persister.LoadObject<T>(path);
-        RemoveEmptyFolders(path);
+        CleanUp(path);
         return result;
     }
-
-
 
     internal List<ObjectMetaData<T>> LoadObjectsPanel<T>(string startPath, string filter = "") where T : RestoreState
     {
@@ -151,23 +150,50 @@ internal class PersistenceAPI
     }
 
     //https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories
-    private void RemoveEmptyFolders(string path)
+    private void CleanUp(string path)
     {
-        
         if (path.Contains("."))
         {
             path = new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName;
         }
         var directories = Directory.GetDirectories(path);
-        
         foreach (var d in directories.Where((d => !d.Contains("."))))
         {
-            RemoveEmptyFolders(d);
-            if (Directory.GetFiles(d).Length == 0 &&
-                Directory.GetDirectories(d).Length == 0)
+            CleanUp(d);
+
+            var metaFiles = Directory.GetFiles(d).Where(f => f.Contains(".meta"));
+            var fileNamesWithoutMeta = Directory.GetFiles(d)
+                .Where(f => !f.Contains(".meta"))
+                .Select(Path.GetFileName)
+                .ToList();
+            var childDirectoryNames = Directory.GetDirectories(d)
+                .Select(Path.GetFileNameWithoutExtension)
+                .ToList();
+            
+            foreach (var metaFile in metaFiles)
             {
-                Directory.Delete(d,false);
+                var metaFileName = Path.GetFileNameWithoutExtension(metaFile);
+                var canDelete = fileNamesWithoutMeta.All(file => file != metaFileName) &&
+                                childDirectoryNames.All(directory => directory != metaFileName);
+
+                if (!canDelete) continue;
+                File.Delete(metaFile);
             }
+            
+
+
+
+            // Delete empty folders
+            var childDirectories = Directory.GetDirectories(d);
+            if (childDirectories.Length > 0) continue;
+
+            var filesWithoutMeta = Directory.GetFiles(d).Where(f => !f.Contains(".meta")).ToList();
+            if (filesWithoutMeta.Count > 0) continue;
+            foreach (var file in Directory.GetFiles(d))
+            {
+                File.Delete(file);
+            }
+            Directory.Delete(d,false);
         }
     }
 }

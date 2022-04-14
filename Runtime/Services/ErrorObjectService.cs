@@ -18,6 +18,6 @@ internal static class ErrorObjectService
             return new Error_Action();
         }
 
-        else return (AiObjectModel)InstantiaterService.Instance.CreateInstance(t);
+        else return (AiObjectModel)InstantiaterService.CreateInstance(t);
     }
 }

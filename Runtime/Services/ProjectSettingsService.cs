@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using UniRx;
 using UnityEditor;
 
 internal class ProjectSettingsService
 {
+    private CompositeDisposable modelChangedSubscription = new CompositeDisposable();
+    internal IObservable<bool> OnProjectSettingsChanged => onProjectSettingsChanged;
+    private readonly Subject<bool> onProjectSettingsChanged = new Subject<bool>();
     private readonly ProjectSettingsModel model;
     private readonly IPersister persister;
     private ProjectSettingsService()
@@ -15,6 +19,9 @@ internal class ProjectSettingsService
         persister = new JsonPersister();
         var loaded = persister.LoadObject<ProjectSettingsModel>(Consts.ProjectSettingsPath);
         model = loaded.Success ? loaded.LoadedObject : new ProjectSettingsModel();
+        model.OnCurrentProjectPathChanged
+            .Subscribe(_ => onProjectSettingsChanged.OnNext(true))
+            .AddTo(modelChangedSubscription);
     }
 
     internal string GetCurrentProjectDirectory()
@@ -149,5 +156,10 @@ internal class ProjectSettingsService
             }
             throw;
         }
+    }
+
+    ~ProjectSettingsService()
+    {
+        modelChangedSubscription.Clear();
     }
 }

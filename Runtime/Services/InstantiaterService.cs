@@ -13,44 +13,19 @@ internal class InstantiaterService
 {
     private Dictionary<Type, Delegate> instantiatersByType = new Dictionary<Type, Delegate>();
     private Dictionary<Type, int> instantiationTimes = new Dictionary<Type, int>();
-    private static InstantiaterService instance;
+    private static InstantiaterService _instance;
     public static InstantiaterService Instance
     {
-        get
-        {
-            if(instance == null)
-            {
-                instance = new InstantiaterService();
-            }
-            return instance;
-        }
+        get { return _instance ??= new InstantiaterService(); }
     }
 
-    public InstantiaterService()
+    internal static object CreateInstance(Type t, bool nonPublic = false)
     {
-    }
-
-    internal object CreateInstance(Type t, bool nonPublic = false)
-    {
-        var sw = new System.Diagnostics.Stopwatch();
-        sw.Start();
-        object instance;
-        if (t == typeof(Parameter))
-        {
-            instance = new Parameter();
-        }
-        else
-        {
-            instance = Activator.CreateInstance(t);
-            //var activator = (ObjectActivator)GetDelegate(t);
-            //var sw2 = new System.Diagnostics.Stopwatch();
-            //sw2.Start();
-            //instance = activator();
-            //TimerService.Instance.LogCall(sw2.ElapsedMilliseconds, "Activator");
-            //TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "Total Create Instance");
-        }
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, t.ToString());
-        return instance;
+        var newObject = t == typeof(Parameter) ? 
+            new Parameter() : 
+            Activator.CreateInstance(t);
+        
+        return newObject;
     }
 
     private Delegate GetDelegate(Type t)

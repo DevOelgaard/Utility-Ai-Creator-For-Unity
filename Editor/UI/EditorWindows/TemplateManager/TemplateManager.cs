@@ -108,6 +108,14 @@ internal class TemplateManager : EditorWindow
         activeCollectionChangedSub = UasTemplateService.Instance
             .OnCollectionChanged
             .Subscribe(UpdateLeftPanelIfActiveCollectionChanged);
+
+        ProjectSettingsService.Instance.OnProjectSettingsChanged
+            .Subscribe(_ =>
+            {
+                var projectName = ProjectSettingsService.Instance.GetCurrentProjectName();
+                titleContent.text = projectName;
+            })
+            .AddTo(disposables);
     }
 
     void OnEnable()

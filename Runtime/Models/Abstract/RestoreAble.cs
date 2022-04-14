@@ -54,7 +54,7 @@ public abstract class RestoreAble
             element = AssetDatabaseService.GetInstanceOfType<T>(state.TypeString);
         } else
         {
-            element = (T)InstantiaterService.Instance.CreateInstance(type,true);
+            element = (T)InstantiaterService.CreateInstance(type,true);
         }
         element.CurrentDirectory = state.FolderLocation + "/" + state.FileName + "/";
         element.RestoreInternalAsync(state, restoreDebug);
@@ -63,7 +63,7 @@ public abstract class RestoreAble
 
     public static RestoreAble Restore(RestoreState state, Type type, bool restoreDebug = false)
     {
-        var element = (RestoreAble)InstantiaterService.Instance.CreateInstance(type, true);
+        var element = (RestoreAble)InstantiaterService.CreateInstance(type, true);
         element.CurrentDirectory = state.FolderLocation + "/" + state.FileName + "/";
 
         element.RestoreInternalAsync(state, restoreDebug);

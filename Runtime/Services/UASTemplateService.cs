@@ -131,13 +131,11 @@ internal class UasTemplateService: RestoreAble
 
     internal void Save(bool backup = false)
     {
-        var sw = new System.Diagnostics.Stopwatch();
-        sw.Start();
+        var path = !backup
+            ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
+            : ProjectSettingsService.Instance.GetBackupDirectory();
         var perstistAPI = PersistenceAPI.Instance;
-        perstistAPI.SaveDestructiveObjectPath(this,
-            !backup
-                ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
-                : ProjectSettingsService.Instance.GetBackupDirectory(),
+        perstistAPI.SaveDestructiveObjectPath(this,path,
             ProjectSettingsService.Instance.GetCurrentProjectName(true));
     }
 

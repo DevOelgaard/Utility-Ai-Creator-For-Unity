@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <ui:VisualElement name="Container" style="flex-direction: row; flex-grow: 1; min-height: 32px;">
-        <ui:VisualElement name="Left" style="min-width: 32px;">
+        <ui:VisualElement name="Left" style="min-width: 80px;">
             <ui:Button text="Expand" display-tooltip-when-elided="true" name="ToggleView-Button" style="-unity-font-style: bold;" />
             <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
                 <ui:Button text="+" display-tooltip-when-elided="true" name="Up-Button" />

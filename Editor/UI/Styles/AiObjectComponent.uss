@@ -21,7 +21,7 @@ CollectionComponent {
 }
 
 #TType-Label-Folded {
-    margin-left: 0px;
+    margin-left: 0;
 }
 
 TabViewComponent {
@@ -107,9 +107,6 @@ AgentComponent > TemplateContainer > #Footer {
 #ResponseCurveButton{
     height: 64px;
 }
-
-
-
 
 
 #FoldedFooterLabel{

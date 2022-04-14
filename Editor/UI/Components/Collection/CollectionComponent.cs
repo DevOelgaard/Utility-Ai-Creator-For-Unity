@@ -162,27 +162,17 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
     private void UpdateCollection()
     {
         //Debug.LogWarning("This could be more effective by using a pool");
-        var sw = new System.Diagnostics.Stopwatch();
-        sw.Start();
         elementsBody.Clear();
         listViewSubscriptions.Clear();
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateCollection Init");
-        sw.Restart();
-
         if (collection.Values.Count > expandedList.Count)
         {
             var diff = collection.Values.Count - expandedList.Count;
             var type = collection.Values[0].GetType();
             for(var i = 0; i < diff; i++)
             {
-                sw.Restart();
                 var expanded = MainWindowService.Instance.RentComponent(type);
                 expandedList.Add(expanded);
-                TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateCollection expanded");
-                sw.Restart();
                 var folded = MainWindowService.Instance.RentMainWindowFoldedComponent();
-                TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateCollection folded");
-                sw.Restart();
                 foldedList.Add(folded);
             }
         }
@@ -196,17 +186,9 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
             expanded.style.display = DisplayStyle.Flex;
 
             var listView = new ListViewComponent();
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateCollection listView");
-            sw.Restart();
             folded.UpdateUi(element);
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateCollection  folded.UpdateUi");
-            sw.Restart();
             expanded.UpdateUi(element);
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateCollection expanded.UpdateUi");
-            sw.Restart();
             listView.UpdateUi(expanded, folded);
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateCollection listView.UpdateUi");
-            sw.Restart();
 
             listView.OnRemoveClicked
                 .Subscribe(_ => collection.Remove(element))
@@ -219,11 +201,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
             listView.OnDownClicked
                 .Subscribe(_ => collection.IncreaIndex(element))
                 .AddTo(listViewSubscriptions);
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateCollection Subscribe");
-            sw.Restart();
             elementsBody.Add(listView);
-            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "UpdateCollection Add");
-            sw.Restart();
         }
 
         if(expandedList.Count > collection.Count)

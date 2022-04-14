@@ -3,13 +3,14 @@
 internal class LabelContainerComponent: VisualElement
 {
     private TemplateContainer root;
-    private VisualElement labelContainer;
+    private readonly VisualElement labelContainer;
 
     internal LabelContainerComponent()
     {
         root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);
-        labelContainer = root.Q<VisualElement>("LabelContainer");
+        labelContainer = root.Q<VisualElement>("InternalLabelContainer");
         root.styleSheets.Add(StylesService.GetStyleSheet(GetType().FullName));
+        Add(root);
     }
 
     internal void ClearLabels()

@@ -48,7 +48,7 @@ public abstract class RestoreAble
     public static T Restore<T>(RestoreState state, bool restoreDebug = false) where T:RestoreAble
     {
         // var type = Type.GetType(state.DerivedTypeString);
-        var type = state.OriginalType;
+        var type = state.DerivedType;
         T element = default(T);
         if (type == null)
         {
@@ -94,7 +94,7 @@ public abstract class RestoreAble
 
 public abstract class RestoreState
 {
-    public readonly string FileName;
+    public string FileName;
     public string DerivedTypeString;
     public string FolderLocation;
     public Type DerivedType;

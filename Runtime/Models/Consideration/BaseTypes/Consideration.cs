@@ -70,7 +70,7 @@ public abstract class Consideration : AiObjectModel
 
     public override string GetTypeDescription()
     {
-        return "Consideration";
+        return GetType().ToString();
     }
 
     protected override AiObjectModel InternalClone()

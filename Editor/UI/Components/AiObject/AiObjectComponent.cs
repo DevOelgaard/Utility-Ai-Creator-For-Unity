@@ -76,6 +76,11 @@ internal abstract class AiObjectComponent : VisualElement
         UasTemplateService.Instance.Add(clone);
     }
 
+    internal void Touch()
+    {
+        UpdateUi(Model);
+    }
+
     internal void UpdateUi(AiObjectModel model)
     {
         var sw = new System.Diagnostics.Stopwatch();
@@ -144,20 +149,18 @@ internal abstract class AiObjectComponent : VisualElement
             if (cons.IsSetter)
             {
                 labelContainer.AddLabel("Setter");
-
             }
             
             if (cons.IsScorer)
             {
                 labelContainer.AddLabel("Scorer");
             }
+            else
+            {
+                labelContainer.AddLabel("Boolean");
+            }
         }
     }
-
-    //internal void Close()
-    //{
-    //    AssetDatabase.SaveAssets();
-    //}
 
     ~AiObjectComponent ()
     {

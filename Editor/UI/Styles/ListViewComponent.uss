@@ -1,20 +1,26 @@
 #Left {
-    max-width: 80px;
-    width: 80px;
     min-width: 80px;
+}
+
+#TypeHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 4px;
 }
 
 #Center {
     margin: 8px;
     padding: 3px;
     /*max-width: 500px;*/
-    border-radius: 0px;
+    border-radius: 0;
     border-width: 1px;
     border-color: rgb(70, 70, 70);
 }
 
     #Center:hover {
-        border-radius: 0px;
+        border-radius: 0;
         border-width: 1px;
         border-color: rgb(100, 100, 100);
     }
+    

@@ -5,8 +5,8 @@ using UnityEngine.UIElements;
 
 public class FoldableComponent : VisualElement
 {
-    public VisualElement Expanded { get; private set; }
-    public VisualElement Folded { get; private set; }
+    internal AiObjectComponent Expanded { get; private set; }
+    internal  MainWindowFoldedComponent Folded { get; private set; }
 
     public bool IsFolded;
     
@@ -15,7 +15,7 @@ public class FoldableComponent : VisualElement
 
     }
 
-    internal void UpdateUi(VisualElement expanded, VisualElement folded, bool startFolded = true)
+    internal void UpdateUi(AiObjectComponent expanded, MainWindowFoldedComponent folded, bool startFolded = true)
     {
         this.Expanded = expanded;
         this.Folded = folded;
@@ -35,6 +35,10 @@ public class FoldableComponent : VisualElement
         //Debug.LogWarning("This may be more effective by hiding and disabling instead of swapping");
         Clear();
         Add(GetActiveElement());
+        
+        //TODO Only touch the active element
+        Expanded.Touch();
+        Folded.Touch();
     }
 
     public VisualElement GetActiveElement()

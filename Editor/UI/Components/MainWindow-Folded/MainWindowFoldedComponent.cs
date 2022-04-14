@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor;
-using UnityEngine.UIElements;
+﻿using UnityEngine.UIElements;
 using UniRx;
-using UnityEngine;
 
 internal class MainWindowFoldedComponent : VisualElement
 {
@@ -42,8 +35,14 @@ internal class MainWindowFoldedComponent : VisualElement
         lc.Add(labelContainer);
     }
 
+    internal void Touch()
+    {
+        UpdateUi(model);
+    }
+
     internal void UpdateUi(AiObjectModel aiObjectModel)
     {
+
         disposables.Clear();
         this.model = aiObjectModel;
 
@@ -61,7 +60,7 @@ internal class MainWindowFoldedComponent : VisualElement
         aiObjectModel.OnDescriptionChanged
             .Subscribe(description => descriptionLabel.text = description)
             .AddTo(disposables);
-
+        
         scoreContainer.Clear();
         if (aiObjectModel.GetType() == typeof(Bucket) || aiObjectModel.GetType().IsAssignableFrom(typeof(Bucket)))
         {
@@ -136,11 +135,15 @@ internal class MainWindowFoldedComponent : VisualElement
                 labelContainer.AddLabel("Setter");
 
             }
-            
             if (cons.IsScorer)
             {
                 labelContainer.AddLabel("Scorer");
             }
+            else
+            {
+                labelContainer.AddLabel("Boolean");
+            }
+            
         }
     }
 

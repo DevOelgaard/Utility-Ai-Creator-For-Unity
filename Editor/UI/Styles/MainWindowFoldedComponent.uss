@@ -11,6 +11,7 @@
     justify-content: flex-start;
     margin-bottom: 4px;
     align-items: flex-start;
+    flex-grow: 1;
 }
 
 MainWindowFoldedComponent > TemplateContainer > #Container > #Body > #IdentifierContainer{
@@ -33,3 +34,9 @@ MainWindowFoldedComponent > TemplateContainer > #Container > #Footer{
     margin-top: 4px;
     margin-bottom: 0;
 }
+
+/*#LabelContainer{*/
+/*    flex-grow: 1;*/
+/*    height: 10px;*/
+/*    width: 10px;*/
+/*}*/

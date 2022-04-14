@@ -43,14 +43,10 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
         await task;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_UtilityContainerSelector);
-        foreach (var parameter in Parameters.Where(p => p != null))
-        {
-            var subPath = path + "/" + Consts.FolderName_Parameters;
-            parameter.SaveToFile(subPath, destructivePersister);
-        }
+        persister.SaveObject(state, path + "." + Consts.FileExtension_UtilityContainerSelector);
+        RestoreAbleService.SaveRestoreAblesToFile(Parameters.Where(p => p != null),path + "/" + Consts.FolderName_Parameters, persister);
     }
 }
 

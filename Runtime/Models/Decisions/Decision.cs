@@ -167,26 +167,12 @@ public class Decision: UtilityContainer
         agentActionSub?.Dispose();
     }
 
-    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_Decision);
-        foreach(var aa in AgentActions.Values)
-        {
-            var subPath = path + "/" + Consts.FolderName_AgentActions;
-            aa.SaveToFile(subPath, destructivePersister);
-        }
-
-        foreach(var c in Considerations.Values)
-        {
-            var subPath = path + "/" + Consts.FolderName_Considerations;
-            c.SaveToFile(subPath, destructivePersister);
-        }
-
-        foreach(var p in Parameters)
-        {
-            var subPath = path + "/" + Consts.FolderName_Parameters;
-            p.SaveToFile(subPath, destructivePersister);
-        }
+        persister.SaveObject(state, path + "." + Consts.FileExtension_Decision);
+        RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values,path + "/" + Consts.FolderName_AgentActions, persister);
+        RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values,path + "/" + Consts.FolderName_Considerations, persister);
+        RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
     }
 }
 

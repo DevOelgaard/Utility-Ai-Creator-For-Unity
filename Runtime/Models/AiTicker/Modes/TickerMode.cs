@@ -50,14 +50,15 @@ public abstract class TickerMode: RestoreAble
         await task;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        destructivePersister.SaveObject(state, path+"." + Consts.FileExtension_TickerModes);
-        foreach (var parameter in Parameters)
-        {
-            var subPath = path + "/" + Consts.FolderName_Parameters;
-            parameter.SaveToFile(subPath, destructivePersister);
-        }
+        persister.SaveObject(state, path+"." + Consts.FileExtension_TickerModes);
+        RestoreAbleService.SaveRestoreAblesToFile(Parameters.Where(p => p != null),path + "/" + Consts.FolderName_Parameters, persister);
+        // foreach (var parameter in Parameters)
+        // {
+        //     var subPath = path + "/" + Consts.FolderName_Parameters;
+        //     parameter.SaveToFile(subPath, persister);
+        // }
     }
 }
 

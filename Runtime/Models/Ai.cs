@@ -199,7 +199,7 @@ public class Ai: AiObjectModel
             var bucketsLocal = RestoreAbleService.GetAiObjects<Bucket>(CurrentDirectory + Consts.FolderName_Buckets, restoreDebug);
             Buckets.Add(RestoreAbleService.SortByName(state.Buckets, bucketsLocal));
 
-            BucketSelectors = RestoreAbleService.GetUCS(CurrentDirectory + Consts.FolderName_BucketSelectors, restoreDebug);
+            BucketSelectors = RestoreAbleService.GetUcs(CurrentDirectory + Consts.FolderName_BucketSelectors, restoreDebug);
             CurrentBucketSelector = BucketSelectors
                 .FirstOrDefault(d => d.GetName() == state.CurrentBucketSelectorName);
 
@@ -208,7 +208,7 @@ public class Ai: AiObjectModel
                 CurrentBucketSelector = BucketSelectors.FirstOrDefault();
             }
 
-            DecisionSelectors = RestoreAbleService.GetUCS(CurrentDirectory + Consts.FolderName_DecisionSelectors, restoreDebug);
+            DecisionSelectors = RestoreAbleService.GetUcs(CurrentDirectory + Consts.FolderName_DecisionSelectors, restoreDebug);
             CurrentDecisionSelector = DecisionSelectors
                 .FirstOrDefault(d => d.GetName() == state.CurrentDecisionSelectorName);
 
@@ -229,26 +229,12 @@ public class Ai: AiObjectModel
         await task;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_UAI);
-        foreach(var b in Buckets.Values)
-        {
-            var subPath = path + "/" + Consts.FolderName_Buckets;
-            b.SaveToFile(subPath,destructivePersister);
-        }
-
-        foreach(var bs in BucketSelectors)
-        {
-            var subPath = path + "/" + Consts.FolderName_BucketSelectors;
-            bs.SaveToFile(subPath, destructivePersister);
-        }
-
-        foreach (var ds in DecisionSelectors)
-        {
-            var subPath = path + "/" + Consts.FolderName_DecisionSelectors;
-            ds.SaveToFile(subPath, destructivePersister);
-        }
+        persister.SaveObject(state, path + "." + Consts.FileExtension_UAI);
+        RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values,path + "/" + Consts.FolderName_Buckets, persister);
+        RestoreAbleService.SaveRestoreAblesToFile(BucketSelectors,path + "/" + Consts.FolderName_BucketSelectors, persister);
+        RestoreAbleService.SaveRestoreAblesToFile(DecisionSelectors,path + "/" + Consts.FolderName_DecisionSelectors, persister);
     }
 }
 

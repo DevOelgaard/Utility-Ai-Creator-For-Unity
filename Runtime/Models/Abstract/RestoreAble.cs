@@ -71,7 +71,7 @@ public abstract class RestoreAble
         return element;
     }
 
-    internal virtual void SaveToFile(string path, IPersister persister, string fileName = null)
+    internal virtual void SaveToFile(string path, IPersister persister, int index = -1, string className = null)
     {
         if (string.IsNullOrEmpty(path))
         {
@@ -79,27 +79,28 @@ public abstract class RestoreAble
         }
         var state = GetState();
         // state.FolderLocation = path;
-        FileName = fileName ?? GetFileName();
+        FileName = className ?? GetFileName();
         path = path + "/" + FileName;
+        state.Index = index;
 
         InternalSaveToFile(path, persister, state);
     }
 
 
-    protected abstract void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state);
+    protected abstract void InternalSaveToFile(string path, IPersister persister, RestoreState state);
 
     internal abstract RestoreState GetState();
 }
 
 public abstract class RestoreState
 {
-    public string FileName;
+    public readonly string FileName;
     public string DerivedTypeString;
     public string FolderLocation;
     public Type DerivedType;
     public int Index;
     public string AssemblyName;
-    public string AssemblyQualifiedName;
+    public readonly string AssemblyQualifiedName;
 
     public RestoreState()
     {

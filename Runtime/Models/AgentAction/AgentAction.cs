@@ -74,14 +74,10 @@ public abstract class AgentAction: AiObjectModel
         await task;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_AgentAction);
-        foreach (var p in Parameters)
-        {
-            var subPath = path + "/" + Consts.FolderName_Parameters;
-            p.SaveToFile(subPath, destructivePersister);
-        }
+        persister.SaveObject(state, path + "." + Consts.FileExtension_AgentAction);
+        RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
     }
 }
 

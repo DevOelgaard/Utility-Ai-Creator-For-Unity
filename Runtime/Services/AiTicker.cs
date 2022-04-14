@@ -148,9 +148,9 @@ internal class AiTicker: RestoreAble
         return new AiTickerState(Settings, this);
     }
 
-    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_AiTicker);
+        persister.SaveObject(state, path + "." + Consts.FileExtension_AiTicker);
     }
 
     internal void Reload()

@@ -1,4 +1,5 @@
 #Left {
+    max-width: 80px;
     width: 80px;
     min-width: 80px;
 }

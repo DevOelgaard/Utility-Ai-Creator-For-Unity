@@ -44,9 +44,9 @@ public class RestoreAbleCollection: RestoreAble
         await task;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        destructivePersister.SaveObject(state, path);
+        persister.SaveObject(state, path);
     }
 }
 

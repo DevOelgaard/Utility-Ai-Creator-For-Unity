@@ -143,23 +143,13 @@ public class Bucket : UtilityContainer
         decisionSub?.Dispose();
     }
 
-    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_Bucket);
-        foreach(var d in Decisions.Values)
-        {
-            var subPath = path + "/" + Consts.FolderName_Decisions;
-            d.SaveToFile(subPath, destructivePersister);
-        }
-
-        foreach (var c in Considerations.Values)
-        {
-            var subPath = path + "/" + Consts.FolderName_Considerations;
-            c.SaveToFile(subPath, destructivePersister);
-        }
-
+        persister.SaveObject(state, path + "." + Consts.FileExtension_Bucket);
+        RestoreAbleService.SaveRestoreAblesToFile(Decisions.Values,path + "/" + Consts.FolderName_Decisions, persister);
+        RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values,path + "/" + Consts.FolderName_Considerations, persister);
         var wSubPath = path + "/" + Consts.FolderName_Weight;
-        Weight.SaveToFile(wSubPath, destructivePersister);
+        Weight.SaveToFile(wSubPath, persister);
     }
 }
 

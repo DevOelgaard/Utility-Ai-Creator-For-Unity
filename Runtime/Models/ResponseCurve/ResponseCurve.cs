@@ -268,28 +268,29 @@ public class ResponseCurve: AiObjectModel
         return clone;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        destructivePersister.SaveObject(state, path + "." + Consts.FileExtension_ResponseCurve);
-        foreach (var segnemt in Segments)
-        {
-            var subPath = path + "/" + Consts.FolderName_Segments + "/" + Segments.IndexOf(segnemt);
-            segnemt.SaveToFile(subPath, destructivePersister);
-        }
+        persister.SaveObject(state, path + "." + Consts.FileExtension_ResponseCurve);
+        RestoreAbleService.SaveRestoreAblesToFile(Segments,path + "/" + Consts.FolderName_Segments, persister);
+        RestoreAbleService.SaveRestoreAblesToFile(ResponseFunctions,path + "/" + Consts.FolderName_ResponseFunctions, persister);
+        // foreach (var segnemt in Segments)
+        // {
+        //     var subPath = path + "/" + Consts.FolderName_Segments + "/" + Segments.IndexOf(segnemt);
+        //     segnemt.SaveToFile(subPath, persister);
+        // }
 
-        foreach(var rf in ResponseFunctions)
-        {
-            rf.RCIndex = ResponseFunctions.IndexOf(rf);
-            var subPath = path + "/" + Consts.FolderName_ResponseFunctions + "/" + ResponseFunctions.IndexOf(rf);
-            rf.SaveToFile(subPath, destructivePersister);
-        }
+        // foreach(var rf in ResponseFunctions)
+        // {
+        //     rf.RCIndex = ResponseFunctions.IndexOf(rf);
+        //     var subPath = path + "/" + Consts.FolderName_ResponseFunctions + "/" + ResponseFunctions.IndexOf(rf);
+        //     rf.SaveToFile(subPath, persister);
+        // }
     }
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
         var task = Task.Factory.StartNew(() =>
         {
-
             var state = (ResponseCurveState)s;
             Name = state.Name;
             Description = state.Description;

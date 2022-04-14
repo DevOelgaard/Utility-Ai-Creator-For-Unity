@@ -58,12 +58,12 @@ internal class PersistenceAPI
 
     internal void SaveObjectPath(RestoreAble o, string path, string fileName)
     {
-        o.SaveToFile(path, persister, fileName);
+        o.SaveToFile(path, persister, -2, fileName);
     }
 
     internal void SaveDestructiveObjectPath(RestoreAble o, string path, string fileName)
     {
-        o.SaveToFile(path, destructivePersister, fileName);
+        o.SaveToFile(path, destructivePersister,-2, fileName);
         CleanUp(path);
     }
 

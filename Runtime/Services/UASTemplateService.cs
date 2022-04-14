@@ -228,59 +228,27 @@ internal class UasTemplateService: RestoreAble
     {
         return new UasTemplateServiceState(AIs, Buckets, Decisions, Considerations, AgentActions, this);
     }
+    
+    
 
-    protected override void InternalSaveToFile(string path, IPersister destructivePersister, RestoreState state)
+    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
         var directoryPath = Path.GetDirectoryName(path);
         if (!path.Contains(Consts.FileExtension_UasProject))
         {
             path += "." + Consts.FileExtension_UasProject;
         }
-        destructivePersister.SaveObject(state, path) ;
+        persister.SaveObject(state, path) ;
 
         // Guard if saving destructively. Should only happen for Project level
-        var persister = new JsonPersister();
-        foreach(var aiObjectModel in AIs.Values)
-        {
-            var a = (Ai) aiObjectModel;
-            var subPath = directoryPath + "/" + Consts.FolderName_Ais;
-            a.SaveToFile(subPath, persister);
-        }
-
-        foreach (var aiObjectModel in Buckets.Values)
-        {
-            var b = (Bucket) aiObjectModel;
-            var subPath = directoryPath + "/" + Consts.FolderName_Buckets;
-            b.SaveToFile(subPath, persister);
-        }
-
-        foreach (var aiObjectModel in Decisions.Values)
-        {
-            var d = (Decision) aiObjectModel;
-            var subPath = directoryPath + "/" + Consts.FolderName_Decisions;
-            d.SaveToFile(subPath, persister);
-        }
-
-        foreach (var aiObjectModel in Considerations.Values)
-        {
-            var c = (Consideration) aiObjectModel;
-            var subPath = directoryPath + "/" + Consts.FolderName_Considerations;
-            c.SaveToFile(subPath, persister);
-        }
-
-        foreach (var aiObjectModel in AgentActions.Values)
-        {
-            var aa = (AgentAction) aiObjectModel;
-            var subPath = directoryPath + "/" + Consts.FolderName_AgentActions;
-            aa.SaveToFile(subPath, persister);
-        }
-
-        foreach (var aiObjectModel in ResponseCurves.Values)
-        {
-            var rc = (ResponseCurve) aiObjectModel;
-            var subPath = directoryPath + "/" + Consts.FolderName_ResponseCurves;
-            rc.SaveToFile(subPath, persister);
-        }
+        persister = new JsonPersister();
+        
+        RestoreAbleService.SaveRestoreAblesToFile(AIs.Values.Cast<Ai>(),directoryPath + "/" + Consts.FolderName_Ais, persister);
+        RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values.Cast<Bucket>(),directoryPath + "/" + Consts.FolderName_Buckets, persister);
+        RestoreAbleService.SaveRestoreAblesToFile(Decisions.Values.Cast<Decision>(),directoryPath + "/" + Consts.FolderName_Decisions, persister);
+        RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values.Cast<Consideration>(),directoryPath + "/" + Consts.FolderName_Considerations, persister);
+        RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values.Cast<AgentAction>(),directoryPath + "/" + Consts.FolderName_AgentActions, persister);
+        RestoreAbleService.SaveRestoreAblesToFile(ResponseCurves.Values.Cast<ResponseCurve>(),directoryPath + "/" + Consts.FolderName_ResponseCurves, persister);
     }
 
     private async Task Restore(UasTemplateServiceState state)

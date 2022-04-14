@@ -39,7 +39,7 @@ public class RestoreAbleCollection: RestoreAble
             {
                 Models.Add(Restore<RestoreAble>(e, restoreDebug));
             });
-            Type = Type.GetType(s.TypeString);
+            Type = Type.GetType(s.DerivedTypeString);
         });
         await task;
     }
@@ -66,6 +66,6 @@ public class RestoreAbleCollectionState: RestoreState
         {
             States.Add(e.GetState());
         });
-        TypeString = typeString.ToString();
+        DerivedTypeString = typeString.ToString();
     }
 }

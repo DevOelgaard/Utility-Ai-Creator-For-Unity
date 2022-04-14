@@ -25,7 +25,7 @@ public abstract class RestoreAble
             fileName = value;   
         }
     }
-    public Type DerivedType;
+    public readonly Type DerivedType;
     protected RestoreAble()
     {
         DerivedType = GetType();
@@ -47,11 +47,12 @@ public abstract class RestoreAble
     protected abstract Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false);
     public static T Restore<T>(RestoreState state, bool restoreDebug = false) where T:RestoreAble
     {
-        var type = Type.GetType(state.TypeString);
+        // var type = Type.GetType(state.DerivedTypeString);
+        var type = state.OriginalType;
         T element = default(T);
         if (type == null)
         {
-            element = AssetDatabaseService.GetInstanceOfType<T>(state.TypeString);
+            element = AssetDatabaseService.GetInstanceOfType<T>(state.AssemblyQualifiedName);
         } else
         {
             element = (T)InstantiaterService.CreateInstance(type,true);
@@ -93,10 +94,12 @@ public abstract class RestoreAble
 public abstract class RestoreState
 {
     public string FileName;
-    public string TypeString;
+    public string DerivedTypeString;
     public string FolderLocation;
     public Type DerivedType;
     public int Index;
+    public string AssemblyName;
+    public string AssemblyQualifiedName;
 
     public RestoreState()
     {
@@ -106,6 +109,10 @@ public abstract class RestoreState
     {
         FileName = o.FileName;
         DerivedType = o.DerivedType;
-        TypeString = o.DerivedType.ToString();
+        DerivedTypeString = o.DerivedType.ToString();
+        AssemblyName = o.DerivedType.Assembly.FullName;
+        AssemblyQualifiedName = o.DerivedType.AssemblyQualifiedName;
     }
+
+    public Type OriginalType => Type.GetType(AssemblyQualifiedName);
 }

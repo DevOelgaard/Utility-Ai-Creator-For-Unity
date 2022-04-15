@@ -22,7 +22,7 @@ internal class UasTemplateService: RestoreAble
     public ReactiveListNameSafe<AiObjectModel> ResponseCurves;
 
     private string loadedPath = "";
-    internal bool isLoaded = false;
+    internal bool isLoaded;
     internal IObservable<bool> OnLoadComplete => onLoadComplete;
     private readonly Subject<bool> onLoadComplete = new Subject<bool>();
 
@@ -50,7 +50,14 @@ internal class UasTemplateService: RestoreAble
     static UasTemplateService()
     {
         Instance = new UasTemplateService();
-        Task.Factory.StartNew(() => Instance.Init(true));
+        if (EditorApplication.isPlayingOrWillChangePlaymode)
+        {
+            Task.Factory.StartNew(() => Instance.Init(false));
+        }
+        else
+        {
+            Task.Factory.StartNew(() => Instance.Init(true));
+        }
     }
 
     private async Task Init(bool restore)
@@ -101,10 +108,10 @@ internal class UasTemplateService: RestoreAble
 
     internal async Task LoadCurrentProject(bool backup = false)
     {
-        Debug.Log("Loading");
         var loadPath = backup
             ? ProjectSettingsService.Instance.GetProjectBackupPath()
             : ProjectSettingsService.Instance.GetCurrentProjectPath();
+        Debug.Log("Loading path: " + loadPath);
 
         if (loadedPath == loadPath) return;
         projectDirectory = ProjectSettingsService.Instance.GetDirectory(loadPath);

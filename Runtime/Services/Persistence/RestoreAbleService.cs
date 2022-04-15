@@ -111,7 +111,7 @@ internal static class RestoreAbleService
             }
             else
             {
-                var parameter = RestoreAble.Restore<Parameter>(p.LoadedObject, restoreDebug);
+                var parameter = Parameter.Restore<Parameter>(p.LoadedObject, restoreDebug);
                 result.Add(parameter);
             }
         }

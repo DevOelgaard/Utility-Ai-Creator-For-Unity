@@ -64,6 +64,9 @@ public class Parameter: RestoreAble
             if (state.ValueType == "UnityEngine.Color")
             {
                 v = new Color(state.RGBA[0], state.RGBA[1], state.RGBA[2], state.RGBA[3]);
+            } else if (state.ValueType == "System.Double")
+            {
+                v = Convert.ToDouble(state.Value);
             }
             else
             {
@@ -95,9 +98,8 @@ public class ParameterState: RestoreState
     {
         Name = name;
         ValueType = v.GetType().ToString();
-        if (v.GetType() == typeof(Color))
+        if (v is Color color)
         {
-            var color = (Color)v;
             RGBA = new float[4];
             RGBA[0] = color.r;
             RGBA[1] = color.g;

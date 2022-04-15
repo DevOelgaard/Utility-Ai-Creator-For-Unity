@@ -537,9 +537,9 @@ internal class TemplateManager : EditorWindow
             // MainThreadDispatcher.StartCoroutine(uASTemplateService.Save(true));
             if (!hasSavedOnDisable)
             {
+                hasSavedOnDisable = true;
                 UasTemplateService.Instance.Save(true);
                 ProjectSettingsService.Instance.SaveSettings();
-                hasSavedOnDisable = true;
             }
         }
         ClearSubscriptions();

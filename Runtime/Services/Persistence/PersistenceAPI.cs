@@ -85,7 +85,7 @@ internal class PersistenceAPI
     internal ObjectMetaData<T> LoadObjectPath<T>(string path)
     {
         var result = persister.LoadObject<T>(path);
-        CleanUp(path);
+        // CleanUp(path);
         return result;
     }
 

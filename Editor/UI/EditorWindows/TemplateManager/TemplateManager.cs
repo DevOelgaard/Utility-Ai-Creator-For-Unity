@@ -208,6 +208,7 @@ internal class TemplateManager : EditorWindow
 
     private async void OpenProject(DropdownMenuAction _)
     {
+        // Updating Backup
         uASTemplateService.Save(true);
         await PopUpService.AskToSaveIfProjectNotSavedThenSelectProjectToLoad();
     }

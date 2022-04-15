@@ -141,7 +141,7 @@ internal class UasTemplateService: RestoreAble
 
     protected override string GetFileName()
     {
-        return "UASProject";
+        return ProjectSettingsService.Instance.GetCurrentProjectName();
     }
 
     internal async Task Reset()
@@ -342,6 +342,7 @@ internal class UasTemplateService: RestoreAble
         };
 
         await Task.WhenAll(tasks);
+        onCollectionChanged.OnNext(AIs);
     }
 }
 

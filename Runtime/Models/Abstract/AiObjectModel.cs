@@ -71,25 +71,12 @@ public abstract class AiObjectModel: RestoreAble
         return currentName;
     }
 
-    protected class MainWindowModelState
-    {
-        public string Name;
-        public string Description;
-
-        public MainWindowModelState(string name, string description)
-        {
-            Name = name;
-            Description = description;
-        }
-    }
-
-
     private string name;
     public string Name
     {
         get
         {
-            if (String.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 Name = "Default";
             }

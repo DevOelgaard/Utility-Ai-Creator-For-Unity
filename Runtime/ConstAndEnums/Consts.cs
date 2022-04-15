@@ -120,7 +120,7 @@ public static class Consts
     };
 
     // UI Element Text
-    public const string Text_Button_SortByPerformance = "Sort By Performance";
+    public const string Text_Button_SortByPerformance = "Performance Sort";
     public const string Text_Button_SortByWeight = "Sort By Weight";
     public const string Text_Button_Folded = "Expand";
     public const string Text_Button_Expanded = "Fold";

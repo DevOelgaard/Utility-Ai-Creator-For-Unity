@@ -9,22 +9,7 @@ using System.IO;
 
 public abstract class RestoreAble
 {
-    private string fileName;
-    public string FileName
-    {
-        get
-        {
-            if(fileName == null)
-            {
-                fileName = GetFileName();
-            }
-            return fileName;
-        }
-        protected set
-        {
-            fileName = value;   
-        }
-    }
+    public string FileName => GetFileName();
     public readonly Type DerivedType;
     protected RestoreAble()
     {
@@ -36,11 +21,6 @@ public abstract class RestoreAble
         return DerivedType.ToString();
     }
 
-    protected RestoreAble(RestoreAble original)
-    {
-        DerivedType = original.DerivedType;
-        FileName = original.FileName;
-    }
     protected abstract string GetFileName();
 
     public string CurrentDirectory;
@@ -79,7 +59,7 @@ public abstract class RestoreAble
         }
         var state = GetState();
         // state.FolderLocation = path;
-        FileName = className ?? GetFileName();
+        // FileName = className ?? GetFileName();
         path = path + "/" + FileName;
         state.Index = index;
 
@@ -100,7 +80,7 @@ public abstract class RestoreState
     public Type DerivedType;
     public int Index;
     public string AssemblyName;
-    public readonly string AssemblyQualifiedName;
+    public string AssemblyQualifiedName;
 
     public RestoreState()
     {

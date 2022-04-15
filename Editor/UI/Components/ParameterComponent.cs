@@ -25,7 +25,7 @@ public class ParameterComponent: VisualElement
         {
             var p = parameter as ParameterEnum;
             var field = new EnumField(parameter.Name);
-            var values = Enum.GetValues(p.EnumType);
+            // var values = Enum.GetValues(p.EnumType);
             field.Init(p.CurrentSelction);
             field.value = p.CurrentSelction;
             field.RegisterCallback<ChangeEvent<Enum>>(evt => parameter.Value = evt.newValue);

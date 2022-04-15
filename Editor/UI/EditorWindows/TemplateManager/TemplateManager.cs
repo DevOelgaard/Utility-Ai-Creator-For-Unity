@@ -118,10 +118,10 @@ internal class TemplateManager : EditorWindow
             .AddTo(disposables);
     }
 
-    void OnEnable()
+    async void  OnEnable()
     {
         autoSave = true;
-        UasTemplateService.Instance.LoadCurrentProject(true);
+        await UasTemplateService.Instance.LoadCurrentProject(true);
         var mws = MainWindowService.Instance;
         mws.OnUpdateStateChanged
             .Subscribe(state =>

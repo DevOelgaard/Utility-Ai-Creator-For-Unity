@@ -10,7 +10,7 @@ internal class RunTimeInspector : SplitViewWindowDropDownSelection<IAgent>
 {
     protected override void Init()
     {
-        UasTemplateService.Instance.LoadCurrentProject();
+        UasTemplateService.Instance.LoadCurrentProject(true);
         var debugMenu = new ToolbarMenu();
         debugMenu.text = "Debug";
 

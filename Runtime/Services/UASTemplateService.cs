@@ -17,7 +17,8 @@ internal class UasTemplateService: RestoreAble
     public ReactiveListNameSafe<AiObjectModel> Considerations;
     public ReactiveListNameSafe<AiObjectModel> AgentActions;
     public ReactiveListNameSafe<AiObjectModel> ResponseCurves;
-    
+
+    private string loadedPath = "";
     internal bool isLoaded = false;
     internal IObservable<bool> OnLoadComplete => onLoadComplete;
     private readonly Subject<bool> onLoadComplete = new Subject<bool>();
@@ -102,6 +103,8 @@ internal class UasTemplateService: RestoreAble
         var loadPath = backup
             ? ProjectSettingsService.Instance.GetProjectBackupPath()
             : ProjectSettingsService.Instance.GetCurrentProjectPath();
+
+        if (loadedPath == loadPath) return;
         projectDirectory = ProjectSettingsService.Instance.GetDirectory(loadPath);
 
         if (string.IsNullOrEmpty(projectDirectory))
@@ -124,6 +127,7 @@ internal class UasTemplateService: RestoreAble
                 await Restore(state);
                 Save(true);
                 isLoaded = true;
+                loadedPath = loadPath;
                 onLoadComplete.OnNext(true);
             }
             catch (Exception ex)

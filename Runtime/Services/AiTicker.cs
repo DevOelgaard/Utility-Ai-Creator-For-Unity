@@ -166,7 +166,6 @@ internal class AiTicker: RestoreAble
     internal void Save()
     {
         persistenceAPI.SaveObjectPath(Settings, Consts.FileTickerSettings, "TickerSettings");
-
     }
 
     ~AiTicker()

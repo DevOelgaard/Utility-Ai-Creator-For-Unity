@@ -83,7 +83,7 @@ internal class ProjectSettingsService
 
         SetProjectPath(path);
         await UasTemplateService.Instance.Reset();
-        UasTemplateService.Instance.Save();
+        UasTemplateService.Instance.SaveCoroutine();
         SaveSettings();
     }
 
@@ -91,7 +91,7 @@ internal class ProjectSettingsService
     {
         var path = EditorUtility.SaveFilePanel("New Project", "", "New Project", Consts.FileExtension_UasProject);
         SetProjectPath(path);
-        UasTemplateService.Instance.Save();
+        UasTemplateService.Instance.SaveCoroutine();
         await UasTemplateService.Instance.LoadCurrentProject();
     }
 

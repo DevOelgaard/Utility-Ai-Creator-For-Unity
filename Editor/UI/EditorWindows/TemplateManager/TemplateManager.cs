@@ -32,6 +32,7 @@ internal class TemplateManager : EditorWindow
     private AiObjectComponent  currentMainWindowComponent;
     private AiObjectModel selectedModel;
     private PersistenceAPI persistenceAPI => PersistenceAPI.Instance;
+    private bool hasSavedOnDisable = false;
 
     private readonly Dictionary<AiObjectModel, AiObjectComponent> componentsByModels = new Dictionary<AiObjectModel, AiObjectComponent>();
     private Toolbar toolbar;
@@ -120,8 +121,9 @@ internal class TemplateManager : EditorWindow
 
     async void  OnEnable()
     {
+        hasSavedOnDisable = false;
         autoSave = true;
-        await UasTemplateService.Instance.LoadCurrentProject(true);
+        // await UasTemplateService.Instance.LoadCurrentProject(true);
         var mws = MainWindowService.Instance;
         mws.OnUpdateStateChanged
             .Subscribe(state =>
@@ -144,7 +146,8 @@ internal class TemplateManager : EditorWindow
 
         menu.menu.AppendAction("Save", _ =>
         {
-            uASTemplateService.Save();
+            MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine());
+            // uASTemplateService.Save();
         });
 
         menu.menu.AppendAction("Save As", _ =>
@@ -183,7 +186,7 @@ internal class TemplateManager : EditorWindow
 
         menu.menu.AppendAction("Save Backup - TEST", _ =>
         {
-            uASTemplateService.Save(true);
+            MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine(true));
         });
 
         menu.menu.AppendAction("Load Backup - TEST", _ =>
@@ -209,7 +212,8 @@ internal class TemplateManager : EditorWindow
     private async void OpenProject(DropdownMenuAction _)
     {
         // Updating Backup
-        uASTemplateService.Save(true);
+        MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine(true));
+
         await PopUpService.AskToSaveIfProjectNotSavedThenSelectProjectToLoad();
     }
 
@@ -509,12 +513,12 @@ internal class TemplateManager : EditorWindow
         }
     }
 
-    ~TemplateManager()
-    {
-        uASTemplateService.Save(true);
-        ClearSubscriptions();
-    }
-
+    // ~TemplateManager()
+    // {
+    //     uASTemplateService.Save(true);
+    //     ClearSubscriptions();
+    // }
+    //
     private void OnDisable()
     {
         OnClose();
@@ -530,8 +534,10 @@ internal class TemplateManager : EditorWindow
         WindowOpener.WindowPosition = this.position;
         if (autoSave && !EditorApplication.isPlaying)
         {
-            uASTemplateService.Save(true);
+            // MainThreadDispatcher.StartCoroutine(uASTemplateService.Save(true));
+            UasTemplateService.Instance.Save(true);
             ProjectSettingsService.Instance.SaveSettings();
+            hasSavedOnDisable = true;
         }
         ClearSubscriptions();
     }

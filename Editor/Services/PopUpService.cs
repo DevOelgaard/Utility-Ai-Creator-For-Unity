@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UniRx;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -28,7 +29,7 @@ public class PopUpService: EditorWindow
 
                 async void Save()
                 {
-                        UasTemplateService.Instance.Save();
+                        MainThreadDispatcher.StartCoroutine(UasTemplateService.Instance.SaveCoroutine());
                         await task.Invoke();
                 }
 

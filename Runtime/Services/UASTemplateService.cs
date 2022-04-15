@@ -2,11 +2,14 @@
 using UniRx;
 using UniRxExtension;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
+using UnityEditor;
 
+[InitializeOnLoad]
 internal class UasTemplateService: RestoreAble
 {
     private readonly CompositeDisposable subscriptions = new CompositeDisposable();
@@ -42,26 +45,18 @@ internal class UasTemplateService: RestoreAble
     public IObservable<bool> OnIncludeDemosChanged => onIncludeDemosChanged;
     private readonly Subject<bool> onIncludeDemosChanged = new Subject<bool>();
 
-    private static UasTemplateService _instance;
-    internal static UasTemplateService Instance
-    {
-        get
-        {
-            if (_instance != null) return _instance;
-            _instance = new UasTemplateService();
-            #pragma warning disable CS4014
-            _instance.Init(true);
-            #pragma warning restore CS4014
-            return _instance;
-        }
-    }
+    internal static UasTemplateService Instance;
 
-    private UasTemplateService()
+    static UasTemplateService()
     {
+        Instance = new UasTemplateService();
+        Task.Factory.StartNew(() => Instance.Init(true));
     }
 
     private async Task Init(bool restore)
     {
+        Debug.Log("Instantiating");
+
         AIs = new ReactiveListNameSafe<AiObjectModel>();
         Buckets = new ReactiveListNameSafe<AiObjectModel>();
         Decisions = new ReactiveListNameSafe<AiObjectModel>();
@@ -84,6 +79,12 @@ internal class UasTemplateService: RestoreAble
         if (restore)
         {
             await LoadCurrentProject(true);
+            Debug.Log("Instantiation complete with restore");
+
+        }
+        else
+        {
+            Debug.Log("Instantiation complete no restore");
         }
     }
 
@@ -100,6 +101,7 @@ internal class UasTemplateService: RestoreAble
 
     internal async Task LoadCurrentProject(bool backup = false)
     {
+        Debug.Log("Loading");
         var loadPath = backup
             ? ProjectSettingsService.Instance.GetProjectBackupPath()
             : ProjectSettingsService.Instance.GetCurrentProjectPath();
@@ -119,30 +121,73 @@ internal class UasTemplateService: RestoreAble
         if (state == null)
         {
             ClearCollectionNotify();
+            Debug.LogError("Loading failed state == null");
+
         }
         else
         {
             try
             {
                 await Restore(state);
-                Save(true);
+
+                MainThreadDispatcher.StartCoroutine(SaveCoroutine(true));
+                // Save(true);
                 isLoaded = true;
                 loadedPath = loadPath;
                 onLoadComplete.OnNext(true);
+                Debug.Log("Load complete");
+
             }
             catch (Exception ex)
             {
+                Debug.LogError("Loading failed: " + ex);
+
                 throw new Exception("UAS Template Service Restore Failed : ", ex);
                 //Debug.LogWarning("UASTemplateService Restore failed: " + ex);
             }
         }
     }
 
-    internal void Save(bool backup = false)
+    internal IEnumerator SaveCoroutine(bool backup = false)
     {
+        Debug.Log("Saving");
         var path = !backup
             ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
             : ProjectSettingsService.Instance.GetBackupDirectory();
+        
+        
+        if (EditorApplication.isPlaying)
+        {
+            Debug.Log("Not Saving from PlayMode");
+            yield return null;
+        }
+        else
+        {
+            Debug.Log("Saving path: " + path);
+        }
+        var perstistAPI = PersistenceAPI.Instance;
+        perstistAPI.SaveDestructiveObjectPath(this,path,
+            ProjectSettingsService.Instance.GetCurrentProjectName(true));
+        yield return null;
+    }
+    
+    internal void Save(bool backup = false)
+    {
+        Debug.Log("Saving private");
+        var path = !backup
+            ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
+            : ProjectSettingsService.Instance.GetBackupDirectory();
+        
+        
+        if (EditorApplication.isPlaying)
+        {
+            Debug.Log("Not Saving from PlayMode");
+            return;
+        }
+        else
+        {
+            Debug.Log("Saving path: " + path);
+        }
         var perstistAPI = PersistenceAPI.Instance;
         perstistAPI.SaveDestructiveObjectPath(this,path,
             ProjectSettingsService.Instance.GetCurrentProjectName(true));
@@ -228,10 +273,7 @@ internal class UasTemplateService: RestoreAble
         return null;
     }
 
-    ~UasTemplateService()
-    {
-        subscriptions.Clear();
-    }
+
 
     internal override RestoreState GetState()
     {
@@ -353,6 +395,13 @@ internal class UasTemplateService: RestoreAble
         await Task.WhenAll(tasks);
         onCollectionChanged.OnNext(AIs);
     }
+    
+    ~UasTemplateService()
+    {
+        Debug.Log("Destroying UAS");
+        Save(true);
+        subscriptions.Clear();
+    }
 }
 
 [Serializable]
@@ -386,11 +435,11 @@ public class UasTemplateServiceState : RestoreState
         responseCurves = RestoreAbleService.NamesToList(model.ResponseCurves.Values);
     }
 
-    internal static UasTemplateServiceState LoadFromFile()
-    {
-        Debug.Log("Change this");
-        var p = PersistenceAPI.Instance;
-        var state = p.LoadObjectPanel<UasTemplateServiceState>();
-        return state.LoadedObject;
-    }
+    // internal static UasTemplateServiceState LoadFromFile()
+    // {
+    //     Debug.Log("Change this");
+    //     var p = PersistenceAPI.Instance;
+    //     var state = p.LoadObjectPanel<UasTemplateServiceState>();
+    //     return state.LoadedObject;
+    // }
 }

@@ -209,8 +209,8 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
     private void OnDestroy()
     {
         WindowOpener.WindowPosition = this.position;
-        var persistenceAPI = PersistenceAPI.Instance;
-        UasTemplateService.Instance.Save();
+        // var persistenceAPI = PersistenceAPI.Instance;
+        // UasTemplateService.Instance.Save();
         //persistenceAPI.SaveObjectPath(UASTemplateService.Instance, Consts.File_UASTemplateService_AutoSave);
         ClearSubscriptions();
     }

@@ -13,7 +13,7 @@ internal class AiLogWindow : SplitViewWindowDropDownSelection<IAgent>
 
     protected override void Init()
     {
-        UasTemplateService.Instance.LoadCurrentProject(true);
+        // UasTemplateService.Instance.LoadCurrentProject(true);
     }
     protected override ReactiveList<IAgent> GetLeftPanelElements(string identifier)
     {

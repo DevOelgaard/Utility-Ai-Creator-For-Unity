@@ -75,6 +75,7 @@ internal static class RestoreAbleService
         var result = new List<T>();
         var states = PersistenceAPI.Instance.LoadObjectsPathWithFilters<RestoreState>(path, typeof(T));
         states = states.OrderBy(s => s.LoadedObject?.Index).ToList();
+        
         foreach (var s in states)
         {
             if (s.LoadedObject == null)

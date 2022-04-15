@@ -273,18 +273,6 @@ public class ResponseCurve: AiObjectModel
         persister.SaveObject(state, path + "." + Consts.FileExtension_ResponseCurve);
         RestoreAbleService.SaveRestoreAblesToFile(Segments,path + "/" + Consts.FolderName_Segments, persister);
         RestoreAbleService.SaveRestoreAblesToFile(ResponseFunctions,path + "/" + Consts.FolderName_ResponseFunctions, persister);
-        // foreach (var segnemt in Segments)
-        // {
-        //     var subPath = path + "/" + Consts.FolderName_Segments + "/" + Segments.IndexOf(segnemt);
-        //     segnemt.SaveToFile(subPath, persister);
-        // }
-
-        // foreach(var rf in ResponseFunctions)
-        // {
-        //     rf.RCIndex = ResponseFunctions.IndexOf(rf);
-        //     var subPath = path + "/" + Consts.FolderName_ResponseFunctions + "/" + ResponseFunctions.IndexOf(rf);
-        //     rf.SaveToFile(subPath, persister);
-        // }
     }
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
@@ -298,44 +286,13 @@ public class ResponseCurve: AiObjectModel
             MaxY = state.MaxY;
             MinX = state.MinX;
             MaxX = state.MaxX;
+            
+            Segments =
+                RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Segments, restoreDebug);
 
-            Segments = new List<Parameter>();
-            var parameterStates = PersistenceAPI.Instance.LoadObjectsPathWithFiltersAndSubDirectories<RestoreState>(CurrentDirectory + Consts.FolderName_Segments, typeof(Parameter));
-            foreach (var p in parameterStates)
-            {
-                if (p.LoadedObject == null)
-                {
-                    var parameter = new Parameter(p.ErrorMessage, p.Exception.ToString());
-                    Segments.Add(parameter);
-                }
-                else
-                {
-                    var parameter = Parameter.Restore<Parameter>(p.LoadedObject, restoreDebug);
-                    Segments.Add(parameter);
-                }
-            }
-
-            Segments = Segments.OrderBy(s => Convert.ToSingle(s.Value)).ToList();
-
-            ResponseFunctions = new List<ResponseFunction>();
-            var responseFunctionStates = PersistenceAPI
-                .Instance
-                .LoadObjectsPathWithFiltersAndSubDirectories<ResponseFunctionState>(CurrentDirectory + Consts.FolderName_ResponseFunctions, typeof(ResponseFunction));
-            foreach (var rf in responseFunctionStates)
-            {
-                if (rf.LoadedObject == null)
-                {
-                    var error = new Error_ResponseFunction();
-                    error.Parameters.Add(new Parameter(rf.ErrorMessage, rf.Exception.ToString()));
-                    ResponseFunctions.Add(error);
-                }
-                else
-                {
-                    var func = Restore<ResponseFunction>(rf.LoadedObject, restoreDebug);
-                    ResponseFunctions.Add(func);
-                }
-            }
-            ResponseFunctions = ResponseFunctions.OrderBy(rf => rf.RCIndex).ToList();
+            ResponseFunctions =
+                RestoreAbleService.GetAiObjects<ResponseFunction>(
+                    CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
         });
 
         await task;

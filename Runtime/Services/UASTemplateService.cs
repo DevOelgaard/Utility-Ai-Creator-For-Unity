@@ -11,13 +11,16 @@ internal class UasTemplateService: RestoreAble
 {
     private readonly CompositeDisposable subscriptions = new CompositeDisposable();
     private Dictionary<string, ReactiveList<AiObjectModel>> collectionsByLabel = new Dictionary<string, ReactiveList<AiObjectModel>>();
-
     public ReactiveListNameSafe<AiObjectModel> AIs;
     public ReactiveListNameSafe<AiObjectModel> Buckets;
     public ReactiveListNameSafe<AiObjectModel> Decisions;
     public ReactiveListNameSafe<AiObjectModel> Considerations;
     public ReactiveListNameSafe<AiObjectModel> AgentActions;
     public ReactiveListNameSafe<AiObjectModel> ResponseCurves;
+    
+    internal bool isLoaded = false;
+    internal IObservable<bool> OnLoadComplete => onLoadComplete;
+    private readonly Subject<bool> onLoadComplete = new Subject<bool>();
 
     public IObservable<ReactiveList<AiObjectModel>> OnCollectionChanged => onCollectionChanged;
     private readonly Subject<ReactiveList<AiObjectModel>> onCollectionChanged = new Subject<ReactiveList<AiObjectModel>>();
@@ -120,6 +123,8 @@ internal class UasTemplateService: RestoreAble
             {
                 await Restore(state);
                 Save(true);
+                isLoaded = true;
+                onLoadComplete.OnNext(true);
             }
             catch (Exception ex)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniRx;
 using UnityEngine;
 
 
@@ -33,8 +34,22 @@ public class AgentMono : MonoBehaviour, IAgent
     {
         Model.Name = SetAgentName();
         AgentManager.Instance.Register(this);
-        var ai = UasTemplateService.Instance.GetAiByName(DefaultAiName,true);
-        SetAi(ai);
+        if (UasTemplateService.Instance.isLoaded)
+        {
+            var localAi = UasTemplateService.Instance.GetAiByName(DefaultAiName,true);
+            SetAi(localAi);
+        }
+        else
+        {
+            UasTemplateService.Instance.OnLoadComplete
+                .Take(1)
+                .Subscribe(value =>
+                {
+                    var localAi = UasTemplateService.Instance.GetAiByName(DefaultAiName, true);
+                    SetAi(localAi);
+                });
+        }
+
         decisionScoreEvaluator = new DecisionScoreEvaluator();
     }
 

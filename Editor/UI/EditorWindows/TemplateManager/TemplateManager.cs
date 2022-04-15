@@ -528,7 +528,7 @@ internal class TemplateManager : EditorWindow
     private void OnClose()
     {
         WindowOpener.WindowPosition = this.position;
-        if (autoSave && !EditorApplication.isPaused)
+        if (autoSave && !EditorApplication.isPlaying)
         {
             uASTemplateService.Save(true);
             ProjectSettingsService.Instance.SaveSettings();

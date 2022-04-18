@@ -9,7 +9,7 @@ using UnityEngine;
 public class Parameter: RestoreAble
 {
     public string Name;
-    protected object v;
+    private object v;
     public virtual object Value { 
         get => v;
         set
@@ -21,8 +21,8 @@ public class Parameter: RestoreAble
 
     public ParameterTypes ParameterEnum;
 
-    public IObservable<object> OnOnValueChange => onValueChanged;
-    private Subject<object> onValueChanged = new Subject<object>();
+    public IObservable<object> OnValueChange => onValueChanged;
+    private readonly Subject<object> onValueChanged = new Subject<object>();
 
     public Parameter()
     {

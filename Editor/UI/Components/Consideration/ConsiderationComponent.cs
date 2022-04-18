@@ -135,7 +135,7 @@ internal class ConsiderationComponent : AiObjectComponent
         
         minMaxSubs.Clear();
         considerationModel.MinFloat
-            .OnOnValueChange
+            .OnValueChange
             .Subscribe(value =>
             {
                 maxField.Min = (float)value;
@@ -143,7 +143,7 @@ internal class ConsiderationComponent : AiObjectComponent
             .AddTo(minMaxSubs);
 
         considerationModel.MaxFloat
-            .OnOnValueChange
+            .OnValueChange
             .Subscribe(value =>
             {
                 minField.Max = (float)value;

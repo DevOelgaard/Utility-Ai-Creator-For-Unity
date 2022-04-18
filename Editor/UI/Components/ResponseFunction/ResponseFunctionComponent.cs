@@ -74,7 +74,7 @@ internal class ResponseFunctionComponent: VisualElement
             var pC = new ParameterComponent();
             pC.UpdateUi(parameter);
             body.Add(pC);
-            parameter.OnOnValueChange
+            parameter.OnValueChange
                 .Subscribe(_ => onParametersChanged.OnNext(true))
                 .AddTo(disposables);
         }

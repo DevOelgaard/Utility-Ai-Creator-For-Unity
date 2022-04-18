@@ -148,7 +148,7 @@ internal class ResponseCurveLcComponent : VisualElement
                 paramComponent.name = "Segment";
                 paramComponent.UpdateUi(segmentParam);
                 segmentParam
-                    .OnOnValueChange
+                    .OnValueChange
                     .Subscribe(_ => ReDrawChart())
                     .AddTo(funcitonDisposables);
 

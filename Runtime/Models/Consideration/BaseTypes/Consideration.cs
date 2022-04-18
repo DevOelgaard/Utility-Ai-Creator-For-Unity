@@ -57,11 +57,11 @@ public abstract class Consideration : AiObjectModel
         ScoreModels.Add(new ScoreModel("Score", 0f));
         PerformanceTag = GetPerformanceTag();
 
-        MinFloat.OnOnValueChange
+        MinFloat.OnValueChange
             .Subscribe(_ => CurrentResponseCurve.MinX = Convert.ToSingle(MinFloat.Value))
             .AddTo(parameterDisposables);
 
-        MaxFloat.OnOnValueChange
+        MaxFloat.OnValueChange
             .Subscribe(_ => CurrentResponseCurve.MaxX = Convert.ToSingle(MaxFloat.Value))
             .AddTo(parameterDisposables);
 
@@ -200,11 +200,11 @@ public abstract class Consideration : AiObjectModel
             PerformanceTag = (PerformanceTag)state.PerformanceTag;
             parameterDisposables.Clear();
 
-            MinFloat.OnOnValueChange
+            MinFloat.OnValueChange
                 .Subscribe(_ => CurrentResponseCurve.MinX = Convert.ToSingle(MinFloat.Value))
                 .AddTo(parameterDisposables);
 
-            MaxFloat.OnOnValueChange
+            MaxFloat.OnValueChange
                 .Subscribe(_ => CurrentResponseCurve.MaxX = Convert.ToSingle(MaxFloat.Value))
                 .AddTo(parameterDisposables);
 

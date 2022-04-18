@@ -29,7 +29,7 @@ public class ParameterComponent: VisualElement
             field.Init(p.CurrentSelction);
             field.value = p.CurrentSelction;
             field.RegisterCallback<ChangeEvent<Enum>>(evt => parameter.Value = evt.newValue);
-            parameter.OnOnValueChange
+            parameter.OnValueChange
                 .Subscribe(v =>
                 {
                     field.value = (Enum)v;
@@ -50,7 +50,7 @@ public class ParameterComponent: VisualElement
                 var field = new IntegerFieldMinMax(parameter.Name);
                 field.value = Convert.ToInt32(parameter.Value);
                 field.RegisterCallback<ChangeEvent<int>>(evt => parameter.Value = evt.newValue);
-                parameter.OnOnValueChange
+                parameter.OnValueChange
                     .Subscribe(v =>
                     {
                         field.value = (int)v;
@@ -66,7 +66,7 @@ public class ParameterComponent: VisualElement
                 field.RegisterCallback<ChangeEvent<float>>(evt =>
                         parameter.Value = evt.newValue
                     );
-                parameter.OnOnValueChange
+                parameter.OnValueChange
                     .Subscribe(v =>
                     {
                         field.value = (float)v;
@@ -80,7 +80,7 @@ public class ParameterComponent: VisualElement
                 var field = new TextField(parameter.Name);
                 field.value = (string)parameter.Value;
                 field.RegisterCallback<ChangeEvent<string>>(evt => parameter.Value = evt.newValue);
-                parameter.OnOnValueChange
+                parameter.OnValueChange
                     .Subscribe(v =>
                     {
                         field.value = (string)v;
@@ -95,7 +95,7 @@ public class ParameterComponent: VisualElement
                 var field = new TagField(parameter.Name);
                 field.value = (string)parameter.Value;
                 field.RegisterCallback<ChangeEvent<ParameterTypes>>(evt => parameter.Value = evt.newValue);
-                parameter.OnOnValueChange
+                parameter.OnValueChange
                     .Subscribe(v =>
                     {
                         field.value = (string)v;
@@ -109,7 +109,7 @@ public class ParameterComponent: VisualElement
                 var field = new LongField(parameter.Name);
                 field.value = (long)parameter.Value;
                 field.RegisterCallback<ChangeEvent<long>>(evt => parameter.Value = evt.newValue);
-                parameter.OnOnValueChange
+                parameter.OnValueChange
                     .Subscribe(v =>
                     {
                         field.value = (long)v;
@@ -123,7 +123,7 @@ public class ParameterComponent: VisualElement
                 var field = new Toggle(parameter.Name);
                 field.value = (bool)parameter.Value;
                 field.RegisterCallback<ChangeEvent<bool>>(evt => parameter.Value = evt.newValue);
-                parameter.OnOnValueChange
+                parameter.OnValueChange
                     .Subscribe(v =>
                     {
                         field.value = (bool)v;
@@ -137,7 +137,7 @@ public class ParameterComponent: VisualElement
                 var field = new ColorField(parameter.Name);
                 field.value = (Color)parameter.Value;
                 field.RegisterCallback<ChangeEvent<Color>>(evt => parameter.Value = evt.newValue);
-                parameter.OnOnValueChange
+                parameter.OnValueChange
                     .Subscribe(v =>
                     {
                         field.value = (Color)v;

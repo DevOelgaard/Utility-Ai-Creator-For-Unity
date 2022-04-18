@@ -96,7 +96,7 @@ internal class MainWindowFoldedComponent : VisualElement
                 name = "FoldedFooterLabel"
             };
             footer.Add(minLabel);
-            cons.MinFloat.OnOnValueChange
+            cons.MinFloat.OnValueChange
                 .Subscribe(_ => minLabel.text = cons.MinFloat.Name + ": " + cons.MinFloat.Value)
                 .AddTo(disposables);
 
@@ -106,7 +106,7 @@ internal class MainWindowFoldedComponent : VisualElement
                 name = "FoldedFooterLabel"
             };
             footer.Add(maxLabel);
-            cons.MinFloat.OnOnValueChange
+            cons.MinFloat.OnValueChange
                 .Subscribe(_ => maxLabel.text = cons.MaxFloat.Name + ": " + cons.MaxFloat.Value)
                 .AddTo(disposables);
 
@@ -125,7 +125,7 @@ internal class MainWindowFoldedComponent : VisualElement
                 name = "FoldedFooterLabel"
             };
             footer.Add(pLabel);
-            parameter.OnOnValueChange
+            parameter.OnValueChange
                 .Subscribe(_ => pLabel.text = parameter.Name + ": " + parameter.Value)
                 .AddTo(disposables);
         }

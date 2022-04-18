@@ -534,16 +534,15 @@ internal class TemplateManager : EditorWindow
     //     OnClose();
     // }
 
-    private void OnClose()
+    private async void OnClose()
     {
         WindowOpener.WindowPosition = this.position;
         if (autoSave && !EditorApplication.isPlaying)
         {
-            // MainThreadDispatcher.StartCoroutine(uASTemplateService.Save(true));
             if (!hasSavedOnDisable)
             {
                 hasSavedOnDisable = true;
-                UasTemplateService.Instance.Save(true);
+                await UasTemplateService.Instance.Save(true);
                 ProjectSettingsService.Instance.SaveSettings();
             }
         }

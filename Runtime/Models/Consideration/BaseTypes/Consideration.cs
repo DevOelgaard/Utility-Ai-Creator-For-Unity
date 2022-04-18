@@ -179,20 +179,23 @@ public abstract class Consideration : AiObjectModel
                 MaxFloat = Restore<Parameter>(maxState.LoadedObject);
             }
 
-            var responseCurveState = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ResponseCurveState>(CurrentDirectory + Consts.FolderName_ResponseCurves, typeof(ResponseCurve)).FirstOrDefault();
-            if (responseCurveState != null)
-            {
-                if (responseCurveState.LoadedObject == null)
-                {
-                    var error = (ResponseCurve)InstantiaterService.CreateInstance(responseCurveState.ModelType);
-                    error.Name = responseCurveState.ErrorMessage;
-                    error.Description = "Exception: " + responseCurveState.Exception.ToString();
-                    CurrentResponseCurve = error;
-                } else
-                {
-                    CurrentResponseCurve = Restore<ResponseCurve>(responseCurveState.LoadedObject);
-                }
-            }
+            // var responseCurveState = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ResponseCurveState>(CurrentDirectory + Consts.FolderName_ResponseCurves, typeof(ResponseCurve)).FirstOrDefault();
+            // if (responseCurveState != null)
+            // {
+            //     if (responseCurveState.LoadedObject == null)
+            //     {
+            //         var error = (ResponseCurve)InstantiaterService.CreateInstance(responseCurveState.ModelType);
+            //         error.Name = "Error";
+            //         error.Description = "Exception: " + responseCurveState.Exception.ToString();
+            //         CurrentResponseCurve = error;
+            //     } else
+            //     {
+            //         CurrentResponseCurve = Restore<ResponseCurve>(responseCurveState.LoadedObject);
+            //     }
+            // }
+
+            CurrentResponseCurve = RestoreAbleService
+                .GetAiObjects<ResponseCurve>(CurrentDirectory + Consts.FolderName_ResponseCurves, restoreDebug).First();
 
             var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
             Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);

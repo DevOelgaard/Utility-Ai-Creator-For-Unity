@@ -170,9 +170,9 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
             var type = collection.Values[0].GetType();
             for(var i = 0; i < diff; i++)
             {
-                var expanded = MainWindowService.Instance.RentComponent(type);
+                var expanded = MainWindowService.Instance.GetAiObjectComponent(type);
                 expandedList.Add(expanded);
-                var folded = MainWindowService.Instance.RentMainWindowFoldedComponent();
+                var folded = MainWindowService.Instance.GetMainWindowFoldedComponent();
                 foldedList.Add(folded);
             }
         }
@@ -224,14 +224,14 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
 
     ~CollectionComponent()
     {
-        foreach(var comp in expandedList)
-        {
-            MainWindowService.Instance.ReturnComponent(comp);
-        }
-         foreach(var comp in foldedList)
-        {
-            MainWindowService.Instance.ReturnMWFC(comp);
-        }
+        // foreach(var comp in expandedList)
+        // {
+        //     MainWindowService.Instance.ReturnComponent(comp);
+        // }
+        //  foreach(var comp in foldedList)
+        // {
+        //     MainWindowService.Instance.ReturnMWFC(comp);
+        // }
         ClearSubscriptions();
     }
 }

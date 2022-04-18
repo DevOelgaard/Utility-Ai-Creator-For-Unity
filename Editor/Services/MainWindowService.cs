@@ -1,33 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using Unity.EditorCoroutines.Editor;
-using System.Collections;
-using UniRxExtension;
 using UniRx;
 
 internal class MainWindowService
 {
     private static MainWindowService instance;
-    private static Dictionary<Type, Queue<AiObjectComponent>> componentsByType = new Dictionary<Type, Queue<AiObjectComponent>>();
-    private List<KeyValuePair<Type,int>> typeAndInitAmountList = new List<KeyValuePair<Type, int>>()
-    {
-        //new KeyValuePair<Type,int>(typeof(Ai),4),
-        //new KeyValuePair<Type,int>(typeof(Bucket),5),
-        //new KeyValuePair<Type,int>(typeof(Decision),10),
-        //new KeyValuePair<Type,int>(typeof(Consideration),0),
-        //new KeyValuePair<Type,int>(typeof(AgentAction),5),
-        //new KeyValuePair<Type,int>(typeof(ResponseCurve),5),
-        //new KeyValuePair<Type,int>(typeof(Demo_ConsiderationFixedValue),5),
-        //new KeyValuePair<Type,int>(typeof(Demo_ConsiderationRandomValue),5),
-        //new KeyValuePair<Type,int>(typeof(Demo_ConsiderationRandomValue),5),
-    };
+    // private static Dictionary<Type, Queue<AiObjectComponent>> componentsByType = new Dictionary<Type, Queue<AiObjectComponent>>();
+    // private List<KeyValuePair<Type,int>> typeAndInitAmountList = new List<KeyValuePair<Type, int>>()
+    // {
+    //     //new KeyValuePair<Type,int>(typeof(Ai),4),
+    //     //new KeyValuePair<Type,int>(typeof(Bucket),5),
+    //     //new KeyValuePair<Type,int>(typeof(Decision),10),
+    //     //new KeyValuePair<Type,int>(typeof(Consideration),0),
+    //     //new KeyValuePair<Type,int>(typeof(AgentAction),5),
+    //     //new KeyValuePair<Type,int>(typeof(ResponseCurve),5),
+    //     //new KeyValuePair<Type,int>(typeof(Demo_ConsiderationFixedValue),5),
+    //     //new KeyValuePair<Type,int>(typeof(Demo_ConsiderationRandomValue),5),
+    //     //new KeyValuePair<Type,int>(typeof(Demo_ConsiderationRandomValue),5),
+    // };
 
-    private static Queue<MainWindowFoldedComponent> mainFoldedComponentPool = new Queue<MainWindowFoldedComponent>();
-    private const int poolSize = 48;
-    private const int mwfcPoolSize = 100;
-    private bool updatingPool = false;
+    // private static Queue<MainWindowFoldedComponent> mainFoldedComponentPool = new Queue<MainWindowFoldedComponent>();
+    // private const int poolSize = 48;
+    // private const int mwfcPoolSize = 100;
+    // private bool updatingPool = false;
     private EditorCoroutine updateComponentsCoroutine;
     internal IObservable<bool> OnUpdateStateChanged => onUpdateStateChanged;
     private Subject<bool> onUpdateStateChanged = new Subject<bool>();
@@ -37,116 +33,144 @@ internal class MainWindowService
 
     internal void Start()
     {
-        Init();
+        // Init();
         //EditorCoroutineUtility.StartCoroutine(Init(),this);
     }
 
-    private void Init()
+    // private void Init()
+    // {
+    //     EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
+    // }
+    //
+    // private IEnumerator UpdatePoolsCoroutine()
+    // {
+    //     onUpdateStateChanged.OnNext(true);
+    //     updatingPool = true;
+    //     foreach (var kv in typeAndInitAmountList)
+    //     {
+    //         if (!componentsByType.ContainsKey(kv.Key))
+    //         {
+    //             componentsByType.Add(kv.Key, new Queue<AiObjectComponent>());
+    //         }
+    //         var queue = componentsByType[kv.Key];
+    //         if (queue.Count < 5)
+    //         {
+    //             for (var i = 0; i < kv.Value; i++)
+    //             {
+    //                 var component = GetComponent(kv.Key);
+    //                 queue.Enqueue(component);
+    //                 yield return null;
+    //             }
+    //         }
+    //     }
+    //     if (mainFoldedComponentPool.Count < 5)
+    //     {
+    //         for (var i = 0; i < poolSize; i++)
+    //         {
+    //             mainFoldedComponentPool.Enqueue(new MainWindowFoldedComponent());
+    //             yield return null;
+    //         }
+    //     }
+    //     updatingPool = false;
+    //     onUpdateStateChanged.OnNext(false);
+    // }
+    //
+    internal MainWindowFoldedComponent GetMainWindowFoldedComponent()
     {
-        EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
+        return new MainWindowFoldedComponent();
+        // if (mainFoldedComponentPool.Count == 0)
+        // {
+        //     if (!updatingPool)
+        //     {
+        //         updatingPool = true;
+        //         EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
+        //     }
+        //     return new MainWindowFoldedComponent();
+        // } else if (mainFoldedComponentPool.Count < 5)
+        // {
+        //     if (!updatingPool)
+        //     {
+        //         updatingPool = true;
+        //         EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
+        //     }
+        // }
+        // return mainFoldedComponentPool.Dequeue();
     }
 
-    private IEnumerator UpdatePoolsCoroutine()
-    {
-        onUpdateStateChanged.OnNext(true);
-        updatingPool = true;
-        foreach (var kv in typeAndInitAmountList)
-        {
-            if (!componentsByType.ContainsKey(kv.Key))
-            {
-                componentsByType.Add(kv.Key, new Queue<AiObjectComponent>());
-            }
-            var queue = componentsByType[kv.Key];
-            if (queue.Count < 5)
-            {
-                for (var i = 0; i < kv.Value; i++)
-                {
-                    var component = GetComponent(kv.Key);
-                    queue.Enqueue(component);
-                    yield return null;
-                }
-            }
-        }
-        if (mainFoldedComponentPool.Count < 5)
-        {
-            for (var i = 0; i < poolSize; i++)
-            {
-                mainFoldedComponentPool.Enqueue(new MainWindowFoldedComponent());
-                yield return null;
-            }
-        }
-        updatingPool = false;
-        onUpdateStateChanged.OnNext(false);
-    }
+    // internal MainWindowFoldedComponent RentMainWindowFoldedComponent()
+    // {
+    //     if (mainFoldedComponentPool.Count == 0)
+    //     {
+    //         if (!updatingPool)
+    //         {
+    //             updatingPool = true;
+    //             EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
+    //         }
+    //         return new MainWindowFoldedComponent();
+    //     } else if (mainFoldedComponentPool.Count < 5)
+    //     {
+    //         if (!updatingPool)
+    //         {
+    //             updatingPool = true;
+    //             EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
+    //         }
+    //     }
+    //     return mainFoldedComponentPool.Dequeue();
+    // }
 
-    internal MainWindowFoldedComponent RentMainWindowFoldedComponent()
-    {
-        if (mainFoldedComponentPool.Count == 0)
-        {
-            if (!updatingPool)
-            {
-                updatingPool = true;
-                EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
-            }
-            return new MainWindowFoldedComponent();
-        } else if (mainFoldedComponentPool.Count < 5)
-        {
-            if (!updatingPool)
-            {
-                updatingPool = true;
-                EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
-            }
-        }
-        return mainFoldedComponentPool.Dequeue();
-    }
-
-    internal AiObjectComponent RentComponent(AiObjectModel model)
+    internal AiObjectComponent GetAiObjectComponent(AiObjectModel model)
     {
         var type = model.GetType();
-        return RentComponent(type);
+        return GetAiObjectComponent(type);
     }
-
-    internal AiObjectComponent RentComponent(Type type)
+    
+    internal AiObjectComponent GetAiObjectComponent(Type modelType)
     {
-
-        if (!componentsByType.ContainsKey(type))
-        {
-            if (!updatingPool)
-            {
-                updatingPool = true;
-                //EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
-            }
-
-            return GetComponent(type);
-        }
-
-        if (componentsByType[type].Count <= 0)
-        {
-            if (!updatingPool)
-            {
-                updatingPool = true;
-                //EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
-            }
-
-            return GetComponent(type);
-        }
-        return componentsByType[type].Dequeue();
+        return GetComponent(modelType);
     }
+    
 
-    internal void ReturnComponent(AiObjectComponent component)
-    {
-        var type = component.Model.GetType();
-        if (!componentsByType.ContainsKey(type))
-        {
-            componentsByType.Add(type, new Queue<AiObjectComponent>());
-        }
-        componentsByType[type].Enqueue(component);
-    }
+    // internal AiObjectComponent RentComponent(Type type)
+    // {
+    //
+    //     if (!componentsByType.ContainsKey(type))
+    //     {
+    //         if (!updatingPool)
+    //         {
+    //             updatingPool = true;
+    //             //EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
+    //         }
+    //
+    //         return GetComponent(type);
+    //     }
+    //
+    //     if (componentsByType[type].Count <= 0)
+    //     {
+    //         if (!updatingPool)
+    //         {
+    //             updatingPool = true;
+    //             //EditorCoroutineUtility.StartCoroutine(UpdatePoolsCoroutine(), this);
+    //         }
+    //
+    //         return GetComponent(type);
+    //     }
+    //     return componentsByType[type].Dequeue();
+    // }
+    //
+    // internal void ReturnComponent(AiObjectComponent component)
+    // {
+    //     var type = component.Model.GetType();
+    //     if (!componentsByType.ContainsKey(type))
+    //     {
+    //         componentsByType.Add(type, new Queue<AiObjectComponent>());
+    //     }
+    //     componentsByType[type].Enqueue(component);
+    // }
 
-    internal void ReturnMWFC(MainWindowFoldedComponent component)
-    {
-        mainFoldedComponentPool.Enqueue(component);
-    }
+    // internal void ReturnMWFC(MainWindowFoldedComponent component)
+    // {
+    //     mainFoldedComponentPool.Enqueue(component);
+    // }
 
     private AiObjectComponent GetComponent(Type type)
     {
@@ -212,9 +236,9 @@ internal class MainWindowService
             return instance;
         }
     }
-
-    internal void PreloadComponents(ReactiveList<AiObjectModel> models)
-    {
-        //throw new NotImplementedException();
-    }
+    //
+    // internal void PreloadComponents(ReactiveList<AiObjectModel> models)
+    // {
+    //     //throw new NotImplementedException();
+    // }
 }

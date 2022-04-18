@@ -348,7 +348,7 @@ internal class TemplateManager : EditorWindow
         //     .OnValueChanged
         //     .Subscribe(LoadModels);
 
-        MainWindowService.Instance.PreloadComponents(models);
+        // MainWindowService.Instance.PreloadComponents(models);
 
         UpdateAddElementPopup();
 
@@ -498,7 +498,7 @@ internal class TemplateManager : EditorWindow
             {
                 var sw = new System.Diagnostics.Stopwatch();
                 sw.Start();
-                var mvc = MainWindowService.Instance.RentComponent(model);
+                var mvc = MainWindowService.Instance.GetAiObjectComponent(model);
                 TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "TMP Rent");
                 sw.Restart();
                 componentsByModels.Add(model, mvc);

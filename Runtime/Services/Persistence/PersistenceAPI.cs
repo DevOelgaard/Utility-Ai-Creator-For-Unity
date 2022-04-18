@@ -145,7 +145,7 @@ internal class PersistenceAPI
     private void CleanUp(string path)
     {
         var thread = Thread.CurrentThread;
-        Debug.Log(thread.Name + " Starting Clea Up path: " + path);
+        Debug.Log(thread.Name + " Starting Clean Up path: " + path);
 
         if (path.Contains("."))
         {
@@ -190,6 +190,7 @@ internal class PersistenceAPI
 
             Directory.Delete(d,false);
             Debug.Log(thread.Name + " Clean Up of: " + d + " completed Deleted files: " + deleted.Count);
+            
             foreach (var del in deleted)
             {
                 Debug.Log(thread.Name + " Deleted: " + del);

@@ -44,19 +44,26 @@ internal class JsonPersister : IPersister
 
     public virtual List<ObjectMetaData<T>> LoadObjects<T>(string folderPath, string filter)
     {
-        try
-        {
-            var fileNames = Directory
-                .GetFiles(folderPath, filter);
-            return fileNames
-                .Where(f => !f.Contains("meta"))
-                .Select(LoadObject<T>)
-                .ToList();
-        }
-        catch
-        {
-            return new List<ObjectMetaData<T>>();
-        }
+        if (!Directory.Exists(folderPath)) return new List<ObjectMetaData<T>>();
+        var fileNames = Directory
+            .GetFiles(folderPath, filter);
+        return fileNames
+            .Where(f => !f.Contains("meta"))
+            .Select(LoadObject<T>)
+            .ToList();
+        // try
+        // {
+        //     var fileNames = Directory
+        //         .GetFiles(folderPath, filter);
+        //     return fileNames
+        //         .Where(f => !f.Contains("meta"))
+        //         .Select(LoadObject<T>)
+        //         .ToList();
+        // }
+        // catch
+        // {
+        //     return new List<ObjectMetaData<T>>();
+        // }
     }
 
 

@@ -29,7 +29,7 @@ public class PopUpService: EditorWindow
 
                 async void Save()
                 {
-                        MainThreadDispatcher.StartCoroutine(UasTemplateService.Instance.SaveCoroutine());
+                        await UasTemplateService.Instance.Save();
                         await task.Invoke();
                 }
 

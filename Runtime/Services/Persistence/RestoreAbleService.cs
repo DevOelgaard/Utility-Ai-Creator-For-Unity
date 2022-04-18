@@ -32,22 +32,6 @@ internal static class RestoreAbleService
     internal static List<T> SortByName<T>(List<string> names, List<T> aiObjects) where T : AiObjectModel
     {
         return aiObjects;
-        // var result = new List<T>();
-        // foreach(var name in names)
-        // {
-        //     var aiObject = aiObjects.FirstOrDefault(a => a.Name == name);
-        //     if(aiObject != null)
-        //     {
-        //         result.Add(aiObject);
-        //         aiObjects.Remove(aiObject);
-        //     }
-        // }
-        //
-        // foreach(var ao in aiObjects.Where(ao => !result.Contains(ao)))
-        // {
-        //      result.Add(ao);
-        // }
-        // return result;
     }
 
     internal static List<Parameter> SortByName(List<string> names, List<Parameter> aiObjects)
@@ -82,7 +66,7 @@ internal static class RestoreAbleService
             {
                 Debug.Log("Creating error file typeof(T): " + typeof(T) + " s.ModelType: " + s.ModelType + " TType: " + s.type);
                 var error = (T)ErrorObjectService.GetErrorObject(s.ModelType);
-                error.Name = s.ErrorMessage;
+                error.Name = "Error";
                 error.Description = "Exception: " + s.Exception.ToString();
                 result.Add(error);
             }
@@ -106,7 +90,7 @@ internal static class RestoreAbleService
         {
             if (p.LoadedObject == null)
             {
-                var parameter = new Parameter(p.ErrorMessage, p.Exception.ToString());
+                var parameter = new Parameter("Error", p.Exception.ToString());
                 result.Add(parameter);
             }
             else
@@ -129,7 +113,7 @@ internal static class RestoreAbleService
             if (bs.LoadedObject == null)
             {
                 var error = (UtilityContainerSelector)InstantiaterService.CreateInstance(bs.ModelType);
-                var errorParam = new Parameter(bs.ErrorMessage, bs.Exception.ToString());
+                var errorParam = new Parameter("Error", bs.Exception.ToString());
                 error.Parameters.Add(errorParam);
                 result.Add(error);
             }

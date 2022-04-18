@@ -14,7 +14,7 @@ internal class Cooldown : Consideration
     {
         cooldownTime = Convert.ToSingle(Parameters[0].Value) / 1000f;
         paramaterDisposable = Parameters[0]
-            .OnValueChange
+            .OnOnValueChange
             .Subscribe(_ => cooldownTime = Convert.ToSingle(Parameters[0].Value) / 1000f);
     }
 

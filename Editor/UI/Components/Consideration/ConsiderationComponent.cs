@@ -126,8 +126,8 @@ internal class ConsiderationComponent : AiObjectComponent
         maxParamComp.UpdateUi(considerationModel.MaxFloat);
         minField = minParamComp.field as FloatFieldMinMax;
         maxField = maxParamComp.field as FloatFieldMinMax;
-        minField.Max = Convert.ToSingle(considerationModel.MaxFloat.Value);
-        maxField.Min = Convert.ToSingle(considerationModel.MinFloat.Value);
+        minField.Max = (float)considerationModel.MaxFloat.Value;
+        maxField.Min = (float)considerationModel.MinFloat.Value;
         
         parametersContainer.Add(performanceTag);
         parametersContainer.Add(minParamComp);
@@ -135,18 +135,18 @@ internal class ConsiderationComponent : AiObjectComponent
         
         minMaxSubs.Clear();
         considerationModel.MinFloat
-            .OnValueChange
+            .OnOnValueChange
             .Subscribe(value =>
             {
-                maxField.Min = Convert.ToSingle(value);
+                maxField.Min = (float)value;
             })
             .AddTo(minMaxSubs);
 
         considerationModel.MaxFloat
-            .OnValueChange
+            .OnOnValueChange
             .Subscribe(value =>
             {
-                minField.Max = Convert.ToSingle(value);
+                minField.Max = (float)value;
             })
             .AddTo(minMaxSubs);
 

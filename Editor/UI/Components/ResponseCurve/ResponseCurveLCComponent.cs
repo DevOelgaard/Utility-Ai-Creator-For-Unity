@@ -17,8 +17,8 @@ internal class ResponseCurveLcComponent : VisualElement
     internal IObservable<ResponseCurve> OnResponseCurveChanged => onResponseCurveChanged;
     private Subject<ResponseCurve> onResponseCurveChanged = new Subject<ResponseCurve>();
 
-    private float min => Convert.ToSingle(responseCurve.MinX);
-    private float max => Convert.ToSingle(responseCurve.MaxX);
+    private float min => (float)responseCurve.MinX;
+    private float max => (float)responseCurve.MaxX;
     private int steps = ConstsEditor.ResponseCurve_Steps;
 
     //private Label nameLabel;
@@ -148,7 +148,7 @@ internal class ResponseCurveLcComponent : VisualElement
                 paramComponent.name = "Segment";
                 paramComponent.UpdateUi(segmentParam);
                 segmentParam
-                    .OnValueChange
+                    .OnOnValueChange
                     .Subscribe(_ => ReDrawChart())
                     .AddTo(funcitonDisposables);
 

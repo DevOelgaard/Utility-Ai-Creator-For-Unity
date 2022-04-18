@@ -201,30 +201,18 @@ public class Ai: AiObjectModel
 
             BucketSelectors = RestoreAbleService.GetUcs(CurrentDirectory + Consts.FolderName_BucketSelectors, restoreDebug);
             CurrentBucketSelector = BucketSelectors
-                .FirstOrDefault(d => d.GetName() == state.CurrentBucketSelectorName);
-
-            if (CurrentBucketSelector == null)
-            {
-                CurrentBucketSelector = BucketSelectors.FirstOrDefault();
-            }
+                .FirstOrDefault(d => d.GetName() == state.CurrentBucketSelectorName) ?? 
+                    BucketSelectors.FirstOrDefault();
 
             DecisionSelectors = RestoreAbleService.GetUcs(CurrentDirectory + Consts.FolderName_DecisionSelectors, restoreDebug);
             CurrentDecisionSelector = DecisionSelectors
-                .FirstOrDefault(d => d.GetName() == state.CurrentDecisionSelectorName);
-
-            if (CurrentDecisionSelector == null)
-            {
-                CurrentDecisionSelector = DecisionSelectors.FirstOrDefault();
-            }
+                .FirstOrDefault(d => d.GetName() == state.CurrentDecisionSelectorName) ?? 
+                    DecisionSelectors.FirstOrDefault();
 
             var utilityScorers = AssetDatabaseService.GetInstancesOfType<IUtilityScorer>();
             UtilityScorer = utilityScorers
-                .FirstOrDefault(u => u.GetName() == state.USName);
-
-            if (UtilityScorer == null)
-            {
-                UtilityScorer = utilityScorers.FirstOrDefault();
-            }
+                .FirstOrDefault(u => u.GetName() == state.USName) ?? 
+                    utilityScorers.FirstOrDefault();
         });
         await task;
     }
@@ -261,8 +249,8 @@ public class AiState: RestoreState
         
         Buckets = RestoreAbleService.NamesToList(buckets);
 
-        CurrentBucketSelectorName = model.CurrentBucketSelector.GetName();
-        CurrentDecisionSelectorName = model.CurrentDecisionSelector.GetName();
+        CurrentBucketSelectorName = model.CurrentBucketSelector?.GetName();
+        CurrentDecisionSelectorName = model.CurrentDecisionSelector?.GetName();
 
         USName = model.UtilityScorer.GetName();
     }

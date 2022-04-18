@@ -1,4 +1,5 @@
-﻿using UnityEngine.UIElements;
+﻿using System;
+using UnityEngine.UIElements;
 using UniRx;
 
 internal class MainWindowFoldedComponent : VisualElement
@@ -51,7 +52,14 @@ internal class MainWindowFoldedComponent : VisualElement
 
         typeLabel.text = aiObjectModel.GetTypeDescription();
         nameLabel.text = aiObjectModel.Name;
-        descriptionLabel.text = aiObjectModel.Description;
+        if (aiObjectModel?.Description?.Length > 128)
+        {
+            descriptionLabel.text = aiObjectModel.Description.Substring(0, 128) + "...";
+        }
+        else
+        {
+            descriptionLabel.text = aiObjectModel.Description;
+        }
 
         aiObjectModel.OnNameChanged
             .Subscribe(aiObjectName => nameLabel.text = aiObjectName)
@@ -88,7 +96,7 @@ internal class MainWindowFoldedComponent : VisualElement
                 name = "FoldedFooterLabel"
             };
             footer.Add(minLabel);
-            cons.MinFloat.OnValueChange
+            cons.MinFloat.OnOnValueChange
                 .Subscribe(_ => minLabel.text = cons.MinFloat.Name + ": " + cons.MinFloat.Value)
                 .AddTo(disposables);
 
@@ -98,7 +106,7 @@ internal class MainWindowFoldedComponent : VisualElement
                 name = "FoldedFooterLabel"
             };
             footer.Add(maxLabel);
-            cons.MinFloat.OnValueChange
+            cons.MinFloat.OnOnValueChange
                 .Subscribe(_ => maxLabel.text = cons.MaxFloat.Name + ": " + cons.MaxFloat.Value)
                 .AddTo(disposables);
 
@@ -106,13 +114,18 @@ internal class MainWindowFoldedComponent : VisualElement
 
         foreach (var parameter in model.Parameters)
         {
+            var labelText = parameter.Name + ": " + parameter.Value.ToString();
+            if (labelText.Length > 64)
+            {
+                labelText = labelText.Substring(0, 64) + "...";
+            }
             var pLabel = new Label()
             {
-                text = parameter.Name + ": " + parameter.Value.ToString(),
+                text = labelText,
                 name = "FoldedFooterLabel"
             };
             footer.Add(pLabel);
-            parameter.OnValueChange
+            parameter.OnOnValueChange
                 .Subscribe(_ => pLabel.text = parameter.Name + ": " + parameter.Value)
                 .AddTo(disposables);
         }

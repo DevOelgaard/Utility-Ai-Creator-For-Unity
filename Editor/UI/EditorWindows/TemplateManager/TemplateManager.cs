@@ -50,7 +50,8 @@ internal class TemplateManager : EditorWindow
     internal void CreateGUI()
     {
         root = rootVisualElement;
-        
+        DontDestroyOnLoad(this);
+
         var treeAsset = AssetDatabaseService.GetVisualTreeAsset(GetType().FullName);
         treeAsset.CloneTree(root);
         toolbar = root.Q<Toolbar>();
@@ -146,8 +147,8 @@ internal class TemplateManager : EditorWindow
 
         menu.menu.AppendAction("Save", _ =>
         {
-            MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine());
-            // uASTemplateService.Save();
+            Task.Factory.StartNew(() => uASTemplateService.Save());
+            // MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine());
         });
 
         menu.menu.AppendAction("Save As", _ =>
@@ -186,7 +187,7 @@ internal class TemplateManager : EditorWindow
 
         menu.menu.AppendAction("Save Backup - TEST", _ =>
         {
-            MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine(true));
+            Task.Factory.StartNew(() => uASTemplateService.Save(true));
         });
 
         menu.menu.AppendAction("Load Backup - TEST", _ =>
@@ -212,7 +213,10 @@ internal class TemplateManager : EditorWindow
     private async void OpenProject(DropdownMenuAction _)
     {
         // Updating Backup
-        MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine(true));
+        // MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine(true));
+        await uASTemplateService.Save(true);
+        Debug.Log("Save complete, Loading");
+        
 
         await PopUpService.AskToSaveIfProjectNotSavedThenSelectProjectToLoad();
     }

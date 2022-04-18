@@ -9,21 +9,21 @@ using System;
 
 internal abstract class AiObjectComponent : VisualElement
 {
-    protected CompositeDisposable modelInfoChangedDisposable = new CompositeDisposable();
+    protected readonly CompositeDisposable modelInfoChangedDisposable = new CompositeDisposable();
 
-    private Label typeLabel;
-    private TextField nameTextField;
-    private TextField descriptionTextField;
+    private readonly Label typeLabel;
+    private readonly TextField nameTextField;
+    private readonly TextField descriptionTextField;
     internal AiObjectModel Model;
-    protected VisualElement ScoreContainer;
-    protected VisualElement Header;
-    protected VisualElement Body;
-    protected VisualElement Footer;
+    protected readonly VisualElement ScoreContainer;
+    protected readonly VisualElement Header;
+    protected readonly VisualElement Body;
+    protected readonly VisualElement Footer;
     protected InfoComponent InfoComponent;
-    protected Button SaveToTemplateButton;
-    protected HelpBox HelpBox;
-    protected VisualElement HelpBoxContainer;
-    private LabelContainerComponent labelContainer;
+    protected readonly Button SaveToTemplateButton;
+    protected readonly HelpBox HelpBox;
+    protected readonly VisualElement HelpBoxContainer;
+    private readonly LabelContainerComponent labelContainer;
 
 
     internal List<ScoreComponent> ScoreComponents = new List<ScoreComponent>();
@@ -83,46 +83,54 @@ internal abstract class AiObjectComponent : VisualElement
 
     internal void UpdateUi(AiObjectModel model)
     {
-        var sw = new System.Diagnostics.Stopwatch();
-        sw.Start();
-        SetLabels();
-        Model = model;
-        typeLabel.text = Model.GetTypeDescription();
-        nameTextField.value = model.Name;
-        descriptionTextField.value = model.Description;
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui Init");
-        sw.Restart();
-        if (string.IsNullOrEmpty(model.HelpText))
+        try
         {
-            HelpBox.style.display = DisplayStyle.None;
-        } else
-        {
-            HelpBox.style.display = DisplayStyle.Flex;
-            HelpBox.text = model.HelpText;
-        }
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui HelpBox");
-        sw.Restart();
-        ScoreContainer.Clear();
-        ScoreComponents = new List<ScoreComponent>();
-        foreach (var scoreModel in model.ScoreModels)
-        {
-            var scoreComponent = new ScoreComponent(scoreModel);
-            ScoreComponents.Add(scoreComponent);
-            ScoreContainer.Add(scoreComponent);
-        }
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui ScoreComponents");
-        sw.Restart();
+            var sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+            SetLabels();
+            Model = model;
+            typeLabel.text = Model.GetTypeDescription();
+            nameTextField.value = model.Name;
+            descriptionTextField.value = model.Description;
+            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui Init");
+            sw.Restart();
+            if (string.IsNullOrEmpty(model.HelpText))
+            {
+                HelpBox.style.display = DisplayStyle.None;
+            } else
+            {
+                HelpBox.style.display = DisplayStyle.Flex;
+                HelpBox.text = model.HelpText;
+            }
+            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui HelpBox");
+            sw.Restart();
+            ScoreContainer.Clear();
+            ScoreComponents = new List<ScoreComponent>();
+            foreach (var scoreModel in model.ScoreModels)
+            {
+                var scoreComponent = new ScoreComponent(scoreModel);
+                ScoreComponents.Add(scoreComponent);
+                ScoreContainer.Add(scoreComponent);
+            }
+            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui ScoreComponents");
+            sw.Restart();
 
-        modelInfoChangedDisposable.Clear();
-        Model.OnInfoChanged
-            .Subscribe(info => InfoComponent.DispalyInfo(info))
-            .AddTo(modelInfoChangedDisposable);
-        InfoComponent.DispalyInfo(Model.Info);
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui Subscribe");
-        sw.Restart();
-        UpdateInternal(model);
-        TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui Update Internal");
-        sw.Restart();
+            modelInfoChangedDisposable.Clear();
+            Model.OnInfoChanged
+                .Subscribe(info => InfoComponent.DispalyInfo(info))
+                .AddTo(modelInfoChangedDisposable);
+            InfoComponent.DispalyInfo(Model.Info);
+            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui Subscribe");
+            sw.Restart();
+            UpdateInternal(model);
+            TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui Update Internal");
+            sw.Restart();
+        }
+        catch (Exception ex)
+        {
+            Model.Name = "Error";
+            Model.Description = ex.ToString();
+        }
     }
 
     protected abstract void UpdateInternal(AiObjectModel model);

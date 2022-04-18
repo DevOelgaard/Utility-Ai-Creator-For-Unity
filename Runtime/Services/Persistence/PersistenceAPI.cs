@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,23 +7,12 @@ using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-
 internal class PersistenceAPI
 {
     private IPersister persister;
     private readonly IPersister destructivePersister;
 
-    internal static PersistenceAPI Instance
-    {
-        get
-        {
-            if(_instance == null)
-            {
-                _instance = new PersistenceAPI(new JsonPersister());
-            }
-            return _instance;
-        }
-    }
+    internal static PersistenceAPI Instance => _instance ??= new PersistenceAPI(new JsonPersister());
     private static PersistenceAPI _instance;
 
     private PersistenceAPI(IPersister persister)
@@ -100,6 +90,7 @@ internal class PersistenceAPI
         var results = persister.LoadObjects<T>(folderPath, "*"+filter);
         foreach (var result in results)
         {
+            if (result.LoadedObject == null) continue;
             result.LoadedObject.FolderLocation = folderPath;
         }
 

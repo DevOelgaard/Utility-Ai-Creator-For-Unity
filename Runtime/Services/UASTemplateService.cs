@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor;
 
 [InitializeOnLoad]
@@ -52,7 +53,7 @@ internal class UasTemplateService: RestoreAble
         Instance = new UasTemplateService();
         if (EditorApplication.isPlayingOrWillChangePlaymode)
         {
-            Task.Factory.StartNew(() => Instance.Init(false));
+            Task.Factory.StartNew(() => Instance.Init(true));
         }
         else
         {
@@ -136,8 +137,9 @@ internal class UasTemplateService: RestoreAble
             try
             {
                 await Restore(state);
+                await Save(true);
 
-                MainThreadDispatcher.StartCoroutine(SaveCoroutine(true));
+                // MainThreadDispatcher.StartCoroutine(SaveCoroutine(true));
                 // Save(true);
                 isLoaded = true;
                 loadedPath = loadPath;
@@ -155,49 +157,55 @@ internal class UasTemplateService: RestoreAble
         }
     }
 
-    internal IEnumerator SaveCoroutine(bool backup = false)
-    {
-        Debug.Log("Saving");
-        var path = !backup
-            ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
-            : ProjectSettingsService.Instance.GetBackupDirectory();
-        
-        
-        if (EditorApplication.isPlaying)
-        {
-            Debug.Log("Not Saving from PlayMode");
-            yield return null;
-        }
-        else
-        {
-            Debug.Log("Saving path: " + path);
-        }
-        var perstistAPI = PersistenceAPI.Instance;
-        perstistAPI.SaveDestructiveObjectPath(this,path,
-            ProjectSettingsService.Instance.GetCurrentProjectName(true));
-        yield return null;
-    }
+    // internal IEnumerator SaveCoroutine(bool backup = false)
+    // {
+    //     Debug.Log("Saving");
+    //     var path = !backup
+    //         ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
+    //         : ProjectSettingsService.Instance.GetBackupDirectory();
+    //     
+    //     
+    //     if (EditorApplication.isPlaying)
+    //     {
+    //         Debug.Log("Not Saving from PlayMode");
+    //         yield return null;
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("Saving path: " + path);
+    //     }
+    //     var perstistAPI = PersistenceAPI.Instance;
+    //     perstistAPI.SaveDestructiveObjectPath(this,path,
+    //         ProjectSettingsService.Instance.GetCurrentProjectName(true));
+    //     yield return null;
+    // }
     
-    internal void Save(bool backup = false)
+    internal async Task Save(bool backup = false)
     {
-        Debug.Log("Saving private");
-        var path = !backup
-            ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
-            : ProjectSettingsService.Instance.GetBackupDirectory();
-        
-        
-        if (EditorApplication.isPlaying)
+        await Task.Factory.StartNew(() =>
         {
-            Debug.Log("Not Saving from PlayMode");
-            return;
-        }
-        else
-        {
+            Debug.Log("Saving private");
+            var path = !backup
+                ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
+                : ProjectSettingsService.Instance.GetBackupDirectory();
+
+
+            // if (EditorApplication.isPlaying)
+            // {
+            //     Debug.Log("Not Saving from PlayMode");
+            //     return;
+            // }
+            // else
+            // {
+            //     Debug.Log("Saving path: " + path);
+            // }
             Debug.Log("Saving path: " + path);
-        }
-        var perstistAPI = PersistenceAPI.Instance;
-        perstistAPI.SaveDestructiveObjectPath(this,path,
-            ProjectSettingsService.Instance.GetCurrentProjectName(true));
+
+            var perstistAPI = PersistenceAPI.Instance;
+            perstistAPI.SaveDestructiveObjectPath(this, path,
+                ProjectSettingsService.Instance.GetCurrentProjectName(true));
+        });
+        Debug.Log("Save complete");
     }
 
     protected override string GetFileName()

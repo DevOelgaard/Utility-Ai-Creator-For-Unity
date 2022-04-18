@@ -15,14 +15,14 @@ public class Parameter: RestoreAble
         set
         {
             v = value;
-            valueChanged.OnNext(v);
+            onValueChanged.OnNext(v);
         }
     }
 
     public ParameterTypes ParameterEnum;
 
-    public IObservable<object> OnValueChange => valueChanged;
-    private Subject<object> valueChanged = new Subject<object>();
+    public IObservable<object> OnOnValueChange => onValueChanged;
+    private Subject<object> onValueChanged = new Subject<object>();
 
     public Parameter()
     {
@@ -61,10 +61,13 @@ public class Parameter: RestoreAble
         {
             var state = (ParameterState) s;
             Name = state.Name;
-            if (state.ValueType == "UnityEngine.Color")
+            if (state.ValueTypeString == "UnityEngine.Color")
             {
                 v = new Color(state.RGBA[0], state.RGBA[1], state.RGBA[2], state.RGBA[3]);
-            } else if (state.ValueType == "System.Double")
+            } else if (state.ValueType == typeof(float))
+            {
+                v = Convert.ToSingle(state.Value);
+            } else if (state.ValueTypeString == "System.Double")
             {
                 v = Convert.ToDouble(state.Value);
             }
@@ -87,7 +90,8 @@ public class ParameterState: RestoreState
 {
     public string Name;
     public object Value;
-    public string ValueType;
+    public string ValueTypeString;
+    public Type ValueType;
     public float[] RGBA = new float[4];
 
     public ParameterState(): base()
@@ -97,7 +101,8 @@ public class ParameterState: RestoreState
     public ParameterState(string name, object v, Parameter p): base(p)
     {
         Name = name;
-        ValueType = v.GetType().ToString();
+        ValueTypeString = v.GetType().ToString();
+        ValueType = v.GetType();
         if (v is Color color)
         {
             RGBA = new float[4];

@@ -16,7 +16,7 @@ internal class BucketLog: AiObjectLog
         var result = new BucketLog();
         result = SetBasics(result, bucket, tick) as BucketLog;
         result.Score = bucket.ScoreModels.First().Value;
-        result.Weight = Convert.ToSingle(bucket.Weight.Value);
+        result.Weight = (float)bucket.Weight.Value;
 
         result.Considerations = new List<ConsiderationLog>();
         foreach (var consideration in bucket.Considerations.Values)

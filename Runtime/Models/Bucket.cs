@@ -120,8 +120,9 @@ public class Bucket : UtilityContainer
         
         Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
 
-        var weightState = PersistenceAPI.Instance
-            .LoadObjectsPath<ParameterState>(CurrentDirectory + Consts.FolderName_Weight).FirstOrDefault();
+        var wStates = await PersistenceAPI.Instance
+            .LoadObjectsPath<ParameterState>(CurrentDirectory + Consts.FolderName_Weight);
+        var weightState = wStates.FirstOrDefault();
         if(weightState.LoadedObject == null)
         {
             Weight = new Parameter(weightState.ErrorMessage, weightState.Exception.ToString());

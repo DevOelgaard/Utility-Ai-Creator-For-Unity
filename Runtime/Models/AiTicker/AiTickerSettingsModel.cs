@@ -33,7 +33,8 @@ public class AiTickerSettingsModel: RestoreAble
         var s = state as AiTickerSettingsState;
         TickerMode = await Restore<TickerMode>(s.TickerMode);
         TickerModes = new List<TickerMode>();
-        var modeStates = PersistenceAPI.Instance.LoadObjectsPathWithFilters<TickerModeState>(CurrentDirectory + Consts.FolderName_TickerModes, typeof(TickerMode));
+        var modeStates = await PersistenceAPI.Instance
+            .LoadObjectsPathWithFilters<TickerModeState>(CurrentDirectory + Consts.FolderName_TickerModes, typeof(TickerMode));
         foreach(var mode in modeStates)
         {
             if(mode.LoadedObject == null)

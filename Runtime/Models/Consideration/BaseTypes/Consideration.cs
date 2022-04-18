@@ -157,9 +157,10 @@ public abstract class Consideration : AiObjectModel
             Name = state.Name;
             Description = state.Description;
 
-            var minState = PersistenceAPI.Instance
-                .LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory+ Consts.FolderName_MinParameter, typeof(Parameter))
-                .FirstOrDefault();
+            var minSates = await PersistenceAPI.Instance
+                .LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory + Consts.FolderName_MinParameter,
+                    typeof(Parameter));
+            var minState = minSates.FirstOrDefault();
             
             if (minState.LoadedObject == null)
             {
@@ -170,9 +171,10 @@ public abstract class Consideration : AiObjectModel
                 MinFloat = await Restore<Parameter>(minState.LoadedObject);
             }
 
-            var maxState = PersistenceAPI.Instance
-                .LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory + Consts.FolderName_MaxParameter, typeof(Parameter))
-                .FirstOrDefault();
+            var maxStates = await PersistenceAPI.Instance
+                .LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory + Consts.FolderName_MaxParameter,
+                    typeof(Parameter));
+            var maxState = maxStates.FirstOrDefault();
             
             if (maxState.LoadedObject == null)
             {

@@ -89,10 +89,6 @@ internal abstract class AiObjectComponent : VisualElement
             sw.Start();
             SetLabels();
             Model = model;
-            if (model.Name == "Error")
-            {
-                style.backgroundColor = new StyleColor(Color.red);
-            }
             typeLabel.text = Model.GetTypeDescription();
             nameTextField.value = model.Name;
             descriptionTextField.value = model.Description;

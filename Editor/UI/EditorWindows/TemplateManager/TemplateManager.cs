@@ -202,7 +202,7 @@ internal class TemplateManager : EditorWindow
 
     private async void ImportFiles(DropdownMenuAction _)
     {
-        var s = persistenceAPI.LoadFilePanel<RestoreState>(Consts.FileExtensionsFilters);
+        var s = await persistenceAPI.LoadFilePanel<RestoreState>(Consts.FileExtensionsFilters);
         s.LoadedObject.FolderLocation = Path.GetDirectoryName(s.Path) + @"\";
         var t = s.StateType;
 

@@ -82,10 +82,6 @@ internal class AgentComponent: RightPanelComponent<IAgent>
         sw.Start();
         if (element == null) return;
         this.agent = element;
-        if (agent.Model.Name == "Error")
-        {
-            style.backgroundColor = new StyleColor(Color.red);
-        }
 
         agentName.text = agent.Model.Name;
         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "AgentComponent Init");

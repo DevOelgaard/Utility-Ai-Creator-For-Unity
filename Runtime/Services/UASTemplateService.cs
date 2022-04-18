@@ -124,8 +124,8 @@ internal class UasTemplateService: RestoreAble
         ClearCollectionNoNotify();
         var perstistAPI = PersistenceAPI.Instance;
         
-        var state = perstistAPI.LoadObjectPath<UasTemplateServiceState>(loadPath).LoadedObject;
-        if (state == null)
+        var state = await perstistAPI.LoadObjectPath<UasTemplateServiceState>(loadPath);
+        if (state.LoadedObject == null)
         {
             ClearCollectionNotify();
             Debug.LogError("Loading failed state == null");
@@ -135,11 +135,9 @@ internal class UasTemplateService: RestoreAble
         {
             try
             {
-                await Restore(state);
+                await Restore(state.LoadedObject);
                 await Save(true);
 
-                // MainThreadDispatcher.StartCoroutine(SaveCoroutine(true));
-                // Save(true);
                 isLoaded = true;
                 loadedPath = loadPath;
                 onLoadComplete.OnNext(true);
@@ -151,33 +149,9 @@ internal class UasTemplateService: RestoreAble
                 Debug.LogError("Loading failed: " + ex);
 
                 throw new Exception("UAS Template Service Restore Failed : ", ex);
-                //Debug.LogWarning("UASTemplateService Restore failed: " + ex);
             }
         }
     }
-
-    // internal IEnumerator SaveCoroutine(bool backup = false)
-    // {
-    //     Debug.Log("Saving");
-    //     var path = !backup
-    //         ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
-    //         : ProjectSettingsService.Instance.GetBackupDirectory();
-    //     
-    //     
-    //     if (EditorApplication.isPlaying)
-    //     {
-    //         Debug.Log("Not Saving from PlayMode");
-    //         yield return null;
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("Saving path: " + path);
-    //     }
-    //     var perstistAPI = PersistenceAPI.Instance;
-    //     perstistAPI.SaveDestructiveObjectPath(this,path,
-    //         ProjectSettingsService.Instance.GetCurrentProjectName(true));
-    //     yield return null;
-    // }
     
     internal async Task Save(bool backup = false)
     {

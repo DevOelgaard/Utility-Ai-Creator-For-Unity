@@ -12,12 +12,17 @@ internal class ProjectSettingsService
     private CompositeDisposable modelChangedSubscription = new CompositeDisposable();
     internal IObservable<bool> OnProjectSettingsChanged => onProjectSettingsChanged;
     private readonly Subject<bool> onProjectSettingsChanged = new Subject<bool>();
-    private readonly ProjectSettingsModel model;
+    private ProjectSettingsModel model;
     private readonly IPersister persister;
     private ProjectSettingsService()
     {
         persister = new JsonPersister();
-        var loaded = persister.LoadObject<ProjectSettingsModel>(Consts.ProjectSettingsPath);
+        Init();
+    }
+
+    private async Task Init()
+    {
+        var loaded = await persister.LoadObject<ProjectSettingsModel>(Consts.ProjectSettingsPath);
         model = loaded.Success ? loaded.LoadedObject : new ProjectSettingsModel();
         model.OnCurrentProjectPathChanged
             .Subscribe(_ => onProjectSettingsChanged.OnNext(true))

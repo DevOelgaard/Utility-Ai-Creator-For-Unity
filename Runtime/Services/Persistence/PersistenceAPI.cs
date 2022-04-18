@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
@@ -143,6 +144,9 @@ internal class PersistenceAPI
     //https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories
     private void CleanUp(string path)
     {
+        var thread = Thread.CurrentThread;
+        Debug.Log(thread.Name + " Starting Clea Up path: " + path);
+
         if (path.Contains("."))
         {
             path = new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName;
@@ -160,7 +164,7 @@ internal class PersistenceAPI
             var childDirectoryNames = Directory.GetDirectories(d)
                 .Select(Path.GetFileNameWithoutExtension)
                 .ToList();
-            
+            var deleted = new List<string>();
             foreach (var metaFile in metaFiles)
             {
                 var metaFileName = Path.GetFileNameWithoutExtension(metaFile);
@@ -168,11 +172,9 @@ internal class PersistenceAPI
                                 childDirectoryNames.All(directory => directory != metaFileName);
 
                 if (!canDelete) continue;
+                deleted.Add(metaFile);
                 File.Delete(metaFile);
             }
-            
-
-
 
             // Delete empty folders
             var childDirectories = Directory.GetDirectories(d);
@@ -182,9 +184,16 @@ internal class PersistenceAPI
             if (filesWithoutMeta.Count > 0) continue;
             foreach (var file in Directory.GetFiles(d))
             {
+                deleted.Add(file);
                 File.Delete(file);
             }
+
             Directory.Delete(d,false);
+            Debug.Log(thread.Name + " Clean Up of: " + d + " completed Deleted files: " + deleted.Count);
+            foreach (var del in deleted)
+            {
+                Debug.Log(thread.Name + " Deleted: " + del);
+            }
         }
     }
 }

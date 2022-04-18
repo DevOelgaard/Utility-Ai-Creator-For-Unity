@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Threading;
+using UnityEngine;
 
 internal class JsonDestructivePersister: JsonPersister
 {
@@ -28,5 +30,8 @@ internal class JsonDestructivePersister: JsonPersister
             var file = File.Create(path);
             file.Close();
         }
+
+        var thread = Thread.CurrentThread;
+        Debug.Log(thread.Name + " Create File complete");
     }
 }

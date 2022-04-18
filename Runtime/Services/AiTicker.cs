@@ -41,7 +41,10 @@ internal class AiTicker: RestoreAble
         var loadedState = persistenceAPI.LoadObjectPath<AiTickerSettingsState>(Consts.FileTickerSettings);
         if (loadedState.LoadedObject != null)
         {
-            Settings = Restore<AiTickerSettingsModel>(loadedState.LoadedObject);
+            Task.Factory.StartNew(async () =>
+            {
+                Settings = await Restore<AiTickerSettingsModel>(loadedState.LoadedObject);
+            });
         } else
         {
             Debug.LogWarning("Failed to load AiTicker settings Error: " + loadedState.ErrorMessage + " Exception: " + loadedState.Exception?.ToString());
@@ -135,12 +138,8 @@ internal class AiTicker: RestoreAble
 
     protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
     {
-        var task = Task.Factory.StartNew(() =>
-        {
-            var s = state as AiTickerState;
-            Settings = Restore<AiTickerSettingsModel>(s.Settings, restoreDebug);
-        });
-        await task;
+        var s = state as AiTickerState;
+        Settings = await Restore<AiTickerSettingsModel>(s.Settings, restoreDebug);
     }
 
     internal override RestoreState GetState()

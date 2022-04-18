@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using Newtonsoft.Json;
 using UnityEditor;
-using UnityEngine;
-using UnityEngine.UIElements;
 internal class PersistenceAPI
 {
     private IPersister persister;
@@ -144,9 +139,6 @@ internal class PersistenceAPI
     //https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories
     private void CleanUp(string path)
     {
-        var thread = Thread.CurrentThread;
-        Debug.Log(thread.Name + " Starting Clean Up path: " + path);
-
         if (path.Contains("."))
         {
             path = new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName;
@@ -180,7 +172,10 @@ internal class PersistenceAPI
             var childDirectories = Directory.GetDirectories(d);
             if (childDirectories.Length > 0) continue;
 
-            var filesWithoutMeta = Directory.GetFiles(d).Where(f => !f.Contains(".meta")).ToList();
+            var filesWithoutMeta = Directory.GetFiles(d)
+                .Where(f => !f.Contains(".meta"))
+                .ToList();
+            
             if (filesWithoutMeta.Count > 0) continue;
             foreach (var file in Directory.GetFiles(d))
             {
@@ -189,12 +184,6 @@ internal class PersistenceAPI
             }
 
             Directory.Delete(d,false);
-            Debug.Log(thread.Name + " Clean Up of: " + d + " completed Deleted files: " + deleted.Count);
-            
-            foreach (var del in deleted)
-            {
-                Debug.Log(thread.Name + " Deleted: " + del);
-            }
         }
     }
 }

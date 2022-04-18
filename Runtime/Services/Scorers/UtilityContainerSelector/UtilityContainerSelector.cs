@@ -33,14 +33,9 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var task = Task.Factory.StartNew(() =>
-        {
-            var state = s as UCSState;
-            var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-            Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
-
-        });
-        await task;
+        var state = s as UCSState;
+        var parameters = await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
     }
 
     protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)

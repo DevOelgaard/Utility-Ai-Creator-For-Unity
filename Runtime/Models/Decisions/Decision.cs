@@ -113,34 +113,32 @@ public class Decision: UtilityContainer
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var task = Task.Factory.StartNew(() =>
+        var state = (DecisionState) s;
+        Name = state.Name;
+        Description = state.Description;
+
+        AgentActions = new ReactiveListNameSafe<AgentAction>();
+        var restoredAgentActions = await RestoreAbleService
+            .GetAiObjects<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions,
+                restoreDebug);
+        
+        AgentActions.Add(RestoreAbleService.SortByName(state.AgentActions, restoredAgentActions));
+
+        Considerations = new ReactiveListNameSafe<Consideration>();
+        var considerations = await RestoreAbleService
+            .GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations,
+                restoreDebug);
+        
+        Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
+
+        var parameters = await RestoreAbleService
+            .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+
+        if (restoreDebug)
         {
-            var state = (DecisionState) s;
-            Name = state.Name;
-            Description = state.Description;
-
-            AgentActions = new ReactiveListNameSafe<AgentAction>();
-            var restoredAgentActions =
-                RestoreAbleService.GetAiObjects<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions,
-                    restoreDebug);
-            AgentActions.Add(RestoreAbleService.SortByName(state.AgentActions, restoredAgentActions));
-
-            Considerations = new ReactiveListNameSafe<Consideration>();
-            var considerations =
-                RestoreAbleService.GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations,
-                    restoreDebug);
-            Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
-
-            var parameters =
-                RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-            Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
-
-            if (restoreDebug)
-            {
-                LastCalculatedUtility = state.LastCalculatedUtility;
-            }
-        });
-        await task;
+            LastCalculatedUtility = state.LastCalculatedUtility;
+        }
     }
 
     protected override float CalculateUtility(AiContext context)

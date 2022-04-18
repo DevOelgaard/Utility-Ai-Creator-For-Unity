@@ -23,7 +23,7 @@ public abstract class ResponseFunction: AiObjectModel
         .FirstOrDefault(p => p.Name == "Inverse" && p.Value.GetType() == typeof(bool))
         .Value; 
 
-    protected ResponseFunction()
+    public ResponseFunction()
     {
         Parameters = GetParameters();
         Parameters.Add(new Parameter("Inverse", false));
@@ -83,16 +83,12 @@ public abstract class ResponseFunction: AiObjectModel
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var task = Task.Factory.StartNew(() =>
-        {
-            var state = (ResponseFunctionState) s;
-            Name = state.Name;
+        var state = (ResponseFunctionState) s;
+        Name = state.Name;
 
-            var parameters =
-                RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-            Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
-        });
-        await task;
+        var parameters = await RestoreAbleService
+                .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
     }
 
 

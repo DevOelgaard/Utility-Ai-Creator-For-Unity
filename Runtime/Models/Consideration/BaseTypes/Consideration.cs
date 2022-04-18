@@ -153,51 +153,43 @@ public abstract class Consideration : AiObjectModel
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var task = Task.Factory.StartNew(() =>
-        {
-            var state = (ConsiderationState)s;
+        var state = (ConsiderationState)s;
             Name = state.Name;
             Description = state.Description;
 
-            var minState = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory+ Consts.FolderName_MinParameter, typeof(Parameter)).FirstOrDefault();
+            var minState = PersistenceAPI.Instance
+                .LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory+ Consts.FolderName_MinParameter, typeof(Parameter))
+                .FirstOrDefault();
+            
             if (minState.LoadedObject == null)
             {
                 MinFloat = new Parameter(minState.ErrorMessage, minState.Exception.ToString());
             }
             else
             {
-                MinFloat = Restore<Parameter>(minState.LoadedObject);
+                MinFloat = await Restore<Parameter>(minState.LoadedObject);
             }
 
-            var maxState = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory + Consts.FolderName_MaxParameter, typeof(Parameter)).FirstOrDefault();
+            var maxState = PersistenceAPI.Instance
+                .LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory + Consts.FolderName_MaxParameter, typeof(Parameter))
+                .FirstOrDefault();
+            
             if (maxState.LoadedObject == null)
             {
                 MaxFloat = new Parameter(maxState.ErrorMessage, maxState.Exception.ToString());
             }
             else
             {
-                MaxFloat = Restore<Parameter>(maxState.LoadedObject);
+                MaxFloat = await Restore<Parameter>(maxState.LoadedObject);
             }
 
-            // var responseCurveState = PersistenceAPI.Instance.LoadObjectsPathWithFilters<ResponseCurveState>(CurrentDirectory + Consts.FolderName_ResponseCurves, typeof(ResponseCurve)).FirstOrDefault();
-            // if (responseCurveState != null)
-            // {
-            //     if (responseCurveState.LoadedObject == null)
-            //     {
-            //         var error = (ResponseCurve)InstantiaterService.CreateInstance(responseCurveState.ModelType);
-            //         error.Name = "Error";
-            //         error.Description = "Exception: " + responseCurveState.Exception.ToString();
-            //         CurrentResponseCurve = error;
-            //     } else
-            //     {
-            //         CurrentResponseCurve = Restore<ResponseCurve>(responseCurveState.LoadedObject);
-            //     }
-            // }
+            var rC = await RestoreAbleService
+                .GetAiObjects<ResponseCurve>(CurrentDirectory + Consts.FolderName_ResponseCurves, restoreDebug);
+            CurrentResponseCurve = rC.First();
+                
 
-            CurrentResponseCurve = RestoreAbleService
-                .GetAiObjects<ResponseCurve>(CurrentDirectory + Consts.FolderName_ResponseCurves, restoreDebug).First();
-
-            var parameters = RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+            var parameters = await RestoreAbleService
+                .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
             Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
 
             PerformanceTag = (PerformanceTag)state.PerformanceTag;
@@ -218,9 +210,6 @@ public abstract class Consideration : AiObjectModel
                 BaseScore = state.BaseScore;
                 NormalizedScore = state.NormalizedScore;
             }
-
-        });
-        await task;
     }
 
     internal override RestoreState GetState()

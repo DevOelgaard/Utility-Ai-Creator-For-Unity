@@ -277,25 +277,19 @@ public class ResponseCurve: AiObjectModel
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var task = Task.Factory.StartNew(() =>
-        {
-            var state = (ResponseCurveState)s;
-            Name = state.Name;
-            Description = state.Description;
-            MinY = state.MinY;
-            MaxY = state.MaxY;
-            MinX = state.MinX;
-            MaxX = state.MaxX;
+        var state = (ResponseCurveState)s;
+        Name = state.Name;
+        Description = state.Description;
+        MinY = state.MinY;
+        MaxY = state.MaxY;
+        MinX = state.MinX;
+        MaxX = state.MaxX;
             
-            Segments =
-                RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Segments, restoreDebug);
+        Segments = await RestoreAbleService
+            .GetParameters(CurrentDirectory + Consts.FolderName_Segments, restoreDebug);
 
-            ResponseFunctions =
-                RestoreAbleService.GetAiObjects<ResponseFunction>(
-                    CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
-        });
-
-        await task;
+        ResponseFunctions = await RestoreAbleService
+        .GetAiObjects<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
     }
 
     ~ResponseCurve()

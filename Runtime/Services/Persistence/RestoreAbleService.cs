@@ -54,7 +54,7 @@ internal static class RestoreAbleService
         return result;
     }
 
-    internal static List<T> GetAiObjects<T>(string path, bool restoreDebug) where T : AiObjectModel
+    internal static async Task<List<T>> GetAiObjects<T>(string path, bool restoreDebug) where T : AiObjectModel
     {
         var result = new List<T>();
         var states = PersistenceAPI.Instance.LoadObjectsPathWithFilters<RestoreState>(path, typeof(T));
@@ -72,7 +72,7 @@ internal static class RestoreAbleService
             }
             else
             {
-                var model = RestoreAble.Restore<T>(s.LoadedObject, restoreDebug);
+                var model = await RestoreAble.Restore<T>(s.LoadedObject, restoreDebug);
                 result.Add(model);
             }
         }
@@ -80,7 +80,7 @@ internal static class RestoreAbleService
         return result;
     }
 
-    internal static List<Parameter> GetParameters(string path, bool restoreDebug)
+    internal static async Task<List<Parameter>> GetParameters(string path, bool restoreDebug)
     {
         var result = new List<Parameter>();
         var parameterStates = PersistenceAPI.Instance.LoadObjectsPathWithFilters<RestoreState>(path, typeof(Parameter));
@@ -95,14 +95,14 @@ internal static class RestoreAbleService
             }
             else
             {
-                var parameter = Parameter.Restore<Parameter>(p.LoadedObject, restoreDebug);
+                var parameter = await Parameter.Restore<Parameter>(p.LoadedObject, restoreDebug);
                 result.Add(parameter);
             }
         }
         return result;
     }
     
-    internal static List<UtilityContainerSelector> GetUcs(string path, bool restoreDebug)
+    internal static async Task<List<UtilityContainerSelector>> GetUcs(string path, bool restoreDebug)
     {
         var result = new List<UtilityContainerSelector>();
         var filter = FileExtensionService.GetFileExtensionFromType(typeof(UtilityContainerSelector));
@@ -119,17 +119,17 @@ internal static class RestoreAbleService
             }
             else
             {
-                var ucs = RestoreAble.Restore<UtilityContainerSelector>(bs.LoadedObject, restoreDebug);
+                var ucs = await RestoreAble.Restore<UtilityContainerSelector>(bs.LoadedObject, restoreDebug);
                 result.Add(ucs);
             }
         }
         return result;
     }
     
-    internal static void LoadObjectsAndSortToCollection<T>(string path, List<string> namesOrdered, 
+    internal static async Task LoadObjectsAndSortToCollection<T>(string path, List<string> namesOrdered, 
         ReactiveList<AiObjectModel> collection, bool restoreDebug) where T: AiObjectModel
     {
-        var aiObjects = GetAiObjects<T>(path, restoreDebug);
+        var aiObjects = await GetAiObjects<T>(path, restoreDebug);
         var sorted = SortByName(namesOrdered, aiObjects);
         collection.Add(sorted);
     }

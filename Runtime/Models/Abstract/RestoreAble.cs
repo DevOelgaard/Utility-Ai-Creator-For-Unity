@@ -25,7 +25,7 @@ public abstract class RestoreAble
 
     public string CurrentDirectory;
     protected abstract Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false);
-    public static T Restore<T>(RestoreState state, bool restoreDebug = false) where T:RestoreAble
+    public static async Task<T> Restore<T>(RestoreState state, bool restoreDebug = false) where T:RestoreAble
     {
         // var type = Type.GetType(state.DerivedTypeString);
         var type = state.DerivedType;
@@ -38,16 +38,16 @@ public abstract class RestoreAble
             element = (T)InstantiaterService.CreateInstance(type,true);
         }
         element.CurrentDirectory = state.FolderLocation + "/" + state.FileName + "/";
-        element.RestoreInternalAsync(state, restoreDebug);
+        await element.RestoreInternalAsync(state, restoreDebug);
         return element;
     }
 
-    public static RestoreAble Restore(RestoreState state, Type type, bool restoreDebug = false)
+    public static async Task<RestoreAble> Restore(RestoreState state, Type type, bool restoreDebug = false)
     {
         var element = (RestoreAble)InstantiaterService.CreateInstance(type, true);
         element.CurrentDirectory = state.FolderLocation + "/" + state.FileName + "/";
 
-        element.RestoreInternalAsync(state, restoreDebug);
+        await element.RestoreInternalAsync(state, restoreDebug);
         return element;
     }
 

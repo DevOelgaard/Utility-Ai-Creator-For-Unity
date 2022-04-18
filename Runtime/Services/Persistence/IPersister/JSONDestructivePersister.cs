@@ -12,7 +12,6 @@ internal class JsonDestructivePersister: JsonPersister
     protected override void CreateFile(string path)
     {
         var directory = new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName;
-        var fileName = Path.GetFileName(path);
         
         if (Directory.Exists(directory))
         {
@@ -30,8 +29,5 @@ internal class JsonDestructivePersister: JsonPersister
             var file = File.Create(path);
             file.Close();
         }
-
-        var thread = Thread.CurrentThread;
-        Debug.Log(thread.Name + " Create File complete");
     }
 }

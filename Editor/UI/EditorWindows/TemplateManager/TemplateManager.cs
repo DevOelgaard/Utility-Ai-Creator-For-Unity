@@ -167,17 +167,7 @@ internal class TemplateManager : EditorWindow
             persistenceAPI.SaveObjectsPanel(saveObjects);
         });
 
-        menu.menu.AppendAction("Import File(s)", _ =>
-        {
-            var s = persistenceAPI.LoadFilePanel<RestoreState>(Consts.FileExtensionsFilters);
-            s.LoadedObject.FolderLocation = Path.GetDirectoryName(s.Path) + @"\";
-            var t = s.StateType;
-
-            var toCollection = uASTemplateService.GetCollection(s.ModelType);
-            var restored = RestoreAble.Restore(s.LoadedObject, s.ModelType);
-            toCollection.Add(restored as AiObjectModel);
-
-        });
+        menu.menu.AppendAction("Import File(s)", ImportFiles);
 
         menu.menu.AppendAction("Load Current Project - TEST", _ =>
         {
@@ -208,6 +198,17 @@ internal class TemplateManager : EditorWindow
         });
         
         toolbar.Add(menu);
+    }
+
+    private async void ImportFiles(DropdownMenuAction _)
+    {
+        var s = persistenceAPI.LoadFilePanel<RestoreState>(Consts.FileExtensionsFilters);
+        s.LoadedObject.FolderLocation = Path.GetDirectoryName(s.Path) + @"\";
+        var t = s.StateType;
+
+        var toCollection = uASTemplateService.GetCollection(s.ModelType);
+        var restored = await RestoreAble.Restore(s.LoadedObject, s.ModelType);
+        toCollection.Add(restored as AiObjectModel);
     }
 
     private async void OpenProject(DropdownMenuAction _)
@@ -528,24 +529,24 @@ internal class TemplateManager : EditorWindow
         OnClose();
     }
 
-    void OnDestroy()
-    {
-        OnClose();
-    }
+    // void OnDestroy()
+    // {
+    //     OnClose();
+    // }
 
     private void OnClose()
     {
         WindowOpener.WindowPosition = this.position;
-        // if (autoSave && !EditorApplication.isPlaying)
-        // {
-        //     // MainThreadDispatcher.StartCoroutine(uASTemplateService.Save(true));
-        //     if (!hasSavedOnDisable)
-        //     {
-        //         hasSavedOnDisable = true;
-        //         UasTemplateService.Instance.Save(true);
-        //         ProjectSettingsService.Instance.SaveSettings();
-        //     }
-        // }
+        if (autoSave && !EditorApplication.isPlaying)
+        {
+            // MainThreadDispatcher.StartCoroutine(uASTemplateService.Save(true));
+            if (!hasSavedOnDisable)
+            {
+                hasSavedOnDisable = true;
+                UasTemplateService.Instance.Save(true);
+                ProjectSettingsService.Instance.SaveSettings();
+            }
+        }
         ClearSubscriptions();
     }
 

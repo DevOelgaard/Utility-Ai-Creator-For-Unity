@@ -89,6 +89,10 @@ internal abstract class AiObjectComponent : VisualElement
             sw.Start();
             SetLabels();
             Model = model;
+            if (model.Name == "Error")
+            {
+                style.backgroundColor = new StyleColor(Color.red);
+            }
             typeLabel.text = Model.GetTypeDescription();
             nameTextField.value = model.Name;
             descriptionTextField.value = model.Description;
@@ -111,6 +115,10 @@ internal abstract class AiObjectComponent : VisualElement
                 var scoreComponent = new ScoreComponent(scoreModel);
                 ScoreComponents.Add(scoreComponent);
                 ScoreContainer.Add(scoreComponent);
+                if (scoreModel.Name == "Error")
+                {
+                    style.backgroundColor = new StyleColor(Color.red);
+                }
             }
             TimerService.Instance.LogCall(sw.ElapsedMilliseconds, model.GetType() + "Update Ui ScoreComponents");
             sw.Restart();

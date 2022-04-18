@@ -38,16 +38,12 @@ public abstract class TickerMode: RestoreAble
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var task = Task.Factory.StartNew(() =>
-        {
-            var state = s as TickerModeState;
-            Name = Enum.Parse<AiTickerMode>(state.Name);
-            Description = state.Description;
-            var parameters =
-                RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-            Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
-        });
-        await task;
+        var state = s as TickerModeState;
+        Name = Enum.Parse<AiTickerMode>(state.Name);
+        Description = state.Description;
+        var parameters =
+            await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
     }
 
     protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)

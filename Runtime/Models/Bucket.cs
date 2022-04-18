@@ -104,37 +104,38 @@ public class Bucket : UtilityContainer
     }
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var task = Task.Factory.StartNew(() =>
-        {
-            var state = (BucketState)s;
-            Name = state.Name;
-            Description = state.Description;
+        var state = (BucketState)s;
+        Name = state.Name;
+        Description = state.Description;
 
-            Decisions = new ReactiveListNameSafe<Decision>();
-            var decisionsLocal = RestoreAbleService.GetAiObjects<Decision>(CurrentDirectory + Consts.FolderName_Decisions, restoreDebug);
-            Decisions.Add(RestoreAbleService.SortByName(state.Decisions, decisionsLocal));
+        Decisions = new ReactiveListNameSafe<Decision>();
+        var decisionsLocal = await RestoreAbleService
+            .GetAiObjects<Decision>(CurrentDirectory + Consts.FolderName_Decisions, restoreDebug);
         
-            Considerations = new ReactiveListNameSafe<Consideration>();
-            var considerations = RestoreAbleService.GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
-            Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
+        Decisions.Add(RestoreAbleService.SortByName(state.Decisions, decisionsLocal));
+        
+        Considerations = new ReactiveListNameSafe<Consideration>();
+        var considerations = await RestoreAbleService
+            .GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
+        
+        Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
 
-            var weightState = PersistenceAPI.Instance.LoadObjectsPath<ParameterState>(CurrentDirectory + Consts.FolderName_Weight).FirstOrDefault();
-            if(weightState.LoadedObject == null)
-            {
-                Weight = new Parameter(weightState.ErrorMessage, weightState.Exception.ToString());
-            }
-            else
-            {
-                Weight = Restore<Parameter>(weightState.LoadedObject);
-            }
+        var weightState = PersistenceAPI.Instance
+            .LoadObjectsPath<ParameterState>(CurrentDirectory + Consts.FolderName_Weight).FirstOrDefault();
+        if(weightState.LoadedObject == null)
+        {
+            Weight = new Parameter(weightState.ErrorMessage, weightState.Exception.ToString());
+        }
+        else
+        {
+            Weight = await Restore<Parameter>(weightState.LoadedObject);
+        }
 
 
-            if (restoreDebug)
-            {
-                LastCalculatedUtility = state.LastCalculatedUtility;
-            }
-        });
-        await task;
+        if (restoreDebug)
+        {
+            LastCalculatedUtility = state.LastCalculatedUtility;
+        }
     }
 
     protected override void ClearSubscriptions()

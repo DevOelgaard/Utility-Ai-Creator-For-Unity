@@ -58,10 +58,10 @@ internal class FileExtensionService
         {
             return typeof(UtilityContainerSelector);
         }
-        else if (path.Contains(Consts.FileExtension_RestoreAbleCollection))
-        {
-            return typeof(RestoreAbleCollection);
-        }
+        // else if (path.Contains(Consts.FileExtension_RestoreAbleCollection))
+        // {
+        //     return typeof(RestoreAbleCollection);
+        // }
         else return null;
     }
 
@@ -111,10 +111,10 @@ internal class FileExtensionService
         {
             return typeof(UCSState);
         }
-        else if (path.Contains(Consts.FileExtension_RestoreAbleCollection))
-        {
-            return typeof(RestoreAbleCollectionState);
-        }
+        // else if (path.Contains(Consts.FileExtension_RestoreAbleCollection))
+        // {
+        //     return typeof(RestoreAbleCollectionState);
+        // }
         else return null;
     }
 
@@ -124,12 +124,12 @@ internal class FileExtensionService
         var start = "";
         //var end = "";
 
-        if (type.IsAssignableFrom(typeof(RestoreAbleCollection)))
-        {
-            var cast = o as RestoreAbleCollection;
-            type = cast.Type;
-            //end = Consts.FileExtension_RestoreAbleCollection;
-        }
+        // if (type.IsAssignableFrom(typeof(RestoreAbleCollection)))
+        // {
+        //     var cast = o as RestoreAbleCollection;
+        //     type = cast.Type;
+        //     //end = Consts.FileExtension_RestoreAbleCollection;
+        // }
 
         if (type.IsAssignableFrom(typeof(AgentAction)))
         {
@@ -220,10 +220,10 @@ internal class FileExtensionService
         {
             return Consts.FileExtension_UtilityContainerSelector;
         }
-        if (type.IsAssignableFrom(typeof(RestoreAbleCollection)))
-        {
-            return Consts.FileExtension_RestoreAbleCollection;
-        }
+        // if (type.IsAssignableFrom(typeof(RestoreAbleCollection)))
+        // {
+        //     return Consts.FileExtension_RestoreAbleCollection;
+        // }
         if (type.IsAssignableFrom(typeof(AiTickerState)))
         {
             return Consts.FileExtension_AiTicker;
@@ -286,10 +286,10 @@ internal class FileExtensionService
         {
             return Consts.FileExtension_UtilityContainerSelector;
         }
-        if (type.IsAssignableFrom(typeof(RestoreAbleCollectionState)))
-        {
-            return Consts.FileExtension_RestoreAbleCollection;
-        }
+        // if (type.IsAssignableFrom(typeof(RestoreAbleCollectionState)))
+        // {
+        //     return Consts.FileExtension_RestoreAbleCollection;
+        // }
         if (type.IsAssignableFrom(typeof(AiTickerState)))
         {
             return Consts.FileExtension_AiTicker;

@@ -88,7 +88,6 @@ internal class UasTemplateService: RestoreAble
         {
             await LoadCurrentProject(true);
             Debug.Log("Instantiation complete with restore");
-
         }
         else
         {

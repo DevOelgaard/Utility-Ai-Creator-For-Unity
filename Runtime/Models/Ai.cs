@@ -192,29 +192,26 @@ public class Ai: AiObjectModel
         Name = state.Name;
         Description = state.Description;
         IsPLayable = state.IsPLayable;
+        
+        Buckets = new ReactiveListNameSafe<Bucket>();
+        var bucketsLocal = await RestoreAbleService
+            .GetAiObjects<Bucket>(CurrentDirectory + Consts.FolderName_Buckets, restoreDebug);
+        Buckets.Add(RestoreAbleService.SortByName(state.Buckets, bucketsLocal));
 
-        var task = Task.Factory.StartNew(() =>
-        {
-            Buckets = new ReactiveListNameSafe<Bucket>();
-            var bucketsLocal = RestoreAbleService.GetAiObjects<Bucket>(CurrentDirectory + Consts.FolderName_Buckets, restoreDebug);
-            Buckets.Add(RestoreAbleService.SortByName(state.Buckets, bucketsLocal));
+        BucketSelectors = await RestoreAbleService.GetUcs(CurrentDirectory + Consts.FolderName_BucketSelectors, restoreDebug);
+        CurrentBucketSelector = BucketSelectors
+            .FirstOrDefault(d => d.GetName() == state.CurrentBucketSelectorName) ?? 
+                BucketSelectors.FirstOrDefault();
 
-            BucketSelectors = RestoreAbleService.GetUcs(CurrentDirectory + Consts.FolderName_BucketSelectors, restoreDebug);
-            CurrentBucketSelector = BucketSelectors
-                .FirstOrDefault(d => d.GetName() == state.CurrentBucketSelectorName) ?? 
-                    BucketSelectors.FirstOrDefault();
+        DecisionSelectors = await RestoreAbleService.GetUcs(CurrentDirectory + Consts.FolderName_DecisionSelectors, restoreDebug);
+        CurrentDecisionSelector = DecisionSelectors
+                    .FirstOrDefault(d => d.GetName() == state.CurrentDecisionSelectorName) ?? 
+                                  DecisionSelectors.FirstOrDefault();
 
-            DecisionSelectors = RestoreAbleService.GetUcs(CurrentDirectory + Consts.FolderName_DecisionSelectors, restoreDebug);
-            CurrentDecisionSelector = DecisionSelectors
-                .FirstOrDefault(d => d.GetName() == state.CurrentDecisionSelectorName) ?? 
-                    DecisionSelectors.FirstOrDefault();
-
-            var utilityScorers = AssetDatabaseService.GetInstancesOfType<IUtilityScorer>();
-            UtilityScorer = utilityScorers
-                .FirstOrDefault(u => u.GetName() == state.USName) ?? 
-                    utilityScorers.FirstOrDefault();
-        });
-        await task;
+        var utilityScorers = AssetDatabaseService.GetInstancesOfType<IUtilityScorer>();
+        UtilityScorer = utilityScorers
+                            .FirstOrDefault(u => u.GetName() == state.USName) ?? 
+                        utilityScorers.FirstOrDefault();
     }
 
     protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)

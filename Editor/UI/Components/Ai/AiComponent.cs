@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine.UIElements;
 using UniRx;
 using UniRxExtension;
+using UnityEngine;
 
 internal class AiComponent : AiObjectComponent 
 {
@@ -85,6 +86,7 @@ internal class AiComponent : AiObjectComponent
         var sw = new System.Diagnostics.Stopwatch();
         sw.Start();
         aiModel = model as Ai;
+
         ScoreContainer.Add(playableToggle);
         ScoreContainer.Add(playAbleHelpBox);
 

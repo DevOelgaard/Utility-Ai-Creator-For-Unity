@@ -20,6 +20,10 @@ internal class AgentActionComponent : AiObjectComponent
     protected override void UpdateInternal(AiObjectModel model)
     {
         this.agentAction = model as AgentAction;
+        if (model.Name == "Error")
+        {
+            style.backgroundColor = new StyleColor(Color.red);
+        }
         SetParameters();
     }
 
@@ -28,6 +32,10 @@ internal class AgentActionComponent : AiObjectComponent
         parametersContainer.Clear();
         foreach (var parameter in agentAction.Parameters)
         {
+            if (parameter.Name == "Error")
+            {
+                style.backgroundColor = new StyleColor(Color.red);
+            }
             var pC = new ParameterComponent();
             pC.UpdateUi(parameter);
             parametersContainer.Add(pC);

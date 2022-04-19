@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Threading;
 using UniRx;
 using UnityEditor;
+using UnityEngine;
 
+[InitializeOnLoad]
 internal class ProjectSettingsService
 {
     private readonly CompositeDisposable modelChangedSubscription = new CompositeDisposable();
@@ -15,43 +18,48 @@ internal class ProjectSettingsService
     private ProjectSettingsModel model;
     private IPersister persister;
     internal static ProjectSettingsService Instance;
-    private ProjectSettingsService()
-    {
-    }
+    // static ProjectSettingsService()
+    // {
+    //
+    // }
 
     [InitializeOnLoadMethod]
-    private static async void Init()
+    static async void Init()
     {
         Instance = new ProjectSettingsService
         {
             persister = new JsonPersister()
         };
-
-        var loaded = await Instance.persister.LoadObject<ProjectSettingsModel>(Consts.ProjectSettingsPath);
+        var loaded = await PersistenceAPI.Instance
+            .LoadObjectPath<ProjectSettingsModel>(Consts.ProjectSettingsPath);
+        
         Instance.model = loaded.Success ? loaded.LoadedObject : new ProjectSettingsModel();
         Instance.model.OnCurrentProjectPathChanged
             .Subscribe(_ => Instance.onProjectSettingsChanged.OnNext(true))
             .AddTo(Instance.modelChangedSubscription);
     }
-
+    
     internal string GetCurrentProjectDirectory()
     {
-        if (string.IsNullOrEmpty(model.CurrentProjectPath))
+        if (model == null || string.IsNullOrEmpty(model.CurrentProjectPath))
         {
             return "";
         }
-        var directory = new DirectoryInfo(System.IO.Path.GetDirectoryName(model.CurrentProjectPath) ?? string.Empty).FullName+"/";
-        return directory;
+        return new DirectoryInfo(Path.GetDirectoryName(model.CurrentProjectPath) ?? 
+                                          string.Empty).FullName+"/";
     }
 
     internal string GetBackupDirectory()
     {
-        return new DirectoryInfo(System.IO.Path.GetDirectoryName(GetProjectBackupPath()) ?? string.Empty).FullName+"/";
+        var backUpPath = GetProjectBackupPath();
+        return new DirectoryInfo(Path.GetDirectoryName(backUpPath) ?? 
+                                 string.Empty).FullName+"/";
     }
 
     internal string GetCurrentProjectName(bool includeExtension = false) 
     {
-        if (string.IsNullOrEmpty(model.CurrentProjectPath))
+
+        if (model == null || string.IsNullOrEmpty(model.CurrentProjectPath))
         {
             return "No Project";
         }
@@ -67,18 +75,19 @@ internal class ProjectSettingsService
 
     internal string GetCurrentProjectPath()
     {
-        return model.CurrentProjectPath;
+        return model != null ? model.CurrentProjectPath : "";
     }
 
     internal string GetDirectory(string path)
     {
         if (string.IsNullOrEmpty(path)) return path;
-        return new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName+"/";
+        return new DirectoryInfo(Path.GetDirectoryName(path) ?? string.Empty).FullName+"/";
     }
     
     public string GetProjectBackupPath()
     {
-        return Consts.FileUasProjectBackUp + GetCurrentProjectName(true);
+        var currentProjectName = GetCurrentProjectName(true);
+        return Consts.FileUasProjectBackUp + currentProjectName;
     }
 
     private void SetProjectPath(string path)
@@ -89,7 +98,9 @@ internal class ProjectSettingsService
 
     internal async Task CreateProject()
     {
-        var path = EditorUtility.SaveFilePanel("New Project", "", "New Project", Consts.FileExtension_UasProject);
+        var path = EditorUtility
+            .SaveFilePanel("New Project", "", "New Project", 
+                Consts.FileExtension_UasProject);
 
         SetProjectPath(path);
         await UasTemplateService.Instance.Reset();
@@ -99,7 +110,10 @@ internal class ProjectSettingsService
 
     internal async Task SaveProjectAs()
     {
-        var path = EditorUtility.SaveFilePanel("New Project", "", "New Project", Consts.FileExtension_UasProject);
+        var path = EditorUtility
+            .SaveFilePanel("New Project", "", "New Project", 
+                Consts.FileExtension_UasProject);
+        
         SetProjectPath(path);
         await UasTemplateService.Instance.Save();
         await UasTemplateService.Instance.LoadCurrentProject();
@@ -107,14 +121,14 @@ internal class ProjectSettingsService
 
     internal void LoadProject()
     {
-        var filtes = new string[8];
-        filtes[0] = "UAS Project";
-        filtes[1] = Consts.FileExtension_UasProject;
-        filtes[2] = "All Files";
-        filtes[3] = "*";
+        var filters = new string[8];
+        filters[0] = "UAS Project";
+        filters[1] = Consts.FileExtension_UasProject;
+        filters[2] = "All Files";
+        filters[3] = "*";
 
 
-        var path = EditorUtility.OpenFilePanelWithFilters("Open Project", "", filtes);
+        var path = EditorUtility.OpenFilePanelWithFilters("Open Project", "", filters);
         SetProjectPath(path);
     }
 
@@ -125,12 +139,12 @@ internal class ProjectSettingsService
 
     
     // https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/how-to-compare-the-contents-of-two-folders-linq
-    internal bool ProjectSaved()
+    internal async Task<bool> ProjectSaved()
     {
         // Current Project Directory
         var cpd = GetCurrentProjectDirectory();
         //Back Up Directory
-        var bud = GetBackupDirectory();
+        var bud =  GetBackupDirectory();
 
         if (string.IsNullOrEmpty(cpd) || string.IsNullOrEmpty(bud))
         {

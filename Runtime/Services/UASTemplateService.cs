@@ -185,8 +185,8 @@ internal class UasTemplateService: RestoreAble
         Debug.Log("Saving path: " + path);
 
         var perstistAPI = PersistenceAPI.Instance;
-        await perstistAPI.SaveDestructiveObjectPath(this, path,
-            ProjectSettingsService.Instance.GetCurrentProjectName(true));
+        var currentProjectName = ProjectSettingsService.Instance.GetCurrentProjectName(true);
+        await perstistAPI.SaveDestructiveObjectPath(this, path, currentProjectName);
     }
 
     protected override string GetFileName()

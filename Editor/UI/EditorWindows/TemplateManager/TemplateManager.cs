@@ -120,7 +120,7 @@ internal class TemplateManager : EditorWindow
             .AddTo(disposables);
     }
 
-    async void  OnEnable()
+    async void OnEnable()
     {
         hasSavedOnDisable = false;
         autoSave = true;
@@ -536,7 +536,7 @@ internal class TemplateManager : EditorWindow
 
     private async void OnClose()
     {
-        WindowOpener.WindowPosition = this.position;
+        WindowOpener.windowPosition = this.position;
         ClearSubscriptions();
     }
 

@@ -21,7 +21,7 @@ public class PopUpService: EditorWindow
 
         private static async Task InitWithThreeButtonsThenAction(Func<Task> task)
         {
-                if (ProjectSettingsService.Instance.ProjectSaved())
+                if (await ProjectSettingsService.Instance.ProjectSaved())
                 {
                         await task.Invoke();
                         return;

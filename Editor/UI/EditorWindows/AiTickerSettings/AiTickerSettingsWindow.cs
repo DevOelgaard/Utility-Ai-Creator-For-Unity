@@ -129,7 +129,7 @@ internal class AiTickerSettingsWindow: EditorWindow
 
     private void OnDestroy()
     {
-        WindowOpener.WindowPosition = this.position;
+        WindowOpener.windowPosition = this.position;
         aiTicker.Save();
         disposables.Clear();
         tickerModeSub?.Dispose();

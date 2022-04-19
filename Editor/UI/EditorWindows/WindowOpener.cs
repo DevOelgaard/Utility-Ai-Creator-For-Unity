@@ -9,8 +9,8 @@ using UniRxExtension;
 
 internal class WindowOpener: EditorWindow
 {
-    public static Rect WindowPosition = new Rect(0f, 0f, 1920*0.6f, 1080 / 2);
-    public static EditorWindow TemplateManager;
+    public static Rect windowPosition = new Rect(0f, 0f, 1920*0.6f, 1080f / 2f);
+    private static EditorWindow _templateManager;
 
     [MenuItem(Consts.MenuName + Consts.Window_AiInspector_Name)]
     public static void OpenRuntimInspector()
@@ -18,7 +18,7 @@ internal class WindowOpener: EditorWindow
         RunTimeInspector wnd = GetWindow<RunTimeInspector>();
         wnd.titleContent = new GUIContent(Consts.Window_AiInspector_Name);
         wnd.Show();
-        wnd.position = WindowPosition;
+        wnd.position = windowPosition;
     }
 
 
@@ -31,7 +31,7 @@ internal class WindowOpener: EditorWindow
             wnd.titleContent = new GUIContent(Consts.Window_SelectProject_Name);
             wnd.SetOnComplete(OpenTemplateManagerPriv);
             wnd.Show();
-            wnd.position = WindowPosition;
+            wnd.position = windowPosition;
         } else
         {
             OpenTemplateManagerPriv();
@@ -43,8 +43,8 @@ internal class WindowOpener: EditorWindow
         TemplateManager wnd = GetWindow<TemplateManager>();
         wnd.titleContent = new GUIContent(Consts.Window_TemplateManager_Name);
         wnd.Show();
-        wnd.position = WindowPosition;
-        TemplateManager = wnd;
+        wnd.position = windowPosition;
+        _templateManager = wnd;
     }
 
     [MenuItem(Consts.MenuName + Consts.Window_Logger_Name)]
@@ -53,7 +53,7 @@ internal class WindowOpener: EditorWindow
         AiLogWindow wnd = GetWindow<AiLogWindow>();
         wnd.titleContent = new GUIContent(Consts.Window_Logger_Name);
         wnd.Show();
-        wnd.position = WindowPosition;
+        wnd.position = windowPosition;
     }
 
     [MenuItem(Consts.MenuName + Consts.Window_AiTickerManager_Name)]
@@ -62,7 +62,7 @@ internal class WindowOpener: EditorWindow
         AiTickerSettingsWindow wnd = GetWindow<AiTickerSettingsWindow>();
         wnd.titleContent = new GUIContent(Consts.Window_AiTickerManager_Name);
         wnd.Show();
-        wnd.position = WindowPosition;
+        wnd.position = windowPosition;
     }
 
     public static ResponseCurveWindow OpenResponseCurve()
@@ -71,13 +71,13 @@ internal class WindowOpener: EditorWindow
         wnd.titleContent = new GUIContent("Response Curve");
         wnd.Show();
 
-        if(TemplateManager != null)
+        if(_templateManager != null)
         {
-            wnd.position = TemplateManager.position;
+            wnd.position = _templateManager.position;
 
         } else
         {
-            wnd.position = WindowPosition;
+            wnd.position = windowPosition;
         }
         return wnd;
     }

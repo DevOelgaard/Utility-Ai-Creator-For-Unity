@@ -10,7 +10,7 @@ internal class JsonPersister : IPersister
 {
     private string json;
 
-    public async Task<ObjectMetaData<T>> LoadObject<T>(string path)
+    public async Task<ObjectMetaData<T>> LoadObjectAsync<T>(string path)
     {
         var t = Task.Factory.StartNew(() =>
         {
@@ -57,10 +57,45 @@ internal class JsonPersister : IPersister
             var result = new List<ObjectMetaData<T>>();
             foreach (var file in fileNames.Where(f => !f.Contains("meta")))
             {
-                result.Add(await LoadObject<T>(file));
+                result.Add(await LoadObjectAsync<T>(file));
             }
 
             return result;
+    }
+
+    public ObjectMetaData<T> LoadObject<T>(string path)
+    {
+        try
+        {
+            if (!File.Exists(path))
+            {
+                var res = new ObjectMetaData<T>(default(T), path)
+                {
+                    ErrorMessage = "File Doesn't exist",
+                    Success = false
+                };
+                return res;
+            }
+
+            json = File.ReadAllText(path);
+            var deserialized = JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
+
+            return new ObjectMetaData<T>(deserialized, path);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning("Loading failed: " + ex);
+            var result = new ObjectMetaData<T>(default(T), path)
+            {
+                ErrorMessage = "Loading failed at: " + path,
+                Exception = ex,
+                Success = false
+            };
+            return result;
+        }
     }
 
     public virtual async Task SaveObject<T>(T o, string path)
@@ -75,6 +110,7 @@ internal class JsonPersister : IPersister
                 });
                 CreateFile(path);
                 File.WriteAllText(path, toJson);
+                File.SetLastWriteTime(path, DateTime.Now);
             }
             catch(Exception ex)
             {

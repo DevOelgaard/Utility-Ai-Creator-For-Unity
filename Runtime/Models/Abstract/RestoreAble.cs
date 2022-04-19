@@ -53,20 +53,21 @@ public abstract class RestoreAble
 
     internal virtual async Task SaveToFile(string path, IPersister persister, int index = -1, string className = null)
     {
-        var task = Task.Factory.StartNew(() =>
+        var task = Task.Factory.StartNew(async () =>
         {
+            Debug.Log("Start SaveToFile path: " + path);
+
             if (string.IsNullOrEmpty(path))
             {
                 return;
             }
 
             var state = GetState();
-            // state.FolderLocation = path;
-            // FileName = className ?? GetFileName();
             path = path + "/" + FileName;
             state.Index = index;
 
-            InternalSaveToFile(path, persister, state);
+            await InternalSaveToFile(path, persister, state);
+            Debug.Log("Done SaveToFile path: " + path);
         });
         await task;
     }

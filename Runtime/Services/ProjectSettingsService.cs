@@ -9,7 +9,6 @@ using UniRx;
 using UnityEditor;
 using UnityEngine;
 
-[InitializeOnLoad]
 internal class ProjectSettingsService
 {
     private readonly CompositeDisposable modelChangedSubscription = new CompositeDisposable();
@@ -17,26 +16,19 @@ internal class ProjectSettingsService
     private readonly Subject<bool> onProjectSettingsChanged = new Subject<bool>();
     private ProjectSettingsModel model;
     private IPersister persister;
-    internal static ProjectSettingsService Instance;
-    // static ProjectSettingsService()
-    // {
-    //
-    // }
 
-    [InitializeOnLoadMethod]
-    static async void Init()
+    internal static ProjectSettingsService Instance => _instance ??= new ProjectSettingsService();
+    private static ProjectSettingsService _instance;
+    private ProjectSettingsService()
     {
-        Instance = new ProjectSettingsService
-        {
-            persister = new JsonPersister()
-        };
-        var loaded = await PersistenceAPI.Instance
+        persister = new JsonPersister();
+        var loaded = PersistenceAPI.Instance
             .LoadObjectPath<ProjectSettingsModel>(Consts.ProjectSettingsPath);
         
-        Instance.model = loaded.Success ? loaded.LoadedObject : new ProjectSettingsModel();
-        Instance.model.OnCurrentProjectPathChanged
-            .Subscribe(_ => Instance.onProjectSettingsChanged.OnNext(true))
-            .AddTo(Instance.modelChangedSubscription);
+        model = loaded.Success ? loaded.LoadedObject : new ProjectSettingsModel();
+        model.OnCurrentProjectPathChanged
+            .Subscribe(_ => onProjectSettingsChanged.OnNext(true))
+            .AddTo(modelChangedSubscription);
     }
     
     internal string GetCurrentProjectDirectory()
@@ -58,10 +50,9 @@ internal class ProjectSettingsService
 
     internal string GetCurrentProjectName(bool includeExtension = false) 
     {
-
         if (model == null || string.IsNullOrEmpty(model.CurrentProjectPath))
         {
-            return "No Project";
+            return null;
         }
         if (includeExtension)
         {
@@ -103,7 +94,7 @@ internal class ProjectSettingsService
                 Consts.FileExtension_UasProject);
 
         SetProjectPath(path);
-        await UasTemplateService.Instance.Reset();
+        UasTemplateService.Instance.Reset();
         await UasTemplateService.Instance.Save();
         SaveSettings();
     }

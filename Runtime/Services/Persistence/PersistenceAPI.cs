@@ -55,6 +55,7 @@ internal class PersistenceAPI
     {
         var startTime = DateTime.Now;
         await o.SaveToFile(path, persister,-2, fileName);
+        Debug.Log("Done saving destructively path: " + path);
         await CleanUp(path, startTime);
     }
 
@@ -62,20 +63,26 @@ internal class PersistenceAPI
     {
         var extension = FileExtensionService.GetExtension(typeof(T));
         var path = EditorUtility.OpenFilePanel("Load object", "", extension);
-        var o = await persister.LoadObject<T>(path);
+        var o = await persister.LoadObjectAsync<T>(path);
         return o;
     }
 
     internal async Task<ObjectMetaData<T>> LoadObjectPanel<T>(string[] filters)
     {
         var path = EditorUtility.OpenFilePanelWithFilters("Load object", "", filters);
-        var o = await persister.LoadObject<T>(path);
+        var o = await persister.LoadObjectAsync<T>(path);
         return o;
     }
-
-    internal async Task<ObjectMetaData<T>> LoadObjectPath<T>(string path)
+    
+    internal ObjectMetaData<T> LoadObjectPath<T>(string path)
     {
-        var result = await persister.LoadObject<T>(path);
+        var result = persister.LoadObject<T>(path);
+        return result;
+    }
+
+    internal async Task<ObjectMetaData<T>> LoadObjectPathAsync<T>(string path)
+    {
+        var result = await persister.LoadObjectAsync<T>(path);
         return result;
     }
 
@@ -141,12 +148,13 @@ internal class PersistenceAPI
 
     private async Task<ObjectMetaData<T>> LoadFilePath<T>(string path)
     {
-        var res = await persister.LoadObject<T>(path);
+        var res = await persister.LoadObjectAsync<T>(path);
         return res;
     }
 
     private static async Task CleanUp(string path, DateTime startTime)
     {
+        Debug.Log("Starting cleanup path: " + path);
         var t = Task.Factory.StartNew(() =>
         {
             var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
@@ -155,7 +163,6 @@ internal class PersistenceAPI
                 var lastWriteTime = File.GetLastWriteTime(file);
                 if (lastWriteTime < startTime)
                 {
-                    Debug.Log("Deleting: " + file);
                     File.Delete(file);
                 }
             }

@@ -2,13 +2,10 @@
 using UniRx;
 using UniRxExtension;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
-using Unity.Collections.LowLevel.Unsafe;
-using UnityEditor;
 
 internal class UasTemplateService: RestoreAble
 {
@@ -45,35 +42,22 @@ internal class UasTemplateService: RestoreAble
     public IObservable<bool> OnIncludeDemosChanged => onIncludeDemosChanged;
     private readonly Subject<bool> onIncludeDemosChanged = new Subject<bool>();
 
-    internal static UasTemplateService Instance;
+    private static UasTemplateService _instance;
+    internal static UasTemplateService Instance => _instance ??= new UasTemplateService();
 
-    // static UasTemplateService()
+    private UasTemplateService()
+    {
+        Init(true);
+        // EditorApplication.playModeStateChanged += _instance.SaveFromStateChange;
+    }
+
+    // private async void SaveFromStateChange(PlayModeStateChange s)
     // {
-    //     Instance = new UasTemplateService();
-    //     if (EditorApplication.isPlayingOrWillChangePlaymode)
-    //     {
-    //         Task.Factory.StartNew(() => Instance.Init(true));
-    //     }
-    //     else
-    //     {
-    //         Task.Factory.StartNew(() => Instance.Init(true));
-    //     }
+    //     await Save(true);
     // }
-
-    [InitializeOnLoadMethod]
-    private static async void InitializeOnLoadMethodAttribute()
-    {
-        Instance = new UasTemplateService();
-        await Instance.Init(true);
-        EditorApplication.playModeStateChanged += Instance.SaveFromStateChange;
-    }
-
-    private async void SaveFromStateChange(PlayModeStateChange s)
-    {
-        await Save(true);
-    }
+    //
     
-    private async Task Init(bool restore)
+    private void Init(bool restore)
     {
         Debug.Log("Instantiating");
 
@@ -98,7 +82,24 @@ internal class UasTemplateService: RestoreAble
 
         if (restore)
         {
-            await LoadCurrentProject(true);
+            var restoreComplete = false;
+            Task.Factory.StartNew(async () =>
+            {
+                await LoadCurrentProject(true);
+                Debug.Log("Task Restore complete");
+                restoreComplete = true;
+            });
+
+            var timeOutMS = 10000;
+            var sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+            while (!restoreComplete)
+            {
+                if (sw.ElapsedMilliseconds >= timeOutMS) continue;
+                Debug.Log("RestoreTimed Out");
+                return;
+            }
+            
             Debug.Log("Instantiation complete with restore");
         }
         else
@@ -125,6 +126,12 @@ internal class UasTemplateService: RestoreAble
             : ProjectSettingsService.Instance.GetCurrentProjectPath();
         Debug.Log("Loading path: " + loadPath);
 
+        if (loadPath == null)
+        {
+            Debug.Log("Failed to load");
+            ClearCollectionNotify();
+            return;
+        }
         if (loadedPath == loadPath) return;
         projectDirectory = ProjectSettingsService.Instance.GetDirectory(loadPath);
 
@@ -136,7 +143,7 @@ internal class UasTemplateService: RestoreAble
         ClearCollectionNoNotify();
         var perstistAPI = PersistenceAPI.Instance;
         
-        var state = await perstistAPI.LoadObjectPath<UasTemplateServiceState>(loadPath);
+        var state = await perstistAPI.LoadObjectPathAsync<UasTemplateServiceState>(loadPath);
         if (state.LoadedObject == null)
         {
             ClearCollectionNotify();
@@ -147,7 +154,8 @@ internal class UasTemplateService: RestoreAble
         {
             try
             {
-                await Restore(state.LoadedObject);
+                await RestoreAsync(state.LoadedObject);
+                Debug.Log("Restore Complete AIs: " + AIs.Values.Count);
                 await Save(true);
 
                 isLoaded = true;
@@ -167,7 +175,7 @@ internal class UasTemplateService: RestoreAble
     
     internal async Task Save(bool backup = false)
     {
-        Debug.Log("Saving private");
+        Debug.Log("Saving Backup: " + backup);
         var path = !backup
             ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
             : ProjectSettingsService.Instance.GetBackupDirectory();
@@ -194,14 +202,12 @@ internal class UasTemplateService: RestoreAble
         return ProjectSettingsService.Instance.GetCurrentProjectName();
     }
 
-    internal async Task Reset()
+    internal void Reset()
     {
         subscriptions.Clear();
         ClearCollectionNoNotify();
-        await Init(false);
+        Init(false);
     }
-
- 
 
     internal Ai GetAiByName(string name, bool isPLayMode = false)
     {
@@ -276,10 +282,10 @@ internal class UasTemplateService: RestoreAble
         return new UasTemplateServiceState(AIs, Buckets, Decisions, Considerations, AgentActions, this);
     }
     
-    
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
+        Debug.Log("Saving Uas Ais: " + AIs.Values.Count);
         var directoryPath = Path.GetDirectoryName(path);
         if (!path.Contains(Consts.FileExtension_UasProject))
         {
@@ -287,7 +293,6 @@ internal class UasTemplateService: RestoreAble
         }
         await persister.SaveObject(state, path) ;
 
-        // Guard if saving destructively. Should only happen for Project level
         persister = new JsonPersister();
         
         await RestoreAbleService.SaveRestoreAblesToFile(AIs.Values.Cast<Ai>(),directoryPath + "/" + Consts.FolderName_Ais, persister);
@@ -298,7 +303,7 @@ internal class UasTemplateService: RestoreAble
         await RestoreAbleService.SaveRestoreAblesToFile(ResponseCurves.Values.Cast<ResponseCurve>(),directoryPath + "/" + Consts.FolderName_ResponseCurves, persister);
     }
 
-    private async Task Restore(UasTemplateServiceState state)
+    private async Task RestoreAsync(UasTemplateServiceState state)
     {
         await RestoreInternalAsync(state);
     }
@@ -370,6 +375,7 @@ internal class UasTemplateService: RestoreAble
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
+        Debug.Log("Starting Restore");
         ClearCollectionNotify();
         SubscribeToCollectionChanges();
         var state = (UasTemplateServiceState)s;
@@ -380,12 +386,12 @@ internal class UasTemplateService: RestoreAble
 
         var tasks = new List<Task>
         {
-            Task.Factory.StartNew(() => RestoreAbleService.LoadObjectsAndSortToCollection<Ai>(projectDirectory + Consts.FolderName_Ais, state.aIs,AIs,restoreDebug)),
-            Task.Factory.StartNew(() => RestoreAbleService.LoadObjectsAndSortToCollection<Bucket>(projectDirectory + Consts.FolderName_Buckets, state.buckets,Buckets,restoreDebug)),
-            Task.Factory.StartNew(() => RestoreAbleService.LoadObjectsAndSortToCollection<Decision>(projectDirectory + Consts.FolderName_Decisions, state.decisions,Decisions,restoreDebug)),
-            Task.Factory.StartNew(() => RestoreAbleService.LoadObjectsAndSortToCollection<Consideration>(projectDirectory + Consts.FolderName_Considerations, state.considerations,Considerations,restoreDebug)),
-            Task.Factory.StartNew(() => RestoreAbleService.LoadObjectsAndSortToCollection<AgentAction>(projectDirectory + Consts.FolderName_AgentActions, state.agentActions,AgentActions,restoreDebug)),
-            Task.Factory.StartNew(() => RestoreAbleService.LoadObjectsAndSortToCollection<ResponseCurve>(projectDirectory + Consts.FolderName_ResponseCurves, state.responseCurves,ResponseCurves,restoreDebug))
+            RestoreAbleService.LoadObjectsAndSortToCollection<Ai>(projectDirectory + Consts.FolderName_Ais, state.aIs,AIs,restoreDebug),
+            RestoreAbleService.LoadObjectsAndSortToCollection<Bucket>(projectDirectory + Consts.FolderName_Buckets, state.buckets,Buckets,restoreDebug),
+            RestoreAbleService.LoadObjectsAndSortToCollection<Decision>(projectDirectory + Consts.FolderName_Decisions, state.decisions,Decisions,restoreDebug),
+            RestoreAbleService.LoadObjectsAndSortToCollection<Consideration>(projectDirectory + Consts.FolderName_Considerations, state.considerations,Considerations,restoreDebug),
+            RestoreAbleService.LoadObjectsAndSortToCollection<AgentAction>(projectDirectory + Consts.FolderName_AgentActions, state.agentActions,AgentActions,restoreDebug),
+            RestoreAbleService.LoadObjectsAndSortToCollection<ResponseCurve>(projectDirectory + Consts.FolderName_ResponseCurves, state.responseCurves,ResponseCurves,restoreDebug)
         };
 
         await Task.WhenAll(tasks);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UniRx;
+using UnityEngine;
 
 namespace UniRxExtension
 {
@@ -33,6 +34,7 @@ namespace UniRxExtension
         public virtual void Add(T element)
         {
             List.Add(element);
+            Debug.Log("Element added: " + element.GetType());
             onValueChanged.OnNext(Values);
         }
 

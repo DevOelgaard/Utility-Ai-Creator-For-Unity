@@ -74,13 +74,13 @@ public class PopUpService: EditorWindow
         {
                 ButtonPopUp.Close();
                 ProjectSettingsService.Instance.LoadProject();
-                await UasTemplateService.Instance.LoadCurrentProject();
+                UasTemplateService.Instance.LoadCurrentProject();
         }
 
         private static async Task CreateNewProject()
         {
                 ButtonPopUp.Close();
                 await ProjectSettingsService.Instance.CreateProject();
-                await UasTemplateService.Instance.LoadCurrentProject();
+                UasTemplateService.Instance.LoadCurrentProject();
         }
 }

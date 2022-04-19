@@ -52,7 +52,7 @@ internal class AiTicker: RestoreAble
     private async Task Init()
     {
         var loadedState = await persistenceAPI
-            .LoadObjectPath<AiTickerSettingsState>(Consts.FileTickerSettings);
+            .LoadObjectPathAsync<AiTickerSettingsState>(Consts.FileTickerSettings);
         
         if (loadedState.LoadedObject != null)
         {

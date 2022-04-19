@@ -27,19 +27,26 @@ public abstract class RestoreAble
     protected abstract Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false);
     public static async Task<T> Restore<T>(RestoreState state, bool restoreDebug = false) where T:RestoreAble
     {
-        // var type = Type.GetType(state.DerivedTypeString);
-        var type = state.DerivedType;
-        T element = default(T);
-        if (type == null)
+        try
         {
-            element = AssetDatabaseService.GetInstanceOfType<T>(state.AssemblyQualifiedName);
-        } else
-        {
-            element = (T)InstantiaterService.CreateInstance(type,true);
+            var type = state.DerivedType;
+            T element = default(T);
+            if (type == null)
+            {
+                element = AssetDatabaseService.GetInstanceOfType<T>(state.AssemblyQualifiedName);
+            } else
+            {
+                element = (T)InstantiaterService.CreateInstance(type,true);
+            }
+            element.CurrentDirectory = state.FolderLocation + "/" + state.FileName + "/";
+            await element.RestoreInternalAsync(state, restoreDebug);
+            return element;
         }
-        element.CurrentDirectory = state.FolderLocation + "/" + state.FileName + "/";
-        await element.RestoreInternalAsync(state, restoreDebug);
-        return element;
+        catch(Exception ex)
+        {
+            Debug.LogError("Failed to restore: " + state.FileName + " path: " + state.FolderLocation);
+            throw;
+        }
     }
 
     public static async Task<RestoreAble> Restore(RestoreState state, Type type, bool restoreDebug = false)

@@ -51,16 +51,24 @@ internal class JsonPersister : IPersister
     
     public virtual async Task<List<ObjectMetaData<T>>> LoadObjects<T>(string folderPath, string filter)
     {
+        // TODO test if this loading method is faster
             if (!Directory.Exists(folderPath)) return new List<ObjectMetaData<T>>();
             var fileNames = Directory
                 .GetFiles(folderPath, filter);
-            var result = new List<ObjectMetaData<T>>();
-            foreach (var file in fileNames.Where(f => !f.Contains("meta")))
-            {
-                result.Add(await LoadObjectAsync<T>(file));
-            }
+            
+            var tasks = fileNames
+                .Where(f => !f.Contains("meta"))
+                .Select(file => Task.Run(async () =>
+                {
+                    var o = await LoadObjectAsync<T>(file);
+                    return o;
+                }))
+                .ToList();
 
-            return result;
+            var taskResult = Task.WhenAll(tasks);
+            var result = await taskResult;
+
+            return result.ToList();
     }
 
     public ObjectMetaData<T> LoadObject<T>(string path)

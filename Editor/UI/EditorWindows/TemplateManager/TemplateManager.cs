@@ -134,6 +134,14 @@ internal class TemplateManager : EditorWindow
             })
             .AddTo(disposables);
         mws.Start();
+
+        uASTemplateService.OnStateChanged
+            .Subscribe(state =>
+            {
+                var projectName = ProjectSettingsService.Instance.GetCurrentProjectName();
+                this.titleContent.text = projectName + " - " + state;
+            })
+            .AddTo(disposables);
     }
 
     private void InitToolbarFile()

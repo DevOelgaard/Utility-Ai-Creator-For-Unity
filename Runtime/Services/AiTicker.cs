@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using UniRx;
 using UnityEditor;
@@ -10,15 +8,15 @@ using Debug = UnityEngine.Debug;
 
 internal class AiTicker: RestoreAble
 {
-    private CompositeDisposable disposables = new CompositeDisposable();
-    private IDisposable tickUntillTargetTickSub;
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
+    private IDisposable tickUntilTargetTickSub;
 
-    private static AiTicker instance;
-    public static AiTicker Instance => instance ??= new AiTicker();
+    private static AiTicker _instance;
+    public static AiTicker Instance => _instance ??= new AiTicker();
     private AgentManager agentManager => AgentManager.Instance;
 
     public IObservable<int> OnTickComplete => onTickComplete;
-    private Subject<int> onTickComplete = new Subject<int>();
+    private readonly Subject<int> onTickComplete = new Subject<int>();
 
     private int tickCount; 
     public int TickCount { 
@@ -38,7 +36,7 @@ internal class AiTicker: RestoreAble
 
     private AiTicker()
     {
-        Init();
+        Init().RunSynchronously();
 
         if (Debug.isDebugBuild)
         {
@@ -59,7 +57,7 @@ internal class AiTicker: RestoreAble
             Settings = await Restore<AiTickerSettingsModel>(loadedState.LoadedObject);
         } else
         {
-            Debug.LogWarning("Failed to load AiTicker settings Error: " + loadedState.ErrorMessage + " Exception: " + loadedState.Exception?.ToString());
+            Debug.LogWarning("Failed to load AiTicker settings Error: " + loadedState.ErrorMessage + " Exception: " + loadedState.Exception);
             Reload();
         }
     }
@@ -86,26 +84,26 @@ internal class AiTicker: RestoreAble
         if (!EditorApplication.isPlaying) return;
         if (EditorApplication.isPaused) return;
         TickCount++;
-        var metaData = new TickMetaData();
-        metaData.TickCount = TickCount;
+        var metaData = new TickMetaData
+        {
+            TickCount = TickCount
+        };
         Settings.TickerMode.Tick(agent, metaData);
         onTickComplete.OnNext(TickCount);
     }
 
     internal void TickUntilCount(int targetTickCount, bool pauseOnComplete)
     {
-        tickUntillTargetTickSub = OnTickComplete
-            .Subscribe(tickCount =>
+        tickUntilTargetTickSub = OnTickComplete
+            .Subscribe(completedTickCount =>
             {
-                if (tickCount >= targetTickCount)
+                if (completedTickCount < targetTickCount) return;
+                if (pauseOnComplete)
                 {
-                    if (pauseOnComplete)
-                    {
-                        EditorApplication.isPaused = true;
-                    }
-                    Stop();
-                    tickUntillTargetTickSub.Dispose();
+                    EditorApplication.isPaused = true;
                 }
+                Stop();
+                tickUntilTargetTickSub.Dispose();
             });
         Start();
         EditorApplication.isPaused = false;
@@ -142,7 +140,8 @@ internal class AiTicker: RestoreAble
     protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
     {
         var s = state as AiTickerState;
-        Settings = await Restore<AiTickerSettingsModel>(s.Settings, restoreDebug);
+        // ReSharper disable once PossibleNullReferenceException
+        Settings = await Restore<AiTickerSettingsModel>(s.settings, restoreDebug);
     }
 
     internal override RestoreState GetState()
@@ -157,10 +156,12 @@ internal class AiTicker: RestoreAble
 
     internal void Reload()
     {
-        Settings.TickerModes = new List<TickerMode>();
-        Settings.TickerModes.Add(new TickerModeDesiredFrameRate());
-        Settings.TickerModes.Add(new TickerModeTimeBudget());
-        Settings.TickerModes.Add(new TickerModeUnrestricted());
+        Settings.TickerModes = new List<TickerMode>
+        {
+            new TickerModeDesiredFrameRate(),
+            new TickerModeTimeBudget(),
+            new TickerModeUnrestricted()
+        };
 
         Settings.TickerMode = Settings.TickerModes.First(m => m.Name == AiTickerMode.Unrestricted);
     }
@@ -172,7 +173,7 @@ internal class AiTicker: RestoreAble
 
     ~AiTicker()
     {
-        Save();
+        Save().RunSynchronously();
         disposables.Clear();
     }
 }
@@ -182,7 +183,7 @@ internal class AiTicker: RestoreAble
 [Serializable]
 public class AiTickerState: RestoreState
 {
-    public AiTickerSettingsState Settings;
+    public AiTickerSettingsState settings;
 
     public AiTickerState()
     {
@@ -190,6 +191,6 @@ public class AiTickerState: RestoreState
 
     internal AiTickerState(AiTickerSettingsModel settings, AiTicker o) : base(o)
     {
-        Settings = settings.GetState() as AiTickerSettingsState;
+        this.settings = settings.GetState() as AiTickerSettingsState;
     }
 }

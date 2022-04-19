@@ -124,7 +124,7 @@ internal class TemplateManager : EditorWindow
     {
         hasSavedOnDisable = false;
         autoSave = true;
-        // await UasTemplateService.Instance.LoadCurrentProject(true);
+        await UasTemplateService.Instance.LoadCurrentProject(true);
         var mws = MainWindowService.Instance;
         mws.OnUpdateStateChanged
             .Subscribe(state =>
@@ -145,11 +145,7 @@ internal class TemplateManager : EditorWindow
 
         menu.menu.AppendAction("New Project", NewProject);
 
-        menu.menu.AppendAction("Save", _ =>
-        {
-            Task.Factory.StartNew(() => uASTemplateService.Save());
-            // MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine());
-        });
+        menu.menu.AppendAction("Save", SaveUas);
 
         menu.menu.AppendAction("Save As", _ =>
         {
@@ -200,6 +196,12 @@ internal class TemplateManager : EditorWindow
         toolbar.Add(menu);
     }
 
+    private async void SaveUas(DropdownMenuAction _)
+    {
+        await uASTemplateService.Save();
+        // MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine());
+    }
+
     private async void ImportFiles(DropdownMenuAction _)
     {
         var s = await persistenceAPI.LoadFilePanel<RestoreState>(Consts.FileExtensionsFilters);
@@ -213,8 +215,6 @@ internal class TemplateManager : EditorWindow
 
     private async void OpenProject(DropdownMenuAction _)
     {
-        // Updating Backup
-        // MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine(true));
         await uASTemplateService.Save(true);
         Debug.Log("Save complete, Loading");
         
@@ -537,15 +537,6 @@ internal class TemplateManager : EditorWindow
     private async void OnClose()
     {
         WindowOpener.WindowPosition = this.position;
-        if (autoSave && !EditorApplication.isPlaying)
-        {
-            if (!hasSavedOnDisable)
-            {
-                hasSavedOnDisable = true;
-                await UasTemplateService.Instance.Save(true);
-                ProjectSettingsService.Instance.SaveSettings();
-            }
-        }
         ClearSubscriptions();
     }
 

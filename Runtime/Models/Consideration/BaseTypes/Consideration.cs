@@ -219,18 +219,18 @@ public abstract class Consideration : AiObjectModel
         return new ConsiderationState(Name,Description,Parameters, CurrentResponseCurve, MinFloat, MaxFloat, this);
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_Consideration);
-        RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
+        await persister.SaveObject(state, path + "." + Consts.FileExtension_Consideration);
+        await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
 
         var rcPath = path + "/" + Consts.FolderName_ResponseCurves;
-        CurrentResponseCurve.SaveToFile(rcPath, persister);
+        await CurrentResponseCurve.SaveToFile(rcPath, persister);
 
         var minPath = path + "/" + Consts.FolderName_MinParameter;
-        MinFloat.SaveToFile(minPath, persister);
+        await MinFloat.SaveToFile(minPath, persister);
         var maxPath = path + "/" + Consts.FolderName_MaxParameter;
-        MaxFloat.SaveToFile(maxPath, persister);
+        await MaxFloat.SaveToFile(maxPath, persister);
     }
 
 

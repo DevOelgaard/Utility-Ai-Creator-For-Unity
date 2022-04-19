@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor;
 
-[InitializeOnLoad]
 internal class UasTemplateService: RestoreAble
 {
     private readonly CompositeDisposable subscriptions = new CompositeDisposable();
@@ -48,19 +47,32 @@ internal class UasTemplateService: RestoreAble
 
     internal static UasTemplateService Instance;
 
-    static UasTemplateService()
+    // static UasTemplateService()
+    // {
+    //     Instance = new UasTemplateService();
+    //     if (EditorApplication.isPlayingOrWillChangePlaymode)
+    //     {
+    //         Task.Factory.StartNew(() => Instance.Init(true));
+    //     }
+    //     else
+    //     {
+    //         Task.Factory.StartNew(() => Instance.Init(true));
+    //     }
+    // }
+
+    [InitializeOnLoadMethod]
+    private static async void InitializeOnLoadMethodAttribute()
     {
         Instance = new UasTemplateService();
-        if (EditorApplication.isPlayingOrWillChangePlaymode)
-        {
-            Task.Factory.StartNew(() => Instance.Init(true));
-        }
-        else
-        {
-            Task.Factory.StartNew(() => Instance.Init(true));
-        }
+        await Instance.Init(true);
+        EditorApplication.playModeStateChanged += Instance.SaveFromStateChange;
     }
 
+    private async void SaveFromStateChange(PlayModeStateChange s)
+    {
+        await Save(true);
+    }
+    
     private async Task Init(bool restore)
     {
         Debug.Log("Instantiating");
@@ -155,30 +167,26 @@ internal class UasTemplateService: RestoreAble
     
     internal async Task Save(bool backup = false)
     {
-        await Task.Factory.StartNew(() =>
-        {
-            Debug.Log("Saving private");
-            var path = !backup
-                ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
-                : ProjectSettingsService.Instance.GetBackupDirectory();
+        Debug.Log("Saving private");
+        var path = !backup
+            ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
+            : ProjectSettingsService.Instance.GetBackupDirectory();
 
 
-            // if (EditorApplication.isPlaying)
-            // {
-            //     Debug.Log("Not Saving from PlayMode");
-            //     return;
-            // }
-            // else
-            // {
-            //     Debug.Log("Saving path: " + path);
-            // }
-            Debug.Log("Saving path: " + path);
+        // if (EditorApplication.isPlaying)
+        // {
+        //     Debug.Log("Not Saving from PlayMode");
+        //     return;
+        // }
+        // else
+        // {
+        //     Debug.Log("Saving path: " + path);
+        // }
+        Debug.Log("Saving path: " + path);
 
-            var perstistAPI = PersistenceAPI.Instance;
-            perstistAPI.SaveDestructiveObjectPath(this, path,
-                ProjectSettingsService.Instance.GetCurrentProjectName(true));
-        });
-        Debug.Log("Save complete");
+        var perstistAPI = PersistenceAPI.Instance;
+        await perstistAPI.SaveDestructiveObjectPath(this, path,
+            ProjectSettingsService.Instance.GetCurrentProjectName(true));
     }
 
     protected override string GetFileName()
@@ -270,24 +278,24 @@ internal class UasTemplateService: RestoreAble
     
     
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
         var directoryPath = Path.GetDirectoryName(path);
         if (!path.Contains(Consts.FileExtension_UasProject))
         {
             path += "." + Consts.FileExtension_UasProject;
         }
-        persister.SaveObject(state, path) ;
+        await persister.SaveObject(state, path) ;
 
         // Guard if saving destructively. Should only happen for Project level
         persister = new JsonPersister();
         
-        RestoreAbleService.SaveRestoreAblesToFile(AIs.Values.Cast<Ai>(),directoryPath + "/" + Consts.FolderName_Ais, persister);
-        RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values.Cast<Bucket>(),directoryPath + "/" + Consts.FolderName_Buckets, persister);
-        RestoreAbleService.SaveRestoreAblesToFile(Decisions.Values.Cast<Decision>(),directoryPath + "/" + Consts.FolderName_Decisions, persister);
-        RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values.Cast<Consideration>(),directoryPath + "/" + Consts.FolderName_Considerations, persister);
-        RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values.Cast<AgentAction>(),directoryPath + "/" + Consts.FolderName_AgentActions, persister);
-        RestoreAbleService.SaveRestoreAblesToFile(ResponseCurves.Values.Cast<ResponseCurve>(),directoryPath + "/" + Consts.FolderName_ResponseCurves, persister);
+        await RestoreAbleService.SaveRestoreAblesToFile(AIs.Values.Cast<Ai>(),directoryPath + "/" + Consts.FolderName_Ais, persister);
+        await RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values.Cast<Bucket>(),directoryPath + "/" + Consts.FolderName_Buckets, persister);
+        await RestoreAbleService.SaveRestoreAblesToFile(Decisions.Values.Cast<Decision>(),directoryPath + "/" + Consts.FolderName_Decisions, persister);
+        await RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values.Cast<Consideration>(),directoryPath + "/" + Consts.FolderName_Considerations, persister);
+        await RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values.Cast<AgentAction>(),directoryPath + "/" + Consts.FolderName_AgentActions, persister);
+        await RestoreAbleService.SaveRestoreAblesToFile(ResponseCurves.Values.Cast<ResponseCurve>(),directoryPath + "/" + Consts.FolderName_ResponseCurves, persister);
     }
 
     private async Task Restore(UasTemplateServiceState state)
@@ -387,7 +395,7 @@ internal class UasTemplateService: RestoreAble
     ~UasTemplateService()
     {
         Debug.Log("Destroying UAS");
-        Save(true);
+        // await Save(true);
         subscriptions.Clear();
     }
 }

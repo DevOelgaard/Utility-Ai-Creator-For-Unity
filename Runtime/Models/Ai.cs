@@ -214,12 +214,12 @@ public class Ai: AiObjectModel
                         utilityScorers.FirstOrDefault();
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_UAI);
-        RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values,path + "/" + Consts.FolderName_Buckets, persister);
-        RestoreAbleService.SaveRestoreAblesToFile(BucketSelectors,path + "/" + Consts.FolderName_BucketSelectors, persister);
-        RestoreAbleService.SaveRestoreAblesToFile(DecisionSelectors,path + "/" + Consts.FolderName_DecisionSelectors, persister);
+        await persister.SaveObject(state, path + "." + Consts.FileExtension_UAI);
+        await RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values,path + "/" + Consts.FolderName_Buckets, persister);
+        await RestoreAbleService.SaveRestoreAblesToFile(BucketSelectors,path + "/" + Consts.FolderName_BucketSelectors, persister);
+        await RestoreAbleService.SaveRestoreAblesToFile(DecisionSelectors,path + "/" + Consts.FolderName_DecisionSelectors, persister);
     }
 }
 

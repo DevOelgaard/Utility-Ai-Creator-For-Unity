@@ -56,10 +56,10 @@ public class AiTickerSettingsModel: RestoreAble
         return new AiTickerSettingsState(TickerMode, TickerModes, this);
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        persister.SaveObject(state, path + Consts.FileExtension_TickerSettings);
-        RestoreAbleService.SaveRestoreAblesToFile(TickerModes,path + "/" + Consts.FolderName_TickerModes, persister);
+        await persister.SaveObject(state, path + Consts.FileExtension_TickerSettings);
+        await RestoreAbleService.SaveRestoreAblesToFile(TickerModes,path + "/" + Consts.FolderName_TickerModes, persister);
     }
 }
 

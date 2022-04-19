@@ -72,7 +72,7 @@ public abstract class RestoreAble
     }
 
 
-    protected abstract void InternalSaveToFile(string path, IPersister persister, RestoreState state);
+    protected abstract Task InternalSaveToFile(string path, IPersister persister, RestoreState state);
 
     internal abstract RestoreState GetState();
 }

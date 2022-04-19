@@ -150,9 +150,9 @@ internal class AiTicker: RestoreAble
         return new AiTickerState(Settings, this);
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_AiTicker);
+        await persister.SaveObject(state, path + "." + Consts.FileExtension_AiTicker);
     }
 
     internal void Reload()
@@ -165,9 +165,9 @@ internal class AiTicker: RestoreAble
         Settings.TickerMode = Settings.TickerModes.First(m => m.Name == AiTickerMode.Unrestricted);
     }
 
-    internal void Save()
+    internal async Task Save()
     {
-        persistenceAPI.SaveObjectPath(Settings, Consts.FileTickerSettings, "TickerSettings");
+        await persistenceAPI.SaveObjectPath(Settings, Consts.FileTickerSettings, "TickerSettings");
     }
 
     ~AiTicker()

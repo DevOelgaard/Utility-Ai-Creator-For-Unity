@@ -134,12 +134,12 @@ internal static class RestoreAbleService
         collection.Add(sorted);
     }
 
-    internal static void SaveRestoreAblesToFile<T>(IEnumerable<T> collection, string path, IPersister persister) where T: RestoreAble
+    internal static async Task SaveRestoreAblesToFile<T>(IEnumerable<T> collection, string path, IPersister persister) where T: RestoreAble
     {
         var restoreAbles = collection.ToList();
         foreach (var element in restoreAbles)
         {
-            element.SaveToFile(path,persister,restoreAbles.IndexOf(element));
+            await element.SaveToFile(path,persister,restoreAbles.IndexOf(element));
         }
     }
 }

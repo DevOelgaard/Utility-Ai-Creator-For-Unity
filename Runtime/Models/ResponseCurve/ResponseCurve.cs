@@ -268,11 +268,11 @@ public class ResponseCurve: AiObjectModel
         return clone;
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_ResponseCurve);
-        RestoreAbleService.SaveRestoreAblesToFile(Segments,path + "/" + Consts.FolderName_Segments, persister);
-        RestoreAbleService.SaveRestoreAblesToFile(ResponseFunctions,path + "/" + Consts.FolderName_ResponseFunctions, persister);
+        await persister.SaveObject(state, path + "." + Consts.FileExtension_ResponseCurve);
+        await RestoreAbleService.SaveRestoreAblesToFile(Segments,path + "/" + Consts.FolderName_Segments, persister);
+        await RestoreAbleService.SaveRestoreAblesToFile(ResponseFunctions,path + "/" + Consts.FolderName_ResponseFunctions, persister);
     }
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)

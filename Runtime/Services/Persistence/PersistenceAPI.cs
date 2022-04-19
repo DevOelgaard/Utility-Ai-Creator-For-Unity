@@ -4,10 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor;
+using UnityEngine;
+
 internal class PersistenceAPI
 {
     private IPersister persister;
-    private readonly IPersister destructivePersister;
+    // private readonly IPersister destructivePersister;
 
     internal static PersistenceAPI Instance => _instance ??= new PersistenceAPI(new JsonPersister());
     private static PersistenceAPI _instance;
@@ -15,7 +17,7 @@ internal class PersistenceAPI
     private PersistenceAPI(IPersister persister)
     {
         this.persister = persister;
-        this.destructivePersister = new JsonDestructivePersister();
+        // this.destructivePersister = new JsonDestructivePersister();
     }
 
     internal void SetPersister(IPersister p)
@@ -31,6 +33,7 @@ internal class PersistenceAPI
         {
             return;
         }
+
         await SaveObjectPath(o, Path.GetDirectoryName(path) + @"\", Path.GetFileName(path));
     }
 
@@ -50,8 +53,9 @@ internal class PersistenceAPI
 
     internal async Task SaveDestructiveObjectPath(RestoreAble o, string path, string fileName)
     {
-        await o.SaveToFile(path, destructivePersister,-2, fileName);
-        await CleanUp(path);
+        var startTime = DateTime.Now;
+        await o.SaveToFile(path, persister,-2, fileName);
+        await CleanUp(path, startTime);
     }
 
     internal async Task<ObjectMetaData<T>> LoadObjectPanel<T>()
@@ -72,22 +76,22 @@ internal class PersistenceAPI
     internal async Task<ObjectMetaData<T>> LoadObjectPath<T>(string path)
     {
         var result = await persister.LoadObject<T>(path);
-        // CleanUp(path);
         return result;
     }
 
     internal async Task<List<ObjectMetaData<T>>> LoadObjectsPanel<T>(string startPath, string filter = "") where T : RestoreState
     {
         var path = EditorUtility.OpenFolderPanel("Load object", startPath, "default name");
-        return await persister.LoadObjects<T>(path, "*"+filter);
+        var res = await persister.LoadObjects<T>(path, "*"+filter);
+        return res;
     }
 
     internal async Task<List<ObjectMetaData<T>>> LoadObjectsPath<T>(string folderPath, string filter = "") where T: RestoreState
     {
         var results = await persister.LoadObjects<T>(folderPath, "*"+filter);
-        foreach (var result in results)
+        foreach (var result in results
+                     .Where(result => result.LoadedObject != null))
         {
-            if (result.LoadedObject == null) continue;
             result.LoadedObject.FolderLocation = folderPath;
         }
 
@@ -97,13 +101,13 @@ internal class PersistenceAPI
     internal async Task<List<ObjectMetaData<T>>> LoadObjectsPathWithFilters<T>(string folderPath, Type t) where T : RestoreState
     {
         var filter = FileExtensionService.GetFileExtensionFromType(t);
-        return await LoadObjectsPath<T>(folderPath, filter);
+        var res = await LoadObjectsPath<T>(folderPath, filter);
+        return res;
     }
 
     internal async Task<List<ObjectMetaData<T>>> LoadObjectsPathWithFiltersAndSubDirectories<T>(string folderPath, Type t) where T : RestoreState
     {
         var filter = FileExtensionService.GetFileExtensionFromType(t);
-
         var result = await LoadObjectsPath<T>(folderPath, filter);
         try
         {
@@ -112,9 +116,7 @@ internal class PersistenceAPI
             {
                 result = await  LoadObjectsPath<T>(subDirectory, filter);
             }
-            // result
-            //     .AddRange(subDirectories
-            //         .SelectMany(subDirectory => LoadObjectsPath<T>(subDirectory, filter)));
+
         } catch (Exception ex)
         {
             if (ex.GetType() == typeof(DirectoryNotFoundException))
@@ -133,66 +135,94 @@ internal class PersistenceAPI
     internal async Task<ObjectMetaData<T>> LoadFilePanel<T>(string[] filters)
     {
         var path = EditorUtility.OpenFilePanelWithFilters("Load object", "", filters);
-        return await LoadFilePath<T>(path);
+        var res = await LoadFilePath<T>(path);
+        return res;
     }
 
     private async Task<ObjectMetaData<T>> LoadFilePath<T>(string path)
     {
-        return await persister.LoadObject<T>(path);
+        var res = await persister.LoadObject<T>(path);
+        return res;
     }
 
-    //https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories
-    private async Task CleanUp(string path)
+    private static async Task CleanUp(string path, DateTime startTime)
     {
-        if (path.Contains("."))
+        var t = Task.Factory.StartNew(() =>
         {
-            path = new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? string.Empty).FullName;
-        }
-        var directories = Directory.GetDirectories(path);
-        var tasks = new List<Task>();
-        foreach (var d in directories.Where((d => !d.Contains("."))))
-        {
-            await CleanUp(d);
-            tasks.Add(Task.Factory.StartNew(() =>
+            var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
+            foreach (var file in files.Where(f => !f.Contains(".meta")))
             {
-                var metaFiles = Directory.GetFiles(d).Where(f => f.Contains(".meta"));
-                var fileNamesWithoutMeta = Directory.GetFiles(d)
-                    .Where(f => !f.Contains(".meta"))
-                    .Select(Path.GetFileName)
-                    .ToList();
-                var childDirectoryNames = Directory.GetDirectories(d)
-                    .Select(Path.GetFileNameWithoutExtension)
-                    .ToList();
-                
-                foreach (var metaFile in metaFiles)
+                var lastWriteTime = File.GetLastWriteTime(file);
+                if (lastWriteTime < startTime)
                 {
-                    var metaFileName = Path.GetFileNameWithoutExtension(metaFile);
-                    var canDelete = fileNamesWithoutMeta.All(file => file != metaFileName) &&
-                                    childDirectoryNames.All(directory => directory != metaFileName);
-
-                    if (!canDelete) continue;
-                    File.Delete(metaFile);
-                }
-
-                // Delete empty folders
-                var childDirectories = Directory.GetDirectories(d);
-                if (childDirectories.Length > 0) return;
-
-                var filesWithoutMeta = Directory.GetFiles(d)
-                    .Where(f => !f.Contains(".meta"))
-                    .ToList();
-            
-                if (filesWithoutMeta.Count > 0) return;
-                foreach (var file in Directory.GetFiles(d))
-                {
+                    Debug.Log("Deleting: " + file);
                     File.Delete(file);
                 }
+            }
+        });
+        await t;
+        await DeleteEmptyFolders(path);
+    }
 
-                Directory.Delete(d,false);
-            }));
-        }
-
-        await Task.WhenAll(tasks);
+    // https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories
+    private static async Task DeleteEmptyFolders(string path)
+    {
+         if (path.Contains("."))
+         {
+             path = new DirectoryInfo(Path.GetDirectoryName(path) ?? string.Empty).FullName;
+         }
+         var directories = Directory.GetDirectories(path);
+         var tasks = new List<Task>();
+         
+         foreach (var d in directories.Where((d => !d.Contains("."))))
+         {
+             await DeleteEmptyFolders(d);
+             tasks.Add(Task.Factory.StartNew(() =>
+             {
+                 var metaFiles = Directory.GetFiles(d).Where(f => f.Contains(".meta"));
+                 var fileNamesWithoutMeta = Directory.GetFiles(d)
+                     .Where(f => !f.Contains(".meta"))
+                     .Select(Path.GetFileName)
+                     .ToList();
+                 var childDirectoryNames = Directory.GetDirectories(d)
+                     .Select(Path.GetFileNameWithoutExtension)
+                     .ToList();
+                 
+                 foreach (var metaFile in metaFiles)
+                 {
+                     var metaFileName = Path.GetFileNameWithoutExtension(metaFile);
+                     var canDelete = fileNamesWithoutMeta.All(file => file != metaFileName) &&
+                                     childDirectoryNames.All(directory => directory != metaFileName);
+        
+                     if (!canDelete) continue;
+                     File.Delete(metaFile);
+                 }
+        
+                 // Delete empty folders
+                 var childDirectories = Directory.GetDirectories(d);
+                 if (childDirectories.Length > 0)
+                 {
+                     return;
+                 }
+        
+                 var filesWithoutMeta = Directory.GetFiles(d)
+                     .Where(f => !f.Contains(".meta"))
+                     .ToList();
+             
+                 if (filesWithoutMeta.Count > 0)
+                 {
+                     return;
+                 }
+                 foreach (var file in Directory.GetFiles(d))
+                 {
+                     File.Delete(file);
+                 }
+        
+                 Directory.Delete(d,false);
+             }));
+         }
+        
+         await Task.WhenAll(tasks);
     }
 }
 

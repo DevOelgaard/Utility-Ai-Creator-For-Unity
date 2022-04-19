@@ -9,24 +9,29 @@ using UnityEditor;
 
 internal class ProjectSettingsService
 {
-    private CompositeDisposable modelChangedSubscription = new CompositeDisposable();
+    private readonly CompositeDisposable modelChangedSubscription = new CompositeDisposable();
     internal IObservable<bool> OnProjectSettingsChanged => onProjectSettingsChanged;
     private readonly Subject<bool> onProjectSettingsChanged = new Subject<bool>();
     private ProjectSettingsModel model;
-    private readonly IPersister persister;
+    private IPersister persister;
+    internal static ProjectSettingsService Instance;
     private ProjectSettingsService()
     {
-        persister = new JsonPersister();
-        Init();
     }
 
-    private async Task Init()
+    [InitializeOnLoadMethod]
+    private static async void Init()
     {
-        var loaded = await persister.LoadObject<ProjectSettingsModel>(Consts.ProjectSettingsPath);
-        model = loaded.Success ? loaded.LoadedObject : new ProjectSettingsModel();
-        model.OnCurrentProjectPathChanged
-            .Subscribe(_ => onProjectSettingsChanged.OnNext(true))
-            .AddTo(modelChangedSubscription);
+        Instance = new ProjectSettingsService
+        {
+            persister = new JsonPersister()
+        };
+
+        var loaded = await Instance.persister.LoadObject<ProjectSettingsModel>(Consts.ProjectSettingsPath);
+        Instance.model = loaded.Success ? loaded.LoadedObject : new ProjectSettingsModel();
+        Instance.model.OnCurrentProjectPathChanged
+            .Subscribe(_ => Instance.onProjectSettingsChanged.OnNext(true))
+            .AddTo(Instance.modelChangedSubscription);
     }
 
     internal string GetCurrentProjectDirectory()
@@ -112,12 +117,6 @@ internal class ProjectSettingsService
         var path = EditorUtility.OpenFilePanelWithFilters("Open Project", "", filtes);
         SetProjectPath(path);
     }
-
-    internal static ProjectSettingsService Instance
-    {
-        get { return _instance ??= new ProjectSettingsService(); }
-    }
-    private static ProjectSettingsService _instance;
 
     internal void SaveSettings()
     {

@@ -38,10 +38,10 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
         Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_UtilityContainerSelector);
-        RestoreAbleService.SaveRestoreAblesToFile(Parameters.Where(p => p != null),path + "/" + Consts.FolderName_Parameters, persister);
+        await persister.SaveObject(state, path + "." + Consts.FileExtension_UtilityContainerSelector);
+        await RestoreAbleService.SaveRestoreAblesToFile(Parameters.Where(p => p != null),path + "/" + Consts.FolderName_Parameters, persister);
     }
 }
 

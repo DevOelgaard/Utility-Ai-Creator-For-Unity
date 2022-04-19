@@ -98,10 +98,10 @@ public abstract class ResponseFunction: AiObjectModel
         return new ResponseFunctionState(this);
     }
 
-    protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        persister.SaveObject(state, path + "." + Consts.FileExtension_ResponseFunction);
-        RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
+        await persister.SaveObject(state, path + "." + Consts.FileExtension_ResponseFunction);
+        await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
     }
 }
 

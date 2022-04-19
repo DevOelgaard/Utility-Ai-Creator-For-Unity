@@ -17,7 +17,7 @@ internal class UasTemplateService: RestoreAble
     public ReactiveListNameSafe<AiObjectModel> Considerations;
     public ReactiveListNameSafe<AiObjectModel> AgentActions;
     public ReactiveListNameSafe<AiObjectModel> ResponseCurves;
-    internal string stateString = "";
+    internal string state = "";
     internal IObservable<string> OnStateChanged => onStateChanged;
     private readonly Subject<string> onStateChanged = new Subject<string>();
 
@@ -86,7 +86,7 @@ internal class UasTemplateService: RestoreAble
         if (restore)
         {
             SetState("Loading");
-            LoadCurrentProject(true).RunSynchronously();
+            LoadCurrentProject(true).Wait();
             SetState("");
             Debug.Log("Instantiation complete with restore");
         }
@@ -98,8 +98,8 @@ internal class UasTemplateService: RestoreAble
 
     private void SetState(string s)
     {
-        stateString = s;
-        onStateChanged.OnNext(stateString);
+        state = s;
+        onStateChanged.OnNext(state);
     }
 
     private void SubscribeToCollectionChanges()

@@ -10,8 +10,6 @@ internal class JsonPersister : IPersister
 {
     private string json;
 
-
-
     public async Task<ObjectMetaData<T>> LoadObjectAsync<T>(string path)
     {
         var t = Task.Factory.StartNew(() =>

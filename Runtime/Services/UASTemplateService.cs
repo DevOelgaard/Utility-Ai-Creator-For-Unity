@@ -78,7 +78,6 @@ internal class UasTemplateService: RestoreAble
         
 
         SubscribeToCollectionChanges();
-        EditorApplication.playModeStateChanged += SaveOnPlayModeChange;
 
         if (restore)
         {
@@ -172,16 +171,6 @@ internal class UasTemplateService: RestoreAble
         }
     }
 
-    private void SaveOnPlayModeChange(PlayModeStateChange playModeState)
-    {
-        AsyncHelpers.RunSync(SaveBackup);
-    }
-
-    private async Task SaveBackup()
-    {
-        await Save(true);
-    }
-    
     internal async Task Save(bool backup = false)
     {
         var currentState = stateString;
@@ -397,7 +386,6 @@ internal class UasTemplateService: RestoreAble
     ~UasTemplateService()
     {
         subscriptions.Clear();
-        EditorApplication.playModeStateChanged -= SaveOnPlayModeChange;
     }
 }
 

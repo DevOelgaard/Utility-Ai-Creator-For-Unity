@@ -123,6 +123,10 @@ public class Bucket : UtilityContainer
         var wStates = await PersistenceAPI.Instance
             .LoadObjectsPath<ParameterState>(CurrentDirectory + Consts.FolderName_Weight);
         var weightState = wStates.FirstOrDefault();
+        if (weightState == null)
+        {
+            throw new NullReferenceException("WeightState is null. State: " + state.Name);
+        }
         if(weightState.LoadedObject == null)
         {
             Weight = new Parameter(weightState.ErrorMessage, weightState.Exception.ToString());

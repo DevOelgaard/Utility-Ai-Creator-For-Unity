@@ -10,10 +10,10 @@ internal class AiLoggerService
     private static AiLoggerService instance;
     public static AiLoggerService Instance => instance ??= new AiLoggerService();
 
-    private Dictionary<IAgent, Dictionary<int,AgentLog>> agentLogByAgent = new Dictionary<IAgent, Dictionary<int, AgentLog>>();
-    private Dictionary<IAgent, List<int>> validTicksByAgent = new Dictionary<IAgent, List<int>>();
+    private readonly Dictionary<IAgent, Dictionary<int,AgentLog>> agentLogByAgent = new Dictionary<IAgent, Dictionary<int, AgentLog>>();
+    private readonly Dictionary<IAgent, List<int>> validTicksByAgent = new Dictionary<IAgent, List<int>>();
     public IObservable<bool> OnTicksChanged => onTicksChanged;
-    private Subject<bool> onTicksChanged = new Subject<bool>();
+    private readonly Subject<bool> onTicksChanged = new Subject<bool>();
     public int MinTick { get; private set; } = int.MaxValue;
     public int MaxTick { get; private set; } = int.MinValue;
 

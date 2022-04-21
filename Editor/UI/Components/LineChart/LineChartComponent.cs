@@ -9,14 +9,14 @@ internal class LineChartComponent: IMGUIContainer
 {
     internal const bool isMinimized = false;
 
-    private float marginLeft = 50f;
-    private float marginRight = 50f;
-    private float marginTop = 25f;
-    private float marginBottom = 25f;
-    private float marginTextBottom = -7.5f;
-    private float marginTextLeft = 30f;
-    private float textXAxisAdjuster = -3f;
-    private float textYAxisAdjuster = 5f;
+    private readonly float marginLeft = 50f;
+    private readonly float marginRight = 50f;
+    private readonly float marginTop = 25f;
+    private readonly float marginBottom = 25f;
+    private readonly float marginTextBottom = -7.5f;
+    private readonly float marginTextLeft = 30f;
+    private readonly float textXAxisAdjuster = -3f;
+    private readonly float textYAxisAdjuster = 5f;
     public float ScreenHeight { get; private set; }
     public float ScreenWidth { get; private set; }
     private float graphHeight;
@@ -28,11 +28,11 @@ internal class LineChartComponent: IMGUIContainer
     private float graphMaxX = 50000f;
     private float graphRangeX => graphMaxX - graphMinX;
 
-    private float graphMinY = 0f;
-    private float graphMaxY = 1f;
+    private readonly float graphMinY = 0f;
+    private readonly float graphMaxY = 1f;
     private float graphRangeY => graphMaxY - graphMinY;
     private float stepCountX = 10f;
-    private float stepCountY = 10f;
+    private readonly float stepCountY = 10f;
     private List<Vector2> points = new List<Vector2>();
 
     public void DrawCurve(List<Vector2> points, float min = 0, float max = 1, int steps = 100, int stepCountX = 10)

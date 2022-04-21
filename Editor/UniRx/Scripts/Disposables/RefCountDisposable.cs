@@ -117,7 +117,7 @@ namespace UniRx
         sealed class InnerDisposable : IDisposable
         {
             private RefCountDisposable _parent;
-            object parentLock = new object();
+            readonly object parentLock = new object();
 
             public InnerDisposable(RefCountDisposable parent)
             {

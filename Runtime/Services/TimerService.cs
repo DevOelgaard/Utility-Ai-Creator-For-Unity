@@ -20,7 +20,7 @@ internal class TimerService
         }
     }
 
-    private Dictionary<string,List<long>> values = new Dictionary<string, List<long>>();
+    private readonly Dictionary<string,List<long>> values = new Dictionary<string, List<long>>();
 
     public TimerService()
     {

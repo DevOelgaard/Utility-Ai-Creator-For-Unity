@@ -13,7 +13,7 @@ internal class FixedValue : Consideration
 
     protected override float CalculateBaseScore(AiContext context)
     {
-        return Convert.ToSingle(Parameters[0].Value);
+        return Convert.ToSingle(GetParameter("Return value").Value);
     }
 
     protected override List<Parameter> GetParameters()

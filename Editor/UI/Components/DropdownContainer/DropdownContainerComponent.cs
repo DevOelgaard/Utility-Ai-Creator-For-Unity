@@ -8,15 +8,15 @@ using UniRx;
 
 internal class DropdownContainerComponent<T> : VisualElement where T : UtilityContainerSelector
 {
-    private DropdownField dropdown;
+    private readonly DropdownField dropdown;
     private List<T> utilityContainerSelectors;
 
-    private VisualElement elementContainer;
-    private UCSComponent ucsComponent;
+    private readonly VisualElement elementContainer;
+    private readonly UCSComponent ucsComponent;
     private T selectedObject;
 
     internal IObservable<T> OnSelectedObjectChanged => onSelectedObjectChanged;
-    private Subject<T> onSelectedObjectChanged = new Subject<T>();
+    private readonly Subject<T> onSelectedObjectChanged = new Subject<T>();
 
     public DropdownContainerComponent(string title)
     {

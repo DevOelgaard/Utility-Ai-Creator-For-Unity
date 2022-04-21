@@ -11,26 +11,26 @@ using UnityEngine.UIElements;
 
 public class CollectionComponent<T> : VisualElement where T : AiObjectModel
 {
-    private CompositeDisposable subscriptions = new CompositeDisposable();
-    private CompositeDisposable listViewSubscriptions = new CompositeDisposable();
-    private CompositeDisposable nameChangeSubscriptions = new CompositeDisposable();
+    private readonly CompositeDisposable subscriptions = new CompositeDisposable();
+    private readonly CompositeDisposable listViewSubscriptions = new CompositeDisposable();
+    private readonly CompositeDisposable nameChangeSubscriptions = new CompositeDisposable();
     private IDisposable collectionUpdatedSub;
 
-    private TemplateContainer root;
+    private readonly TemplateContainer root;
 
-    private Button sortCollectionButton;
+    private readonly Button sortCollectionButton;
     private VisualElement tempHeader;
-    private PopupField<string> addCopyPopup;
+    private readonly PopupField<string> addCopyPopup;
 
     //private Label titleLabel;
-    private ScrollView elementsBody;
+    private readonly ScrollView elementsBody;
 
     private ReactiveList<T> collection;
-    private ReactiveList<AiObjectModel> templates;
-    private VisualElement dropdownContainer;
+    private readonly ReactiveList<AiObjectModel> templates;
+    private readonly VisualElement dropdownContainer;
 
-    private List<AiObjectComponent> expandedList = new List<AiObjectComponent>();
-    private List<MainWindowFoldedComponent> foldedList = new List<MainWindowFoldedComponent>();
+    private readonly List<AiObjectComponent> expandedList = new List<AiObjectComponent>();
+    private readonly List<MainWindowFoldedComponent> foldedList = new List<MainWindowFoldedComponent>();
 
     public IObservable<bool> OnSortClicked => onSortClicked;
     private readonly Subject<bool> onSortClicked = new Subject<bool>();

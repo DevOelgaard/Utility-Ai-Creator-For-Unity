@@ -12,9 +12,9 @@ public class IT_ConsiderationUsAverageAiContextDecisionBucketUcsHighestDSE
     private UsAverageScorer uSAverage;
     private AiContext aIContext;
     private List<Bucket> buckets;
-    private int numberOfBuckets = 3;
-    private int numberOfDecisions = 4;
-    private int numberOfConsiderations = 5;
+    private readonly int numberOfBuckets = 3;
+    private readonly int numberOfDecisions = 4;
+    private readonly int numberOfConsiderations = 5;
 
     [SetUp]
     public void SetUp()

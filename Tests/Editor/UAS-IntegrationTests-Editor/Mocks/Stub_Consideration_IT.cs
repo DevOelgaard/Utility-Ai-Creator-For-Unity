@@ -11,8 +11,10 @@ public class Stub_Consideration_IT : Consideration
     public Stub_Consideration_IT(float returnValue, List<Parameter> parameters, float min = 0f, float max = 1f)
     {
         ReturnValue = returnValue;
-
-        Parameters = parameters;
+        foreach (var parameter in parameters)
+        {
+            AddParameter(parameter);
+        }
         CurrentResponseCurve = new Mock_ResponseCurve_IT("Mock");
         MinFloat.Value = min;
         MaxFloat.Value = max;

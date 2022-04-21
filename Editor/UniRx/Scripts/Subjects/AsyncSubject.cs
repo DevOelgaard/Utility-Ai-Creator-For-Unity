@@ -14,7 +14,7 @@ namespace UniRx
         , INotifyCompletion
 #endif
     {
-        object observerLock = new object();
+        readonly object observerLock = new object();
 
         T lastValue;
         bool hasValue;

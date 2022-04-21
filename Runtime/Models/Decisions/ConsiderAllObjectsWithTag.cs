@@ -21,7 +21,7 @@ internal class ConsiderAllObjectsWithTag : Decision
 
     protected override float CalculateUtility(AiContext context)
     {
-        var targets = GameObject.FindGameObjectsWithTag((string)Parameters[0].Value);
+        var targets = GameObject.FindGameObjectsWithTag((string)GetParameter("Tag").Value);
         GameObject selectedTarget = null;
         var highestUtility = 0f;
         if (targets == null)

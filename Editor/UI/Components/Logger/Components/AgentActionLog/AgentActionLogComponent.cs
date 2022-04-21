@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 internal class AgentActionLogComponent : AiObjectLogComponent
 {
-    private LogComponentPool<ParameterLogComponent> parameterPool;
+    private readonly LogComponentPool<ParameterLogComponent> parameterPool;
     public AgentActionLogComponent() : base()
     {
         parameterPool = new LogComponentPool<ParameterLogComponent>(Body, false,"Parameters",1);

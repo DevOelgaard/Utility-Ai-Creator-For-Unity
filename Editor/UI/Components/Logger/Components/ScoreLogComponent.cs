@@ -8,8 +8,8 @@ using UnityEngine.UIElements;
 
 internal class ScoreLogComponent: VisualElement
 {
-    private Label scoreLabel;
-    private string identifier;
+    private readonly Label scoreLabel;
+    private readonly string identifier;
     public ScoreLogComponent(string identifier, string value)
     {
         scoreLabel = new Label();

@@ -26,7 +26,7 @@ internal class MainWindowService
     // private bool updatingPool = false;
     private EditorCoroutine updateComponentsCoroutine;
     internal IObservable<bool> OnUpdateStateChanged => onUpdateStateChanged;
-    private Subject<bool> onUpdateStateChanged = new Subject<bool>();
+    private readonly Subject<bool> onUpdateStateChanged = new Subject<bool>();
     public MainWindowService()
     {
     }

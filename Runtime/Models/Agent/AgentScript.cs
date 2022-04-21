@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class AgentScript : IAgent
 {
-    private AgentModel model = new AgentModel();
+    private readonly AgentModel model = new AgentModel();
     public AgentModel Model => model;
 
     public string TypeIdentifier => GetType().FullName;

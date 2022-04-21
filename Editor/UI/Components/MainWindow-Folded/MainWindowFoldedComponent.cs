@@ -4,14 +4,14 @@ using UniRx;
 
 internal class MainWindowFoldedComponent : VisualElement
 {
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
 
-    private Label typeLabel;
-    private Label nameLabel;
-    private Label descriptionLabel;
-    private VisualElement scoreContainer;
-    private LabelContainerComponent labelContainer;
-    private VisualElement footer;
+    private readonly Label typeLabel;
+    private readonly Label nameLabel;
+    private readonly Label descriptionLabel;
+    private readonly VisualElement scoreContainer;
+    private readonly LabelContainerComponent labelContainer;
+    private readonly VisualElement footer;
     private ScoreComponent baseScore;
     private AiObjectModel model;
     protected InfoComponent InfoComponent;

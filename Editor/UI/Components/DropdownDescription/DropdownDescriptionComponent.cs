@@ -8,13 +8,13 @@ using MoreLinq;
 
 public class DropdownDescriptionComponent<T> : VisualElement where T : IIdentifier
 {
-    private CompositeDisposable subscriptions = new CompositeDisposable();
-    private TemplateContainer root;
-    private DropdownField dropDown;
-    private Label description;
+    private readonly CompositeDisposable subscriptions = new CompositeDisposable();
+    private readonly TemplateContainer root;
+    private readonly DropdownField dropDown;
+    private readonly Label description;
     private ReactiveList<T> elements;
     public IObservable<T> OnDropdownValueChanged => onDropdownValueChanged;
-    private Subject<T> onDropdownValueChanged = new Subject<T>();
+    private readonly Subject<T> onDropdownValueChanged = new Subject<T>();
 
     public DropdownDescriptionComponent()
     {

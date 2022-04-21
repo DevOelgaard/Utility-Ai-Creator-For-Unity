@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 internal class ResponseCurveLogComponent : AiObjectLogComponent
 {
     //private ResponseFunctionLogPool pool;
-    private LogComponentPool<ResponseFunctionLogComponent> responseFunctionPool;
+    private readonly LogComponentPool<ResponseFunctionLogComponent> responseFunctionPool;
     public ResponseCurveLogComponent() : base()
     {
         var root = AssetDatabaseService.GetTemplateContainer(this.GetType().FullName);

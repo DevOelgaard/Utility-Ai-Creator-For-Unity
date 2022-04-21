@@ -40,7 +40,7 @@ namespace UniRx
         // EditorThreadDispatcher use EditorApplication.update instead of MonoBehaviour.Update.
         class EditorThreadDispatcher
         {
-            static object gate = new object();
+            static readonly object gate = new object();
             static EditorThreadDispatcher instance;
 
             public static EditorThreadDispatcher Instance
@@ -60,7 +60,7 @@ namespace UniRx
                 }
             }
 
-            ThreadSafeQueueWorker editorQueueWorker = new ThreadSafeQueueWorker();
+            readonly ThreadSafeQueueWorker editorQueueWorker = new ThreadSafeQueueWorker();
 
             EditorThreadDispatcher()
             {
@@ -397,7 +397,7 @@ namespace UniRx
             }
         }
 
-        ThreadSafeQueueWorker queueWorker = new ThreadSafeQueueWorker();
+        readonly ThreadSafeQueueWorker queueWorker = new ThreadSafeQueueWorker();
         Action<Exception> unhandledExceptionCallback = ex => Debug.LogException(ex); // default
 
         MicroCoroutine updateMicroCoroutine = null;

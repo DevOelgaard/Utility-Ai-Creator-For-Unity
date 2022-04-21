@@ -20,11 +20,12 @@ internal class FixedValueFunction : ResponseFunction
 
     protected override float CalculateResponseInternal(float x)
     {
-        return Convert.ToSingle(Parameters[0].Value);
+        return (float)GetParameter("Return").Value;
     }
 
     public override float CalculateResponse(float x, float prevResult, float maxY)
     {
-        return Convert.ToSingle(Parameters[0].Value);
+        return (float)GetParameter("Return").Value;
+
     }
 }

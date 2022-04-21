@@ -5,7 +5,7 @@ namespace UniRx
 {
     public sealed class BehaviorSubject<T> : ISubject<T>, IDisposable, IOptimizedObservable<T>
     {
-        object observerLock = new object();
+        readonly object observerLock = new object();
 
         bool isStopped;
         bool isDisposed;

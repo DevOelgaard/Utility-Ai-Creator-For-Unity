@@ -59,7 +59,7 @@ namespace UniRx
         readonly Subject<T> trigger = new Subject<T>();
         readonly IDisposable canExecuteSubscription;
 
-        ReactiveProperty<bool> canExecute;
+        readonly ReactiveProperty<bool> canExecute;
         public IReadOnlyReactiveProperty<bool> CanExecute
         {
             get

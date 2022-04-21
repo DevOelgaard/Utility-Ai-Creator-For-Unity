@@ -373,10 +373,10 @@ namespace UniRx.Operators
 
     internal class ZipObservable<T1, T2, T3, TR> : OperatorObservableBase<TR>
     {
-        IObservable<T1> source1;
-        IObservable<T2> source2;
-        IObservable<T3> source3;
-        ZipFunc<T1, T2, T3, TR> resultSelector;
+        readonly IObservable<T1> source1;
+        readonly IObservable<T2> source2;
+        readonly IObservable<T3> source3;
+        readonly ZipFunc<T1, T2, T3, TR> resultSelector;
 
         public ZipObservable(
             IObservable<T1> source1,
@@ -457,11 +457,11 @@ namespace UniRx.Operators
 
     internal class ZipObservable<T1, T2, T3, T4, TR> : OperatorObservableBase<TR>
     {
-        IObservable<T1> source1;
-        IObservable<T2> source2;
-        IObservable<T3> source3;
-        IObservable<T4> source4;
-        ZipFunc<T1, T2, T3, T4, TR> resultSelector;
+        readonly IObservable<T1> source1;
+        readonly IObservable<T2> source2;
+        readonly IObservable<T3> source3;
+        readonly IObservable<T4> source4;
+        readonly ZipFunc<T1, T2, T3, T4, TR> resultSelector;
 
         public ZipObservable(
             IObservable<T1> source1,
@@ -547,12 +547,12 @@ namespace UniRx.Operators
 
     internal class ZipObservable<T1, T2, T3, T4, T5, TR> : OperatorObservableBase<TR>
     {
-        IObservable<T1> source1;
-        IObservable<T2> source2;
-        IObservable<T3> source3;
-        IObservable<T4> source4;
-        IObservable<T5> source5;
-        ZipFunc<T1, T2, T3, T4, T5, TR> resultSelector;
+        readonly IObservable<T1> source1;
+        readonly IObservable<T2> source2;
+        readonly IObservable<T3> source3;
+        readonly IObservable<T4> source4;
+        readonly IObservable<T5> source5;
+        readonly ZipFunc<T1, T2, T3, T4, T5, TR> resultSelector;
 
         public ZipObservable(
             IObservable<T1> source1,
@@ -643,13 +643,13 @@ namespace UniRx.Operators
 
     internal class ZipObservable<T1, T2, T3, T4, T5, T6, TR> : OperatorObservableBase<TR>
     {
-        IObservable<T1> source1;
-        IObservable<T2> source2;
-        IObservable<T3> source3;
-        IObservable<T4> source4;
-        IObservable<T5> source5;
-        IObservable<T6> source6;
-        ZipFunc<T1, T2, T3, T4, T5, T6, TR> resultSelector;
+        readonly IObservable<T1> source1;
+        readonly IObservable<T2> source2;
+        readonly IObservable<T3> source3;
+        readonly IObservable<T4> source4;
+        readonly IObservable<T5> source5;
+        readonly IObservable<T6> source6;
+        readonly ZipFunc<T1, T2, T3, T4, T5, T6, TR> resultSelector;
 
         public ZipObservable(
             IObservable<T1> source1,
@@ -745,14 +745,14 @@ namespace UniRx.Operators
 
     internal class ZipObservable<T1, T2, T3, T4, T5, T6, T7, TR> : OperatorObservableBase<TR>
     {
-        IObservable<T1> source1;
-        IObservable<T2> source2;
-        IObservable<T3> source3;
-        IObservable<T4> source4;
-        IObservable<T5> source5;
-        IObservable<T6> source6;
-        IObservable<T7> source7;
-        ZipFunc<T1, T2, T3, T4, T5, T6, T7, TR> resultSelector;
+        readonly IObservable<T1> source1;
+        readonly IObservable<T2> source2;
+        readonly IObservable<T3> source3;
+        readonly IObservable<T4> source4;
+        readonly IObservable<T5> source5;
+        readonly IObservable<T6> source6;
+        readonly IObservable<T7> source7;
+        readonly ZipFunc<T1, T2, T3, T4, T5, T6, T7, TR> resultSelector;
 
         public ZipObservable(
             IObservable<T1> source1,

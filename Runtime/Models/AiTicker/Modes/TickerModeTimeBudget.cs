@@ -7,7 +7,7 @@ using UnityEngine;
 
 internal class TickerModeTimeBudget : TickerMode
 {
-    private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+    private readonly System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
     private int lastTickIndex = -1;
     internal int TickedAgentsThisFrame { get; private set; }
     public TickerModeTimeBudget() : base(AiTickerMode.TimeBudget, Consts.Description_TickerModeTimeBudget)
@@ -31,9 +31,9 @@ internal class TickerModeTimeBudget : TickerMode
 
         while(TickedAgentsThisFrame < agents.Count)
         {
-            if (stopwatch.ElapsedMilliseconds >= Convert.ToSingle(Parameters[0].Value))
+            if (stopwatch.ElapsedMilliseconds >= Convert.ToSingle(GetParameter("Time Budget MS").Value))
             {
-                if ((bool)Parameters[1].Value)
+                if ((bool)GetParameter("Debug").Value)
                 {
                     Debug.Log("Breaking tickedAgents: " + TickedAgentsThisFrame + " Elapsed Time: " + stopwatch.ElapsedMilliseconds + "ms");
                 }
@@ -56,7 +56,7 @@ internal class TickerModeTimeBudget : TickerMode
             TickedAgentsThisFrame++;
             if (TickedAgentsThisFrame >= agents.Count)
             {
-                if ((bool)Parameters[1].Value)
+                if ((bool)GetParameter("Debug").Value)
                 {
                     Debug.Log("All agents ticked agents.count: " + agents.Count + " Elapsed Time: " + stopwatch.ElapsedMilliseconds + "ms");
                 }

@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 
 internal class LoggerGamePaused : LoggerState
 {
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
     public LoggerGamePaused(TemplateContainer root, LoggerComponent debuggerComponent) 
         : base(root, debuggerComponent)
     {

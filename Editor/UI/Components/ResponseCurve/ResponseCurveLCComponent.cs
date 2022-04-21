@@ -10,27 +10,24 @@ using UnityEditor.UIElements;
 
 internal class ResponseCurveLcComponent : VisualElement
 {
-    private CompositeDisposable funcitonDisposables = new CompositeDisposable();
-    private CompositeDisposable responseCurveDisposables = new CompositeDisposable();
+    private readonly CompositeDisposable funcitonDisposables = new CompositeDisposable();
+    private readonly CompositeDisposable responseCurveDisposables = new CompositeDisposable();
     private ResponseCurve responseCurve;
-    private LineChartComponent lineChart;
+    private readonly LineChartComponent lineChart;
     internal IObservable<ResponseCurve> OnResponseCurveChanged => onResponseCurveChanged;
-    private Subject<ResponseCurve> onResponseCurveChanged = new Subject<ResponseCurve>();
+    private readonly Subject<ResponseCurve> onResponseCurveChanged = new Subject<ResponseCurve>();
 
     private float min => (float)responseCurve.MinX;
     private float max => (float)responseCurve.MaxX;
-    private int steps = ConstsEditor.ResponseCurve_Steps;
+    private readonly int steps = ConstsEditor.ResponseCurve_Steps;
 
     //private Label nameLabel;
     private Button foldButton;
-    private VisualElement curveContainer;
-    private VisualElement functionsContainer;
-    private VisualElement header;
+    private readonly VisualElement functionsContainer;
+    private readonly VisualElement header;
     private VisualElement footer;
     private IntegerField resolution;
-    private Button addFunctionButton;
-    private Button saveTemplateButton;
-    private DropdownField curveDropdown;
+    private readonly DropdownField curveDropdown;
 
     public ResponseCurveLcComponent()
     {
@@ -39,11 +36,11 @@ internal class ResponseCurveLcComponent : VisualElement
         root.styleSheets.Add(StylesService.GetStyleSheet("ResponseCurve"));
         header = root.Q<VisualElement>("Header");
         foldButton = root.Q<Button>("FoldButton");
-        curveContainer = root.Q<VisualElement>("CurveContainer");
+        var curveContainer = root.Q<VisualElement>("CurveContainer");
         functionsContainer = root.Q<VisualElement>("FunctionsContainer");
         footer = root.Q<VisualElement>("Footer");
-        addFunctionButton = root.Q<Button>("AddFunctionButton");
-        saveTemplateButton = root.Q<Button>("SaveTemplateButton");
+        var addFunctionButton = root.Q<Button>("AddFunctionButton");
+        var saveTemplateButton = root.Q<Button>("SaveTemplateButton");
         lineChart = new LineChartComponent();
         curveContainer.Add(lineChart);
 

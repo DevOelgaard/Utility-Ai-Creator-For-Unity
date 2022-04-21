@@ -11,25 +11,25 @@ using UnityEngine;
 
 internal class ConsiderationComponent : AiObjectComponent 
 {
-    private CompositeDisposable minMaxSubs = new CompositeDisposable();
-    private CompositeDisposable rcDisposable = new CompositeDisposable();
-    private TemplateContainer root;
+    private readonly CompositeDisposable minMaxSubs = new CompositeDisposable();
+    private readonly CompositeDisposable rcDisposable = new CompositeDisposable();
+    private readonly TemplateContainer root;
     private Consideration considerationModel;
     private ScoreComponent baseScore => ScoreComponents[0];
     private ScoreComponent normalizedScore => ScoreComponents[1];
-    private VisualElement parametersContainer;
+    private readonly VisualElement parametersContainer;
     private VisualElement curveContainer;
-    private EnumField performanceTag;
+    private readonly EnumField performanceTag;
 
-    private ParameterComponent minParamComp;
-    private ParameterComponent maxParamComp;
+    private readonly ParameterComponent minParamComp;
+    private readonly ParameterComponent maxParamComp;
     private FloatFieldMinMax minField;
     private FloatFieldMinMax maxField;
 
-    private TabViewComponent tabView;
+    private readonly TabViewComponent tabView;
     private Button responseCurveTab;
     private Button parametersTab;
-    private LineChartButton responseCurveButton;
+    private readonly LineChartButton responseCurveButton;
     private ResponseCurveWindow responseCurveWindow;
 
     internal ConsiderationComponent() : base()

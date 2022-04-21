@@ -12,7 +12,7 @@ using UnityEditor.UIElements;
 [CustomEditor(typeof(AgentMono)), CanEditMultipleObjects]
 internal class AgentMonoInspector: Editor
 {
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
     private DropdownField aiField;
     private VisualElement root;
     //private AgentMono agent;

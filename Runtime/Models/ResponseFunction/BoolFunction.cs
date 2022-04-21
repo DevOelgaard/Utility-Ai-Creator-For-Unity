@@ -13,7 +13,7 @@ internal class BoolFunction : ResponseFunction
         {
             if(min == null)
             {
-                min = Parameters.First(p => p.Name == "Min");
+                min = GetParameter("Min");
             }
             return min;
         }
@@ -35,25 +35,25 @@ internal class BoolFunction : ResponseFunction
 
     protected override float CalculateResponseInternal(float x)
     {
-        if (x < Convert.ToSingle(Parameters[1].Value))
+        if (x < (float)GetParameter("CutOff").Value)
         {
-            return (bool)Parameters[0].Value == true ? Convert.ToSingle(Max.Value) : Convert.ToSingle(Min.Value);
+            return (bool)GetParameter("First Value").Value == true ? Convert.ToSingle(Max.Value) : Convert.ToSingle(Min.Value);
         }
         else
         {
-            return (bool)Parameters[0].Value == true ? Convert.ToSingle(Min.Value) : Convert.ToSingle(Max.Value);
+            return (bool)GetParameter("First Value").Value == true ? Convert.ToSingle(Min.Value) : Convert.ToSingle(Max.Value);
         }
     }
 
     public override float CalculateResponse(float x, float prevResult, float maxY)
     {
-        if (x < Convert.ToSingle(Parameters[1].Value))
+        if (x < (float)GetParameter("CutOff").Value)
         {
-            return (bool)Parameters[0].Value == true ? Convert.ToSingle(Max.Value) : Convert.ToSingle(Min.Value);
+            return (bool)GetParameter("First Value").Value == true ? Convert.ToSingle(Max.Value) : Convert.ToSingle(Min.Value);
         }
         else
         {
-            return (bool)Parameters[0].Value == true ? Convert.ToSingle(Min.Value) : Convert.ToSingle(Max.Value);
+            return (bool)GetParameter("First Value").Value == true ? Convert.ToSingle(Min.Value) : Convert.ToSingle(Max.Value);
         }
     }
 }

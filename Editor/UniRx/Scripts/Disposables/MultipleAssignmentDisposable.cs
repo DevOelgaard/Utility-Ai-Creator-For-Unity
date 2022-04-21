@@ -7,7 +7,7 @@ namespace UniRx
     {
         static readonly BooleanDisposable True = new BooleanDisposable(true);
 
-        object gate = new object();
+        readonly object gate = new object();
         IDisposable current;
 
         public bool IsDisposed

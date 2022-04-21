@@ -7,12 +7,12 @@ using UnityEngine.UIElements;
 
 internal class TabViewComponent : VisualElement
 {
-    private List<Button> tabs = new List<Button>();
-    private List<VisualElement> contents = new List<VisualElement>();
+    private readonly List<Button> tabs = new List<Button>();
+    private readonly List<VisualElement> contents = new List<VisualElement>();
 
-    private StyleSheet selectedStyle;
-    private VisualElement tabContainer;
-    private VisualElement content;
+    private readonly StyleSheet selectedStyle;
+    private readonly VisualElement tabContainer;
+    private readonly VisualElement content;
     private int selectedIndex = -1;
 
     public TabViewComponent()

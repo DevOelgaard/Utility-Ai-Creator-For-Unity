@@ -13,8 +13,8 @@ using UniRxExtension;
 internal class TemplateManager : EditorWindow
 {
     private IDisposable activeCollectionChangedSub;
-    private CompositeDisposable disposables = new CompositeDisposable();
-    private CompositeDisposable modelsChangedSubsciptions = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable modelsChangedSubsciptions = new CompositeDisposable();
 
     private VisualElement root;
     private VisualElement leftPanel;
@@ -139,7 +139,15 @@ internal class TemplateManager : EditorWindow
             .Subscribe(state =>
             {
                 var projectName = ProjectSettingsService.Instance.GetCurrentProjectName();
-                this.titleContent.text = projectName + " - " + state;
+                Debug.Log("Setting state: " + state);
+                if (string.IsNullOrEmpty(state))
+                {
+                    titleContent.text = projectName;
+                }
+                else
+                {
+                    titleContent.text = projectName + " - " + state;
+                }
             })
             .AddTo(disposables);
     }
@@ -173,10 +181,10 @@ internal class TemplateManager : EditorWindow
 
         menu.menu.AppendAction("Import File(s)", ImportFiles);
 
-        menu.menu.AppendAction("Load Current Project - TEST", _ =>
+        menu.menu.AppendAction("Load Current Project - TEST", async _ =>
         {
-            uASTemplateService.LoadCurrentProject();
-            UpdateLeftPanel();
+            await uASTemplateService.LoadCurrentProject();
+            // UpdateLeftPanel();
         });
 
         menu.menu.AppendAction("Save Backup - TEST", _ =>
@@ -184,9 +192,10 @@ internal class TemplateManager : EditorWindow
             Task.Factory.StartNew(() => uASTemplateService.Save(true));
         });
 
-        menu.menu.AppendAction("Load Backup - TEST", _ =>
+        menu.menu.AppendAction("Load Backup - TEST", async _ =>
         {
-            uASTemplateService.LoadCurrentProject(true);
+            await uASTemplateService.LoadCurrentProject(true);
+            // UpdateLeftPanel();
         });
 
         menu.menu.AppendAction("Exit", _ =>
@@ -223,10 +232,6 @@ internal class TemplateManager : EditorWindow
 
     private async void OpenProject(DropdownMenuAction _)
     {
-        await uASTemplateService.Save(true);
-        Debug.Log("Save complete, Loading");
-        
-
         await PopUpService.AskToSaveIfProjectNotSavedThenSelectProjectToLoad();
     }
 
@@ -239,8 +244,10 @@ internal class TemplateManager : EditorWindow
 
     private void InitToolbarDebug()
     {
-        var menu = new ToolbarMenu();
-        menu.text = "Debug";
+        var menu = new ToolbarMenu
+        {
+            text = "Debug"
+        };
 
         menu.menu.AppendAction("Timer Print", _ =>
         {
@@ -407,7 +414,7 @@ internal class TemplateManager : EditorWindow
 
     }
 
-    private List<Button> buttons = new List<Button>();
+    private readonly List<Button> buttons = new List<Button>();
     private List<KeyValuePair<AiObjectModel,Button>> selectedObjects = new List<KeyValuePair<AiObjectModel, Button>>();
 
     private void ObjectClicked(AiObjectModel model, Button button, MouseUpEvent e)

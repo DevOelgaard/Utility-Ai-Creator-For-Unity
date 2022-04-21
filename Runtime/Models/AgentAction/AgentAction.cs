@@ -11,22 +11,6 @@ public abstract class AgentAction: AiObjectModel
 
     protected AgentAction()
     {
-        Parameters = new List<Parameter>(GetParameters());
-    }
-
-    //protected AgentAction(AgentAction original): base(original)
-    //{
-    //    Parameters = new List<Parameter>();
-    //    foreach (var s in original.Parameters)
-    //    {
-    //        var clone = new Parameter(s.Name, s.Value);
-    //        Parameters.Add(clone);
-    //    }
-    //}
-
-    protected virtual List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
     }
 
     public override string GetTypeDescription()
@@ -36,12 +20,6 @@ public abstract class AgentAction: AiObjectModel
     protected override AiObjectModel InternalClone()
     {
         var clone = (AgentAction)Activator.CreateInstance(GetType());
-        clone.Parameters = new List<Parameter>();
-        foreach (var s in this.Parameters)
-        {
-            var c = s.Clone();
-            clone.Parameters.Add(c);
-        }
         return clone;
     }
 
@@ -56,7 +34,7 @@ public abstract class AgentAction: AiObjectModel
 
     internal override RestoreState GetState()
     {
-        return new AgentActionState(Parameters, Name, Description, this);
+        return new AgentActionState(Parameters.ToList(), Name, Description, this);
     }
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
@@ -66,7 +44,10 @@ public abstract class AgentAction: AiObjectModel
         Description = state.Description;
 
         var parameters = await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+        foreach (var parameter in parameters)
+        {
+            AddParameter(parameter);
+        }
     }
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)

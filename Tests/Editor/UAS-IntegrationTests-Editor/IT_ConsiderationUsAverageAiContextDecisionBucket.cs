@@ -79,31 +79,31 @@ public class IT_ConsiderationUsAverageAiContextDecisionBucket
         Assert.AreEqual(Math.Round(expected, 2), Math.Round(result, 2));
     }
 
-    [TestCase(1, 1, 2, 0, 8, 0.5f)]
-    [TestCase(3, -1, 1, 0, 10, 0.3f)]
-    [TestCase(-1, -2, -3, -10, 0, 0.4f)]
-    [TestCase(30, 15, 10, 20, 120, 0.35f)]
-    public void GetUtility_ConsiderationParameters_ReturnsExpected(float p1, float p2, float p3, float min, float max, float expected)
-    {
-        var considerations = CreateUniformConsiderations(5, 0);
-
-
-        foreach (var consideration in considerations)
-        {
-            consideration.Parameters.Add(new Parameter("p1", p1));
-            consideration.Parameters.Add(new Parameter("p2", p2));
-            consideration.Parameters.Add(new Parameter("p3", p3));
-
-            consideration.MinFloat.Value = min;
-            consideration.MaxFloat.Value = max;
-
-            bucket.Considerations.Add(consideration);
-        }
-
-        var result = bucket.GetUtility(aIContext);
-
-        Assert.AreEqual(Math.Round(expected, 2), Math.Round(result, 2));
-    }
+    // [TestCase(1, 1, 2, 0, 8, 0.5f)]
+    // [TestCase(3, -1, 1, 0, 10, 0.3f)]
+    // [TestCase(-1, -2, -3, -10, 0, 0.4f)]
+    // [TestCase(30, 15, 10, 20, 120, 0.35f)]
+    // public void GetUtility_ConsiderationParameters_ReturnsExpected(float p1, float p2, float p3, float min, float max, float expected)
+    // {
+    //     var considerations = CreateUniformConsiderations(5, 0);
+    //
+    //
+    //     foreach (var consideration in considerations)
+    //     {
+    //         consideration.Parameters.Add(new Parameter("p1", p1));
+    //         consideration.Parameters.Add(new Parameter("p2", p2));
+    //         consideration.Parameters.Add(new Parameter("p3", p3));
+    //
+    //         consideration.MinFloat.Value = min;
+    //         consideration.MaxFloat.Value = max;
+    //
+    //         bucket.Considerations.Add(consideration);
+    //     }
+    //
+    //     var result = bucket.GetUtility(aIContext);
+    //
+    //     Assert.AreEqual(Math.Round(expected, 2), Math.Round(result, 2));
+    // }
 
     private List<Consideration> CreateUniformConsiderations(int numberOfConsiderations, float returnValue, float min = 0f, float max = 1f)
     {

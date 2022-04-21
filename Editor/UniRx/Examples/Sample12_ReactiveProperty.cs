@@ -19,7 +19,7 @@ namespace UniRx.Examples
         // You can monitor/modifie in inspector by SpecializedReactiveProperty
         public IntReactiveProperty IntRxProp = new IntReactiveProperty();
 
-        Enemy enemy = new Enemy(1000);
+        readonly Enemy enemy = new Enemy(1000);
 
         void Start()
         {

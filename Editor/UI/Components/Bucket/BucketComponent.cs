@@ -8,15 +8,15 @@ using UniRx;
 
 internal class BucketComponent : AiObjectComponent 
 {
-    private CompositeDisposable disposables = new CompositeDisposable();
-    private TemplateContainer root;
-    private CollectionComponent<Consideration> considerationCollections;
-    private CollectionComponent<Decision> decisionCollections;
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
+    private readonly TemplateContainer root;
+    private readonly CollectionComponent<Consideration> considerationCollections;
+    private readonly CollectionComponent<Decision> decisionCollections;
     private Bucket model;
-    private ParameterComponent weightComponent;
-    private TabViewComponent tabView;
-    private Button considerationsTab;
-    private Button decisionTab;
+    private readonly ParameterComponent weightComponent;
+    private readonly TabViewComponent tabView;
+    private readonly Button considerationsTab;
+    private readonly Button decisionTab;
 
     internal BucketComponent() : base()
     {

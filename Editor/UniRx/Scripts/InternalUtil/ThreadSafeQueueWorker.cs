@@ -7,7 +7,7 @@ namespace UniRx.InternalUtil
         const int MaxArrayLength = 0X7FEFFFFF;
         const int InitialSize = 16;
 
-        object gate = new object();
+        readonly object gate = new object();
         bool dequing = false;
 
         int actionListCount = 0;

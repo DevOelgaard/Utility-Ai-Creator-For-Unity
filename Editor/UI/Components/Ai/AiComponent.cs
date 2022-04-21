@@ -10,22 +10,22 @@ using UnityEngine;
 
 internal class AiComponent : AiObjectComponent 
 {
-    private CompositeDisposable subscriptions = new CompositeDisposable();
+    private readonly CompositeDisposable subscriptions = new CompositeDisposable();
     private IDisposable bucketTabSub;
-    private TemplateContainer root;
-    private DropdownContainerComponent<UtilityContainerSelector> bucketDropdown;
-    private DropdownContainerComponent<UtilityContainerSelector> decisionDropdown;
-    private DropdownDescriptionComponent<IUtilityScorer> utilityScorerDropdown;
+    private readonly TemplateContainer root;
+    private readonly DropdownContainerComponent<UtilityContainerSelector> bucketDropdown;
+    private readonly DropdownContainerComponent<UtilityContainerSelector> decisionDropdown;
+    private readonly DropdownDescriptionComponent<IUtilityScorer> utilityScorerDropdown;
     private Ai aiModel;
-    private VisualElement collectionsContainer;
-    private Toggle playableToggle;
+    private readonly VisualElement collectionsContainer;
+    private readonly Toggle playableToggle;
 
-    private TabViewComponent tabView;
-    private Button bucketTab;
+    private readonly TabViewComponent tabView;
+    private readonly Button bucketTab;
     private Button settingsTab;
-    private HelpBox playAbleHelpBox;
+    private readonly HelpBox playAbleHelpBox;
 
-    private CollectionComponent<Bucket> bucketCollection;
+    private readonly CollectionComponent<Bucket> bucketCollection;
 
     internal AiComponent() : base()
     {

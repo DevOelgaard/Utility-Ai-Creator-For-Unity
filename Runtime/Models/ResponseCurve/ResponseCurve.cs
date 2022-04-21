@@ -20,9 +20,9 @@ public class ResponseCurve: AiObjectModel
     public List<Parameter> Segments = new List<Parameter>();
 
     public IObservable<bool> OnParametersChanged => onParametersChanged;
-    private Subject<bool> onParametersChanged = new Subject<bool>();
+    private readonly Subject<bool> onParametersChanged = new Subject<bool>();
     public IObservable<bool> OnFunctionsChanged => onFunctionsChanged;
-    private Subject<bool> onFunctionsChanged = new Subject<bool>();
+    private readonly Subject<bool> onFunctionsChanged = new Subject<bool>();
 
     public ResponseCurve()
     {
@@ -50,9 +50,9 @@ public class ResponseCurve: AiObjectModel
     
     public void AddResponseFunction(ResponseFunction newFunction)
     {
-        var previouseFunction = ResponseFunctions.LastOrDefault();
+        var previousFunction = ResponseFunctions.LastOrDefault();
 
-        if (previouseFunction != null) // Not First function
+        if (previousFunction != null) // Not First function
         {
 
             var previousSegment = Segments.LastOrDefault();

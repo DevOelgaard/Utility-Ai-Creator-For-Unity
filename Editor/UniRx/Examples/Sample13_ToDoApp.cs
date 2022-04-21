@@ -21,7 +21,7 @@ namespace UniRx.Examples
         // prefab:)
         public GameObject SampleItemPrefab;
 
-        ReactiveCollection<GameObject> toDos = new ReactiveCollection<GameObject>();
+        readonly ReactiveCollection<GameObject> toDos = new ReactiveCollection<GameObject>();
 
         void Start()
         {

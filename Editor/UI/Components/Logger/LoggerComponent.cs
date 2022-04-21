@@ -11,32 +11,32 @@ using UnityEditor.UIElements;
 
 internal class LoggerComponent : RightPanelComponent<IAgent>
 {
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
     
-    private TemplateContainer root;
-    private VisualElement Body;
-    private VisualElement Footer;
+    private readonly TemplateContainer root;
+    private readonly VisualElement Body;
+    private readonly VisualElement Footer;
 
-    private Button backLeapButton;
-    private Button backStepButton;
-    private Button toggleStateButton;
-    private Button forwardStepButton;
-    private Button forwardLeapButton;
+    private readonly Button backLeapButton;
+    private readonly Button backStepButton;
+    private readonly Button toggleStateButton;
+    private readonly Button forwardStepButton;
+    private readonly Button forwardLeapButton;
 
     private LoggerState state;
 
-    private AgentLogComponent agentLogComponent;
-    private HelpBox helpBox;
+    private readonly AgentLogComponent agentLogComponent;
+    private readonly HelpBox helpBox;
 
-    private SliderInt tickSlider;
+    private readonly SliderInt tickSlider;
 
     private bool isPlaying => EditorApplication.isPlaying;
     private bool isPaused => EditorApplication.isPaused;
     private IAgent agent;
     internal int CurrentTick;
-    private Button tickAgent;
+    private readonly Button tickAgent;
 
-    private Button foldoutButton;
+    private readonly Button foldoutButton;
 
     private bool isExpanded = false;
     

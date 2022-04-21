@@ -10,14 +10,14 @@ using UnityEngine;
 
 public class ScoreComponent: VisualElement
 {
-    private CompositeDisposable subscriptions = new CompositeDisposable();
+    private readonly CompositeDisposable subscriptions = new CompositeDisposable();
 
-    private TemplateContainer root;
-    private Label scoreName;
-    private Label score;
-    private VisualElement colorContainer;
-    private Color defaultColor;
-    private bool dynamicColor;
+    private readonly TemplateContainer root;
+    private readonly Label scoreName;
+    private readonly Label score;
+    private readonly VisualElement colorContainer;
+    private readonly Color defaultColor;
+    private readonly bool dynamicColor;
     public ScoreComponent(ScoreModel model, bool dynamicColor = false)
     {
         var sw = new System.Diagnostics.Stopwatch();

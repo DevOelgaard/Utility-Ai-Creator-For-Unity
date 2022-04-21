@@ -10,7 +10,7 @@ using UnityEditor.UIElements;
 
 internal class ParameterLogComponent : LogComponent
 {
-    private Label parameterLabel;
+    private readonly Label parameterLabel;
     private ParameterLog parameter; 
     public ParameterLogComponent()
     {

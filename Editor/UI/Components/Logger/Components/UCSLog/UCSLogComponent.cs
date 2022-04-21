@@ -7,9 +7,9 @@ using UnityEngine.UIElements;
 
 internal class UCSLogComponent : LogComponent
 {
-    private Label titleLabel;
-    private Label nameLabel;
-    private LogComponentPool<ParameterLogComponent> parameterPool;
+    private readonly Label titleLabel;
+    private readonly Label nameLabel;
+    private readonly LogComponentPool<ParameterLogComponent> parameterPool;
     private UCSLog ucsLog;
     public UCSLogComponent(string title): base()
     {

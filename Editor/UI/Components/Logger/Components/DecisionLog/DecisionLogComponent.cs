@@ -7,15 +7,15 @@ using UnityEngine.UIElements;
 
 internal class DecisionLogComponent : AiObjectLogComponent
 {
-    private VisualElement considerationsContainer;
-    private VisualElement agentActionsContainer;
-    private VisualElement parameters;
-    private LogComponentPool<ParameterLogComponent> parametersPool;
-    private LogComponentPool<ConsiderationLogComponent> considerationsPool;
-    private LogComponentPool<AgentActionLogComponent> agentActionsPool;
+    private readonly VisualElement considerationsContainer;
+    private readonly VisualElement agentActionsContainer;
+    private readonly VisualElement parameters;
+    private readonly LogComponentPool<ParameterLogComponent> parametersPool;
+    private readonly LogComponentPool<ConsiderationLogComponent> considerationsPool;
+    private readonly LogComponentPool<AgentActionLogComponent> agentActionsPool;
     private DecisionLog decisionLog;
 
-    private ScoreLogComponent score;
+    private readonly ScoreLogComponent score;
     public DecisionLogComponent() : base()
     {
         var root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);

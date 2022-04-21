@@ -4,8 +4,8 @@ using UnityEngine.UIElements;
 
 internal class InfoComponent: VisualElement
 {
-    private TemplateContainer root;
-    private Label infoText;
+    private readonly TemplateContainer root;
+    private readonly Label infoText;
 
     internal InfoComponent()
     {

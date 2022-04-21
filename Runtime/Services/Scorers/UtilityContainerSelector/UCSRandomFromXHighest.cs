@@ -10,7 +10,7 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
     {
         get
         {
-            var val = Convert.ToInt32(Parameters[0].Value);
+            var val = Convert.ToInt32(GetParameter("Number Of Items").Value);
             if (val > 0)
             {
                 return val;
@@ -20,9 +20,9 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
             }       
         }
     }
-    private bool PercentageChance => (bool)Parameters[1].Value;
+    private bool PercentageChance => (bool)GetParameter("Percentage chance").Value;
 
-    private float MaxDeviationFromHighest => Convert.ToSingle(Parameters[2].Value);
+    private float MaxDeviationFromHighest => Convert.ToSingle(GetParameter("Max deviation from highest").Value);
     protected override List<Parameter> GetParameters()
     {
         return new List<Parameter>()

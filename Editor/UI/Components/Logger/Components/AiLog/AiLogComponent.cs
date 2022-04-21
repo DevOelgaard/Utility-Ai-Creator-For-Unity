@@ -7,11 +7,11 @@ using UnityEngine.UIElements;
 
 internal class AiLogComponent : AiObjectLogComponent
 {
-    private VisualElement bucketContainer;
-    private LogComponentPool<BucketLogComponent> bucketPool;
-    private VisualElement ucsContainer;
-    private UCSLogComponent bucketSelctorComponent;
-    private UCSLogComponent decisionSelctorComponent;
+    private readonly VisualElement bucketContainer;
+    private readonly LogComponentPool<BucketLogComponent> bucketPool;
+    private readonly VisualElement ucsContainer;
+    private readonly UCSLogComponent bucketSelctorComponent;
+    private readonly UCSLogComponent decisionSelctorComponent;
     
     public AiLogComponent(): base()
     {

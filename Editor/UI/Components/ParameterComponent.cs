@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class ParameterComponent: VisualElement
 {
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
     public VisualElement field;
     public ParameterComponent()
     {

@@ -7,11 +7,11 @@ using UnityEngine.UIElements;
 
 internal class LogComponentPool<T> where T: LogComponent
 {
-    private VisualElement root;
+    private readonly VisualElement root;
     internal List<T> LogComponents = new List<T>();
-    private List<Foldout> foldouts = new List<Foldout>();
-    private bool isFoldout;
-    private bool startExpanded;
+    private readonly List<Foldout> foldouts = new List<Foldout>();
+    private readonly bool isFoldout;
+    private readonly bool startExpanded;
     internal LogComponentPool(VisualElement r, bool addToFoldout, string title, int initialPoolSize = 1, bool startExpanded = true, bool addMainElementToFoldout = true)
     {
         if (addMainElementToFoldout)

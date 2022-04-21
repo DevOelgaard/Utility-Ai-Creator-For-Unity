@@ -14,8 +14,8 @@ internal class ProjectSettingsService
     private readonly CompositeDisposable modelChangedSubscription = new CompositeDisposable();
     internal IObservable<bool> OnProjectSettingsChanged => onProjectSettingsChanged;
     private readonly Subject<bool> onProjectSettingsChanged = new Subject<bool>();
-    private ProjectSettingsModel model;
-    private IPersister persister;
+    private readonly ProjectSettingsModel model;
+    private readonly IPersister persister;
 
     internal static ProjectSettingsService Instance => _instance ??= new ProjectSettingsService();
     private static ProjectSettingsService _instance;

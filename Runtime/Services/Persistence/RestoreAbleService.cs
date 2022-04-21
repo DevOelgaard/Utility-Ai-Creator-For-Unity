@@ -114,7 +114,7 @@ internal static class RestoreAbleService
             {
                 var error = (UtilityContainerSelector)InstantiaterService.CreateInstance(bs.ModelType);
                 var errorParam = new Parameter("Error", bs.Exception.ToString());
-                error.Parameters.Add(errorParam);
+                error.AddParameter(errorParam);
                 result.Add(error);
             }
             else

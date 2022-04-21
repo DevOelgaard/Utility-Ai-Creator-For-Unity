@@ -22,7 +22,7 @@ namespace UniRx.Operators
         class TakeUntil : OperatorObserverBase<T, T>
         {
             readonly TakeUntilObservable<T, TOther> parent;
-            object gate = new object();
+            readonly object gate = new object();
 
             public TakeUntil(TakeUntilObservable<T, TOther> parent, IObserver<T> observer, IDisposable cancel) : base(observer, cancel)
             {

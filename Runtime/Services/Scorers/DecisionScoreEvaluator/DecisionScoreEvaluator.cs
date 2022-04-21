@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class DecisionScoreEvaluator: IDecisionScoreEvaluator
 {
-    private string name = Consts.Name_DefaultDSE;
-    private string description = Consts.Description_DefaultDSE; 
+    private readonly string name = Consts.Name_DefaultDSE;
+    private readonly string description = Consts.Description_DefaultDSE; 
     public UtilityContainerSelector DecisionSelector;
     public UtilityContainerSelector BucketSelector;
 

@@ -16,13 +16,14 @@ public class LogisticFunction : ResponseFunction
         return new List<Parameter>()
         {
             new Parameter("Growth Rate", 10f),
-            new Parameter("Midpoint", 0.5f),
+            new Parameter("Mid Point", 0.5f),
         };
     }
 
     protected override float CalculateResponseInternal(float x)
     {
         // L / 1 + e^-k(x-x0)
-        return Convert.ToSingle(Max.Value) / (1.0f + (float)Mathf.Exp(-Convert.ToSingle(Parameters[0].Value) * (x - Convert.ToSingle(Parameters[1].Value))));
+        return Convert.ToSingle(Max.Value) / (1.0f + (float)Mathf.Exp(-Convert.ToSingle(GetParameter("Growth Rate").Value) * 
+                                                                      (x - Convert.ToSingle(GetParameter("Mid Point").Value))));
     }
 }

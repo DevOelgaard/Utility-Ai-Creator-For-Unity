@@ -11,10 +11,10 @@ internal class AgentManager
     internal List<string> AgentIdentifiers => Model.AgentIdentifiers;
 
     internal IObservable<bool> AgentTypesUpdated => agentIdentifiersUpdated;
-    private Subject<bool> agentIdentifiersUpdated = new Subject<bool>();
+    private readonly Subject<bool> agentIdentifiersUpdated = new Subject<bool>();
 
     internal IObservable<IAgent> AgentsUpdated => agentsUpdated;
-    private Subject<IAgent> agentsUpdated = new Subject<IAgent>();
+    private readonly Subject<IAgent> agentsUpdated = new Subject<IAgent>();
     internal AgentManager()
     {
         //AiTicker.Instance.Start();

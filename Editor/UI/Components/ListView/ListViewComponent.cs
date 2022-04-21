@@ -7,24 +7,24 @@ using System;
 
 public class ListViewComponent : VisualElement
 {
-    private TemplateContainer root;
+    private readonly TemplateContainer root;
 
-    private Button toggleViewButton;
-    private Button removeButton;
-    private Button upButton;
-    private Button downButton;
+    private readonly Button toggleViewButton;
+    private readonly Button removeButton;
+    private readonly Button upButton;
+    private readonly Button downButton;
 
     public IObservable<bool> OnRemoveClicked => onRemoveClicked;
-    private Subject<bool> onRemoveClicked = new Subject<bool>();
+    private readonly Subject<bool> onRemoveClicked = new Subject<bool>();
 
     public IObservable<bool> OnUpClicked => onUpClicked;
-    private Subject<bool> onUpClicked = new Subject<bool>();
+    private readonly Subject<bool> onUpClicked = new Subject<bool>();
 
     public IObservable<bool> OnDownClicked => onDownClicked;
-    private Subject<bool> onDownClicked = new Subject<bool>();
+    private readonly Subject<bool> onDownClicked = new Subject<bool>();
 
-    private VisualElement centerContainer;
-    private FoldableComponent FoldableComponent;
+    private readonly VisualElement centerContainer;
+    private readonly FoldableComponent FoldableComponent;
 
     public ListViewComponent()
     {

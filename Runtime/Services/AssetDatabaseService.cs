@@ -10,8 +10,8 @@ using UnityEngine.UIElements;
 
 public static class AssetDatabaseService
 {
-    private static Dictionary<string,string> cachedPaths = new Dictionary<string,string>();
-    private static Dictionary<string,VisualTreeAsset> cachedVisualTrees = new Dictionary<string, VisualTreeAsset>();
+    private static readonly Dictionary<string,string> cachedPaths = new Dictionary<string,string>();
+    private static readonly Dictionary<string,VisualTreeAsset> cachedVisualTrees = new Dictionary<string, VisualTreeAsset>();
     public static string GetAssetPath(string filter, string type)
     {
         if (cachedPaths.ContainsKey(filter + type))

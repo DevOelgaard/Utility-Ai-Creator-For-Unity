@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public abstract class ResponseFunction: AiObjectModel
 {
@@ -13,48 +14,37 @@ public abstract class ResponseFunction: AiObjectModel
         {
             if(max == null)
             {
-                max = Parameters.First(p => p.Name == "Max");
+                max = GetParameter("Max");
             }
             return max;
         }
     }
-    // public List<Parameter> Parameters;
-    private bool Inverse => (bool)Parameters
-        .FirstOrDefault(p => p.Name == "Inverse" && p.Value.GetType() == typeof(bool))
-        .Value; 
 
-    public ResponseFunction()
+    private bool Inverse => (bool)GetParameter("Inverse").Value;
+
+    protected ResponseFunction()
     {
-        Parameters = GetParameters();
-        Parameters.Add(new Parameter("Inverse", false));
-        Parameters.Add(new Parameter("Max", 1f));
+        AddParameter(new Parameter("Inverse", false));
+        AddParameter(new Parameter("Max", 1f));
     }
 
     protected ResponseFunction(string name)
     {
         Name = name;
-        Parameters = new List<Parameter>();
-        Parameters = GetParameters();
-        Parameters.Add(new Parameter("Inverse", false ));
-        Parameters.Add(new Parameter("Max", 1f));
+        AddParameter(new Parameter("Inverse", false ));
+        AddParameter(new Parameter("Max", 1f));
     }
-
+    
     protected override AiObjectModel InternalClone()
     {
         var clone = (ResponseFunction)Activator.CreateInstance(GetType());
-        clone.Parameters = new List<Parameter>();
-        foreach (var s in Parameters)
-        {
-            var pClone = s.Clone();
-            clone.Parameters.Add(pClone);
-        }
+        // foreach (var pClone in ParametersByName
+        //              .Select(s => s.Value.Clone()))
+        // {
+        //     clone.AddParameter(pClone);
+        // }
 
         return clone;
-    }
-
-    protected virtual List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
     }
 
     public virtual float CalculateResponse(float x, float prevResult, float maxY)
@@ -72,9 +62,9 @@ public abstract class ResponseFunction: AiObjectModel
         return result + prevResult;
     }
 
-    private float Normalize(float value, float min, float max)
+    private float Normalize(float value, float min, float tempMax)
     {
-        var factor = (max - min) / max;
+        var factor = (tempMax - min) / tempMax;
         var x = value * factor;// * ResultFactor;
         return x;
     }
@@ -88,7 +78,10 @@ public abstract class ResponseFunction: AiObjectModel
 
         var parameters = await RestoreAbleService
                 .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+        foreach (var parameter in parameters)
+        {
+            AddParameter(parameter);
+        }
     }
 
 
@@ -122,7 +115,7 @@ public class ResponseFunctionState : RestoreState
         Name = responseFunction.Name;
         Description = responseFunction.Description;
         RcIndex = responseFunction.RCIndex;
-        Parameters = RestoreAbleService.NamesToList(responseFunction.Parameters);
+        Parameters = RestoreAbleService.NamesToList(responseFunction.Parameters.ToList());
 
     }
 }

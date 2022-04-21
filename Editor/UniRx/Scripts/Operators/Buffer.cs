@@ -229,7 +229,7 @@ namespace UniRx.Operators
 
             class Buffer : IObserver<long>
             {
-                BufferT parent;
+                readonly BufferT parent;
 
                 public Buffer(BufferT parent)
                 {
@@ -529,7 +529,7 @@ namespace UniRx.Operators
             static readonly TSource[] EmptyArray = new TSource[0]; // cache
 
             readonly BufferObservable<TSource, TWindowBoundary> parent;
-            object gate = new object();
+            readonly object gate = new object();
             List<TSource> list;
 
             public Buffer(BufferObservable<TSource, TWindowBoundary> parent, IObserver<IList<TSource>> observer, IDisposable cancel) : base(observer, cancel)

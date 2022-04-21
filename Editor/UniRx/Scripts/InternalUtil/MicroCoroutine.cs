@@ -18,7 +18,7 @@ namespace UniRx.InternalUtil
         int tail = 0;
         bool running = false;
         IEnumerator[] coroutines = new IEnumerator[InitialSize];
-        Queue<IEnumerator> waitQueue = new Queue<IEnumerator>();
+        readonly Queue<IEnumerator> waitQueue = new Queue<IEnumerator>();
 
         public MicroCoroutine(Action<Exception> unhandledExceptionCallback)
         {

@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 
 public class PanelSelection : VisualElement
 {
-    private VisualTreeAsset uxml;
-    private TemplateContainer template;
+    private readonly VisualTreeAsset uxml;
+    private readonly TemplateContainer template;
 
     public PanelSelection()
     {

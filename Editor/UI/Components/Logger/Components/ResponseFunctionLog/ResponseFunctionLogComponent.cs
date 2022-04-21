@@ -7,11 +7,11 @@ using UnityEngine.UIElements;
 
 internal class ResponseFunctionLogComponent: LogComponent
 {
-    private Label typeLabel;
-    private VisualElement body;
+    private readonly Label typeLabel;
+    private readonly VisualElement body;
     private ResponseFunctionLog rf;
     //private ParameterLogComponentPool pool;
-    private LogComponentPool<ParameterLogComponent> parameterPool;
+    private readonly LogComponentPool<ParameterLogComponent> parameterPool;
     public ResponseFunctionLogComponent()
     {
         var root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);

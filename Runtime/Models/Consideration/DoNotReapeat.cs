@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 internal class DoNotReapeat : ConsiderationBoolean
 {
-    private UtilityContainerTypes typeNotToRepeat => (UtilityContainerTypes)Parameters[0].Value;
+    private UtilityContainerTypes TypeNotToRepeat => (UtilityContainerTypes)GetParameter("Container").Value;
     public DoNotReapeat(): base()
     {
     }
 
     protected override float CalculateBaseScore(AiContext context)
     {
-        if(typeNotToRepeat == UtilityContainerTypes.Bucket)
+        if(TypeNotToRepeat == UtilityContainerTypes.Bucket)
         {
             return context.LastSelectedBucket == context.CurrentEvaluatedBucket ? 0 : 1;
         }
-        else if(typeNotToRepeat == UtilityContainerTypes.Decision)
+        else if(TypeNotToRepeat == UtilityContainerTypes.Decision)
         {
             return context.LastSelectedDecision == context.CurrentEvalutedDecision ? 0 : 1;
         }

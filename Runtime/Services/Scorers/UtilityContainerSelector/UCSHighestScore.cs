@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class UCSHighestScore : UtilityContainerSelector
 {
-    private string name = Consts.UCS_HighestScore_Name;
-    private string description = Consts.UCS_HighestScore_Description;
+    private readonly string name = Consts.UCS_HighestScore_Name;
+    private readonly string description = Consts.UCS_HighestScore_Description;
 
     public override string GetDescription()
     {

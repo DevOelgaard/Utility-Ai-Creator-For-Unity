@@ -9,22 +9,22 @@ using UnityEngine;
 
 internal class ResponseFunctionComponent: VisualElement
 {
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
 
-    private DropdownField typeDropdown;
-    private VisualElement body;
-    private Button removeButton;
+    private readonly DropdownField typeDropdown;
+    private readonly VisualElement body;
+    private readonly Button removeButton;
 
     private ResponseFunction responseFunction;
 
     public IObservable<ResponseFunction> OnResponseFunctionChanged => onResponseFunctionChanged;
-    private Subject<ResponseFunction> onResponseFunctionChanged = new Subject<ResponseFunction>();
+    private readonly Subject<ResponseFunction> onResponseFunctionChanged = new Subject<ResponseFunction>();
 
     public IObservable<ResponseFunction> OnRemoveClicked => onRemoveClicked;
-    private Subject<ResponseFunction> onRemoveClicked = new Subject<ResponseFunction>();
+    private readonly Subject<ResponseFunction> onRemoveClicked = new Subject<ResponseFunction>();
 
     public IObservable<bool> OnParametersChanged => onParametersChanged;
-    private Subject<bool> onParametersChanged = new Subject<bool>();
+    private readonly Subject<bool> onParametersChanged = new Subject<bool>();
 
 
     public ResponseFunctionComponent()
@@ -42,7 +42,7 @@ internal class ResponseFunctionComponent: VisualElement
         //    .ToList();
         typeDropdown.choices = AssetDatabaseService
             .GetAssignableTypes<ResponseFunction>()
-            .Select(t => TypeToName.ResponseFunctionToName(t))
+            .Select(TypeToName.ResponseFunctionToName)
             .ToList();
             //.GetInstancesOfType<ResponseFunction>()
             //.Select(rF => rF.Name)
@@ -61,15 +61,15 @@ internal class ResponseFunctionComponent: VisualElement
         });
     }
 
-    internal void UpdateUi(ResponseFunction responseFunction, bool disableRemoveButton = false)
+    internal void UpdateUi(ResponseFunction rF, bool disableRemoveButton = false)
     {
-        this.responseFunction = responseFunction;
-        typeDropdown.value = responseFunction.Name;
+        this.responseFunction = rF;
+        typeDropdown.value = rF.Name;
 
         //Debug.LogWarning("This could be more effective by using a pool");
         body.Clear();
         disposables.Clear();
-        foreach(var parameter in responseFunction.Parameters)
+        foreach(var parameter in rF.Parameters)
         {
             var pC = new ParameterComponent();
             pC.UpdateUi(parameter);

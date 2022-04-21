@@ -7,12 +7,12 @@ using UnityEngine.UIElements;
 
 internal class BucketLogComponent : AiObjectLogComponent
 {
-    private VisualElement considerationsContainer;
-    private VisualElement decisionsContainer;
-    private LogComponentPool<ConsiderationLogComponent> considerationsPool;
-    private LogComponentPool<DecisionLogComponent> decisionsPool;
-    private ScoreLogComponent weight;
-    private ScoreLogComponent score;
+    private readonly VisualElement considerationsContainer;
+    private readonly VisualElement decisionsContainer;
+    private readonly LogComponentPool<ConsiderationLogComponent> considerationsPool;
+    private readonly LogComponentPool<DecisionLogComponent> decisionsPool;
+    private readonly ScoreLogComponent weight;
+    private readonly ScoreLogComponent score;
     private BucketLog bucketLog;
 
     public BucketLogComponent() : base()

@@ -9,13 +9,14 @@ using UniRx;
 internal class Cooldown : Consideration
 {
     private float cooldownTime = 0f;
-    private IDisposable paramaterDisposable;
+    private readonly IDisposable paramaterDisposable;
     public Cooldown(): base()
     {
-        cooldownTime = Convert.ToSingle(Parameters[0].Value) / 1000f;
-        paramaterDisposable = Parameters[0]
+        cooldownTime = Convert.ToSingle(GetParameter("Cooldown Time MS").Value) / 1000f;
+        paramaterDisposable = GetParameter("Cooldown Time MS")
             .OnValueChange
-            .Subscribe(_ => cooldownTime = Convert.ToSingle(Parameters[0].Value) / 1000f);
+            .Subscribe(_ => 
+                cooldownTime = Convert.ToSingle(GetParameter("Cooldown Time MS").Value) / 1000f);
     }
 
     protected override float CalculateBaseScore(AiContext context)
@@ -33,7 +34,7 @@ internal class Cooldown : Consideration
     {
         return new List<Parameter>()
         {
-            new Parameter("Cooldowm Time MS", 1000f),
+            new Parameter("Cooldown Time MS", 1000f),
         };
     }
 

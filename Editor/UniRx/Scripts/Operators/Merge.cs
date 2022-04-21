@@ -39,7 +39,7 @@ namespace UniRx.Operators
 
             CompositeDisposable collectionDisposable;
             SingleAssignmentDisposable sourceDisposable;
-            object gate = new object();
+            readonly object gate = new object();
             bool isStopped = false;
 
             public MergeOuterObserver(MergeObservable<T> parent, IObserver<T> observer, IDisposable cancel) : base(observer, cancel)
@@ -137,7 +137,7 @@ namespace UniRx.Operators
 
             CompositeDisposable collectionDisposable;
             SingleAssignmentDisposable sourceDisposable;
-            object gate = new object();
+            readonly object gate = new object();
             bool isStopped = false;
 
             // concurrency

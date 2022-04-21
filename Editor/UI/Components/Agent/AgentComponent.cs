@@ -9,17 +9,17 @@ using UnityEngine;
 
 internal class AgentComponent: RightPanelComponent<IAgent>
 {
-    private TemplateContainer root;
-    private VisualElement body;
-    private Label agentName;
-    private DropdownField aiDropdown;
-    private AiComponent aiComponent;
-    private VisualElement footer;
-    private Button tickAgent;
-    private Button tickAllButton;
-    private Button applyToAllButton;
+    private readonly TemplateContainer root;
+    private readonly VisualElement body;
+    private readonly Label agentName;
+    private readonly DropdownField aiDropdown;
+    private readonly AiComponent aiComponent;
+    private readonly VisualElement footer;
+    private readonly Button tickAgent;
+    private readonly Button tickAllButton;
+    private readonly Button applyToAllButton;
     private IAgent agent;
-    private UasTemplateService uasTemplateService;
+    private readonly UasTemplateService uasTemplateService;
 
     internal AgentComponent()
     {

@@ -19,7 +19,7 @@ public class InverseLogisticFunction : ResponseFunction
 
     protected override float CalculateResponseInternal(float x)
     {
-        var baseLn = Convert.ToSingle(Parameters[0].Value);
+        var baseLn = Convert.ToSingle(GetParameter("Base").Value);
         return (((float)Math.Log(x,baseLn) - (float)Math.Log(1-x,baseLn))/10) + 0.5f;
     }
 }

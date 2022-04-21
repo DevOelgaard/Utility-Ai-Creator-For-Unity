@@ -31,7 +31,7 @@ public abstract class Consideration : AiObjectModel
         }
     }
     public IObservable<ResponseCurve> OnResponseCurveChanged => onResponseCurveChanged;
-    private Subject<ResponseCurve> onResponseCurveChanged = new Subject<ResponseCurve>();
+    private readonly Subject<ResponseCurve> onResponseCurveChanged = new Subject<ResponseCurve>();
     public PerformanceTag PerformanceTag;
     public float BaseScore
     {
@@ -51,10 +51,11 @@ public abstract class Consideration : AiObjectModel
 
     protected Consideration() : base()
     {
-        Parameters =  new List<Parameter>(GetParameters());
-        ScoreModels = new List<ScoreModel>();
-        ScoreModels.Add(new ScoreModel("Base", 0f));
-        ScoreModels.Add(new ScoreModel("Score", 0f));
+        ScoreModels = new List<ScoreModel>
+        {
+            new ScoreModel("Base", 0f),
+            new ScoreModel("Score", 0f)
+        };
         PerformanceTag = GetPerformanceTag();
 
         MinFloat.OnValueChange
@@ -76,11 +77,10 @@ public abstract class Consideration : AiObjectModel
     protected override AiObjectModel InternalClone()
     {
         var clone = (Consideration)Activator.CreateInstance(GetType());
-        clone.Parameters = new List<Parameter>();
         foreach (var p in this.Parameters)
         {
             var c = p.Clone();
-            clone.Parameters.Add(c);
+            clone.AddParameter(c);
         }
 
         clone.ScoreModels = new List<ScoreModel>();
@@ -112,11 +112,6 @@ public abstract class Consideration : AiObjectModel
     protected virtual PerformanceTag GetPerformanceTag()
     {
         return PerformanceTag.Normal;
-    }
-
-    protected virtual List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
     }
 
     protected abstract float CalculateBaseScore(AiContext context);
@@ -192,7 +187,6 @@ public abstract class Consideration : AiObjectModel
 
             var parameters = await RestoreAbleService
                 .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-            Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
 
             PerformanceTag = (PerformanceTag)state.PerformanceTag;
             parameterDisposables.Clear();
@@ -216,7 +210,7 @@ public abstract class Consideration : AiObjectModel
 
     internal override RestoreState GetState()
     {
-        return new ConsiderationState(Name,Description,Parameters, CurrentResponseCurve, MinFloat, MaxFloat, this);
+        return new ConsiderationState(Name,Description,Parameters.ToList(), CurrentResponseCurve, MinFloat, MaxFloat, this);
     }
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)

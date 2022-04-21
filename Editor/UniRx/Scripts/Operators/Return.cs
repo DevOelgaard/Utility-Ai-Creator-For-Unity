@@ -158,7 +158,7 @@ namespace UniRx.Operators
 
     internal class ImmutableReturnInt32Observable : IObservable<int>, IOptimizedObservable<int>
     {
-        static ImmutableReturnInt32Observable[] Caches = new ImmutableReturnInt32Observable[]
+        static readonly ImmutableReturnInt32Observable[] Caches = new ImmutableReturnInt32Observable[]
         {
             new ImmutableReturnInt32Observable(-1),
             new ImmutableReturnInt32Observable(0),

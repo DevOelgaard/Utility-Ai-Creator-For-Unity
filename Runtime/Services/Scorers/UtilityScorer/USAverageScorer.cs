@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 public class UsAverageScorer : IUtilityScorer
 {
-    private string name = Consts.Name_USAverageScore;
-    private string description = Consts.Description_USAverageScore;
+    private readonly string name = Consts.Name_USAverageScore;
+    private readonly string description = Consts.Description_USAverageScore;
     public float CalculateUtility(List<Consideration> considerations, AiContext context)
     {
         if (considerations.Count == 0)

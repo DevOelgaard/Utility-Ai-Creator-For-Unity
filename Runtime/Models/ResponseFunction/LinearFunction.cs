@@ -22,6 +22,6 @@ public class LinearFunction : ResponseFunction
 
     protected override float CalculateResponseInternal(float x)
     {
-        return Convert.ToSingle(Parameters[0].Value) * x + Convert.ToSingle(Parameters[1].Value);
+        return (float) GetParameter("a").Value * x + (float) GetParameter("b").Value;
     }
 }

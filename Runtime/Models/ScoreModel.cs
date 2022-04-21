@@ -24,7 +24,7 @@ public class ScoreModel
     }
 
     public IObservable<float> OnValueChanged => valueChanged;
-    private Subject<float> valueChanged = new Subject<float>();
+    private readonly Subject<float> valueChanged = new Subject<float>();
 
     public ScoreModel(string name, float value)
     {

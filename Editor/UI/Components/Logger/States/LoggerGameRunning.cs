@@ -9,7 +9,7 @@ using UnityEditor;
 
 internal class LoggerGameRunning : LoggerState
 {
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
     public LoggerGameRunning(TemplateContainer root, LoggerComponent debuggerComponent)
         : base(root, debuggerComponent)
     {

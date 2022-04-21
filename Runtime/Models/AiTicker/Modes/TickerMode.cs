@@ -4,18 +4,20 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public abstract class TickerMode: RestoreAble
 {
     internal AiTickerMode Name;
     internal string Description;
-    internal List<Parameter> Parameters;
+    protected readonly Dictionary<string, Parameter> ParametersByName = new Dictionary<string, Parameter>();
+    public Dictionary<string, Parameter>.ValueCollection Parameters => ParametersByName.Values;
+    private bool parametersInitialized = false;
 
     protected TickerMode(AiTickerMode name, string description)
     {
         Description = description;
         Name = name;
-        Parameters = GetParameters();
     }
 
 
@@ -33,7 +35,7 @@ public abstract class TickerMode: RestoreAble
 
     internal override RestoreState GetState()
     {
-        return new TickerModeState(Name, Description, Parameters, this);
+        return new TickerModeState(Name, Description, Parameters.ToList(), this);
     }
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
@@ -43,7 +45,45 @@ public abstract class TickerMode: RestoreAble
         Description = state.Description;
         var parameters =
             await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
+        foreach (var parameter in parameters)
+        {
+            AddParameter(parameter);
+        }
+    }
+    protected void AddParameter(Parameter param)
+    {
+        if (ParametersByName.ContainsKey(param.Name))
+        {
+            ParametersByName[param.Name] = param;
+        }
+        else
+        {
+            ParametersByName.Add(param.Name, param);
+        }
+    }
+
+    protected Parameter GetParameter(string parameterName)
+    {
+        if (!parametersInitialized)
+        {
+            foreach (var param in GetParameters())
+            {
+                ParametersByName.Add(param.Name, param);
+            }
+            parametersInitialized = true;
+        }
+        
+        if (!ParametersByName.ContainsKey(parameterName))
+        {
+            var p = Parameters.FirstOrDefault(p => p.Name == parameterName);
+            if (p == null)
+            {
+                Debug.LogError("Couldn't find parameter: " + parameterName);
+            }
+            ParametersByName.Add(parameterName,p);
+        }
+
+        return ParametersByName[parameterName];
     }
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)

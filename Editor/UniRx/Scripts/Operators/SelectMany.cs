@@ -69,7 +69,7 @@ namespace UniRx.Operators
 
             CompositeDisposable collectionDisposable;
             SingleAssignmentDisposable sourceDisposable;
-            object gate = new object();
+            readonly object gate = new object();
             bool isStopped = false;
 
             public SelectManyOuterObserver(SelectManyObservable<TSource, TResult> parent, IObserver<TResult> observer, IDisposable cancel) : base(observer, cancel)
@@ -178,7 +178,7 @@ namespace UniRx.Operators
 
             CompositeDisposable collectionDisposable;
             int index = 0;
-            object gate = new object();
+            readonly object gate = new object();
             bool isStopped = false;
             SingleAssignmentDisposable sourceDisposable;
 
@@ -508,7 +508,7 @@ namespace UniRx.Operators
             readonly SelectManyObservable<TSource, TCollection, TResult> parent;
 
             CompositeDisposable collectionDisposable;
-            object gate = new object();
+            readonly object gate = new object();
             bool isStopped = false;
             SingleAssignmentDisposable sourceDisposable;
 
@@ -630,7 +630,7 @@ namespace UniRx.Operators
             readonly SelectManyObservable<TSource, TCollection, TResult> parent;
 
             CompositeDisposable collectionDisposable;
-            object gate = new object();
+            readonly object gate = new object();
             bool isStopped = false;
             SingleAssignmentDisposable sourceDisposable;
             int index = 0;

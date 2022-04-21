@@ -7,8 +7,8 @@ using UnityEngine.UIElements;
 
 internal class UCSComponent : VisualElement
 {
-    private HelpBox descriptionHelpBox;
-    private VisualElement parametersContainer;
+    private readonly HelpBox descriptionHelpBox;
+    private readonly VisualElement parametersContainer;
 
     public UCSComponent()
     {

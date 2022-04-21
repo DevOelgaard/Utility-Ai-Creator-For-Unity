@@ -36,7 +36,7 @@ internal class AiTicker: RestoreAble
 
     private AiTicker()
     {
-        Init().Wait();
+        AsyncHelpers.RunSync(Init);
 
         if (Debug.isDebugBuild)
         {
@@ -173,12 +173,10 @@ internal class AiTicker: RestoreAble
 
     ~AiTicker()
     {
-        Save().Wait();
+        AsyncHelpers.RunSync(Save);
         disposables.Clear();
     }
 }
-
-
 
 [Serializable]
 public class AiTickerState: RestoreState

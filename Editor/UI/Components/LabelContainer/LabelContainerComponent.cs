@@ -2,7 +2,7 @@
 
 internal class LabelContainerComponent: VisualElement
 {
-    private TemplateContainer root;
+    private readonly TemplateContainer root;
     private readonly VisualElement labelContainer;
 
     internal LabelContainerComponent()

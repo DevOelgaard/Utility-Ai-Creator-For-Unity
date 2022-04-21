@@ -11,7 +11,7 @@ using UniRx;
 
 internal class AiTickerSettingsWindow: EditorWindow
 {
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
     private IDisposable tickerModeSub;
     private VisualElement root;
     private EnumField modes;
@@ -98,6 +98,7 @@ internal class AiTickerSettingsWindow: EditorWindow
         if (tickerMode == null) return;
 
         tickerMode.Parameters
+            .ToList()
             .ForEach(p =>
             {
                 var pC = new ParameterComponent();

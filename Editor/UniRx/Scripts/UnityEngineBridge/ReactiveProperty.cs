@@ -265,7 +265,7 @@ namespace UniRx
 
         T latestValue = default(T);
         Exception lastException = null;
-        IDisposable sourceConnection = null;
+        readonly IDisposable sourceConnection = null;
 
         ObserverNode<T> root;
         ObserverNode<T> last;

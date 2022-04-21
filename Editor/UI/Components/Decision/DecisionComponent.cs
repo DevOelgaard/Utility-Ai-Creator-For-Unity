@@ -8,18 +8,18 @@ using UnityEngine;
 
 internal class DecisionComponent : AiObjectComponent 
 {
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
 
-    private TemplateContainer root;
-    private VisualElement parametersContainer;
+    private readonly TemplateContainer root;
+    private readonly VisualElement parametersContainer;
 
-    private CollectionComponent<Consideration> considerationCollections;
-    private CollectionComponent<AgentAction> agentActionCollection;
+    private readonly CollectionComponent<Consideration> considerationCollections;
+    private readonly CollectionComponent<AgentAction> agentActionCollection;
     private Decision decision;
 
-    private TabViewComponent tabView;
-    private Button considerationsTab;
-    private Button actionsTab;
+    private readonly TabViewComponent tabView;
+    private readonly Button considerationsTab;
+    private readonly Button actionsTab;
     internal DecisionComponent(): base()
     {
         root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);

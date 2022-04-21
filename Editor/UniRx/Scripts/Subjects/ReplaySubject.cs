@@ -6,7 +6,7 @@ namespace UniRx
 {
     public sealed class ReplaySubject<T> : ISubject<T>, IOptimizedObservable<T>, IDisposable
     {
-        object observerLock = new object();
+        readonly object observerLock = new object();
 
         bool isStopped;
         bool isDisposed;

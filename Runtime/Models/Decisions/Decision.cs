@@ -40,8 +40,6 @@ public class Decision: UtilityContainer
 
     public Decision()
     {
-        Parameters = new List<Parameter>(GetParameters());
-        agentActionSub?.Dispose();
         UpdateInfo();
         agentActionSub = agentActions.OnValueChanged
             .Subscribe(_ => UpdateInfo());
@@ -52,12 +50,6 @@ public class Decision: UtilityContainer
     protected override AiObjectModel InternalClone()
     {
         var clone = (Decision)Activator.CreateInstance(GetType());
-        clone.Parameters = new List<Parameter>();
-        foreach (var s in Parameters)
-        {
-            var sClone = s.Clone();
-            clone.Parameters.Add(sClone);
-        }
         
         clone.agentActionSub?.Dispose();
         clone.AgentActions = new ReactiveListNameSafe<AgentAction>();
@@ -107,7 +99,7 @@ public class Decision: UtilityContainer
 
     internal override RestoreState GetState()
     {
-        return new DecisionState(Name, Description, AgentActions.Values, Considerations.Values, Parameters, this);
+        return new DecisionState(Name, Description, AgentActions.Values, Considerations.Values, Parameters.ToList(), this);
     }
 
 
@@ -133,7 +125,6 @@ public class Decision: UtilityContainer
 
         var parameters = await RestoreAbleService
             .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        Parameters = RestoreAbleService.SortByName(state.Parameters, parameters);
 
         if (restoreDebug)
         {

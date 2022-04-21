@@ -22,8 +22,8 @@ internal class NormalDistributionFunction : ResponseFunction
 
     protected override float CalculateResponseInternal(float x)
     {
-        var mean = Convert.ToSingle(Parameters[0].Value);
-        var stdDeviation = Convert.ToSingle(Parameters[1].Value);
+        var mean = Convert.ToSingle(GetParameter("Mean").Value);
+        var stdDeviation = Convert.ToSingle(GetParameter("Std Deviation").Value);
         var f = (1 / (stdDeviation * Mathf.Sqrt(2 * Mathf.PI))) * Math.E;
         var p = (float)-0.5 * Mathf.Pow(((x - mean) / stdDeviation), 2);
         var result = Mathf.Pow((float)f, p);

@@ -1,13 +1,16 @@
 ﻿using System;
 using UniRx;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using MoreLinq;
+using UniRxExtension;
+using UnityEngine;
 
 public abstract class AiObjectModel: RestoreAble
 {
     internal AiObjectMetaData MetaData = new AiObjectMetaData();
-    private readonly CompositeDisposable disposables = new CompositeDisposable();
-    public List<Parameter> Parameters = new List<Parameter>();
+    public readonly CompositeDisposable disposables = new CompositeDisposable();
     public string HelpText { get; protected set; }
     public IObservable<string> OnNameChanged => onNameChanged;
     private readonly Subject<string> onNameChanged = new Subject<string>();
@@ -20,6 +23,22 @@ public abstract class AiObjectModel: RestoreAble
 
     public List<ScoreModel> ScoreModels = new List<ScoreModel>();
     public string ContextAddress { get; private set; }
+
+    protected readonly Dictionary<string, Parameter> ParametersByName = new Dictionary<string, Parameter>();
+    public Dictionary<string, Parameter>.ValueCollection Parameters
+    {
+        get
+        {
+            if (!parametersInitialized)
+            {
+                InitializeParameters();
+            }
+
+            return ParametersByName.Values;
+        }
+    }
+
+    private bool parametersInitialized = false;
     protected AiObjectModel(): base()
     {
         Name = StringService.SpaceBetweenUpperCase(GetType().ToString());
@@ -32,15 +51,69 @@ public abstract class AiObjectModel: RestoreAble
         return Name;
     }
 
+    protected void AddParameter(Parameter param)
+    {
+        if (ParametersByName.ContainsKey(param.Name))
+        {
+            ParametersByName[param.Name] = param;
+        }
+        else
+        {
+            ParametersByName.Add(param.Name, param);
+        }
+    }
+
+    protected Parameter GetParameter(string parameterName)
+    {
+        if (!parametersInitialized)
+        {
+            InitializeParameters();
+        }
+        
+        if (!ParametersByName.ContainsKey(parameterName))
+        {
+            var p = Parameters.FirstOrDefault(p => p.Name == parameterName);
+            if (p == null)
+            {
+                Debug.LogError("Couldn't find parameter: " + parameterName);
+            }
+            ParametersByName.Add(parameterName,p);
+        }
+
+        return ParametersByName[parameterName];
+    }
+
+    private void InitializeParameters()
+    {
+        if (parametersInitialized) return;
+        foreach (var param in GetParameters())
+        {
+            ParametersByName.Add(param.Name, param);
+        }
+        parametersInitialized = true;
+    }
+    
+    protected virtual List<Parameter> GetParameters()
+    {
+        return new List<Parameter>();
+    }
+
     protected abstract AiObjectModel InternalClone();
+    
 
     protected virtual void SetBaseClone(AiObjectModel clone)
     {
-        clone.MetaData = new AiObjectMetaData();
-        clone.MetaData.Type = GetType();
+        clone.MetaData = new AiObjectMetaData
+        {
+            Type = GetType()
+        };
         clone.Name = Name;
         clone.Description = Description;
         clone.HelpText = HelpText;
+        foreach (var parameter in Parameters)
+        {
+            AddParameter(parameter);
+        }
     }
     
     internal AiObjectModel Clone()

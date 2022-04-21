@@ -7,20 +7,18 @@ using UnityEngine.UIElements;
 
 internal class ConsiderationLogComponent : AiObjectLogComponent
 {
-    private VisualElement parametersContianer;
-    private VisualElement responseCurveContainer;
-    private ScoreLogComponent baseScore;
-    private ScoreLogComponent normalizedScore;
-    private ResponseCurveLogComponent responseCurve;
-    private LogComponentPool<ParameterLogComponent> parameterPool;
+    private readonly ScoreLogComponent baseScore;
+    private readonly ScoreLogComponent normalizedScore;
+    private readonly ResponseCurveLogComponent responseCurve;
+    private readonly LogComponentPool<ParameterLogComponent> parameterPool;
     private ConsiderationLog considerationLog;
     public ConsiderationLogComponent(): base()
     {
         var root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);
         Body.Add(root);
 
-        parametersContianer = root.Q<VisualElement>("ParametersContainer");
-        responseCurveContainer = root.Q<VisualElement>("ResponseCurveContainer");
+        var parametersContainer = root.Q<VisualElement>("ParametersContainer");
+        var responseCurveContainer = root.Q<VisualElement>("ResponseCurveContainer");
         baseScore = new ScoreLogComponent("BaseScore", 0.ToString());
         ScoreContainer.Add(baseScore);
         normalizedScore = new ScoreLogComponent("Normalized", 0.ToString());
@@ -29,21 +27,21 @@ internal class ConsiderationLogComponent : AiObjectLogComponent
         responseCurve = new ResponseCurveLogComponent();
         responseCurveContainer.Add(responseCurve);
 
-        parameterPool = new LogComponentPool<ParameterLogComponent>(parametersContianer, false,"Parameters",1);
+        parameterPool = new LogComponentPool<ParameterLogComponent>(parametersContainer, false,"Parameters",1);
     }
 
     internal override string GetUiName()
     {
-        var name = base.GetUiName() + " S: " + considerationLog.NormalizedScore.ToString("0.00");
+        var uiName = base.GetUiName() + " S: " + considerationLog.NormalizedScore.ToString("0.00");
         if (IsSelected)
         {
-            name += " *S*";
+            uiName += " *S*";
         }
         else if (!IsEvaluated)
         {
-            name += " *!E*";
+            uiName += " *!E*";
         }
-        return name;
+        return uiName;
     }
 
     protected override void UpdateUiInternal(AiObjectLog aiObjectDebug)

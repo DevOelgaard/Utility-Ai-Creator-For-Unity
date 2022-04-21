@@ -10,7 +10,7 @@ using UnityEditor.UIElements;
 
 internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
 {
-    private CompositeDisposable elementNameUpdatedSub = new CompositeDisposable();
+    private readonly CompositeDisposable elementNameUpdatedSub = new CompositeDisposable();
 
     protected VisualElement Root;
     private VisualElement leftContainer;

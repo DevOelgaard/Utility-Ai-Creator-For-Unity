@@ -102,10 +102,10 @@ public class LineChartComponentOld : IMGUIContainer
 
     private class ChartLabel
     {
-        public Vector3 Position;
-        public string Text;
-        private Vector3 adjusterX = new Vector3(5, 0, 0);
-        private Vector3 adjusterY = new Vector3(0, 15, 0);
+        public readonly Vector3 Position;
+        public readonly string Text;
+        private readonly Vector3 adjusterX = new Vector3(5, 0, 0);
+        private readonly Vector3 adjusterY = new Vector3(0, 15, 0);
 
         public ChartLabel(Vector3 position, string text)
         {

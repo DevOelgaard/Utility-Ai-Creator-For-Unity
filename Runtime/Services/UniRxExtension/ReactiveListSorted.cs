@@ -10,7 +10,7 @@ namespace UniRxExtension
 {
     internal class ReactiveListSorted<T,TKey> : ReactiveList<T>
     {
-        private bool descending;
+        private readonly bool descending;
         private Func<T, TKey> sortFunction;
         public ReactiveListSorted(Func<T, TKey> sortFunction, bool descending): base()
         {

@@ -12,8 +12,11 @@ public class Stub_Consideration_UT : Consideration
     public Stub_Consideration_UT(float returnValue, List<Parameter> parameters)
     {
         ReturnValue = returnValue;
+        foreach (var parameter in parameters)
+        {
+            AddParameter(parameter);
+        }
 
-        Parameters = parameters;
         CurrentResponseCurve = new Mock_ResponseCurve("Mock");
     }
     protected override float CalculateBaseScore(AiContext context)

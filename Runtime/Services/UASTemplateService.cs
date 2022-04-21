@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
+using UnityEditor;
 
 internal class UasTemplateService: RestoreAble
 {
@@ -74,14 +75,13 @@ internal class UasTemplateService: RestoreAble
             {Consts.Label_AgentActionModel, AgentActions},
             {Consts.Label_ResponseCurve, ResponseCurves}
         };
+        
 
         SubscribeToCollectionChanges();
+        EditorApplication.playModeStateChanged += SaveOnPlayModeChange;
 
         if (restore)
         {
-            // var t = LoadCurrentProject(true);
-            // t.Wait();
-
             AsyncHelpers.RunSync(LoadBackup);
             Debug.Log("Instantiation complete with restore");
         }
@@ -131,9 +131,6 @@ internal class UasTemplateService: RestoreAble
         if (loadedPath == loadPath)
         {
             Debug.Log("Reloading path: " + loadPath);
-            // SetState("");
-            // Debug.Log("Path already loaded. Returning");
-            // return;
         }
         projectDirectory = ProjectSettingsService.Instance.GetDirectory(loadPath);
 
@@ -159,7 +156,6 @@ internal class UasTemplateService: RestoreAble
             {
                 await RestoreAsync(state.LoadedObject);
                 Debug.Log("Restore Complete AIs: " + AIs.Values.Count);
-                await Save(true);
 
                 isLoaded = true;
                 loadedPath = loadPath;
@@ -171,14 +167,24 @@ internal class UasTemplateService: RestoreAble
             {
                 Debug.LogError("Loading failed: " + ex);
                 SetState("Error");
-
                 throw new Exception("UAS Template Service Restore Failed : ", ex);
             }
         }
     }
+
+    private void SaveOnPlayModeChange(PlayModeStateChange playModeState)
+    {
+        AsyncHelpers.RunSync(SaveBackup);
+    }
+
+    private async Task SaveBackup()
+    {
+        await Save(true);
+    }
     
     internal async Task Save(bool backup = false)
     {
+        var currentState = stateString;
         SetState("Saving");
         Debug.Log("Saving Backup: " + backup);
         var path = !backup
@@ -186,21 +192,12 @@ internal class UasTemplateService: RestoreAble
             : ProjectSettingsService.Instance.GetBackupDirectory();
 
 
-        // if (EditorApplication.isPlaying)
-        // {
-        //     Debug.Log("Not Saving from PlayMode");
-        //     return;
-        // }
-        // else
-        // {
-        //     Debug.Log("Saving path: " + path);
-        // }
         Debug.Log("Saving path: " + path);
 
         var perstistAPI = PersistenceAPI.Instance;
         var currentProjectName = ProjectSettingsService.Instance.GetCurrentProjectName(true);
-        await perstistAPI.SaveDestructiveObjectPath(this, path, currentProjectName);
-        SetState("");
+        await perstistAPI.SaveDestructiveObjectPathAsync(this, path, currentProjectName);
+        SetState(currentState);
     }
 
     protected override string GetFileName()
@@ -213,30 +210,6 @@ internal class UasTemplateService: RestoreAble
         subscriptions.Clear();
         ClearCollectionNoNotify();
         Init(false);
-    }
-
-    internal Ai GetAiByName(string name, bool isPLayMode = false)
-    {
-        var aiTemplate = AIs.Values
-            .Cast<Ai>()
-            .FirstOrDefault(ai => ai.Name == name && ai.IsPLayable);
-
-        if (aiTemplate == null)
-        {
-            if (Debug.isDebugBuild)
-            {
-                Debug.LogWarning("Ai: " + name + " not found, returning default Ai");
-            }
-            aiTemplate = AIs.Values.Cast<Ai>().First(ai => ai.IsPLayable);
-            if (aiTemplate == null)
-            {
-                Debug.LogError("No ai found");
-                throw new Exception("No default Ai found AiName: " + name + " is the ai playable?");
-            }
-        }
-        var clone = aiTemplate.Clone() as Ai;
-
-        return clone;
     }
 
     internal ReactiveList<AiObjectModel> GetCollection(string label)
@@ -291,22 +264,32 @@ internal class UasTemplateService: RestoreAble
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        Debug.Log("Saving Uas Ais: " + AIs.Values.Count);
+        Debug.Log("Uas: Saving Ais: " + AIs.Values.Count);
         var directoryPath = Path.GetDirectoryName(path);
         if (!path.Contains(Consts.FileExtension_UasProject))
         {
             path += "." + Consts.FileExtension_UasProject;
         }
-        await persister.SaveObject(state, path) ;
+        await persister.SaveObjectAsync(state, path) ;
 
         persister = new JsonPersister();
-        
-        await RestoreAbleService.SaveRestoreAblesToFile(AIs.Values.Cast<Ai>(),directoryPath + "/" + Consts.FolderName_Ais, persister);
-        await RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values.Cast<Bucket>(),directoryPath + "/" + Consts.FolderName_Buckets, persister);
-        await RestoreAbleService.SaveRestoreAblesToFile(Decisions.Values.Cast<Decision>(),directoryPath + "/" + Consts.FolderName_Decisions, persister);
-        await RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values.Cast<Consideration>(),directoryPath + "/" + Consts.FolderName_Considerations, persister);
-        await RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values.Cast<AgentAction>(),directoryPath + "/" + Consts.FolderName_AgentActions, persister);
-        await RestoreAbleService.SaveRestoreAblesToFile(ResponseCurves.Values.Cast<ResponseCurve>(),directoryPath + "/" + Consts.FolderName_ResponseCurves, persister);
+        var tasks = new List<Task>()
+        {
+            RestoreAbleService.SaveRestoreAblesToFile(AIs.Values.Cast<Ai>(),
+                directoryPath + "/" + Consts.FolderName_Ais, persister),
+            RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values.Cast<Bucket>(),
+                directoryPath + "/" + Consts.FolderName_Buckets, persister),
+            RestoreAbleService.SaveRestoreAblesToFile(Decisions.Values.Cast<Decision>(),
+                directoryPath + "/" + Consts.FolderName_Decisions, persister),
+            RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values.Cast<Consideration>(),
+                directoryPath + "/" + Consts.FolderName_Considerations, persister),
+            RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values.Cast<AgentAction>(),
+                directoryPath + "/" + Consts.FolderName_AgentActions, persister),
+            RestoreAbleService.SaveRestoreAblesToFile(ResponseCurves.Values.Cast<ResponseCurve>(),
+                directoryPath + "/" + Consts.FolderName_ResponseCurves, persister),
+        };
+        await Task.WhenAll(tasks);
+        Debug.Log("Uas: Saving Complete");
     }
 
     private async Task RestoreAsync(UasTemplateServiceState state)
@@ -373,7 +356,7 @@ internal class UasTemplateService: RestoreAble
         }
         return null;
     }
-
+    
     private bool TypeMatches(Type a, Type b)
     {
         return a.IsAssignableFrom(b) || a.IsSubclassOf(b);
@@ -381,15 +364,10 @@ internal class UasTemplateService: RestoreAble
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        Debug.Log("Starting Restore");
+        Debug.Log("Start Restore: " + s.FileName);
         ClearCollectionNotify();
         SubscribeToCollectionChanges();
         var state = (UasTemplateServiceState)s;
-        if (state == null)
-        {
-            return;
-        }
-
         var tasks = new List<Task>
         {
             RestoreAbleService
@@ -418,9 +396,8 @@ internal class UasTemplateService: RestoreAble
     
     ~UasTemplateService()
     {
-        Debug.Log("Destroying UAS");
-        // await Save(true);
         subscriptions.Clear();
+        EditorApplication.playModeStateChanged -= SaveOnPlayModeChange;
     }
 }
 

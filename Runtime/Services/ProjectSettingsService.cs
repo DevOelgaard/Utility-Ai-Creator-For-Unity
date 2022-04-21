@@ -120,17 +120,18 @@ internal class ProjectSettingsService
 
 
         var path = EditorUtility.OpenFilePanelWithFilters("Open Project", "", filters);
+        if (path.Length == 0) return;
         SetProjectPath(path);
     }
 
     internal void SaveSettings()
     {
-        persister.SaveObject(model, Consts.ProjectSettingsPath);
+        persister.SaveObjectAsync(model, Consts.ProjectSettingsPath);
     }
 
     
     // https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/how-to-compare-the-contents-of-two-folders-linq
-    internal async Task<bool> ProjectSaved()
+    internal bool ProjectSaved()
     {
         // Current Project Directory
         var cpd = GetCurrentProjectDirectory();

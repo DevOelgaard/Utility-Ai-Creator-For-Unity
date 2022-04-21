@@ -147,7 +147,7 @@ public class Bucket : UtilityContainer
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        await persister.SaveObject(state, path + "." + Consts.FileExtension_Bucket);
+        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_Bucket);
         await RestoreAbleService.SaveRestoreAblesToFile(Decisions.Values,path + "/" + Consts.FolderName_Decisions, persister);
         await RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values,path + "/" + Consts.FolderName_Considerations, persister);
         var wSubPath = path + "/" + Consts.FolderName_Weight;

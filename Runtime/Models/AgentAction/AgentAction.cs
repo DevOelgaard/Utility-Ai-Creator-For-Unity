@@ -52,7 +52,7 @@ public abstract class AgentAction: AiObjectModel
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        await persister.SaveObject(state, path + "." + Consts.FileExtension_AgentAction);
+        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_AgentAction);
         await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
     }
 }

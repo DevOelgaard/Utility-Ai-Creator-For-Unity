@@ -16,7 +16,7 @@ public class AgentMono : MonoBehaviour, IAgent
     public string TypeIdentifier => GetType().FullName;
 
     [HideInInspector]
-    public string DefaultAiName = "";
+    public string defaultAiName = "";
 
     private DecisionScoreEvaluator decisionScoreEvaluator;
     private Ai ai;
@@ -29,6 +29,7 @@ public class AgentMono : MonoBehaviour, IAgent
             ai.Context.Agent = this;
         }
     }
+    
 
     void Start()
     {
@@ -36,7 +37,7 @@ public class AgentMono : MonoBehaviour, IAgent
         AgentManager.Instance.Register(this);
         if (UasTemplateService.Instance.isLoaded)
         {
-            var localAi = UasTemplateService.Instance.GetAiByName(DefaultAiName,true);
+            var localAi = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
             SetAi(localAi);
         }
         else
@@ -45,7 +46,7 @@ public class AgentMono : MonoBehaviour, IAgent
                 .Take(1)
                 .Subscribe(value =>
                 {
-                    var localAi = UasTemplateService.Instance.GetAiByName(DefaultAiName, true);
+                    var localAi = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
                     SetAi(localAi);
                 });
         }

@@ -14,7 +14,7 @@ internal class TemplateManager : EditorWindow
 {
     private IDisposable activeCollectionChangedSub;
     private readonly CompositeDisposable disposables = new CompositeDisposable();
-    private readonly CompositeDisposable modelsChangedSubsciptions = new CompositeDisposable();
+    private readonly CompositeDisposable modelsChangedSubscriptions = new CompositeDisposable();
 
     private VisualElement root;
     private VisualElement leftPanel;
@@ -32,11 +32,9 @@ internal class TemplateManager : EditorWindow
     private AiObjectComponent  currentMainWindowComponent;
     private AiObjectModel selectedModel;
     private PersistenceAPI persistenceAPI => PersistenceAPI.Instance;
-    private bool hasSavedOnDisable = false;
 
     private readonly Dictionary<AiObjectModel, AiObjectComponent> componentsByModels = new Dictionary<AiObjectModel, AiObjectComponent>();
     private Toolbar toolbar;
-    private bool autoSave = true;
     private AiObjectModel SelectedModel
     {
         get => selectedModel;
@@ -122,8 +120,6 @@ internal class TemplateManager : EditorWindow
 
     async void OnEnable()
     {
-        hasSavedOnDisable = false;
-        autoSave = true;
         await UasTemplateService.Instance.LoadCurrentProject(true);
         var mws = MainWindowService.Instance;
         mws.OnUpdateStateChanged
@@ -166,7 +162,6 @@ internal class TemplateManager : EditorWindow
         menu.menu.AppendAction("Save As", _ =>
         {
             ProjectSettingsService.Instance.SaveProjectAs();
-            UpdateLeftPanel();
             rightPanel.Clear();
         });
 
@@ -181,10 +176,9 @@ internal class TemplateManager : EditorWindow
 
         menu.menu.AppendAction("Import File(s)", ImportFiles);
 
-        menu.menu.AppendAction("Load Current Project - TEST", async _ =>
+        menu.menu.AppendAction("Reload Project", async _ =>
         {
             await uASTemplateService.LoadCurrentProject();
-            // UpdateLeftPanel();
         });
 
         menu.menu.AppendAction("Save Backup - TEST", _ =>
@@ -195,18 +189,10 @@ internal class TemplateManager : EditorWindow
         menu.menu.AppendAction("Load Backup - TEST", async _ =>
         {
             await uASTemplateService.LoadCurrentProject(true);
-            // UpdateLeftPanel();
         });
 
         menu.menu.AppendAction("Exit", _ =>
         {
-            //var wnd = GetWindow<TemplateManager>();
-            this.Close();
-        });
-
-        menu.menu.AppendAction("Close No Save - TEST", _ =>
-        {
-            autoSave = false;
             this.Close();
         });
         
@@ -238,7 +224,7 @@ internal class TemplateManager : EditorWindow
     private async void NewProject(DropdownMenuAction _)
     {
         await PopUpService.AskToSaveIfProjectNotSavedThenCreateNew();
-        UpdateLeftPanel();
+        UpdateLeftPanel(dropDown.value);
         rightPanel.Clear();
     }
 
@@ -376,8 +362,9 @@ internal class TemplateManager : EditorWindow
     {
         var activeCollection = uASTemplateService.GetCollection(dropDown.value);
         if (modifiedList != activeCollection) return;
+        LoadModels(modifiedList.Values);
         
-        UnityMainThreadService.InvokeActionOnMainThread(() => LoadModels(modifiedList.Values));
+        // UnityMainThreadService.InvokeActionOnMainThread(() => LoadModels(modifiedList.Values));
     }
 
     private void UpdateAddElementPopup()
@@ -392,7 +379,7 @@ internal class TemplateManager : EditorWindow
         elementsContainer.Clear();
         buttons.Clear();
         selectedObjects.Clear();
-        modelsChangedSubsciptions.Clear();
+        modelsChangedSubscriptions.Clear();
 
         foreach (var model in models)
         {
@@ -407,7 +394,7 @@ internal class TemplateManager : EditorWindow
             buttons.Add(button);
             model.OnNameChanged
                 .Subscribe(newName => button.text = model.GetUiName())
-                .AddTo(modelsChangedSubsciptions);
+                .AddTo(modelsChangedSubscriptions);
         }
 
         var type = MainWindowService.Instance.GetTypeFromString(dropDown.value);
@@ -533,32 +520,21 @@ internal class TemplateManager : EditorWindow
         }
     }
 
-    // ~TemplateManager()
-    // {
-    //     uASTemplateService.Save(true);
-    //     ClearSubscriptions();
-    // }
-    //
     private void OnDisable()
     {
         OnClose();
     }
 
-    // void OnDestroy()
-    // {
-    //     OnClose();
-    // }
-
-    private async void OnClose()
+    private void OnClose()
     {
-        WindowOpener.windowPosition = this.position;
+        WindowOpener.windowPosition = position;
         ClearSubscriptions();
     }
 
     private void ClearSubscriptions()
     {
         activeCollectionChangedSub?.Dispose();
-        modelsChangedSubsciptions.Clear();
+        modelsChangedSubscriptions.Clear();
         disposables.Clear();
     }
 }

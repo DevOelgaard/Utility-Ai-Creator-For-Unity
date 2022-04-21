@@ -10,6 +10,8 @@ internal class JsonPersister : IPersister
 {
     private string json;
 
+
+
     public async Task<ObjectMetaData<T>> LoadObjectAsync<T>(string path)
     {
         var t = Task.Factory.StartNew(() =>
@@ -105,8 +107,25 @@ internal class JsonPersister : IPersister
             return result;
         }
     }
+    public void SaveObject<T>(T o, string path)
+    {
+        try
+        {
+            var toJson = JsonConvert.SerializeObject(o, Formatting.Indented, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
+            CreateFile(path);
+            File.WriteAllText(path, toJson);
+            File.SetLastWriteTime(path, DateTime.Now);
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("File Not Saved: ", ex);
+        }
+    }
 
-    public virtual async Task SaveObject<T>(T o, string path)
+    public virtual async Task SaveObjectAsync<T>(T o, string path)
     {
         var t = Task.Factory.StartNew(() =>
         {

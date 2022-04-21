@@ -42,7 +42,7 @@ public abstract class RestoreAble
             await element.RestoreInternalAsync(state, restoreDebug);
             return element;
         }
-        catch(Exception ex)
+        catch
         {
             Debug.LogError("Failed to restore: " + state.FileName + " path: " + state.FolderLocation);
             throw;

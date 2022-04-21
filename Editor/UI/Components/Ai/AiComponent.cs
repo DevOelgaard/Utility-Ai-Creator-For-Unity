@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 using UniRx;
 using UniRxExtension;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
 
 internal class AiComponent : AiObjectComponent 
 {
@@ -41,9 +42,11 @@ internal class AiComponent : AiObjectComponent
 
         var settingsContainer = new VisualElement();
 
-        playableToggle = new Toggle("Playable");
-        playableToggle.name = "Playable-Toggle";
-        
+        playableToggle = new Toggle("Playable")
+        {
+            name = "Playable-Toggle"
+        };
+
         bucketDropdown = new DropdownContainerComponent<UtilityContainerSelector>("Bucket Selector");
         settingsContainer.Add(bucketDropdown);
         decisionDropdown = new DropdownContainerComponent<UtilityContainerSelector>("Decision Selector");
@@ -63,7 +66,7 @@ internal class AiComponent : AiObjectComponent
         playableToggle.RegisterCallback<ChangeEvent<bool>>(evt =>
         {
             if (aiModel == null) return;
-            aiModel.IsPLayable = evt.newValue;
+            aiModel.IsPLayAble = evt.newValue;
 
             UpdateHelpBox(evt.newValue);
         });
@@ -90,13 +93,14 @@ internal class AiComponent : AiObjectComponent
         ScoreContainer.Add(playableToggle);
         ScoreContainer.Add(playAbleHelpBox);
 
+        Debug.Assert(aiModel != null, nameof(aiModel) + " != null");
         bucketTab.text = "Buckets (" + aiModel.Buckets.Count + ")";
         bucketTabSub?.Dispose();
         bucketTabSub = aiModel.Buckets.OnValueChanged
             .Subscribe(list => bucketTab.text = "Buckets (" + list.Count + ")");
         
         
-        playableToggle.SetValueWithoutNotify(aiModel.IsPLayable);
+        playableToggle.SetValueWithoutNotify(aiModel.IsPLayAble);
         UpdateHelpBox(playableToggle.value);
 
         if (aiModel == null)

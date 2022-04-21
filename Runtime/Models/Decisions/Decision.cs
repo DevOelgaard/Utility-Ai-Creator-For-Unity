@@ -65,11 +65,6 @@ public class Decision: UtilityContainer
         return clone;
     }
 
-    protected virtual List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
-    }
-
     public override void SetContextAddress(string address)
     {
         base.SetContextAddress(address);
@@ -158,7 +153,7 @@ public class Decision: UtilityContainer
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        await persister.SaveObject(state, path + "." + Consts.FileExtension_Decision);
+        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_Decision);
         await RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values,path + "/" + Consts.FolderName_AgentActions, persister);
         await RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values,path + "/" + Consts.FolderName_Considerations, persister);
         await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);

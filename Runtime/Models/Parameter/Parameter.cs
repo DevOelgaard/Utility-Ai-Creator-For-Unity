@@ -81,7 +81,7 @@ public class Parameter: RestoreAble
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        await persister.SaveObject(state, path + "." + Consts.FileExtension_Parameter);
+        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_Parameter);
     }
 }
 

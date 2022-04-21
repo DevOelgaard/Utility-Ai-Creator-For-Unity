@@ -270,7 +270,7 @@ public class ResponseCurve: AiObjectModel
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        await persister.SaveObject(state, path + "." + Consts.FileExtension_ResponseCurve);
+        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_ResponseCurve);
         await RestoreAbleService.SaveRestoreAblesToFile(Segments,path + "/" + Consts.FolderName_Segments, persister);
         await RestoreAbleService.SaveRestoreAblesToFile(ResponseFunctions,path + "/" + Consts.FolderName_ResponseFunctions, persister);
     }

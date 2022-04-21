@@ -215,7 +215,7 @@ public abstract class Consideration : AiObjectModel
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        await persister.SaveObject(state, path + "." + Consts.FileExtension_Consideration);
+        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_Consideration);
         await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
 
         var rcPath = path + "/" + Consts.FolderName_ResponseCurves;

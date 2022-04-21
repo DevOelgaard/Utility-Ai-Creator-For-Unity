@@ -151,7 +151,7 @@ internal class AiTicker: RestoreAble
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        await persister.SaveObject(state, path + "." + Consts.FileExtension_AiTicker);
+        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_AiTicker);
     }
 
     internal void Reload()

@@ -86,11 +86,11 @@ public abstract class AiObjectModel: RestoreAble
     private void InitializeParameters()
     {
         if (parametersInitialized) return;
+        parametersInitialized = true;
         foreach (var param in GetParameters())
         {
-            ParametersByName.Add(param.Name, param);
+            AddParameter(param);
         }
-        parametersInitialized = true;
     }
     
     protected virtual List<Parameter> GetParameters()
@@ -112,7 +112,7 @@ public abstract class AiObjectModel: RestoreAble
         clone.HelpText = HelpText;
         foreach (var parameter in Parameters)
         {
-            AddParameter(parameter);
+            clone.AddParameter(parameter);
         }
     }
     

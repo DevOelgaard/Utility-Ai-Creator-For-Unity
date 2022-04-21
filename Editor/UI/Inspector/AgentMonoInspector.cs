@@ -43,26 +43,26 @@ internal class AgentMonoInspector: Editor
             .ForEach(ai =>
             {
                 var aiCast = ai as Ai;
-                aiCast.OnIsPlayableChanged
-                .Subscribe(isPlayable =>
-                {
-                    if (isPlayable)
+                aiCast?.OnIsPlayableChanged
+                    .Subscribe(isPlayable =>
                     {
-                        aiField.choices.Add(ai.Name);
-                    }
-                    else
-                    {
-                        aiField.choices.Remove(ai.Name);
-                    }
-                })
-                .AddTo(disposables);
+                        if (isPlayable)
+                        {
+                            aiField.choices.Add(ai.Name);
+                        }
+                        else
+                        {
+                            aiField.choices.Remove(ai.Name);
+                        }
+                    })
+                    .AddTo(disposables);
             });
 
         aiField.RegisterCallback<ChangeEvent<string>>(evt =>
         {
             foreach(var agent in agents)
             {
-                agent.DefaultAiName = evt.newValue;
+                agent.defaultAiName = evt.newValue;
                 EditorUtility.SetDirty(agent);
             }
         });
@@ -80,19 +80,20 @@ internal class AgentMonoInspector: Editor
         aiField.choices.Clear();
         var playableAis = ais
             .Cast<Ai>()
-            .Where(ai => ai.IsPLayable);
+            .Where(ai => ai.IsPLayAble);
 
-        foreach (Ai ai in playableAis)
+        var playAbleAis = playableAis.ToList();
+        foreach (Ai ai in playAbleAis)
         {
             aiField.choices.Add(ai.Name);
         }
 
         var agent = agents.FirstOrDefault();
 
-        var currentAiName = playableAis.FirstOrDefault(c => c.Name == agent.DefaultAiName)?.Name;
+        var currentAiName = playAbleAis.FirstOrDefault(c => agent != null && c.Name == agent.defaultAiName)?.Name;
         if (string.IsNullOrEmpty(currentAiName))
         {
-            currentAiName = playableAis.FirstOrDefault()?.Name;
+            currentAiName = playAbleAis.FirstOrDefault()?.Name;
         }
         aiField.SetValueWithoutNotify(currentAiName);
     }

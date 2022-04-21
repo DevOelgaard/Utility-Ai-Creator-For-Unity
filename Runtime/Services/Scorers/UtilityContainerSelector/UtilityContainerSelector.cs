@@ -96,7 +96,7 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        await persister.SaveObject(state, path + "." + Consts.FileExtension_UtilityContainerSelector);
+        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_UtilityContainerSelector);
         await RestoreAbleService.SaveRestoreAblesToFile(Parameters.Where(p => p != null),path + "/" + Consts.FolderName_Parameters, persister);
     }
 }

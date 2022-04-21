@@ -8,7 +8,7 @@ using UnityEngine;
 
 internal class PersistenceAPI
 {
-    private IPersister persister;
+    public IPersister Persister { get; private set; }
     // private readonly IPersister destructivePersister;
 
     internal static PersistenceAPI Instance => _instance ??= new PersistenceAPI(new JsonPersister());
@@ -16,13 +16,13 @@ internal class PersistenceAPI
 
     private PersistenceAPI(IPersister persister)
     {
-        this.persister = persister;
+        this.Persister = persister;
         // this.destructivePersister = new JsonDestructivePersister();
     }
 
     internal void SetPersister(IPersister p)
     {
-        this.persister = p;
+        this.Persister = p;
     }
 
     internal async Task SaveObjectPanel(RestoreAble o)
@@ -48,54 +48,62 @@ internal class PersistenceAPI
 
     internal async Task SaveObjectPath(RestoreAble o, string path, string fileName)
     {
-        await o.SaveToFile(path, persister, -2, fileName);
+        await o.SaveToFile(path, Persister, -2, fileName);
     }
 
-    internal async Task SaveDestructiveObjectPath(RestoreAble o, string path, string fileName)
+    internal async Task SaveDestructiveObjectPathAsync(RestoreAble o, string path, string fileName)
     {
         var startTime = DateTime.Now;
-        await o.SaveToFile(path, persister,-2, fileName);
+        await o.SaveToFile(path, Persister,-2, fileName);
         Debug.Log("Done saving destructively path: " + path);
-        await CleanUp(path, startTime);
+        await CleanUpAsync(path, startTime);
+    }
+    
+    internal void SaveDestructiveObjectPath(RestoreState o, string path)
+    {
+        var startTime = DateTime.Now;
+        Persister.SaveObject(o,path);
+        Debug.Log("Done saving destructively path: " + path);
+        CleanUp(path, startTime);
     }
 
     internal async Task<ObjectMetaData<T>> LoadObjectPanel<T>()
     {
         var extension = FileExtensionService.GetExtension(typeof(T));
         var path = EditorUtility.OpenFilePanel("Load object", "", extension);
-        var o = await persister.LoadObjectAsync<T>(path);
+        var o = await Persister.LoadObjectAsync<T>(path);
         return o;
     }
 
     internal async Task<ObjectMetaData<T>> LoadObjectPanel<T>(string[] filters)
     {
         var path = EditorUtility.OpenFilePanelWithFilters("Load object", "", filters);
-        var o = await persister.LoadObjectAsync<T>(path);
+        var o = await Persister.LoadObjectAsync<T>(path);
         return o;
     }
     
     internal ObjectMetaData<T> LoadObjectPath<T>(string path)
     {
-        var result = persister.LoadObject<T>(path);
+        var result = Persister.LoadObject<T>(path);
         return result;
     }
 
     internal async Task<ObjectMetaData<T>> LoadObjectPathAsync<T>(string path)
     {
-        var result = await persister.LoadObjectAsync<T>(path);
+        var result = await Persister.LoadObjectAsync<T>(path);
         return result;
     }
 
     internal async Task<List<ObjectMetaData<T>>> LoadObjectsPanel<T>(string startPath, string filter = "") where T : RestoreState
     {
         var path = EditorUtility.OpenFolderPanel("Load object", startPath, "default name");
-        var res = await persister.LoadObjects<T>(path, "*"+filter);
+        var res = await Persister.LoadObjects<T>(path, "*"+filter);
         return res;
     }
 
     internal async Task<List<ObjectMetaData<T>>> LoadObjectsPath<T>(string folderPath, string filter = "") where T: RestoreState
     {
-        var results = await persister.LoadObjects<T>(folderPath, "*"+filter);
+        var results = await Persister.LoadObjects<T>(folderPath, "*"+filter);
         foreach (var result in results
                      .Where(result => result.LoadedObject != null))
         {
@@ -148,11 +156,26 @@ internal class PersistenceAPI
 
     private async Task<ObjectMetaData<T>> LoadFilePath<T>(string path)
     {
-        var res = await persister.LoadObjectAsync<T>(path);
+        var res = await Persister.LoadObjectAsync<T>(path);
         return res;
     }
 
-    private static async Task CleanUp(string path, DateTime startTime)
+    private static void CleanUp(string path, DateTime startTime)
+    {
+        Debug.Log("Starting cleanup path: " + path);
+        var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
+        foreach (var file in files.Where(f => !f.Contains(".meta")))
+        {
+            var lastWriteTime = File.GetLastWriteTime(file);
+            if (lastWriteTime < startTime)
+            {
+                File.Delete(file);
+            }
+        }
+        DeleteEmptyFolders(path);
+    }
+    
+    private static async Task CleanUpAsync(string path, DateTime startTime)
     {
         Debug.Log("Starting cleanup path: " + path);
         var t = Task.Factory.StartNew(() =>
@@ -168,11 +191,11 @@ internal class PersistenceAPI
             }
         });
         await t;
-        await DeleteEmptyFolders(path);
+        await DeleteEmptyFoldersAsync(path);
     }
 
     // https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories
-    private static async Task DeleteEmptyFolders(string path)
+    private static async Task DeleteEmptyFoldersAsync(string path)
     {
          if (path.Contains("."))
          {
@@ -183,7 +206,7 @@ internal class PersistenceAPI
          
          foreach (var d in directories.Where((d => !d.Contains("."))))
          {
-             await DeleteEmptyFolders(d);
+             await DeleteEmptyFoldersAsync(d);
              tasks.Add(Task.Factory.StartNew(() =>
              {
                  var metaFiles = Directory.GetFiles(d).Where(f => f.Contains(".meta"));
@@ -230,6 +253,61 @@ internal class PersistenceAPI
          }
         
          await Task.WhenAll(tasks);
+    }
+    
+        // https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories
+    private static void DeleteEmptyFolders(string path)
+    {
+         if (path.Contains("."))
+         {
+             path = new DirectoryInfo(Path.GetDirectoryName(path) ?? string.Empty).FullName;
+         }
+         var directories = Directory.GetDirectories(path);
+         
+         foreach (var d in directories.Where((d => !d.Contains("."))))
+         {
+             DeleteEmptyFolders(d);
+             var metaFiles = Directory.GetFiles(d).Where(f => f.Contains(".meta"));
+             var fileNamesWithoutMeta = Directory.GetFiles(d)
+                 .Where(f => !f.Contains(".meta"))
+                 .Select(Path.GetFileName)
+                 .ToList();
+             var childDirectoryNames = Directory.GetDirectories(d)
+                 .Select(Path.GetFileNameWithoutExtension)
+                 .ToList();
+                 
+             foreach (var metaFile in metaFiles)
+             {
+                 var metaFileName = Path.GetFileNameWithoutExtension(metaFile);
+                 var canDelete = fileNamesWithoutMeta.All(file => file != metaFileName) &&
+                                 childDirectoryNames.All(directory => directory != metaFileName);
+        
+                 if (!canDelete) continue;
+                 File.Delete(metaFile);
+             }
+        
+             // Delete empty folders
+             var childDirectories = Directory.GetDirectories(d);
+             if (childDirectories.Length > 0)
+             {
+                 return;
+             }
+        
+             var filesWithoutMeta = Directory.GetFiles(d)
+                 .Where(f => !f.Contains(".meta"))
+                 .ToList();
+             
+             if (filesWithoutMeta.Count > 0)
+             {
+                 return;
+             }
+             foreach (var file in Directory.GetFiles(d))
+             {
+                 File.Delete(file);
+             }
+        
+             Directory.Delete(d,false);
+         }
     }
 }
 

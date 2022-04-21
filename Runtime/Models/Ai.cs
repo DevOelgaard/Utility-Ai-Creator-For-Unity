@@ -12,13 +12,13 @@ public class Ai: AiObjectModel
 {
     private IDisposable bucketSub;
     private IDisposable playableSub;
-    private bool isPLayable;
-    public bool IsPLayable
+    private bool isPLayAble;
+    public bool IsPLayAble
     {
-        get { return isPLayable; }
+        get => isPLayAble;
         set
         {
-            isPLayable = value;
+            isPLayAble = value;
             onIsPlayableChanged.OnNext(value);
         }
     }
@@ -78,7 +78,7 @@ public class Ai: AiObjectModel
         {
             Info = new InfoModel("No Buckets, Object won't be selected", InfoTypes.Warning);
         }
-        else if (!IsPLayable)
+        else if (!IsPLayAble)
         {
             Info = new InfoModel("Not marked playable, Ai won't be selected", InfoTypes.Warning);
         }
@@ -191,7 +191,7 @@ public class Ai: AiObjectModel
         var state = (AiState)s;
         Name = state.Name;
         Description = state.Description;
-        IsPLayable = state.IsPLayable;
+        IsPLayAble = state.IsPLayable;
         
         Buckets = new ReactiveListNameSafe<Bucket>();
         var bucketsLocal = await RestoreAbleService
@@ -216,7 +216,7 @@ public class Ai: AiObjectModel
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        await persister.SaveObject(state, path + "." + Consts.FileExtension_UAI);
+        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_UAI);
         await RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values,path + "/" + Consts.FolderName_Buckets, persister);
         await RestoreAbleService.SaveRestoreAblesToFile(BucketSelectors,path + "/" + Consts.FolderName_BucketSelectors, persister);
         await RestoreAbleService.SaveRestoreAblesToFile(DecisionSelectors,path + "/" + Consts.FolderName_DecisionSelectors, persister);
@@ -242,7 +242,7 @@ public class AiState: RestoreState
     {
         Name = name;
         Description = description;
-        IsPLayable = model.IsPLayable;
+        IsPLayable = model.IsPLayAble;
         
         Buckets = RestoreAbleService.NamesToList(buckets);
 

@@ -29,7 +29,7 @@ public abstract class RestoreAble
     {
         try
         {
-            var type = state.DerivedType;
+            var type = Type.GetType(state.AssemblyQualifiedName);
             T element = default(T);
             if (type == null)
             {
@@ -88,9 +88,9 @@ public abstract class RestoreAble
 public abstract class RestoreState
 {
     public string FileName;
-    public string DerivedTypeString;
+    // public string DerivedTypeString;
     public string FolderLocation;
-    public Type DerivedType;
+    // public Type DerivedType;
     public int Index;
     public string AssemblyName;
     public string AssemblyQualifiedName;
@@ -102,8 +102,8 @@ public abstract class RestoreState
     public RestoreState(RestoreAble o)
     {
         FileName = o.FileName;
-        DerivedType = o.DerivedType;
-        DerivedTypeString = o.DerivedType.ToString();
+        // DerivedType = o.DerivedType;
+        // DerivedTypeString = o.DerivedType.ToString();
         AssemblyName = o.DerivedType.Assembly.FullName;
         AssemblyQualifiedName = o.DerivedType.AssemblyQualifiedName;
     }

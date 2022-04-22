@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using NSubstitute.Exceptions;
 using UnityEditor;
 using UniRx;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class PlayAbleAiService: RestoreAble
     private static readonly CompositeDisposable AiDisposables = new CompositeDisposable();
     private static List<Ai> _ais = new List<Ai>();
     private static bool _saveOnDestroy = true;
+    private string oldStacktrace ="";
 
     public static PlayAbleAiService Instance
     {
@@ -38,26 +40,60 @@ public class PlayAbleAiService: RestoreAble
     {
         if (EditorApplication.isPlayingOrWillChangePlaymode)
         {
-            Debug.Log("PlayAbleService: Initializing playmode");
+            DebugService.Log("Initializing playmode", this);
 
             _saveOnDestroy = false;
             AsyncHelpers.RunSync(RestoreService);
         
-            Debug.Log("PlayAbleService: Initialized playmode complete");
+            DebugService.Log("Initialized playmode complete Ais Count: " + _ais.Count, this);
             if (_ais.Count == 0)
             {
-                Debug.LogWarning("No Playable Ais");
+                DebugService.LogWarning("No Playable Ais", this);
             }
         }
         else
         {
-            Debug.Log("PlayAbleService: Initializing editor mode");
+            DebugService.Log("Initializing editor mode", this);
 
-            EditorApplication.playModeStateChanged += Instance.SaveIfExitingEditorMode;
+            if (TemplateService.Instance.isLoaded)
+            {
+                UpdateAisFromTemplateService();
+                DebugService.Log("Ais loaded from TemplateService", this);
+            }
+            else
+            {
+                AsyncHelpers.RunSync(RestoreService);
+                DebugService.Log("Ais loaded from file", this);
+            }
+
+            TemplateService.Instance
+                .AIs
+                .OnValueChanged
+                .Subscribe(_ => UpdateAisFromTemplateService())
+                .AddTo(Disposables);
         
-            Debug.Log("PlayAbleService: Initialized editor mode complete");
+            DebugService.Log("Initialized editor mode complete Ais Count: " + _ais.Count, this);
         }
+
+        Application.logMessageReceived += Reset;
     }
+
+    private void Reset(string condition, string stacktrace, LogType type)
+    {
+        if (type != LogType.Exception) return;
+        if (oldStacktrace == stacktrace)
+        {
+            return;
+        }
+
+        oldStacktrace = stacktrace;
+        DebugService.Log("Resetting because of exception: " + stacktrace, this);
+        ClearSubscriptions();
+
+        Init();
+    }
+
+
 
     private static PlayAbleAiService _instance;
     public static IObservable<List<Ai>> OnAisChanged => onAisChanged;
@@ -66,7 +102,9 @@ public class PlayAbleAiService: RestoreAble
 
     public Ai GetAiByName(string name)
     {
-        return _ais.FirstOrDefault(ai => ai.Name == name)?.Clone() as Ai;
+        var ai = _ais.FirstOrDefault(ai => ai.Name == name) ?? _ais.First();
+
+        return ai.Clone() as Ai;
     }
 
     public static IEnumerable<Ai> GetAis()
@@ -76,16 +114,12 @@ public class PlayAbleAiService: RestoreAble
 
     private PlayAbleAiService()
     {
-        UasTemplateService.Instance
-            .AIs
-            .OnValueChanged
-            .Subscribe(_ => UpdateAis(!EditorApplication.isPlayingOrWillChangePlaymode))
-            .AddTo(Disposables);
+
     }
 
     private async Task RestoreService()
     {
-        Debug.Log("PlayAbleService: Restoring");
+        DebugService.Log("Restoring", this);
         var objectMetaData = PersistenceAPI.Instance.LoadObjectPath<PlayAbleAiServiceState>(Consts.FileUasPlayAbleWithExtension);
         if (objectMetaData.Success)
         {
@@ -100,30 +134,27 @@ public class PlayAbleAiService: RestoreAble
 
             var results = await Task.WhenAll(tasks);
             _ais = results.ToList();
-            Debug.Log("PlayAbleService: Restoring Complete");
+            DebugService.Log("Restoring Complete", this);
         }
         else
         {
-            Debug.LogError("Failed to load playable service");
+            DebugService.LogError("Failed to load playable service", this);
         }
     }
 
-    private static void UpdateAis(bool addAis)
+    private static void UpdateAisFromTemplateService()
     {
         _ais = new List<Ai>();
         AiDisposables.Clear();
-        foreach (var ai in UasTemplateService.Instance.AIs.Values
+        foreach (var ai in TemplateService.Instance.AIs.Values
                      .Cast<Ai>())
         {
-            if (addAis && ai.IsPLayAble)
-            {
-                _ais.Add(ai);
-            }
+            _ais.Add(ai);
             ai.OnIsPlayableChanged
-                .Subscribe(_ => UpdateAis(true))
+                .Subscribe(_ => UpdateAisFromTemplateService())
                 .AddTo(AiDisposables);
         }
-        Debug.Log("Ais Updated Count: " + _ais.Count);
+        DebugService.Log("Ais Updated Count: " + _ais.Count, Instance);
 
         onAisChanged.OnNext(_ais);
     }
@@ -134,7 +165,8 @@ public class PlayAbleAiService: RestoreAble
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        Debug.Log("PlayAbleService: Restoring");
+        
+        DebugService.Log("Restoring", this);
 
         var state = (PlayAbleAiServiceState) s;
         _ais = new List<Ai>();
@@ -146,19 +178,19 @@ public class PlayAbleAiService: RestoreAble
 
         var results = await Task.WhenAll(tasks);
         _ais = results.ToList();
-        Debug.Log("PlayAbleService: Restoring Complete");
+        DebugService.Log("Restoring Complete", this);
 
     }
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        Debug.Log("PlayAbleService: Saving");
+        DebugService.Log("Saving", this);
         if (!path.Contains(Consts.FileExtension_UasPlayAble))
         {
             path += "." + Consts.FileExtension_UasPlayAble;
         }
         await persister.SaveObjectAsync(state, path);
-        Debug.Log("PlayAbleService: Saving Complete");
+        DebugService.Log("Saving Complete", this);
     }
 
     internal override RestoreState GetState()
@@ -166,25 +198,29 @@ public class PlayAbleAiService: RestoreAble
         return new PlayAbleAiServiceState(_ais,this);
     }
 
-    private void SaveIfExitingEditorMode(PlayModeStateChange playModeState)
+    private void SaveBeforeEnteringPlayMode()
     {
-        Debug.Log("PlayAbleService: SaveIfExitingEditorMode playModeState: " + playModeState);
-
-        if (playModeState != PlayModeStateChange.ExitingEditMode) return;
+        DebugService.Log("SaveBeforeEnteringPlayMode Start", this);
+        if (EditorApplication.isPlaying) return;
         if (!_saveOnDestroy) return;
-        Debug.Log("PlayAbleService: Saving");
+        DebugService.Log("Saving", this);
 
         var state = GetState();
         PersistenceAPI.Instance
             .SaveDestructiveObjectPath(state, Consts.FileUasPlayAbleWithExtension);
-        Debug.Log("PlayAbleService: Saving Complete");
+        DebugService.Log("SaveBeforeEnteringPlayMode Complete ais count: " + _ais.Count, this);
+
+    }
+    private void ClearSubscriptions()
+    {
+        Disposables.Clear();
+        AiDisposables.Clear();
     }
 
     ~PlayAbleAiService()
     {
-        Disposables.Clear();
-        AiDisposables.Clear();
-        EditorApplication.playModeStateChanged -= Instance.SaveIfExitingEditorMode;
+        SaveBeforeEnteringPlayMode();
+        ClearSubscriptions();
     }
 }
 

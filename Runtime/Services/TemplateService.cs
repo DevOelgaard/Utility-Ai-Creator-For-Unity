@@ -8,7 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using UnityEditor;
 
-internal class UasTemplateService: RestoreAble
+internal class TemplateService: RestoreAble
 {
     private readonly CompositeDisposable subscriptions = new CompositeDisposable();
     private Dictionary<string, ReactiveList<AiObjectModel>> collectionsByLabel = new Dictionary<string, ReactiveList<AiObjectModel>>();
@@ -30,7 +30,6 @@ internal class UasTemplateService: RestoreAble
     public IObservable<ReactiveList<AiObjectModel>> OnCollectionChanged => onCollectionChanged;
     private readonly Subject<ReactiveList<AiObjectModel>> onCollectionChanged = new Subject<ReactiveList<AiObjectModel>>();
 
-    // private bool autoSaveLoaded = false;
     private string projectDirectory;
 
     private bool includeDemos = true;
@@ -46,19 +45,23 @@ internal class UasTemplateService: RestoreAble
     public IObservable<bool> OnIncludeDemosChanged => onIncludeDemosChanged;
     private readonly Subject<bool> onIncludeDemosChanged = new Subject<bool>();
 
-    private static UasTemplateService _instance;
-    internal static UasTemplateService Instance => _instance ??= new UasTemplateService();
+    private static TemplateService _instance;
+    internal static TemplateService Instance => _instance ??= new TemplateService();
+    private System.Guid id;
 
-    private UasTemplateService()
+    private TemplateService()
     {
         Init(true);
+        id = Guid.NewGuid();
+        DebugService.Log("ID set: " + id, this);
         // EditorApplication.playModeStateChanged += _instance.SaveFromStateChange;
     }
 
     private void Init(bool restore)
     {
-        Debug.Log("Instantiating");
+        DebugService.Log("Instantiating",this);
 
+        
         AIs = new ReactiveListNameSafe<AiObjectModel>();
         Buckets = new ReactiveListNameSafe<AiObjectModel>();
         Decisions = new ReactiveListNameSafe<AiObjectModel>();
@@ -82,11 +85,11 @@ internal class UasTemplateService: RestoreAble
         if (restore)
         {
             AsyncHelpers.RunSync(LoadBackup);
-            Debug.Log("Instantiation complete with restore");
+            DebugService.Log("Instantiation complete with restore",this);
         }
         else
         {
-            Debug.Log("Instantiation complete no restore");
+            DebugService.Log("Instantiation complete no restore",this);
         }
     }
 
@@ -118,28 +121,31 @@ internal class UasTemplateService: RestoreAble
         var loadPath = backup
             ? ProjectSettingsService.Instance.GetProjectBackupPath()
             : ProjectSettingsService.Instance.GetCurrentProjectPath();
-        Debug.Log("Loading path: " + loadPath);
+        DebugService.Log("Loading path: " + loadPath,this);
 
         if (loadPath == null)
         {
-            Debug.Log("Failed to load");
+            DebugService.Log("Failed to load", this);
             ClearCollectionNotify();
+            
             return;
         }
 
         if (loadedPath == loadPath)
         {
-            Debug.Log("Reloading path: " + loadPath);
+            DebugService.Log("Reloading path: " + loadPath, this);
         }
         projectDirectory = ProjectSettingsService.Instance.GetDirectory(loadPath);
+        DebugService.Log("ProjectDirectory: " + projectDirectory, this);
+
 
         if (string.IsNullOrEmpty(projectDirectory))
         {
             SetState("");
+            ClearCollectionNotify();
             return;
         }
         
-        ClearCollectionNotify();
         var perstistAPI = PersistenceAPI.Instance;
         
         var state = await perstistAPI.LoadObjectPathAsync<UasTemplateServiceState>(loadPath);
@@ -147,41 +153,43 @@ internal class UasTemplateService: RestoreAble
         {
             ClearCollectionNotify();
             SubscribeToCollectionChanges();
-            Debug.LogError("Loading failed state == null");
+            DebugService.LogError("Loading failed state.LoadedObjet == null",this);
+            DebugService.LogError("State.ErrorMessage: " + state.ErrorMessage,this);
         }
         else
         {
             try
             {
                 await RestoreAsync(state.LoadedObject);
-                Debug.Log("Restore Complete AIs: " + AIs.Values.Count);
+                DebugService.Log("Restore Complete AIs: " + AIs.Values.Count,this);
 
                 isLoaded = true;
                 loadedPath = loadPath;
                 onLoadComplete.OnNext(true);
-                Debug.Log("Load complete");
+                DebugService.Log("Load complete",this);
                 SetState("");
             }
             catch (Exception ex)
             {
-                Debug.LogError("Loading failed: " + ex);
+                DebugService.LogError("Loading failed: " + ex, this);
                 SetState("Error");
                 throw new Exception("UAS Template Service Restore Failed : ", ex);
             }
         }
     }
+    
 
     internal async Task Save(bool backup = false)
     {
         var currentState = stateString;
         SetState("Saving");
-        Debug.Log("Saving Backup: " + backup);
+        DebugService.Log("Saving Backup: " + backup, this);
         var path = !backup
             ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
             : ProjectSettingsService.Instance.GetBackupDirectory();
 
 
-        Debug.Log("Saving path: " + path);
+        DebugService.Log("Saving path: " + path, this);
 
         var perstistAPI = PersistenceAPI.Instance;
         var currentProjectName = ProjectSettingsService.Instance.GetCurrentProjectName(true);
@@ -253,7 +261,7 @@ internal class UasTemplateService: RestoreAble
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        Debug.Log("Uas: Saving Ais: " + AIs.Values.Count);
+        DebugService.Log("Saving Ais: " + AIs.Values.Count, this);
         var directoryPath = Path.GetDirectoryName(path);
         if (!path.Contains(Consts.FileExtension_UasProject))
         {
@@ -278,7 +286,7 @@ internal class UasTemplateService: RestoreAble
                 directoryPath + "/" + Consts.FolderName_ResponseCurves, persister),
         };
         await Task.WhenAll(tasks);
-        Debug.Log("Uas: Saving Complete");
+        DebugService.Log("Saving Complete", this);
     }
 
     private async Task RestoreAsync(UasTemplateServiceState state)
@@ -353,8 +361,8 @@ internal class UasTemplateService: RestoreAble
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        Debug.Log("Start Restore: " + s.FileName);
-        ClearCollectionNotify();
+        DebugService.Log("Start Restore: " + s.FileName, this);
+        ClearCollectionNoNotify();
         SubscribeToCollectionChanges();
         var state = (UasTemplateServiceState)s;
         var tasks = new List<Task>
@@ -380,11 +388,14 @@ internal class UasTemplateService: RestoreAble
         };
 
         await Task.WhenAll(tasks);
+        DebugService.Log("Finished Restore: " + s.FileName, this);
+
         onCollectionChanged.OnNext(AIs);
     }
     
-    ~UasTemplateService()
+    ~TemplateService()
     {
+        DebugService.Log("Destroying",this);
         subscriptions.Clear();
     }
 }
@@ -405,7 +416,7 @@ public class UasTemplateServiceState : RestoreState
     internal UasTemplateServiceState(
         ReactiveList<AiObjectModel> aiS,
         ReactiveList<AiObjectModel> buckets, ReactiveList<AiObjectModel> decisions,
-        ReactiveList<AiObjectModel> considerations, ReactiveList<AiObjectModel> agentActions, UasTemplateService model) : base(model)
+        ReactiveList<AiObjectModel> considerations, ReactiveList<AiObjectModel> agentActions, TemplateService model) : base(model)
     {
         aIs = RestoreAbleService.NamesToList(aiS.Values);
 
@@ -419,12 +430,4 @@ public class UasTemplateServiceState : RestoreState
 
         responseCurves = RestoreAbleService.NamesToList(model.ResponseCurves.Values);
     }
-
-    // internal static UasTemplateServiceState LoadFromFile()
-    // {
-    //     Debug.Log("Change this");
-    //     var p = PersistenceAPI.Instance;
-    //     var state = p.LoadObjectPanel<UasTemplateServiceState>();
-    //     return state.LoadedObject;
-    // }
 }

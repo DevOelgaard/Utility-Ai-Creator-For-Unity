@@ -25,8 +25,8 @@ internal class DecisionComponent : AiObjectComponent
         root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);
         parametersContainer = root.Q<VisualElement>("Parameters");
 
-        considerationCollections = new CollectionComponent<Consideration>(UasTemplateService.Instance.Considerations, "Consideration", "Considerations");
-        agentActionCollection = new CollectionComponent<AgentAction>(UasTemplateService.Instance.AgentActions, "Action", "Actions");
+        considerationCollections = new CollectionComponent<Consideration>(TemplateService.Instance.Considerations, "Consideration", "Considerations");
+        agentActionCollection = new CollectionComponent<AgentAction>(TemplateService.Instance.AgentActions, "Action", "Actions");
 
         tabView = new TabViewComponent();
         root.Add(tabView);

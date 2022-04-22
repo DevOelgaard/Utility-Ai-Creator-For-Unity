@@ -59,7 +59,7 @@ internal class ResponseCurveLcComponent : VisualElement
     private async void SaveTemplate(MouseUpEvent evt)
     {
         var clone = await responseCurve.CloneAsync();
-        UasTemplateService.Instance.Add(clone);
+        TemplateService.Instance.Add(clone);
     }
 
     internal void UpdateUi(ResponseCurve rCurve, bool showSelection = true)
@@ -163,7 +163,7 @@ internal class ResponseCurveLcComponent : VisualElement
             .Select(e => e.Name)
             .ToList();
 
-        foreach(var template in UasTemplateService.Instance.ResponseCurves.Values)
+        foreach(var template in TemplateService.Instance.ResponseCurves.Values)
         {
             curveDropdown.choices.Add(template.Name);
         }
@@ -171,7 +171,7 @@ internal class ResponseCurveLcComponent : VisualElement
 
     private async Task ChangeResponseCurve(string responseCurveName)
     {
-        var template = UasTemplateService
+        var template = TemplateService
             .Instance
             .ResponseCurves
             .Values

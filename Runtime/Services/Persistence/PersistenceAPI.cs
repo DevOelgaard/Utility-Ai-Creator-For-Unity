@@ -55,7 +55,7 @@ internal class PersistenceAPI
     {
         var startTime = DateTime.Now;
         await o.SaveToFile(path, Persister,-2, fileName);
-        Debug.Log("Done saving destructively path: " + path);
+        DebugService.Log("Done saving destructively path: " + path, this);
         await CleanUpAsync(path, startTime);
     }
     
@@ -63,7 +63,7 @@ internal class PersistenceAPI
     {
         var startTime = DateTime.Now;
         Persister.SaveObject(o,path);
-        Debug.Log("Done saving destructively path: " + path);
+        DebugService.Log("Done saving destructively path: " + path, this);
         CleanUp(path, startTime);
     }
 
@@ -162,7 +162,7 @@ internal class PersistenceAPI
 
     private static void CleanUp(string path, DateTime startTime)
     {
-        Debug.Log("Starting cleanup path: " + path);
+        DebugService.Log("Starting cleanup path: " + path, nameof(PersistenceAPI));
         var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
         foreach (var file in files.Where(f => !f.Contains(".meta")))
         {
@@ -177,7 +177,7 @@ internal class PersistenceAPI
     
     private static async Task CleanUpAsync(string path, DateTime startTime)
     {
-        Debug.Log("Starting cleanup path: " + path);
+        DebugService.Log("Starting cleanup path: " + path, nameof(PersistenceAPI));
         var t = Task.Factory.StartNew(() =>
         {
             var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);

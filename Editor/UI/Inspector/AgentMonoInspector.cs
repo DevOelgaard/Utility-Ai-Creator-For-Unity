@@ -33,13 +33,13 @@ internal class AgentMonoInspector: Editor
         agents = targets.Cast<AgentMono>().ToList();
         //serializedObject.Update();
 
-        SetAiFieldChoices(UasTemplateService.Instance.AIs.Values);
-        UasTemplateService.Instance.AIs
+        SetAiFieldChoices(TemplateService.Instance.AIs.Values);
+        TemplateService.Instance.AIs
             .OnValueChanged
             .Subscribe(values => SetAiFieldChoices(values))
             .AddTo(disposables);
 
-        UasTemplateService.Instance.AIs.Values
+        TemplateService.Instance.AIs.Values
             .ForEach(ai =>
             {
                 var aiCast = ai as Ai;

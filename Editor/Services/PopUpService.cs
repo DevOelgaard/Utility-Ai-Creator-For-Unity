@@ -29,7 +29,7 @@ public class PopUpService: EditorWindow
 
                 async void Save()
                 {
-                        await UasTemplateService.Instance.Save();
+                        await TemplateService.Instance.Save();
                         await task.Invoke();
                 }
 
@@ -74,13 +74,13 @@ public class PopUpService: EditorWindow
         {
                 ButtonPopUp.Close();
                 ProjectSettingsService.Instance.LoadProject();
-                await UasTemplateService.Instance.LoadCurrentProject();
+                await TemplateService.Instance.LoadCurrentProject();
         }
 
         private static async Task CreateNewProject()
         {
                 ButtonPopUp.Close();
                 await ProjectSettingsService.Instance.CreateProject();
-                await UasTemplateService.Instance.LoadCurrentProject();
+                await TemplateService.Instance.LoadCurrentProject();
         }
 }

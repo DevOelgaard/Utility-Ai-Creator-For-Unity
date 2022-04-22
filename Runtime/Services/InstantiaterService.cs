@@ -64,7 +64,7 @@ internal class InstantiaterService
             msg += kv.Key + ": " + kv.Value + " | ";
         }
 
-        Debug.Log("InstantiaterService: " + msg);
+        DebugService.Log(msg, this);
 
     }
 

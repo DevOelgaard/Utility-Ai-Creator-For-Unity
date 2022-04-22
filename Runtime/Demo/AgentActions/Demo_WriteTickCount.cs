@@ -23,6 +23,6 @@ internal class Demo_WriteTickCount : AgentAction
     {
         base.OnStart(context);
         var value = context.TickMetaData.TickCount;
-        Debug.Log("Agent: " + context.Agent.Model.Name + " TickCount: " + value); ;
+        DebugService.Log("Agent: " + context.Agent.Model.Name + " TickCount: " + value, this); ;
     }
 }

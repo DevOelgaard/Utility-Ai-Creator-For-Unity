@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using UnityEngine;
-using System.IO;
+using System.Threading;
 
 public abstract class RestoreAble
 {
@@ -44,7 +39,7 @@ public abstract class RestoreAble
         }
         catch
         {
-            Debug.LogError("Failed to restore: " + state.FileName + " path: " + state.FolderLocation);
+            DebugService.LogError("Failed to restore: " + state.FileName + " path: " + state.FolderLocation, nameof(RestoreAble));
             throw;
         }
     }
@@ -62,7 +57,7 @@ public abstract class RestoreAble
     {
         var task = Task.Factory.StartNew(async () =>
         {
-            Debug.Log("Start SaveToFile path: " + path);
+            DebugService.Log("Start SaveToFile path: " + path, this, Thread.CurrentThread);
 
             if (string.IsNullOrEmpty(path))
             {
@@ -74,7 +69,7 @@ public abstract class RestoreAble
             state.Index = index;
 
             await InternalSaveToFile(path, persister, state);
-             Debug.Log("Done SaveToFile path: " + path);
+            DebugService.Log("Done SaveToFile path: " + path, this, Thread.CurrentThread);
         });
         await task;
     }

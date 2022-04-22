@@ -30,7 +30,7 @@ public class DecisionScoreEvaluator: IDecisionScoreEvaluator
     {
         if (decisions.Count == 0)
         {
-            Debug.LogWarning("List of buckets must be >0");
+            DebugService.LogWarning("List of buckets must be >0", this);
             return null;
         } else 
         {

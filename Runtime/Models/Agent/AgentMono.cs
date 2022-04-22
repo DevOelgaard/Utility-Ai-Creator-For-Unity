@@ -35,22 +35,8 @@ public class AgentMono : MonoBehaviour, IAgent
     {
         Model.Name = SetAgentName();
         AgentManager.Instance.Register(this);
-        if (UasTemplateService.Instance.isLoaded)
-        {
-            var localAi = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
-            SetAi(localAi);
-        }
-        else
-        {
-            UasTemplateService.Instance.OnLoadComplete
-                .Take(1)
-                .Subscribe(value =>
-                {
-                    var localAi = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
-                    SetAi(localAi);
-                });
-        }
-
+        var localAi = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
+        SetAi(localAi);
         decisionScoreEvaluator = new DecisionScoreEvaluator();
     }
 

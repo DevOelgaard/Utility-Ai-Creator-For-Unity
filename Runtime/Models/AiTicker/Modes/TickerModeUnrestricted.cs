@@ -47,7 +47,7 @@ internal class TickerModeUnrestricted : TickerMode
         {
             if (!isLogged)
             {
-                UnityEngine.Debug.Log("Sample Ended SampleTime: " + sampleTimeSW.ElapsedMilliseconds + "ms. Total ExecutionTime: " + executionTimeSW.ElapsedMilliseconds+"ms. Total Ticks: " + TotalTicks + " #Agents: " + agents.Count);
+                DebugService.Log("Sample Ended SampleTime: " + sampleTimeSW.ElapsedMilliseconds + "ms. Total ExecutionTime: " + executionTimeSW.ElapsedMilliseconds+"ms. Total Ticks: " + TotalTicks + " #Agents: " + agents.Count, this);
                 isLogged = true;
             }
         }

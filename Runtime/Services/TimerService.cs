@@ -65,7 +65,7 @@ internal class TimerService
             if (kv.Key.Contains("RestoreInternal Cons "))
             {
                 msg = kv.Key + ": Time " + kv.Value + " Count: " + values[kv.Key][0] + " | ";
-                Debug.Log(msg);
+                DebugService.Log(msg, this);
             }
         }
     }

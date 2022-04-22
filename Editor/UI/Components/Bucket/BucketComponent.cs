@@ -24,8 +24,8 @@ internal class BucketComponent : AiObjectComponent
 
         weightComponent = new ParameterComponent();
         tabView = new TabViewComponent();
-        considerationCollections = new CollectionComponent<Consideration>(UasTemplateService.Instance.Considerations, "Consideration", "Considerations");
-        decisionCollections = new CollectionComponent<Decision>(UasTemplateService.Instance.Decisions, "Decision", "Decisions");
+        considerationCollections = new CollectionComponent<Consideration>(TemplateService.Instance.Considerations, "Consideration", "Considerations");
+        decisionCollections = new CollectionComponent<Decision>(TemplateService.Instance.Decisions, "Decision", "Decisions");
 
         considerationsTab = tabView.AddTabGroup("Considerations", considerationCollections);
         decisionTab = tabView.AddTabGroup("Decisions", decisionCollections);

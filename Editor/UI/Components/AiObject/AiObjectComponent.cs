@@ -73,7 +73,7 @@ internal abstract class AiObjectComponent : VisualElement
     private async void SaveToTemplate(MouseUpEvent evt)
     {
         var clone = await Model.CloneAsync();
-        UasTemplateService.Instance.Add(clone);
+        TemplateService.Instance.Add(clone);
     }
 
     internal void Touch()

@@ -38,7 +38,7 @@ internal class AiComponent : AiObjectComponent
         tabView = new TabViewComponent();
         collectionsContainer.Add(tabView);
 
-        bucketCollection = new CollectionComponent<Bucket>(UasTemplateService.Instance.Buckets, "Bucket", "Buckets");
+        bucketCollection = new CollectionComponent<Bucket>(TemplateService.Instance.Buckets, "Bucket", "Buckets");
 
         var settingsContainer = new VisualElement();
 

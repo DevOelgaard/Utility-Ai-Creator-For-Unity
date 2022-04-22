@@ -29,16 +29,16 @@ internal class WindowOpener: EditorWindow
         {
             var wnd = GetWindow<SelectProjectWindow>();
             wnd.titleContent = new GUIContent(Consts.Window_SelectProject_Name);
-            wnd.SetOnComplete(OpenTemplateManagerPriv);
+            wnd.SetOnComplete(OpenTemplateManagerPrivate);
             wnd.Show();
             wnd.position = windowPosition;
         } else
         {
-            OpenTemplateManagerPriv();
+            OpenTemplateManagerPrivate();
         }
     }
 
-    private static void OpenTemplateManagerPriv()
+    private static void OpenTemplateManagerPrivate()
     {
         TemplateManager wnd = GetWindow<TemplateManager>();
         wnd.titleContent = new GUIContent(Consts.Window_TemplateManager_Name);

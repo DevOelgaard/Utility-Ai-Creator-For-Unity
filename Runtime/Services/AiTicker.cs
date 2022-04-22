@@ -57,7 +57,7 @@ internal class AiTicker: RestoreAble
             Settings = await Restore<AiTickerSettingsModel>(loadedState.LoadedObject);
         } else
         {
-            Debug.LogWarning("Failed to load AiTicker settings Error: " + loadedState.ErrorMessage + " Exception: " + loadedState.Exception);
+            DebugService.LogWarning("Failed to load AiTicker settings Error: " + loadedState.ErrorMessage + " Exception: " + loadedState.Exception, this);
             Reload();
         }
     }

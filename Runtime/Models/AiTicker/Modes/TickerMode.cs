@@ -78,7 +78,7 @@ public abstract class TickerMode: RestoreAble
             var p = Parameters.FirstOrDefault(p => p.Name == parameterName);
             if (p == null)
             {
-                Debug.LogError("Couldn't find parameter: " + parameterName);
+                DebugService.LogError("Couldn't find parameter: " + parameterName, this);
             }
             ParametersByName.Add(parameterName,p);
         }

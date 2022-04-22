@@ -94,8 +94,8 @@ internal class ProjectSettingsService
                 Consts.FileExtension_UasProject);
 
         SetProjectPath(path);
-        UasTemplateService.Instance.Reset();
-        await UasTemplateService.Instance.Save();
+        TemplateService.Instance.Reset();
+        await TemplateService.Instance.Save();
         SaveSettings();
     }
 
@@ -106,8 +106,8 @@ internal class ProjectSettingsService
                 Consts.FileExtension_UasProject);
         
         SetProjectPath(path);
-        await UasTemplateService.Instance.Save();
-        await UasTemplateService.Instance.LoadCurrentProject();
+        await TemplateService.Instance.Save();
+        await TemplateService.Instance.LoadCurrentProject();
     }
 
     internal void LoadProject()

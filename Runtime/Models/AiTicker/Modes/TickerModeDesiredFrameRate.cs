@@ -65,14 +65,14 @@ internal class TickerModeDesiredFrameRate : TickerMode
                 allowedTicksPrFrame = Mathf.FloorToInt(ticksThisSample / framesThisSample);
                 if ((bool)GetParameter("Debug").Value)
                 {
-                    Debug.Log("LastFrameRate: " + LastFrameRate + " TargetFrameRate: " + TargetFrameRate + " optimizeFactor: " + optimizeFactor + " tickedItemsLastSample: " + tickedItemsLastSample + " allowedTicsPrFrame: " + allowedTicksPrFrame + " oldAllowedTicks: " + oldAllowedTicks);
+                    DebugService.Log("LastFrameRate: " + LastFrameRate + " TargetFrameRate: " + TargetFrameRate + " optimizeFactor: " + optimizeFactor + " tickedItemsLastSample: " + tickedItemsLastSample + " allowedTicsPrFrame: " + allowedTicksPrFrame + " oldAllowedTicks: " + oldAllowedTicks, this);
                 }
             }
 
 
             if ((bool)GetParameter("Debug").Value)
             {
-                Debug.Log("LastFrameRate: " + LastFrameRate + " framesThisSample: " + framesThisSample + " elapsedTime: " + elapsedTime + " SampleTime: " + SampelTimeInSeconds);
+                DebugService.Log("LastFrameRate: " + LastFrameRate + " framesThisSample: " + framesThisSample + " elapsedTime: " + elapsedTime + " SampleTime: " + SampelTimeInSeconds, this);
             }
             framesThisSample = 0;
             elapsedTime = 0f;
@@ -89,7 +89,7 @@ internal class TickerModeDesiredFrameRate : TickerMode
             {
                 if ((bool)GetParameter("Debug").Value)
                 {
-                    Debug.Log("All Agents ticked Agent count: " + agents.Count + " TickCount: " + metaData.TickCount);
+                    DebugService.Log("All Agents ticked Agent count: " + agents.Count + " TickCount: " + metaData.TickCount, this);
                 }
                 lastTickIndex = 0;
             } else
@@ -110,7 +110,7 @@ internal class TickerModeDesiredFrameRate : TickerMode
         if ((bool)GetParameter("Debug").Value && debugTickCount >= Convert.ToInt32(GetParameter("DebugTickCount").Value))
         {
             debugTickCount = 0;
-            Debug.Log("Framerate: " + LastFrameRate + " Allowed TicksPrFrame: " + allowedTicksPrFrame + " FrameCount: " + framesThisSample);
+            DebugService.Log("Framerate: " + LastFrameRate + " Allowed TicksPrFrame: " + allowedTicksPrFrame + " FrameCount: " + framesThisSample, this);
         }
     }
 

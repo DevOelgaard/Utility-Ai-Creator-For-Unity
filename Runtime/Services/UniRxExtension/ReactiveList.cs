@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -39,7 +40,14 @@ namespace UniRxExtension
 
         public virtual void Add(IEnumerable<T> elements)
         {
-            foreach(var e in elements)
+            
+            var elementsAsList = elements.ToList();
+            if (!elementsAsList.Any())
+            {
+                DebugService.Log("Returning no elements to add", nameof(ReactiveList<T>));
+            }
+            DebugService.Log("Adding " + elementsAsList.Count() + " elements", nameof(ReactiveList<T>));
+            foreach(var e in elementsAsList)
             {
                 List.Add(e);
             }

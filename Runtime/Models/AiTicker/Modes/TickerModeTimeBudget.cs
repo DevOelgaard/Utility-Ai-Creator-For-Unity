@@ -35,12 +35,12 @@ internal class TickerModeTimeBudget : TickerMode
             {
                 if ((bool)GetParameter("Debug").Value)
                 {
-                    Debug.Log("Breaking tickedAgents: " + TickedAgentsThisFrame + " Elapsed Time: " + stopwatch.ElapsedMilliseconds + "ms");
+                    DebugService.Log("Breaking tickedAgents: " + TickedAgentsThisFrame + " Elapsed Time: " + stopwatch.ElapsedMilliseconds + "ms", this);
                 }
 
                 if (TickedAgentsThisFrame <= 0)
                 {
-                    Debug.LogWarning("No agents ticked. The time budget may be to low! Consider increasing the Time budget or the performance of the active agents!");
+                    DebugService.LogWarning("No agents ticked. The time budget may be to low! Consider increasing the Time budget or the performance of the active agents!", this);
                 }
                 break;
             }
@@ -58,7 +58,7 @@ internal class TickerModeTimeBudget : TickerMode
             {
                 if ((bool)GetParameter("Debug").Value)
                 {
-                    Debug.Log("All agents ticked agents.count: " + agents.Count + " Elapsed Time: " + stopwatch.ElapsedMilliseconds + "ms");
+                    DebugService.Log("All agents ticked agents.count: " + agents.Count + " Elapsed Time: " + stopwatch.ElapsedMilliseconds + "ms", this);
                 }
                 break;
             }

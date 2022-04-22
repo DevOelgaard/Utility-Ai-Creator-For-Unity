@@ -27,7 +27,8 @@ namespace UniRxExtension
 
         public override void Add(IEnumerable<T> elements)
         {
-            foreach (var element in elements)
+            var aiObjectModels = elements.ToList();
+            foreach (var element in aiObjectModels)
             {
                 var numberOfIdenticalNames = Values
                     .Where(e => e.Name.Contains(element.Name))
@@ -39,7 +40,7 @@ namespace UniRxExtension
                     element.Name += "(" + numberOfIdenticalNames + ")";
                 }
             }
-            base.Add(elements);
+            base.Add(aiObjectModels);
         }
     }
 }

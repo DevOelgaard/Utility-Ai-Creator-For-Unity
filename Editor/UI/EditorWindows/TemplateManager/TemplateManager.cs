@@ -27,7 +27,7 @@ internal class TemplateManager : EditorWindow
     private PopupField<string> addElementPopup;
     private List<string> dropDownChoices;
     private DropdownField dropDown;
-    private UasTemplateService uASTemplateService => UasTemplateService.Instance;
+    private TemplateService uASTemplateService => TemplateService.Instance;
 
     private AiObjectComponent  currentMainWindowComponent;
     private AiObjectModel selectedModel;
@@ -47,6 +47,7 @@ internal class TemplateManager : EditorWindow
 
     internal void CreateGUI()
     {
+        // Load Objects
         root = rootVisualElement;
         DontDestroyOnLoad(this);
 
@@ -61,6 +62,39 @@ internal class TemplateManager : EditorWindow
 
         buttonContainer = root.Q<VisualElement>("Buttons");
         addElementPopup = new PopupField<string>("Add element");
+        var addElementPopupContainer = root.Q<VisualElement>("AddElementPopupContainer");
+        copyButton = root.Q<Button>("CopyButton");
+        deleteButton = root.Q<Button>("DeleteButton");
+        clearButton = root.Q<Button>("ClearButton");
+        rightPanel = root.Q<VisualElement>("right-panel");
+
+        
+        // Init Objects
+        InitToolbarFile();
+        InitToolbarDebug();
+        InitToolbarDemos();
+        InitDropdown();
+        UpdateLeftPanel();
+        addElementPopupContainer.Add(addElementPopup);
+
+        
+        // Subscribe
+        copyButton.RegisterCallback<MouseUpEvent>(evt =>
+        {
+            CopySelectedElements();
+        });
+
+        deleteButton.RegisterCallback<MouseUpEvent>(evt =>
+        {
+            DeleteSelectedElements();
+        });
+
+        clearButton.RegisterCallback<MouseUpEvent>(evt =>
+        {
+            uASTemplateService.Reset();
+            UpdateLeftPanel();
+        });
+        
         addElementPopup.RegisterCallback<ChangeEvent<string>>(evt =>
         {
             if (evt.newValue == null) return;
@@ -68,44 +102,14 @@ internal class TemplateManager : EditorWindow
             addElementPopup.SetValueWithoutNotify(null);
         });
 
-        var addElementPopupContainer = root.Q<VisualElement>("AddElementPopupContainer");
-        addElementPopupContainer.Add(addElementPopup);
-        InitToolbarFile();
-        InitToolbarDebug();
-        InitToolbarDemos();
-
-        rightPanel = root.Q<VisualElement>("right-panel");
-
-        copyButton = root.Q<Button>("CopyButton");
-        copyButton.RegisterCallback<MouseUpEvent>(evt =>
-        {
-            CopySelectedElements();
-        });
-
-        deleteButton = root.Q<Button>("DeleteButton");
-        deleteButton.RegisterCallback<MouseUpEvent>(evt =>
-        {
-            DeleteSelectedElements();
-        });
-
-        clearButton = root.Q<Button>("ClearButton");
-        clearButton.RegisterCallback<MouseUpEvent>(evt =>
-        {
-            uASTemplateService.Reset();
-            UpdateLeftPanel();
-        });
-
-        InitDropdown();
-        UpdateLeftPanel();
-
-        UasTemplateService.Instance.OnIncludeDemosChanged
+        TemplateService.Instance.OnIncludeDemosChanged
             .Subscribe(value =>
             {
                 UpdateAddElementPopup();
             })
             .AddTo(disposables);
 
-        activeCollectionChangedSub = UasTemplateService.Instance
+        activeCollectionChangedSub = TemplateService.Instance
             .OnCollectionChanged
             .Subscribe(UpdateLeftPanelIfActiveCollectionChanged);
 
@@ -120,7 +124,7 @@ internal class TemplateManager : EditorWindow
 
     async void OnEnable()
     {
-        await UasTemplateService.Instance.LoadCurrentProject(true);
+        // await UasTemplateService.Instance.LoadCurrentProject(true);
         var mws = MainWindowService.Instance;
         mws.OnUpdateStateChanged
             .Subscribe(state =>
@@ -135,7 +139,7 @@ internal class TemplateManager : EditorWindow
             .Subscribe(state =>
             {
                 var projectName = ProjectSettingsService.Instance.GetCurrentProjectName();
-                Debug.Log("Setting state: " + state);
+                DebugService.Log("Setting state: " + state, this);
                 if (string.IsNullOrEmpty(state))
                 {
                     titleContent.text = projectName;
@@ -256,10 +260,10 @@ internal class TemplateManager : EditorWindow
 
         includeDemos.RegisterCallback<ChangeEvent<bool>>(evt =>
         {
-            UasTemplateService.Instance.IncludeDemos = evt.newValue;
+            TemplateService.Instance.IncludeDemos = evt.newValue;
         });
         toolbar.Add(includeDemos);
-        includeDemos.SetValueWithoutNotify(UasTemplateService.Instance.IncludeDemos);
+        includeDemos.SetValueWithoutNotify(TemplateService.Instance.IncludeDemos);
     }
 
 
@@ -336,6 +340,7 @@ internal class TemplateManager : EditorWindow
 
     private void UpdateLeftPanel(string label = "")
     {
+        DebugService.Log("Updating left panel",this);
         titleContent.text = ProjectSettingsService.Instance.GetCurrentProjectName();
 
         if (string.IsNullOrEmpty(label))
@@ -343,28 +348,20 @@ internal class TemplateManager : EditorWindow
             label = dropDown.value;
         }
         var models = uASTemplateService.GetCollection(label);
-        if (models == null) return;
-
-        // activeCollectionChangedSub?.Dispose();
-        // activeCollectionChangedSub = models
-        //     .OnValueChanged
-        //     .Subscribe(LoadModels);
-
-        // MainWindowService.Instance.PreloadComponents(models);
-
-        UpdateAddElementPopup();
-
-        LoadModels(models.Values);
-        UpdateButtons();
+        UpdateLeftPanelIfActiveCollectionChanged(models);
     }
 
     private void UpdateLeftPanelIfActiveCollectionChanged(ReactiveList<AiObjectModel> modifiedList)
     {
         var activeCollection = uASTemplateService.GetCollection(dropDown.value);
-        if (modifiedList != activeCollection) return;
-        LoadModels(modifiedList.Values);
-        
-        // UnityMainThreadService.InvokeActionOnMainThread(() => LoadModels(modifiedList.Values));
+        if (modifiedList != activeCollection)
+        {
+            DebugService.Log("Skipped updating collections were equal", this);
+            return;
+        }
+
+        LoadModels(activeCollection.Values);
+        UpdateAddElementPopup();
     }
 
     private void UpdateAddElementPopup()
@@ -380,12 +377,19 @@ internal class TemplateManager : EditorWindow
         buttons.Clear();
         selectedObjects.Clear();
         modelsChangedSubscriptions.Clear();
+        DebugService.Log("Loading " + models.Count + " models", this);
 
         foreach (var model in models)
         {
-            var button = new Button();
-            button.text = model.GetUiName();
-            button.style.unityTextAlign = TextAnchor.MiddleLeft;
+            DebugService.Log("Loading model: " + model.Name, this);
+            var button = new Button
+            {
+                text = model.GetUiName(),
+                style =
+                {
+                    unityTextAlign = TextAnchor.MiddleLeft
+                }
+            };
             button.RegisterCallback<MouseUpEvent>(evt =>
             {
                 ObjectClicked(model, button, evt);
@@ -396,9 +400,7 @@ internal class TemplateManager : EditorWindow
                 .Subscribe(newName => button.text = model.GetUiName())
                 .AddTo(modelsChangedSubscriptions);
         }
-
-        var type = MainWindowService.Instance.GetTypeFromString(dropDown.value);
-
+        UpdateButtons();
     }
 
     private readonly List<Button> buttons = new List<Button>();
@@ -529,6 +531,11 @@ internal class TemplateManager : EditorWindow
     {
         WindowOpener.windowPosition = position;
         ClearSubscriptions();
+    }
+
+    private void OnDestroy()
+    {
+        OnClose();
     }
 
     private void ClearSubscriptions()

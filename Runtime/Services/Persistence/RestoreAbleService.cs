@@ -8,25 +8,14 @@ using UnityEngine;
 
 internal static class RestoreAbleService
 {
-    internal static List<string> NamesToList<T>(List<T> aiObjects) where T : AiObjectModel
+    internal static List<string> NamesToList<T>(IEnumerable<T> aiObjects) where T : AiObjectModel
     {
-        var result = new List<string>();
-        foreach(var a in aiObjects.Where(a => a != null))
-        {
-            result.Add(a.Name);
-        }
-
-        return result;
+        return aiObjects.Where(a => a != null).Select(a => a.Name).ToList();
     }
 
     internal static List<string> NamesToList(List<Parameter> aiObjects)
     {
-        var result = new List<string>();
-        foreach (var a in aiObjects.Where(a => a != null))
-        {
-            result.Add(a.Name);
-        }
-        return result;
+        return aiObjects.Where(a => a != null).Select(a => a.Name).ToList();
     }
 
     internal static List<T> SortByName<T>(List<string> names, List<T> aiObjects) where T : AiObjectModel
@@ -64,7 +53,7 @@ internal static class RestoreAbleService
         {
             if (s.LoadedObject == null)
             {
-                Debug.Log("Creating error file typeof(T): " + typeof(T) + " s.ModelType: " + s.ModelType + " TType: " + s.type);
+                DebugService.Log("Creating error file typeof(T): " + typeof(T) + " s.ModelType: " + s.ModelType + " TType: " + s.type, nameof(RestoreAbleService));
                 var error = (T)ErrorObjectService.GetErrorObject(s.ModelType);
                 error.Name = "Error";
                 error.Description = "Exception: " + s.Exception.ToString();
@@ -95,7 +84,7 @@ internal static class RestoreAbleService
             }
             else
             {
-                var parameter = await Parameter.Restore<Parameter>(p.LoadedObject, restoreDebug);
+                var parameter = await RestoreAble.Restore<Parameter>(p.LoadedObject, restoreDebug);
                 result.Add(parameter);
             }
         }
@@ -128,10 +117,16 @@ internal static class RestoreAbleService
     
     internal static async Task LoadObjectsAndSortToCollection<T>(string path, List<string> namesOrdered, 
         ReactiveList<AiObjectModel> collection, bool restoreDebug) where T: AiObjectModel
-    {
+    {   
+        DebugService.Log("Loading objects at: " + path, nameof(RestoreAbleService));
+
         var aiObjects = await GetAiObjects<T>(path, restoreDebug);
-        var sorted = SortByName(namesOrdered, aiObjects);
-        collection.Add(sorted);
+        DebugService.Log("Loading objects at: " + path + " completed " + aiObjects.Count + " objects loaded", typeof(RestoreAbleService));
+        if (aiObjects.Count > 0)
+        {
+            var sorted = SortByName(namesOrdered, aiObjects);
+            collection.Add(sorted);
+        }
     }
 
     internal static async Task SaveRestoreAblesToFile<T>(IEnumerable<T> collection, string path, IPersister persister) where T: RestoreAble

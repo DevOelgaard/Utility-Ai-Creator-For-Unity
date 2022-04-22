@@ -20,6 +20,6 @@ internal class Demo_DebugLogContextAddress : AgentAction
 
     public override void OnGoing(AiContext context)
     {
-        Debug.Log(GetContextAddress(context));
+        DebugService.Log(GetContextAddress(context),this);
     }
 }

@@ -29,7 +29,7 @@ internal class Demo_ActOnTarget : AgentAction
     private void Do(AiContext context)
     {
         var target = GetTarget(context);
-        Debug.Log("Target: " + target.name);
+        DebugService.Log("Target: " + target.name, this);
     }
 
 

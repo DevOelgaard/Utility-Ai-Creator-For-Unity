@@ -36,7 +36,7 @@ internal class JsonPersister : IPersister
             }
             catch (Exception ex)
             {
-                Debug.LogWarning("Loading failed: " + ex);
+                DebugService.LogWarning("Loading failed: " + ex, this);
                 var result = new ObjectMetaData<T>(default(T), path)
                 {
                     ErrorMessage = "Loading failed at: " + path,
@@ -95,7 +95,7 @@ internal class JsonPersister : IPersister
         }
         catch (Exception ex)
         {
-            Debug.LogWarning("Loading failed: " + ex);
+            DebugService.LogWarning("Loading failed: " + ex, this);
             var result = new ObjectMetaData<T>(default(T), path)
             {
                 ErrorMessage = "Loading failed at: " + path,

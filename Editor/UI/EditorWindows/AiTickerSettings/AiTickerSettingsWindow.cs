@@ -53,13 +53,18 @@ internal class AiTickerSettingsWindow: EditorWindow
         aiTicker = AiTicker.Instance;
         modes.Init(AiTickerMode.Unrestricted);
         modes.value = aiTicker.Settings.TickerMode.Name;
+        
+        LoadTicker(aiTicker.Settings.TickerMode);
+        tickCount.text = aiTicker.TickCount.ToString();
+
+        
         modes.RegisterCallback<ChangeEvent<Enum>>(evt =>
         {
             aiTicker.SetTickerMode((AiTickerMode)evt.newValue);
         });
 
         aiTicker.Settings.OnTickerModeChanged
-            .Subscribe(tickerMode => LoadTicker(tickerMode))
+            .Subscribe(LoadTicker)
             .AddTo(disposables);
 
         startButton.RegisterCallback<MouseUpEvent>(evt =>
@@ -77,14 +82,12 @@ internal class AiTickerSettingsWindow: EditorWindow
             aiTicker.Reload();
         });
 
-        LoadTicker(aiTicker.Settings.TickerMode);
         autoRunToggle.value = aiTicker.Settings.AutoRun;
         autoRunToggle.RegisterCallback<ChangeEvent<bool>>(evt =>
         {
             aiTicker.Settings.AutoRun = evt.newValue;
         });
 
-        tickCount.text = aiTicker.TickCount.ToString();
 
         aiTicker.OnTickCountChanged
             .Subscribe(value => tickCount.text = value.ToString())

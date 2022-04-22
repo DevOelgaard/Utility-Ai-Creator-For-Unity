@@ -122,7 +122,7 @@ internal class TemplateManager : EditorWindow
             .AddTo(disposables);
     }
 
-    async void OnEnable()
+    void OnEnable()
     {
         // await UasTemplateService.Instance.LoadCurrentProject(true);
         var mws = MainWindowService.Instance;

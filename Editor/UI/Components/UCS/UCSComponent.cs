@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.UIElements;
 
-internal class UCSComponent : VisualElement
+internal class UcsComponent : VisualElement
 {
     private readonly HelpBox descriptionHelpBox;
     private readonly VisualElement parametersContainer;
 
-    public UCSComponent()
+    public UcsComponent()
     {
         var root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);
         Add(root);
@@ -25,7 +25,7 @@ internal class UCSComponent : VisualElement
         descriptionHelpBox.text = utilityContainerSelector.GetDescription();
 
         parametersContainer.Clear();
-        foreach(var p in utilityContainerSelector.Parameters)
+        foreach(var p in utilityContainerSelector.ParameterContainer.Parameters)
         {
             var pC = new ParameterComponent();
             parametersContainer.Add(pC);

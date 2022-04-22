@@ -59,11 +59,14 @@ internal class PersistenceAPI
         await CleanUpAsync(path, startTime);
     }
     
+    
     internal void SaveDestructiveObjectPath(RestoreState o, string path)
     {
+        DebugService.Log("Saving destructively path: " + path, this);
+
         var startTime = DateTime.Now;
         Persister.SaveObject(o,path);
-        DebugService.Log("Done saving destructively path: " + path, this);
+        DebugService.Log("Saving destructively Complete path: " + path, this);
         CleanUp(path, startTime);
     }
 

@@ -10,16 +10,17 @@ public abstract class TickerMode: RestoreAble
 {
     internal AiTickerMode Name;
     internal string Description;
-    protected readonly Dictionary<string, Parameter> ParametersByName = new Dictionary<string, Parameter>();
-    public Dictionary<string, Parameter>.ValueCollection Parameters => ParametersByName.Values;
-    private bool parametersInitialized = false;
+    public ParameterContainer ParameterContainer;
+    public Dictionary<string, Parameter>.ValueCollection Parameters => 
+        ParameterContainer.Parameters;
+    
 
     protected TickerMode(AiTickerMode name, string description)
     {
         Description = description;
         Name = name;
+        ParameterContainer = new ParameterContainer(GetParameters);
     }
-
 
     protected override string GetFileName()
     {
@@ -41,60 +42,29 @@ public abstract class TickerMode: RestoreAble
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
         var state = s as TickerModeState;
-        Name = Enum.Parse<AiTickerMode>(state.Name);
-        Description = state.Description;
-        var parameters =
-            await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        foreach (var parameter in parameters)
+        if (state == null)
         {
-            AddParameter(parameter);
-        }
-    }
-    protected void AddParameter(Parameter param)
-    {
-        if (ParametersByName.ContainsKey(param.Name))
-        {
-            ParametersByName[param.Name] = param;
-        }
+            Name = default;
+            Description = "Error state is null";
+        } 
         else
         {
-            ParametersByName.Add(param.Name, param);
-        }
-    }
-
-    protected Parameter GetParameter(string parameterName)
-    {
-        if (!parametersInitialized)
-        {
-            foreach (var param in GetParameters())
+            Name = Enum.Parse<AiTickerMode>(state.Name);
+            Description = state.Description;
+            var parameters =
+                await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+            foreach (var parameter in parameters)
             {
-                ParametersByName.Add(param.Name, param);
+                ParameterContainer.AddParameter(parameter);
             }
-            parametersInitialized = true;
         }
-        
-        if (!ParametersByName.ContainsKey(parameterName))
-        {
-            var p = Parameters.FirstOrDefault(p => p.Name == parameterName);
-            if (p == null)
-            {
-                DebugService.LogError("Couldn't find parameter: " + parameterName, this);
-            }
-            ParametersByName.Add(parameterName,p);
-        }
-
-        return ParametersByName[parameterName];
     }
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
         await persister.SaveObjectAsync(state, path+"." + Consts.FileExtension_TickerModes);
-        await RestoreAbleService.SaveRestoreAblesToFile(Parameters.Where(p => p != null),path + "/" + Consts.FolderName_Parameters, persister);
-        // foreach (var parameter in Parameters)
-        // {
-        //     var subPath = path + "/" + Consts.FolderName_Parameters;
-        //     parameter.SaveToFile(subPath, persister);
-        // }
+        await RestoreAbleService.SaveRestoreAblesToFile(Parameters
+            .Where(p => p != null),path + "/" + Consts.FolderName_Parameters, persister);
     }
 }
 

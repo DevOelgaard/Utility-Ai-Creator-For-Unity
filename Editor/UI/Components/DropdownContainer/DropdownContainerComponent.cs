@@ -12,7 +12,7 @@ internal class DropdownContainerComponent<T> : VisualElement where T : UtilityCo
     private List<T> utilityContainerSelectors;
 
     private readonly VisualElement elementContainer;
-    private readonly UCSComponent ucsComponent;
+    private readonly UcsComponent ucsComponent;
     private T selectedObject;
 
     internal IObservable<T> OnSelectedObjectChanged => onSelectedObjectChanged;
@@ -25,7 +25,7 @@ internal class DropdownContainerComponent<T> : VisualElement where T : UtilityCo
 
         dropdown = root.Q<DropdownField>("Dropdown");
         elementContainer = root.Q<VisualElement>("ElementContainer");
-        ucsComponent = new UCSComponent();
+        ucsComponent = new UcsComponent();
         elementContainer.Add(ucsComponent);
 
         dropdown.label = title;

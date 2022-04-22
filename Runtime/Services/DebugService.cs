@@ -4,29 +4,35 @@ using UnityEngine;
 
 public static class DebugService
 {
+        public static bool PrintDebug = true;
         public static void Log(string message, object sender, Thread thread = null)
         {
+                if(!PrintDebug) return;
                 var senderMerged = MergeSenderAndThread(sender, thread);
                 Debug.Log(Message(message,senderMerged));
         }                
         public static void Log(string message, string sender, Thread thread = null)
         {
+                if(!PrintDebug) return;
                 var senderMerged = MergeSenderAndThread(sender, thread);
                 Debug.Log(Message(message,senderMerged));
         }
 
         public static void LogWarning(string message, object sender)
         {
+                if(!PrintDebug) return;
                 Debug.LogWarning(Message(message,sender));
         }
 
         public static void LogError(string message, object sender, Exception ex = null)
         {
+                if(!PrintDebug) return;
                 Debug.LogError(Message(message,sender,ex));
         }
 
         public static void DebugException(Exception ex)
         {
+                if(!PrintDebug) return;
                 Debug.LogException(ex);
         }
 
@@ -57,7 +63,7 @@ public static class DebugService
                 {
                         return sender;
                 }
-                return sender + " -T(" + thread.Name + ")";
+                return sender + " -T(" + thread.ManagedThreadId + ")";
         }
 
 

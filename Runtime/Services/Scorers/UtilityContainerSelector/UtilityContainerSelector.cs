@@ -7,64 +7,22 @@ using UnityEngine;
 
 public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
 {
-    protected readonly Dictionary<string, Parameter> ParametersByName = new Dictionary<string, Parameter>();
-    public Dictionary<string, Parameter>.ValueCollection Parameters
-    {
-        get
-        {
-            if (!parametersInitialized)
-            {
-                InitializeParameters();
-            }
+    public readonly ParameterContainer ParameterContainer;
 
-            return ParametersByName.Values;
-        }
-    }
-    private bool parametersInitialized = false;
     protected UtilityContainerSelector()
     {
+        ParameterContainer = new ParameterContainer(GetParameters);
     }
     public void AddParameter(Parameter param)
     {
-        if (ParametersByName.ContainsKey(param.Name))
-        {
-            ParametersByName[param.Name] = param;
-        }
-        else
-        {
-            ParametersByName.Add(param.Name, param);
-        }
+        ParameterContainer.AddParameter(param);
     }
 
     protected Parameter GetParameter(string parameterName)
     {
-        if (!parametersInitialized)
-        {
-            InitializeParameters();
-        }
-        
-        if (!ParametersByName.ContainsKey(parameterName))
-        {
-            var p = Parameters.FirstOrDefault(p => p.Name == parameterName);
-            if (p == null)
-            {
-                DebugService.LogError("Couldn't find parameter: " + parameterName, this);
-            }
-            ParametersByName.Add(parameterName,p);
-        }
-
-        return ParametersByName[parameterName];
+        return ParameterContainer.GetParameter(parameterName);
     }
 
-    private void InitializeParameters()
-    {
-        if (parametersInitialized) return;
-        foreach (var param in GetParameters())
-        {
-            ParametersByName.Add(param.Name, param);
-        }
-        parametersInitialized = true;
-    }
     public abstract Bucket GetBestUtilityContainer(List<Bucket> containers, AiContext context);
     public abstract Decision GetBestUtilityContainer(List<Decision> containers, AiContext context);
 
@@ -76,7 +34,7 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
 
     internal override RestoreState GetState()
     {
-        return new UCSState(Parameters.ToList(), this);
+        return new UCSState(ParameterContainer.Parameters.ToList(), this);
     }
 
     protected override string GetFileName()
@@ -97,7 +55,7 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
         await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_UtilityContainerSelector);
-        await RestoreAbleService.SaveRestoreAblesToFile(Parameters.Where(p => p != null),path + "/" + Consts.FolderName_Parameters, persister);
+        await RestoreAbleService.SaveRestoreAblesToFile(ParameterContainer.Parameters.Where(p => p != null),path + "/" + Consts.FolderName_Parameters, persister);
     }
 }
 
@@ -111,6 +69,6 @@ public class UCSState: RestoreState
 
     public UCSState(List<Parameter> parameters, UtilityContainerSelector ucs): base(ucs)
     {
-        Parameters = ucs.Parameters.Select(p => p.Name).ToList();
+        Parameters = ucs.ParameterContainer.Parameters.Select(p => p.Name).ToList();
     }
 }

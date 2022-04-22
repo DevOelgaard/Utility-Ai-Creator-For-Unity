@@ -22,26 +22,16 @@ public abstract class AiObjectModel: RestoreAble
     private readonly Subject<InfoModel> onInfoChanged = new Subject<InfoModel>();
 
     public List<ScoreModel> ScoreModels = new List<ScoreModel>();
+    // ReSharper disable once MemberCanBeProtected.Global
     public string ContextAddress { get; private set; }
-
-    protected readonly Dictionary<string, Parameter> ParametersByName = new Dictionary<string, Parameter>();
-    public Dictionary<string, Parameter>.ValueCollection Parameters
-    {
-        get
-        {
-            if (!parametersInitialized)
-            {
-                InitializeParameters();
-            }
-
-            return ParametersByName.Values;
-        }
-    }
-
-    private bool parametersInitialized = false;
+    // ReSharper disable once MemberCanBePrivate.Global
+    public readonly ParameterContainer ParameterContainer;
+    public Dictionary<string, Parameter>.ValueCollection Parameters => ParameterContainer.Parameters;
+    
     protected AiObjectModel(): base()
     {
         Name = StringService.SpaceBetweenUpperCase(GetType().ToString());
+        ParameterContainer = new ParameterContainer(GetParameters);
         UpdateInfo();
     }
 
@@ -53,44 +43,12 @@ public abstract class AiObjectModel: RestoreAble
 
     protected void AddParameter(Parameter param)
     {
-        if (ParametersByName.ContainsKey(param.Name))
-        {
-            ParametersByName[param.Name] = param;
-        }
-        else
-        {
-            ParametersByName.Add(param.Name, param);
-        }
+        ParameterContainer.AddParameter(param);
     }
 
     protected Parameter GetParameter(string parameterName)
     {
-        if (!parametersInitialized)
-        {
-            InitializeParameters();
-        }
-        
-        if (!ParametersByName.ContainsKey(parameterName))
-        {
-            var p = Parameters.FirstOrDefault(p => p.Name == parameterName);
-            if (p == null)
-            {
-                DebugService.LogError("Couldn't find parameter: " + parameterName, this);
-            }
-            ParametersByName.Add(parameterName,p);
-        }
-
-        return ParametersByName[parameterName];
-    }
-
-    private void InitializeParameters()
-    {
-        if (parametersInitialized) return;
-        parametersInitialized = true;
-        foreach (var param in GetParameters())
-        {
-            AddParameter(param);
-        }
+        return ParameterContainer.GetParameter(parameterName);
     }
     
     protected virtual List<Parameter> GetParameters()

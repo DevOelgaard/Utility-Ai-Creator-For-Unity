@@ -14,7 +14,7 @@ internal class UCSLog: ILogModel
         var result = new UCSLog();
         result.Name = ucs.GetName();
         result.Parameters = new List<ParameterLog>();
-        foreach (var p in ucs.Parameters)
+        foreach (var p in ucs.ParameterContainer.Parameters)
         {
             result.Parameters.Add(ParameterLog.GetDebug(p, tick));
         }

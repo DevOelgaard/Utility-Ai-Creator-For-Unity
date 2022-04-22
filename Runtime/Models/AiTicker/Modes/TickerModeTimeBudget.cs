@@ -31,9 +31,9 @@ internal class TickerModeTimeBudget : TickerMode
 
         while(TickedAgentsThisFrame < agents.Count)
         {
-            if (stopwatch.ElapsedMilliseconds >= Convert.ToSingle(GetParameter("Time Budget MS").Value))
+            if (stopwatch.ElapsedMilliseconds >= (float)ParameterContainer.GetParameter("Time Budget MS").Value)
             {
-                if ((bool)GetParameter("Debug").Value)
+                if ((bool)ParameterContainer.GetParameter("Debug").Value)
                 {
                     DebugService.Log("Breaking tickedAgents: " + TickedAgentsThisFrame + " Elapsed Time: " + stopwatch.ElapsedMilliseconds + "ms", this);
                 }
@@ -56,7 +56,7 @@ internal class TickerModeTimeBudget : TickerMode
             TickedAgentsThisFrame++;
             if (TickedAgentsThisFrame >= agents.Count)
             {
-                if ((bool)GetParameter("Debug").Value)
+                if ((bool)ParameterContainer.GetParameter("Debug").Value)
                 {
                     DebugService.Log("All agents ticked agents.count: " + agents.Count + " Elapsed Time: " + stopwatch.ElapsedMilliseconds + "ms", this);
                 }

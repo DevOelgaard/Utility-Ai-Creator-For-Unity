@@ -121,7 +121,7 @@ internal static class RestoreAbleService
         DebugService.Log("Loading objects at: " + path, nameof(RestoreAbleService));
 
         var aiObjects = await GetAiObjects<T>(path, restoreDebug);
-        DebugService.Log("Loading objects at: " + path + " completed " + aiObjects.Count + " objects loaded", typeof(RestoreAbleService));
+        DebugService.Log("Loading objects at: " + path + " completed " + aiObjects.Count + " objects loaded", nameof(RestoreAbleService));
         if (aiObjects.Count > 0)
         {
             var sorted = SortByName(namesOrdered, aiObjects);

@@ -35,13 +35,17 @@ public class AgentMono : MonoBehaviour, IAgent
     {
         Model.Name = SetAgentName();
         AgentManager.Instance.Register(this);
-        var localAi = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
-        SetAi(localAi);
+        var aiByName = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
+        SetAi(aiByName);
         decisionScoreEvaluator = new DecisionScoreEvaluator();
     }
 
     public void SetAi(Ai model)
     {
+        if (model == null)
+        {
+            DebugService.LogWarning("Setting Ai of agent: " + name +" to null", this);
+        }
         Ai = model;
     }
 
@@ -51,7 +55,7 @@ public class AgentMono : MonoBehaviour, IAgent
     }
 
     /// <summary>
-    /// Returns the desired AiAgent name, which is displayd in the UAS Tools
+    /// Returns the desired AiAgent name, which is displayed in the UAS Tools
     /// By default set as the name of the attached MonoBehaviour
     /// </summary>
     /// <returns></returns>

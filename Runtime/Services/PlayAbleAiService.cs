@@ -14,6 +14,7 @@ public class PlayAbleAiService: RestoreAble
     private static readonly CompositeDisposable AiDisposables = new CompositeDisposable();
     private static List<Ai> _ais = new List<Ai>();
     private string oldStacktrace ="";
+    private bool saveOnDestroy;
 
     public static PlayAbleAiService Instance
     {
@@ -42,6 +43,7 @@ public class PlayAbleAiService: RestoreAble
             DebugService.Log("Initializing playmode", this);
 
             AsyncHelpers.RunSync(RestoreService);
+            saveOnDestroy = false;
         
             DebugService.Log("Initialized playmode complete Ais Count: " + _ais.Count, this);
             if (_ais.Count == 0)
@@ -63,6 +65,7 @@ public class PlayAbleAiService: RestoreAble
                 AsyncHelpers.RunSync(RestoreService);
                 DebugService.Log("Ais loaded from file", this);
             }
+            saveOnDestroy = true;
 
             TemplateService.Instance
                 .AIs
@@ -100,6 +103,11 @@ public class PlayAbleAiService: RestoreAble
 
     public Ai GetAiByName(string name)
     {
+        if (_ais.Count == 0)
+        {
+            DebugService.LogWarning("No playable Ais. Have you marked an ai PlayAble", this);
+            return null;
+        }
         var ai = _ais.FirstOrDefault(ai => ai.Name == name) ?? _ais.First();
 
         return ai.Clone() as Ai;
@@ -199,6 +207,7 @@ public class PlayAbleAiService: RestoreAble
     private void SaveBeforeEnteringPlayMode()
     {
         DebugService.Log("SaveBeforeEnteringPlayMode Start", this);
+        if(!saveOnDestroy) return;
         if (EditorApplication.isPlaying) return;
         DebugService.Log("Saving", this);
 

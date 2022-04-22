@@ -20,7 +20,6 @@ internal class TemplateManager : EditorWindow
     private VisualElement leftPanel;
     private VisualElement elementsContainer;
     private VisualElement rightPanel;
-    private VisualElement buttonContainer;
     private Button copyButton;
     private Button deleteButton;
     private Button clearButton;
@@ -60,7 +59,7 @@ internal class TemplateManager : EditorWindow
         leftPanel = root.Q<VisualElement>("left-panel");
         elementsContainer = leftPanel.Q<VisualElement>("ButtonContainer");
 
-        buttonContainer = root.Q<VisualElement>("Buttons");
+        root.Q<VisualElement>("Buttons");
         addElementPopup = new PopupField<string>("Add element");
         var addElementPopupContainer = root.Q<VisualElement>("AddElementPopupContainer");
         copyButton = root.Q<Button>("CopyButton");
@@ -72,6 +71,7 @@ internal class TemplateManager : EditorWindow
         // Init Objects
         InitToolbarFile();
         InitToolbarDebug();
+        InitToolBarSettings();
         InitToolbarDemos();
         InitDropdown();
         UpdateLeftPanel();
@@ -79,17 +79,17 @@ internal class TemplateManager : EditorWindow
 
         
         // Subscribe
-        copyButton.RegisterCallback<MouseUpEvent>(evt =>
+        copyButton.RegisterCallback<MouseUpEvent>(_ =>
         {
             CopySelectedElements();
         });
 
-        deleteButton.RegisterCallback<MouseUpEvent>(evt =>
+        deleteButton.RegisterCallback<MouseUpEvent>(_ =>
         {
             DeleteSelectedElements();
         });
 
-        clearButton.RegisterCallback<MouseUpEvent>(evt =>
+        clearButton.RegisterCallback<MouseUpEvent>(_ =>
         {
             uASTemplateService.Reset();
             UpdateLeftPanel();
@@ -103,7 +103,7 @@ internal class TemplateManager : EditorWindow
         });
 
         TemplateService.Instance.OnIncludeDemosChanged
-            .Subscribe(value =>
+            .Subscribe(_ =>
             {
                 UpdateAddElementPopup();
             })
@@ -163,44 +163,61 @@ internal class TemplateManager : EditorWindow
 
         menu.menu.AppendAction("Save", SaveUas);
 
-        menu.menu.AppendAction("Save As", _ =>
+        async void SaveProjectAs(DropdownMenuAction _)
         {
-            ProjectSettingsService.Instance.SaveProjectAs();
+            await ProjectSettingsService.Instance.SaveProjectAs();
             rightPanel.Clear();
-        });
+        }
+
+        menu.menu.AppendAction("Save As", SaveProjectAs);
 
         menu.menu.AppendAction("Open Project", OpenProject);
 
-        menu.menu.AppendAction("Export File(s)", _ =>
-        {
-            var saveObjects = new List<RestoreAble>();
-            selectedObjects.ForEach(pair => saveObjects.Add(pair.Key));
-            persistenceAPI.SaveObjectsPanel(saveObjects);
-        });
+ 
+
+        menu.menu.AppendAction("Export File(s)", ExportFiles);
 
         menu.menu.AppendAction("Import File(s)", ImportFiles);
 
-        menu.menu.AppendAction("Reload Project", async _ =>
-        {
-            await uASTemplateService.LoadCurrentProject();
-        });
+        menu.menu.AppendAction("Reload Project", ReloadProject);
 
         menu.menu.AppendAction("Save Backup - TEST", _ =>
         {
             Task.Factory.StartNew(() => uASTemplateService.Save(true));
         });
 
-        menu.menu.AppendAction("Load Backup - TEST", async _ =>
-        {
-            await uASTemplateService.LoadCurrentProject(true);
-        });
+        menu.menu.AppendAction("Load Backup - TEST", LoadBackup);
 
         menu.menu.AppendAction("Exit", _ =>
         {
-            this.Close();
+            Close();
         });
         
         toolbar.Add(menu);
+    }
+
+    private async void LoadBackup(DropdownMenuAction _)
+    {
+        await uASTemplateService.LoadCurrentProject(true);
+    }
+
+    private async void ReloadProject(DropdownMenuAction _)
+    {
+        await uASTemplateService.LoadCurrentProject();
+    }
+
+    private void InitToolBarSettings()
+    {
+        var printDebug = new ToolbarToggle
+        {
+            text = "Print debug"
+        };
+        printDebug.SetValueWithoutNotify(DebugService.PrintDebug);
+        
+        printDebug.RegisterCallback<ChangeEvent<bool>>(evt =>
+        {
+            DebugService.PrintDebug = evt.newValue;
+        });
     }
 
     private async void SaveUas(DropdownMenuAction _)
@@ -213,11 +230,17 @@ internal class TemplateManager : EditorWindow
     {
         var s = await persistenceAPI.LoadFilePanel<RestoreState>(Consts.FileExtensionsFilters);
         s.LoadedObject.FolderLocation = Path.GetDirectoryName(s.Path) + @"\";
-        var t = s.StateType;
 
         var toCollection = uASTemplateService.GetCollection(s.ModelType);
         var restored = await RestoreAble.Restore(s.LoadedObject, s.ModelType);
         toCollection.Add(restored as AiObjectModel);
+    }
+    
+    private async void ExportFiles(DropdownMenuAction _)
+    {
+        var saveObjects = new List<RestoreAble>();
+        selectedObjects.ForEach(pair => saveObjects.Add(pair.Key));
+        await persistenceAPI.SaveObjectsPanel(saveObjects);
     }
 
     private async void OpenProject(DropdownMenuAction _)
@@ -255,15 +278,18 @@ internal class TemplateManager : EditorWindow
 
     private void InitToolbarDemos()
     {
-        var includeDemos = new ToolbarToggle();
-        includeDemos.text = "include Demo Files";
+        var includeDemos = new ToolbarToggle
+        {
+            text = "include Demo Files"
+        };
 
         includeDemos.RegisterCallback<ChangeEvent<bool>>(evt =>
         {
             TemplateService.Instance.IncludeDemos = evt.newValue;
         });
+        includeDemos.value = false;
+
         toolbar.Add(includeDemos);
-        includeDemos.SetValueWithoutNotify(TemplateService.Instance.IncludeDemos);
     }
 
 
@@ -397,7 +423,7 @@ internal class TemplateManager : EditorWindow
             elementsContainer.Add(button);
             buttons.Add(button);
             model.OnNameChanged
-                .Subscribe(newName => button.text = model.GetUiName())
+                .Subscribe(_ => button.text = model.GetUiName())
                 .AddTo(modelsChangedSubscriptions);
         }
         UpdateButtons();
@@ -476,7 +502,7 @@ internal class TemplateManager : EditorWindow
             pair.Value.style.color = Color.gray;
         }
     }
-    private int selectionCounter = 0;
+    private int selectionCounter;
 
     private void ModelSelected(AiObjectModel model)
     {

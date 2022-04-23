@@ -216,7 +216,7 @@ public class PlayAbleAiService: RestoreAble
         if (EditorApplication.isPlaying) return;
         var state = GetState();
         PersistenceAPI.Instance
-            .SaveDestructiveObjectPath(state, Consts.FileUasPlayAbleWithExtension);
+            .SaveFileDestructiveObjectPath(state, Consts.FileUasPlayAbleWithExtension);
         DebugService.Log("Saving Complete ais count: " + _ais.Count, this);
 
     }

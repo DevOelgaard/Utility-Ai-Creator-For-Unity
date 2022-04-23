@@ -60,14 +60,14 @@ internal class PersistenceAPI
     }
     
     
-    internal void SaveDestructiveObjectPath(RestoreState o, string path)
+    internal void SaveFileDestructiveObjectPath(RestoreState o, string path)
     {
         DebugService.Log("Saving destructively path: " + path, this);
 
-        var startTime = DateTime.Now;
+        // var startTime = DateTime.Now;
         Persister.SaveObject(o,path);
         DebugService.Log("Saving destructively Complete path: " + path, this);
-        CleanUp(path, startTime);
+        // CleanUp(path, startTime);
     }
 
     internal async Task<ObjectMetaData<T>> LoadObjectPanel<T>()
@@ -166,6 +166,11 @@ internal class PersistenceAPI
     private static void CleanUp(string path, DateTime startTime)
     {
         DebugService.Log("Starting cleanup path: " + path, nameof(PersistenceAPI));
+        if (path.Contains("."))
+        {
+            DebugService.Log("Only intended or directories returning : " + path, nameof(PersistenceAPI));
+            return;
+        }
         var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
         foreach (var file in files.Where(f => !f.Contains(".meta")))
         {

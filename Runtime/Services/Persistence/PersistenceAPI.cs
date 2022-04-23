@@ -51,7 +51,7 @@ internal class PersistenceAPI
         await o.SaveToFile(path, Persister, -2, fileName);
     }
 
-    internal async Task SaveDestructiveObjectPathAsync(RestoreAble o, string path, string fileName)
+    internal async Task SaveObjectDestructivelyAsync(RestoreAble o, string path, string fileName)
     {
         var startTime = DateTime.Now;
         await o.SaveToFile(path, Persister,-2, fileName);
@@ -337,5 +337,9 @@ public class ObjectMetaData<T>
         type = typeof(T);
         LoadedObject = o;
         Path = path;
+        if (LoadedObject == null)
+        {
+            IsSuccessFullyLoaded = false;
+        }
     }
 }

@@ -289,7 +289,7 @@ public class ResponseCurve: AiObjectModel
             .GetParameters(CurrentDirectory + Consts.FolderName_Segments, restoreDebug);
 
         ResponseFunctions = await RestoreAbleService
-        .GetAiObjects<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
+        .GetAiObjectsSortedByIndex<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
     }
 
     ~ResponseCurve()

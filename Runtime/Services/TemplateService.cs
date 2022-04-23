@@ -153,8 +153,8 @@ internal class TemplateService: RestoreAble
         {
             ClearCollectionNotify();
             SubscribeToCollectionChanges();
-            DebugService.LogError("Loading failed state.LoadedObjet == null",this);
-            DebugService.LogError("State.ErrorMessage: " + state.ErrorMessage,this);
+            DebugService.LogWarning("Loading failed state.LoadedObjet == null at path: " + loadPath,this);
+            DebugService.LogWarning("State.ErrorMessage: " + state.ErrorMessage,this);
         }
         else
         {
@@ -193,7 +193,7 @@ internal class TemplateService: RestoreAble
 
         var perstistAPI = PersistenceAPI.Instance;
         var currentProjectName = ProjectSettingsService.Instance.GetCurrentProjectName(true);
-        await perstistAPI.SaveDestructiveObjectPathAsync(this, path, currentProjectName);
+        await perstistAPI.SaveObjectDestructivelyAsync(this, path, currentProjectName);
         SetState(currentState);
     }
 

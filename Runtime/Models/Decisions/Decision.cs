@@ -106,14 +106,14 @@ public class Decision: UtilityContainer
 
         AgentActions = new ReactiveListNameSafe<AgentAction>();
         var restoredAgentActions = await RestoreAbleService
-            .GetAiObjects<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions,
+            .GetAiObjectsSortedByIndex<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions,
                 restoreDebug);
         
         AgentActions.Add(RestoreAbleService.SortByName(state.AgentActions, restoredAgentActions));
 
         Considerations = new ReactiveListNameSafe<Consideration>();
         var considerations = await RestoreAbleService
-            .GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations,
+            .GetAiObjectsSortedByIndex<Consideration>(CurrentDirectory + Consts.FolderName_Considerations,
                 restoreDebug);
         
         Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));

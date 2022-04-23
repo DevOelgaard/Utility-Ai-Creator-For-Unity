@@ -47,6 +47,7 @@ public class AgentMono : MonoBehaviour, IAgent
             DebugService.LogWarning("Setting Ai of agent: " + name +" to null", this);
             throw new NullReferenceException();
         }
+        DebugService.Log("Setting Ai of agent: " + model.Name, this);
         Ai = model;
     }
 

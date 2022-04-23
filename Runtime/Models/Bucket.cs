@@ -110,13 +110,13 @@ public class Bucket : UtilityContainer
 
         Decisions = new ReactiveListNameSafe<Decision>();
         var decisionsLocal = await RestoreAbleService
-            .GetAiObjects<Decision>(CurrentDirectory + Consts.FolderName_Decisions, restoreDebug);
+            .GetAiObjectsSortedByIndex<Decision>(CurrentDirectory + Consts.FolderName_Decisions, restoreDebug);
         
         Decisions.Add(RestoreAbleService.SortByName(state.Decisions, decisionsLocal));
         
         Considerations = new ReactiveListNameSafe<Consideration>();
         var considerations = await RestoreAbleService
-            .GetAiObjects<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
+            .GetAiObjectsSortedByIndex<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
         
         Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
 

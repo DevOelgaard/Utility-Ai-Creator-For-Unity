@@ -126,13 +126,13 @@ internal class TemplateManager : EditorWindow
     {
         // await UasTemplateService.Instance.LoadCurrentProject(true);
         var mws = MainWindowService.Instance;
-        mws.OnUpdateStateChanged
-            .Subscribe(state =>
-            {
-                var projectName = ProjectSettingsService.Instance.GetCurrentProjectName();
-                this.titleContent.text = state ? projectName + " - Loading" : projectName;
-            })
-            .AddTo(disposables);
+        // mws.OnUpdateStateChanged
+        //     .Subscribe(state =>
+        //     {
+        //         var projectName = ProjectSettingsService.Instance.GetCurrentProjectName();
+        //         this.titleContent.text = state ? projectName + " - Loading" : projectName;
+        //     })
+        //     .AddTo(disposables);
         mws.Start();
 
         uASTemplateService.OnStateChanged

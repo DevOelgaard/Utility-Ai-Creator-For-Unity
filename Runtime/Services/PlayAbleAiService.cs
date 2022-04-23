@@ -13,8 +13,6 @@ public class PlayAbleAiService: RestoreAble
     private static readonly CompositeDisposable Disposables = new CompositeDisposable();
     private static readonly CompositeDisposable AiDisposables = new CompositeDisposable();
     private static List<Ai> _ais = new List<Ai>();
-    private string oldLogString ="";
-    private static bool _saveOnDestroy = false;
 
     public static PlayAbleAiService Instance
     {
@@ -32,7 +30,9 @@ public class PlayAbleAiService: RestoreAble
     [InitializeOnLoadMethod]
     private static void TouchInstance()
     {
+        DebugService.Log("Initialize On Load", nameof(PlayAbleAiService));
         var x = Instance;
+        DebugService.Log("Initialize On Load Complete", nameof(PlayAbleAiService));
     }
 
     private void Init()
@@ -42,7 +42,6 @@ public class PlayAbleAiService: RestoreAble
             DebugService.Log("Initializing playmode", this);
 
             AsyncHelpers.RunSync(RestoreService);
-            _saveOnDestroy = false;
         
             DebugService.Log("Initialized playmode complete Ais Count: " + _ais.Count, this);
             if (_ais.Count == 0)
@@ -67,7 +66,6 @@ public class PlayAbleAiService: RestoreAble
                 AsyncHelpers.RunSync(RestoreService);
                 DebugService.Log("Loading Ais from file Complete", this);
             }
-            _saveOnDestroy = true;
 
             TemplateService.Instance
                 .AIs
@@ -78,23 +76,30 @@ public class PlayAbleAiService: RestoreAble
             DebugService.Log("Initialized editor mode complete Ais Count: " + _ais.Count, this);
         }
 
-        Application.logMessageReceived += Reset;
+        EditorApplication.playModeStateChanged += Reset;
+        // Application.logMessageReceived += Reset;
     }
 
-    private void Reset(string logString, string stacktrace, LogType type)
+    private void Reset(PlayModeStateChange obj)
     {
-        if (type != LogType.Exception) return;
-        if (oldLogString == logString)
-        {
-            return;
-        }
-
-        oldLogString = logString;
-        DebugService.Log("Resetting because of exception: " + stacktrace, this);
+        DebugService.Log("Resetting because of playmode state change: " + obj, this);
         ClearSubscriptions();
-
         Init();
     }
+    //
+    // private void Reset(string logString, string stacktrace, LogType type)
+    // {
+    //     if (type != LogType.Exception) return;
+    //     if (oldLogString == logString)
+    //     {
+    //         return;
+    //     }
+    //
+    //     oldLogString = logString;
+    //     DebugService.Log("Resetting because of exception: " + stacktrace, this);
+    //     ClearSubscriptions();
+    //     Init();
+    // }
 
 
 
@@ -111,7 +116,7 @@ public class PlayAbleAiService: RestoreAble
             return null;
         }
         var ai = _ais.FirstOrDefault(ai => ai.Name == name) ?? _ais.First();
-
+        DebugService.Log("GetAiByName requested name: " + name +" returning: " + ai.Name,this);
         return ai.Clone() as Ai;
     }
 
@@ -124,25 +129,25 @@ public class PlayAbleAiService: RestoreAble
     {
 
     }
-
     private async Task RestoreService()
     {
         DebugService.Log("Restoring", this);
-        var objectMetaData = PersistenceAPI.Instance
-            .LoadObjectPath<PlayAbleAiServiceState>(Consts.FileUasPlayAbleWithExtension);
+        var objectMetaData = await PersistenceAPI.Instance
+            .LoadObjectPathAsync<PlayAbleAiServiceState>(Consts.FileUasPlayAblePathWithNameAndExtension);
         if (objectMetaData.IsSuccessFullyLoaded)
         {
-
             var state = objectMetaData.LoadedObject;
-            _ais = new List<Ai>();
-            var tasks = state.AiStates
-                .Select(aiState => 
-                    Task.Run(async () => 
-                        await Restore<Ai>(aiState)))
-                .ToList();
-
-            var results = await Task.WhenAll(tasks);
-            _ais = results.ToList();
+            await RestoreInternalAsync(state);
+            //
+            // _ais = new List<Ai>();
+            // var tasks = state.AiStates
+            //     .Select(aiState => 
+            //         Task.Run(async () => 
+            //             await Restore<Ai>(aiState)))
+            //     .ToList();
+            //
+            // var results = await Task.WhenAll(tasks);
+            // _ais = results.ToList();
             DebugService.Log("Restoring Complete", this);
         }
         else
@@ -173,35 +178,45 @@ public class PlayAbleAiService: RestoreAble
     }
     protected override string GetFileName()
     {
-        return "Play Able Ais";
+        return Consts.FileUasPlayAbleFileName;
     }
 
+    
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
         DebugService.Log("Restoring", this);
+        var state = (PlayAbleAiServiceState)s;
+        var directoryPath = Consts.FileUasPlayAblePath + Consts.FolderName_Ais;
+        _ais = await RestoreAbleService.GetAiObjectsSortedByIndex<Ai>(directoryPath, restoreDebug);
 
-        var state = (PlayAbleAiServiceState) s;
-        _ais = new List<Ai>();
-        var tasks = state.AiStates
-            .Select(aiState => 
-                Task.Run(async () => 
-                    await Restore<Ai>(aiState)))
-            .ToList();
-
-        var results = await Task.WhenAll(tasks);
-        _ais = results.ToList();
-        DebugService.Log("Restoring Complete", this);
+        // var state = (PlayAbleAiServiceState) s;
+        // _ais = new List<Ai>();
+        // var tasks = state.AiStates
+        //     .Select(aiState => 
+        //         Task.Run(async () => 
+        //             await Restore<Ai>(aiState)))
+        //     .ToList();
+        //
+        // var results = await Task.WhenAll(tasks);
+        // _ais = results.ToList();
+        DebugService.Log("Restoring Complete Ai count: " + _ais.Count, this);
 
     }
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
         DebugService.Log("Saving", this);
+        var directoryPath = Path.GetDirectoryName(path);
         if (!path.Contains(Consts.FileExtension_UasPlayAble))
         {
             path += "." + Consts.FileExtension_UasPlayAble;
         }
         await persister.SaveObjectAsync(state, path);
+        
+        
+        DebugService.Log("Starting save AI tasks", this);
+        await RestoreAbleService.SaveRestoreAblesToFile(_ais,
+            directoryPath + "/" + Consts.FolderName_Ais, persister);
         DebugService.Log("Saving Complete", this);
     }
 
@@ -210,13 +225,13 @@ public class PlayAbleAiService: RestoreAble
         return new PlayAbleAiServiceState(_ais,this);
     }
 
-    private void SaveState()
+    private async void SaveState()
     {
         DebugService.Log("Saving", this);
         if (EditorApplication.isPlaying) return;
         var state = GetState();
-        PersistenceAPI.Instance
-            .SaveFileDestructiveObjectPath(state, Consts.FileUasPlayAbleWithExtension);
+        await PersistenceAPI.Instance.SaveObjectDestructivelyAsync(this, Consts.FileUasPlayAblePath,
+            Consts.FileUasPlayAblePathWithNameAndExtension);
         DebugService.Log("Saving Complete ais count: " + _ais.Count, this);
 
     }
@@ -224,7 +239,8 @@ public class PlayAbleAiService: RestoreAble
     {
         Disposables.Clear();
         AiDisposables.Clear();
-        Application.logMessageReceived -= Reset;
+        // Application.logMessageReceived -= Reset;
+        EditorApplication.playModeStateChanged -= Reset;
     }
 
     ~PlayAbleAiService()
@@ -238,7 +254,7 @@ public class PlayAbleAiService: RestoreAble
 [Serializable]
 public class PlayAbleAiServiceState: RestoreState
 {
-    public List<AiState> AiStates;
+    // public List<AiState> AiStates;
 
     public PlayAbleAiServiceState()
     {
@@ -246,12 +262,12 @@ public class PlayAbleAiServiceState: RestoreState
 
     public PlayAbleAiServiceState(IEnumerable<Ai> ais, PlayAbleAiService o): base(o)
     {
-        AiStates = new List<AiState>();
-        foreach (var state in ais.Select(ai => 
-                     ai.GetState() as AiState))
-        {
-            AiStates.Add(state);
-        }
+        // AiStates = new List<AiState>();
+        // foreach (var state in ais.Select(ai => 
+        //              ai.GetState() as AiState))
+        // {
+        //     AiStates.Add(state);
+        // }
     }
 }
 

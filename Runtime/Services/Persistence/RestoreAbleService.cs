@@ -40,7 +40,7 @@ internal static class RestoreAbleService
         return result;
     }
 
-    internal static async Task<List<T>> GetAiObjects<T>(string path, bool restoreDebug) where T : AiObjectModel
+    internal static async Task<List<T>> GetAiObjectsSortedByIndex<T>(string path, bool restoreDebug) where T : AiObjectModel
     {
         var result = new List<T>();
         var states = await PersistenceAPI.Instance.LoadObjectsPathWithFilters<RestoreState>(path, typeof(T));
@@ -117,7 +117,7 @@ internal static class RestoreAbleService
     {   
         DebugService.Log("Loading objects at: " + path, nameof(RestoreAbleService));
 
-        var aiObjects = await GetAiObjects<T>(path, restoreDebug);
+        var aiObjects = await GetAiObjectsSortedByIndex<T>(path, restoreDebug);
         DebugService.Log("Loading objects at: " + path + " completed " + aiObjects.Count + " objects loaded", nameof(RestoreAbleService));
         if (aiObjects.Count > 0)
         {

@@ -181,7 +181,7 @@ public abstract class Consideration : AiObjectModel
             }
 
             var rC = await RestoreAbleService
-                .GetAiObjects<ResponseCurve>(CurrentDirectory + Consts.FolderName_ResponseCurves, restoreDebug);
+                .GetAiObjectsSortedByIndex<ResponseCurve>(CurrentDirectory + Consts.FolderName_ResponseCurves, restoreDebug);
             CurrentResponseCurve = rC.First();
                 
 

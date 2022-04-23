@@ -16,7 +16,9 @@ public static class Consts
     //internal const string File_PlayAi = Path_MainFolder + "Ai/Playable" + "." + FileExtension_UasTemplateCollection;
     internal const string File_UASTemplateService_AutoSave = PathMainFolder + "Saves/AutoSave" + "." + FileExtension_UasProject;
     internal const string FileUasProjectBackUp = PathMainFolder + "BackUp/";
-    internal const string FileUasPlayAbleWithExtension = PathMainFolder + "PlayAble/PlayAble." + FileExtension_UasPlayAble;
+    internal const string FileUasPlayAblePathWithNameAndExtension = FileUasPlayAblePath + FileUasPlayAbleFileName + "." + FileExtension_UasPlayAble;
+    internal const string FileUasPlayAblePath = PathMainFolder + FileUasPlayAbleFileName+"/";
+    internal const string FileUasPlayAbleFileName = "PlayAble";
     internal const string File_UASTemplateServicel_Playable = PathMainFolder + "Saves/Playable" + "." + FileExtension_UasProject;
 
     // Folder Names

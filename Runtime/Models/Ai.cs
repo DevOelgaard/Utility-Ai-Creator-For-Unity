@@ -98,8 +98,6 @@ public class Ai: AiObjectModel
         return new AiState(Name, Description, Buckets.Values, this);
     }
 
-
-
     private UtilityContainerSelector currentBucketSelector;
     public UtilityContainerSelector CurrentBucketSelector
     {
@@ -195,7 +193,7 @@ public class Ai: AiObjectModel
         
         Buckets = new ReactiveListNameSafe<Bucket>();
         var bucketsLocal = await RestoreAbleService
-            .GetAiObjects<Bucket>(CurrentDirectory + Consts.FolderName_Buckets, restoreDebug);
+            .GetAiObjectsSortedByIndex<Bucket>(CurrentDirectory + Consts.FolderName_Buckets, restoreDebug);
         Buckets.Add(RestoreAbleService.SortByName(state.Buckets, bucketsLocal));
 
         BucketSelectors = await RestoreAbleService.GetUcs(CurrentDirectory + Consts.FolderName_BucketSelectors, restoreDebug);

@@ -92,12 +92,17 @@ internal static class RestoreAbleService
     {
         var result = new List<UtilityContainerSelector>();
         var filter = FileExtensionService.GetFileExtensionFromType(typeof(UtilityContainerSelector));
-        var states = await PersistenceAPI.Instance.LoadObjectsPath<RestoreState>(path, filter);
+        DebugService.Log("GetUcs path: " + path + " filter: " + filter, nameof(RestoreAbleService));
+
+        var states = await PersistenceAPI.Instance.LoadObjectsPathAsync<RestoreState>(path, filter);
+        DebugService.Log("GetUcs number of states: " + states.Count, nameof(RestoreAbleService));
+
         states = states.OrderBy(s => s.LoadedObject?.Index).ToList();
         foreach (var bs in states)
         {
             if (bs.LoadedObject == null)
             {
+                DebugService.Log("GetUcs failed fo load: " + bs.Path, nameof(RestoreAbleService));
                 var error = (UtilityContainerSelector)InstantiaterService.CreateInstance(bs.ModelType);
                 var errorParam = new Parameter("Error", bs.Exception.ToString());
                 error.AddParameter(errorParam);
@@ -106,6 +111,8 @@ internal static class RestoreAbleService
             else
             {
                 var ucs = await RestoreAble.Restore<UtilityContainerSelector>(bs.LoadedObject, restoreDebug);
+                DebugService.Log("GetUcs loaded: " + ucs.FileName, nameof(RestoreAbleService));
+
                 result.Add(ucs);
             }
         }

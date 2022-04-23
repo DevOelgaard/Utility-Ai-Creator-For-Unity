@@ -43,7 +43,7 @@ namespace UniRxExtension
             var elementsAsList = elements.ToList();
             if (!elementsAsList.Any())
             {
-                DebugService.Log("Returning no elements to add", nameof(ReactiveList<T>));
+                DebugService.Log("Returning no elements to add of type: " + typeof(T), nameof(ReactiveList<T>));
             }
             DebugService.Log("Adding " + elementsAsList.Count() + " elements of type: " + typeof(T), nameof(ReactiveList<T>));
             foreach(var e in elementsAsList)

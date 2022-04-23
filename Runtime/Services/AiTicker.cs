@@ -168,7 +168,7 @@ internal class AiTicker: RestoreAble
 
     internal async Task Save()
     {
-        await persistenceAPI.SaveObjectPath(Settings, Consts.FileTickerSettings, "TickerSettings");
+        await persistenceAPI.SaveObjectPathAsync(Settings, Consts.FileTickerSettings, "TickerSettings");
     }
 
     ~AiTicker()

@@ -250,7 +250,7 @@ internal class TemplateManager : EditorWindow
     {
         var saveObjects = new List<RestoreAble>();
         selectedObjects.ForEach(pair => saveObjects.Add(pair.Key));
-        await persistenceAPI.SaveObjectsPanel(saveObjects);
+        await persistenceAPI.SaveObjectsPanelAsync(saveObjects);
     }
 
     private async void OpenProject(DropdownMenuAction _)

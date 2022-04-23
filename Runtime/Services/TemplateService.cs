@@ -194,7 +194,7 @@ internal class TemplateService: RestoreAble
         var perstistAPI = PersistenceAPI.Instance;
         var currentProjectName = ProjectSettingsService.Instance.GetCurrentProjectName(true);
         await perstistAPI.SaveObjectDestructivelyAsync(this, path, currentProjectName);
-        SetState(currentState);
+        SetState("");
     }
 
     protected override string GetFileName()
@@ -390,7 +390,7 @@ internal class TemplateService: RestoreAble
         await Task.WhenAll(tasks);
         DebugService.Log("Finished Restore: " + s.FileName, this);
 
-        onCollectionChanged.OnNext(AIs);
+        // onCollectionChanged.OnNext(AIs);
     }
     
     ~TemplateService()

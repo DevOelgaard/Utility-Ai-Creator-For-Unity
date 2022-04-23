@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -34,6 +35,7 @@ public abstract class RestoreAble
                 element = (T)InstantiaterService.CreateInstance(type,true);
             }
             element.CurrentDirectory = state.FolderLocation + "/" + state.FileName + "/";
+            DebugService.Log("Setting CurrentDirectory: " + element.CurrentDirectory + " of type: " + typeof(T), nameof(RestoreAble));
             await element.RestoreInternalAsync(state, restoreDebug);
             return element;
         }
@@ -67,6 +69,9 @@ public abstract class RestoreAble
             var state = GetState();
             path = path + "/" + FileName;
             state.Index = index;
+            state.FolderLocation = Path.GetDirectoryName(path);
+            DebugService.Log("Setting folder location of " + state.FileName + " Folder location: " + state.FolderLocation + " Path: " + path, this);
+
 
             await InternalSaveToFile(path, persister, state);
             DebugService.Log("Done SaveToFile path: " + path, this, Thread.CurrentThread);

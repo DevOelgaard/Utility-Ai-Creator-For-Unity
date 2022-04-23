@@ -101,61 +101,31 @@ public class Ai: AiObjectModel
     private UtilityContainerSelector currentBucketSelector;
     public UtilityContainerSelector CurrentBucketSelector
     {
-        get
-        {
-            if(currentBucketSelector == null)
-            {
-                currentBucketSelector = BucketSelectors.FirstOrDefault();
-            }
-            return currentBucketSelector;
-        }
-        set
-        {
-            currentBucketSelector = value;
-        }
+        get => currentBucketSelector ??= BucketSelectors.FirstOrDefault();
+        set => currentBucketSelector = value;
     }
     private List<UtilityContainerSelector> bucketSelectors;
     internal List<UtilityContainerSelector> BucketSelectors
     {
-        get
-        {
-            if (bucketSelectors == null)
-            {
-                bucketSelectors = new List<UtilityContainerSelector>(AssetDatabaseService.GetInstancesOfType<UtilityContainerSelector>());
-            }
-            return bucketSelectors;
-        }
-        set { bucketSelectors = value; }
+        get =>
+            bucketSelectors ??= new List<UtilityContainerSelector>(AssetDatabaseService
+                .GetInstancesOfType<UtilityContainerSelector>());
+        set => bucketSelectors = value;
     }
 
     private UtilityContainerSelector currentDecisionSelector;
     public UtilityContainerSelector CurrentDecisionSelector
     {
-        get
-        {
-            if(currentDecisionSelector == null)
-            {
-                currentDecisionSelector = DecisionSelectors.FirstOrDefault();
-            }
-            return currentDecisionSelector;
-        }
-        set
-        {
-            currentDecisionSelector = value;
-        }
+        get => currentDecisionSelector ??= DecisionSelectors.FirstOrDefault();
+        set => currentDecisionSelector = value;
     }
     private List<UtilityContainerSelector> decisionSelectors;
     internal List<UtilityContainerSelector> DecisionSelectors
     {
-        get
-        {
-            if (decisionSelectors == null)
-            {
-                decisionSelectors = new List<UtilityContainerSelector>(AssetDatabaseService.GetInstancesOfType<UtilityContainerSelector>());
-            }
-            return decisionSelectors;
-        }
-        set { decisionSelectors = value; }
+        get =>
+            decisionSelectors ??= new List<UtilityContainerSelector>(AssetDatabaseService
+                .GetInstancesOfType<UtilityContainerSelector>());
+        set => decisionSelectors = value;
     }
 
     private IUtilityScorer utilityScorer;

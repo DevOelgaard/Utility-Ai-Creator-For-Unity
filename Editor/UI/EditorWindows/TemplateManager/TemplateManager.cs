@@ -218,6 +218,16 @@ internal class TemplateManager : EditorWindow
         {
             DebugService.PrintDebug = evt.newValue;
         });
+        toolbar.Add(printDebug);
+        var reloadPlayAbleAis = new ToolbarButton()
+        {
+            text = "Reload Playable Ais"
+        };
+        reloadPlayAbleAis.RegisterCallback<MouseUpEvent>(_ =>
+        {
+            PlayAbleAiService.UpdateAisFromTemplateService();
+        });
+        toolbar.Add(reloadPlayAbleAis);
     }
 
     private async void SaveUas(DropdownMenuAction _)

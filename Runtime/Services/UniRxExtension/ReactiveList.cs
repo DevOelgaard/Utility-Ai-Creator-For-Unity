@@ -40,13 +40,12 @@ namespace UniRxExtension
 
         public virtual void Add(IEnumerable<T> elements)
         {
-            
             var elementsAsList = elements.ToList();
             if (!elementsAsList.Any())
             {
                 DebugService.Log("Returning no elements to add", nameof(ReactiveList<T>));
             }
-            DebugService.Log("Adding " + elementsAsList.Count() + " elements", nameof(ReactiveList<T>));
+            DebugService.Log("Adding " + elementsAsList.Count() + " elements of type: " + typeof(T), nameof(ReactiveList<T>));
             foreach(var e in elementsAsList)
             {
                 List.Add(e);

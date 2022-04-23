@@ -13,8 +13,8 @@ public class PlayAbleAiService: RestoreAble
     private static readonly CompositeDisposable Disposables = new CompositeDisposable();
     private static readonly CompositeDisposable AiDisposables = new CompositeDisposable();
     private static List<Ai> _ais = new List<Ai>();
-    private string oldStacktrace ="";
-    private bool saveOnDestroy;
+    private string oldLogString ="";
+    private static bool _saveOnDestroy = false;
 
     public static PlayAbleAiService Instance
     {
@@ -43,7 +43,7 @@ public class PlayAbleAiService: RestoreAble
             DebugService.Log("Initializing playmode", this);
 
             AsyncHelpers.RunSync(RestoreService);
-            saveOnDestroy = false;
+            _saveOnDestroy = false;
         
             DebugService.Log("Initialized playmode complete Ais Count: " + _ais.Count, this);
             if (_ais.Count == 0)
@@ -57,15 +57,18 @@ public class PlayAbleAiService: RestoreAble
 
             if (TemplateService.Instance.isLoaded)
             {
-                UpdateAisFromTemplateService();
-                DebugService.Log("Ais loaded from TemplateService", this);
+                DebugService.Log("Loading Ais from TemplateService", this);
+                UpdateAisFromTemplateService();                
+                DebugService.Log("Loading Ais from TemplateService Complete", this);
+
             }
             else
             {
+                DebugService.Log("Loading Ais from file", this);
                 AsyncHelpers.RunSync(RestoreService);
-                DebugService.Log("Ais loaded from file", this);
+                DebugService.Log("Loading Ais from file Complete", this);
             }
-            saveOnDestroy = true;
+            _saveOnDestroy = true;
 
             TemplateService.Instance
                 .AIs
@@ -79,15 +82,17 @@ public class PlayAbleAiService: RestoreAble
         Application.logMessageReceived += Reset;
     }
 
-    private void Reset(string condition, string stacktrace, LogType type)
+    private void Reset(string logString, string stacktrace, LogType type)
     {
+        return;
         if (type != LogType.Exception) return;
-        if (oldStacktrace == stacktrace)
+        if (oldLogString == logString)
         {
             return;
         }
+        
 
-        oldStacktrace = stacktrace;
+        oldLogString = logString;
         DebugService.Log("Resetting because of exception: " + stacktrace, this);
         ClearSubscriptions();
 
@@ -126,8 +131,9 @@ public class PlayAbleAiService: RestoreAble
     private async Task RestoreService()
     {
         DebugService.Log("Restoring", this);
-        var objectMetaData = PersistenceAPI.Instance.LoadObjectPath<PlayAbleAiServiceState>(Consts.FileUasPlayAbleWithExtension);
-        if (objectMetaData.Success)
+        var objectMetaData = PersistenceAPI.Instance
+            .LoadObjectPath<PlayAbleAiServiceState>(Consts.FileUasPlayAbleWithExtension);
+        if (objectMetaData.IsSuccessFullyLoaded)
         {
 
             var state = objectMetaData.LoadedObject;
@@ -207,7 +213,7 @@ public class PlayAbleAiService: RestoreAble
     private void SaveBeforeEnteringPlayMode()
     {
         DebugService.Log("SaveBeforeEnteringPlayMode Start", this);
-        if(!saveOnDestroy) return;
+        if(!_saveOnDestroy) return;
         if (EditorApplication.isPlaying) return;
         DebugService.Log("Saving", this);
 
@@ -221,6 +227,7 @@ public class PlayAbleAiService: RestoreAble
     {
         Disposables.Clear();
         AiDisposables.Clear();
+        Application.logMessageReceived -= Reset;
     }
 
     ~PlayAbleAiService()

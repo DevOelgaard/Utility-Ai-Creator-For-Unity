@@ -21,7 +21,7 @@ internal class JsonPersister : IPersister
                     var res = new ObjectMetaData<T>(default(T), path)
                     {
                         ErrorMessage = "File Doesn't exist",
-                        Success = false
+                        IsSuccessFullyLoaded = false
                     };
                     return res;
                 }
@@ -41,7 +41,7 @@ internal class JsonPersister : IPersister
                 {
                     ErrorMessage = "Loading failed at: " + path,
                     Exception = ex,
-                    Success = false
+                    IsSuccessFullyLoaded = false
                 };
                 return result;
             }
@@ -80,7 +80,7 @@ internal class JsonPersister : IPersister
                 var res = new ObjectMetaData<T>(default(T), path)
                 {
                     ErrorMessage = "File Doesn't exist",
-                    Success = false
+                    IsSuccessFullyLoaded = false
                 };
                 return res;
             }
@@ -100,7 +100,7 @@ internal class JsonPersister : IPersister
             {
                 ErrorMessage = "Loading failed at: " + path,
                 Exception = ex,
-                Success = false
+                IsSuccessFullyLoaded = false
             };
             return result;
         }

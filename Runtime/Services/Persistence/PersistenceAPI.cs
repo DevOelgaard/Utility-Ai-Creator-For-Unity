@@ -316,7 +316,7 @@ internal class PersistenceAPI
 
 public class ObjectMetaData<T>
 {
-    public bool Success = true;
+    public bool IsSuccessFullyLoaded = true;
     public readonly Type StateType;
     public readonly Type ModelType;
     public readonly T LoadedObject;

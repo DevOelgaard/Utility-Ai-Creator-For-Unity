@@ -45,6 +45,7 @@ public class AgentMono : MonoBehaviour, IAgent
         if (model == null)
         {
             DebugService.LogWarning("Setting Ai of agent: " + name +" to null", this);
+            throw new NullReferenceException();
         }
         Ai = model;
     }
@@ -96,8 +97,7 @@ public class AgentMono : MonoBehaviour, IAgent
     public bool CanAutoTick()
     {
         if (Model.AutoTick == false) return false;
-        if (Time.time - Model.LastTickTime < Model.MsBetweenTicks/1000) return false;
-        if (Time.frameCount - Model.LastTickFrame < Model.FramesBetweenTicks) return false;
-        return true;
+        if (Time.time - Model.LastTickTime < Model.MsBetweenTicks/1000f) return false;
+        return Time.frameCount - Model.LastTickFrame >= Model.FramesBetweenTicks;
     }
 }

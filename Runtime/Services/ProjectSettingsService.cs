@@ -25,7 +25,7 @@ internal class ProjectSettingsService
         var loaded = PersistenceAPI.Instance
             .LoadObjectPath<ProjectSettingsModel>(Consts.ProjectSettingsPath);
         
-        model = loaded.Success ? loaded.LoadedObject : new ProjectSettingsModel();
+        model = loaded.IsSuccessFullyLoaded ? loaded.LoadedObject : new ProjectSettingsModel();
         model.OnCurrentProjectPathChanged
             .Subscribe(_ => onProjectSettingsChanged.OnNext(true))
             .AddTo(modelChangedSubscription);

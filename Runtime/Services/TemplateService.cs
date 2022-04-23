@@ -397,6 +397,7 @@ internal class TemplateService: RestoreAble
     {
         DebugService.Log("Destroying",this);
         subscriptions.Clear();
+        DebugService.Log("Destroying Complete",this);
     }
 }
 

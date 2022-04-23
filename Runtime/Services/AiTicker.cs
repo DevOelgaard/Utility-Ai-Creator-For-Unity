@@ -173,8 +173,11 @@ internal class AiTicker: RestoreAble
 
     ~AiTicker()
     {
+        DebugService.Log("Destroying",this);
         AsyncHelpers.RunSync(Save);
         disposables.Clear();
+        DebugService.Log("Destroying Complete",this);
+
     }
 }
 

@@ -84,13 +84,11 @@ public class PlayAbleAiService: RestoreAble
 
     private void Reset(string logString, string stacktrace, LogType type)
     {
-        return;
         if (type != LogType.Exception) return;
         if (oldLogString == logString)
         {
             return;
         }
-        
 
         oldLogString = logString;
         DebugService.Log("Resetting because of exception: " + stacktrace, this);
@@ -232,8 +230,10 @@ public class PlayAbleAiService: RestoreAble
 
     ~PlayAbleAiService()
     {
+        DebugService.Log("Destroying", this);
         SaveBeforeEnteringPlayMode();
         ClearSubscriptions();
+        DebugService.Log("Destroying complete", this);
     }
 }
 

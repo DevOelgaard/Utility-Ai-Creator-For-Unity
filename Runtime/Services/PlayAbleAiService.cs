@@ -25,7 +25,6 @@ public class PlayAbleAiService: RestoreAble
                 _instance = new PlayAbleAiService();
                 _instance.Init();
             }
-
             return _instance;
         }
     }
@@ -159,12 +158,16 @@ public class PlayAbleAiService: RestoreAble
         foreach (var ai in TemplateService.Instance.AIs.Values
                      .Cast<Ai>())
         {
-            _ais.Add(ai);
+            if (ai.IsPLayAble)
+            {
+                _ais.Add(ai);
+            }
             ai.OnIsPlayableChanged
                 .Subscribe(_ => UpdateAisFromTemplateService())
                 .AddTo(AiDisposables);
         }
         DebugService.Log("Ais Updated Count: " + _ais.Count, Instance);
+        Instance.SaveState();
 
         onAisChanged.OnNext(_ais);
     }
@@ -175,7 +178,6 @@ public class PlayAbleAiService: RestoreAble
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        
         DebugService.Log("Restoring", this);
 
         var state = (PlayAbleAiServiceState) s;
@@ -208,17 +210,14 @@ public class PlayAbleAiService: RestoreAble
         return new PlayAbleAiServiceState(_ais,this);
     }
 
-    private void SaveBeforeEnteringPlayMode()
+    private void SaveState()
     {
-        DebugService.Log("SaveBeforeEnteringPlayMode Start", this);
-        if(!_saveOnDestroy) return;
-        if (EditorApplication.isPlaying) return;
         DebugService.Log("Saving", this);
-
+        if (EditorApplication.isPlaying) return;
         var state = GetState();
         PersistenceAPI.Instance
             .SaveDestructiveObjectPath(state, Consts.FileUasPlayAbleWithExtension);
-        DebugService.Log("SaveBeforeEnteringPlayMode Complete ais count: " + _ais.Count, this);
+        DebugService.Log("Saving Complete ais count: " + _ais.Count, this);
 
     }
     private void ClearSubscriptions()
@@ -231,7 +230,6 @@ public class PlayAbleAiService: RestoreAble
     ~PlayAbleAiService()
     {
         DebugService.Log("Destroying", this);
-        SaveBeforeEnteringPlayMode();
         ClearSubscriptions();
         DebugService.Log("Destroying complete", this);
     }

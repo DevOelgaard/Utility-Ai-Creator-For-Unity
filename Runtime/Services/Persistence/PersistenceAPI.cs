@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 internal class PersistenceAPI
 {
@@ -185,7 +186,7 @@ internal class PersistenceAPI
 
         private static void CleanUp(string path, DateTime startTime)
     {
-        DebugService.Log("Starting cleanup path: " + path, nameof(PersistenceAPI));
+        DebugService.Log("Clean up Start path: " + path, nameof(PersistenceAPI));
         if (path.Contains("."))
         {
             DebugService.Log("Only intended or directories returning : " + path, nameof(PersistenceAPI));
@@ -201,11 +202,13 @@ internal class PersistenceAPI
             }
         }
         DeleteEmptyFolders(path);
+        DebugService.Log("Clean up Complete path: " + path, nameof(PersistenceAPI));
+
     }
     
     private static async Task CleanUpAsync(string path, DateTime startTime)
     {
-        DebugService.Log("Starting cleanup path: " + path, nameof(PersistenceAPI));
+        DebugService.Log("Clean up Start path: " + path, nameof(PersistenceAPI));
         var t = Task.Factory.StartNew(() =>
         {
             var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
@@ -220,11 +223,14 @@ internal class PersistenceAPI
         });
         await t;
         await DeleteEmptyFoldersAsync(path);
+        DebugService.Log("Clean up Complete path: " + path, nameof(PersistenceAPI));
+
     }
 
     // https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories
     private static async Task DeleteEmptyFoldersAsync(string path)
     {
+        DebugService.Log("Deleting Folders at path: " + path, nameof(PersistenceAPI));
          if (path.Contains("."))
          {
              path = new DirectoryInfo(Path.GetDirectoryName(path) ?? string.Empty).FullName;
@@ -281,6 +287,8 @@ internal class PersistenceAPI
          }
         
          await Task.WhenAll(tasks);
+         DebugService.Log("Deleting Folders Complete at path: " + path, nameof(PersistenceAPI));
+
     }
     
         // https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories

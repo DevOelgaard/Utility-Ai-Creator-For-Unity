@@ -141,7 +141,7 @@ internal class TemplateService: RestoreAble
 
         if (string.IsNullOrEmpty(projectDirectory))
         {
-            SetState("");
+            SetState("Ready");
             ClearCollectionNotify();
             return;
         }
@@ -167,7 +167,7 @@ internal class TemplateService: RestoreAble
                 loadedPath = loadPath;
                 onLoadComplete.OnNext(true);
                 DebugService.Log("Load complete",this);
-                SetState("");
+                SetState("Ready");
             }
             catch (Exception ex)
             {
@@ -194,7 +194,7 @@ internal class TemplateService: RestoreAble
         var perstistAPI = PersistenceAPI.Instance;
         var currentProjectName = ProjectSettingsService.Instance.GetCurrentProjectName(true);
         await perstistAPI.SaveObjectDestructivelyAsync(this, path, currentProjectName);
-        SetState("");
+        SetState("Ready");
     }
 
     protected override string GetFileName()

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UniRxExtension;
@@ -138,6 +139,10 @@ internal static class RestoreAbleService
         var restoreAbles = collection.ToList();
         foreach (var element in restoreAbles)
         {
+            if (string.IsNullOrEmpty(element.FileName) || string.IsNullOrWhiteSpace(element.FileName))
+            {
+                throw new ArgumentException("A valid name must be set for element: " + element);
+            }
             await element.SaveToFile(path,persister,restoreAbles.IndexOf(element));
         }
     }

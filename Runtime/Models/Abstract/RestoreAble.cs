@@ -17,6 +17,8 @@ public abstract class RestoreAble
         return DerivedType.ToString();
     }
 
+
+
     protected abstract string GetFileName();
 
     public string CurrentDirectory;
@@ -83,6 +85,11 @@ public abstract class RestoreAble
     protected abstract Task InternalSaveToFile(string path, IPersister persister, RestoreState state);
 
     internal abstract RestoreState GetState();
+    
+    public override string ToString()
+    {
+        return "FileName: " + FileName + " DerivedType: " + DerivedType + " CurrentDirectory: " + CurrentDirectory;
+    }
 }
 
 public abstract class RestoreState

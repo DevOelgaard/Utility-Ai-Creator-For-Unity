@@ -65,7 +65,7 @@ public class ResponseCurve: AiObjectModel
             {
                 segmentValue = (MaxX - MinX) / 2;
             }
-            var newSegment = new Parameter(" ", segmentValue);
+            var newSegment = new Parameter(Segments.Count.ToString(), segmentValue);
             Segments.Add(newSegment);
         }
         ResponseFunctions.Add(newFunction);

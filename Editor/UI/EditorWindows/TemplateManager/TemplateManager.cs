@@ -221,7 +221,7 @@ internal class TemplateManager : EditorWindow
         toolbar.Add(printDebug);
         var reloadPlayAbleAis = new ToolbarButton()
         {
-            text = "Reload Playable Ais"
+            text = "Force Update Playable Ais"
         };
         reloadPlayAbleAis.RegisterCallback<MouseUpEvent>(_ =>
         {

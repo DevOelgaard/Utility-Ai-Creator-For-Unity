@@ -38,12 +38,24 @@ internal class AiTicker: RestoreAble
     {
         AsyncHelpers.RunSync(Init);
 
+        EditorApplication.playModeStateChanged += HandlePLayModeStateChange;
+
         if (Debug.isDebugBuild)
         {
             if (Settings.AutoRun)
             {
                 Start();
             }
+        }
+    }
+
+    private void HandlePLayModeStateChange(PlayModeStateChange playModeChange)
+    {
+        if (playModeChange == PlayModeStateChange.ExitingEditMode)
+        {
+            DebugService.Log("Handling playMode: " + playModeChange, this);
+
+            AsyncHelpers.RunSync(Save);
         }
     }
 
@@ -166,16 +178,19 @@ internal class AiTicker: RestoreAble
         Settings.TickerMode = Settings.TickerModes.First(m => m.Name == AiTickerMode.Unrestricted);
     }
 
-    internal async Task Save()
+    private async Task Save()
     {
+        DebugService.Log("Saving",this);
         await persistenceAPI.SaveObjectPathAsync(Settings, Consts.FileTickerSettings, "TickerSettings");
+        DebugService.Log("Saving Complete",this);
     }
 
     ~AiTicker()
     {
         DebugService.Log("Destroying",this);
-        AsyncHelpers.RunSync(Save);
+        // AsyncHelpers.RunSync(Save);
         disposables.Clear();
+        EditorApplication.playModeStateChanged -= HandlePLayModeStateChange;
         DebugService.Log("Destroying Complete",this);
 
     }

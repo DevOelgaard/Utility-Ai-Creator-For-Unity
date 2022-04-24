@@ -16,11 +16,15 @@ public static class AsyncHelpers
         var oldContext = SynchronizationContext.Current;
         var synch = new ExclusiveSynchronizationContext();
         SynchronizationContext.SetSynchronizationContext(synch);
-        synch.Post(async _ =>
+
+        async void SendOrPostCallback(object _)
         {
             try
             {
+                DebugService.Log("Running task sync",nameof(AsyncHelpers));
                 await task();
+                DebugService.Log("Running task sync Complete",nameof(AsyncHelpers));
+
             }
             catch (Exception e)
             {
@@ -31,7 +35,9 @@ public static class AsyncHelpers
             {
                 synch.EndMessageLoop();
             }
-        }, null);
+        }
+
+        synch.Post(SendOrPostCallback, null);
         synch.BeginMessageLoop();
 
         SynchronizationContext.SetSynchronizationContext(oldContext);
@@ -49,11 +55,14 @@ public static class AsyncHelpers
         var synch = new ExclusiveSynchronizationContext();
         SynchronizationContext.SetSynchronizationContext(synch);
         T ret = default(T);
-        synch.Post(async _ =>
+
+        async void SendOrPostCallback(object _)
         {
             try
             {
+                DebugService.Log("Running task sync with return type: " + typeof(T),nameof(AsyncHelpers));
                 ret = await task();
+                DebugService.Log("Running task sync with return type: " + typeof(T) + " Complete",nameof(AsyncHelpers));
             }
             catch (Exception e)
             {
@@ -64,7 +73,9 @@ public static class AsyncHelpers
             {
                 synch.EndMessageLoop();
             }
-        }, null);
+        }
+
+        synch.Post(SendOrPostCallback, null);
         synch.BeginMessageLoop();
         SynchronizationContext.SetSynchronizationContext(oldContext);
         return ret;

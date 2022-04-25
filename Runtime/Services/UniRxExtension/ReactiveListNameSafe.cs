@@ -11,7 +11,6 @@ namespace UniRxExtension
 
         public override void Add(T element)
         {
-
             var numberOfIdenticalNames = Values
             .Where(e => e.Name.Contains(element.Name))
             .ToList()

@@ -26,7 +26,7 @@ internal class TemplateManager : EditorWindow
     private PopupField<string> addElementPopup;
     private List<string> dropDownChoices;
     private DropdownField dropDown;
-    private TemplateService uASTemplateService => TemplateService.Instance;
+    private TemplateService templateService => TemplateService.Instance;
 
     private AiObjectComponent  currentMainWindowComponent;
     private AiObjectModel selectedModel;
@@ -91,16 +91,11 @@ internal class TemplateManager : EditorWindow
 
         clearButton.RegisterCallback<MouseUpEvent>(_ =>
         {
-            uASTemplateService.Reset();
+            templateService.Reset();
             UpdateLeftPanel();
         });
         
-        addElementPopup.RegisterCallback<ChangeEvent<string>>(evt =>
-        {
-            if (evt.newValue == null) return;
-            AddNewAiObject(StringService.RemoveWhiteSpaces(evt.newValue));
-            addElementPopup.SetValueWithoutNotify(null);
-        });
+        addElementPopup.RegisterCallback<ChangeEvent<string>>(AddAiObject);
 
         TemplateService.Instance.OnIncludeDemosChanged
             .Subscribe(_ =>
@@ -122,6 +117,19 @@ internal class TemplateManager : EditorWindow
             .AddTo(disposables);
     }
 
+    private async void AddAiObject(ChangeEvent<string> evt)
+    {
+        if (evt.newValue != null && evt.newValue != Consts.LineBreakBaseTypes && evt.newValue != Consts.LineBreakTemplates && evt.newValue != Consts.LineBreakDemos)
+        {
+            var type = MainWindowService.Instance.GetTypeFromString(dropDown.value);
+            var collection = templateService.GetCollection(type);
+            var aiObject = await AddCopyService.GetAiObjectClone(evt.newValue, collection.Values);
+            templateService.Add(aiObject);
+            ModelSelected(aiObject);
+        }
+        addElementPopup.SetValueWithoutNotify(null);
+    }
+
     void OnEnable()
     {
         // await UasTemplateService.Instance.LoadCurrentProject(true);
@@ -135,7 +143,7 @@ internal class TemplateManager : EditorWindow
         //     .AddTo(disposables);
         mws.Start();
 
-        uASTemplateService.OnStateChanged
+        templateService.OnStateChanged
             .Subscribe(state =>
             {
                 var projectName = ProjectSettingsService.Instance.GetCurrentProjectName();
@@ -183,7 +191,7 @@ internal class TemplateManager : EditorWindow
 
         menu.menu.AppendAction("Save Backup - TEST", _ =>
         {
-            Task.Factory.StartNew(() => uASTemplateService.Save(true));
+            Task.Factory.StartNew(() => templateService.Save(true));
         });
 
         menu.menu.AppendAction("Load Backup - TEST", LoadBackup);
@@ -198,12 +206,12 @@ internal class TemplateManager : EditorWindow
 
     private async void LoadBackup(DropdownMenuAction _)
     {
-        await uASTemplateService.LoadCurrentProject(true);
+        await templateService.LoadCurrentProject(true);
     }
 
     private async void ReloadProject(DropdownMenuAction _)
     {
-        await uASTemplateService.LoadCurrentProject();
+        await templateService.LoadCurrentProject();
     }
 
     private void InitToolBarSettings()
@@ -232,7 +240,7 @@ internal class TemplateManager : EditorWindow
 
     private async void SaveUas(DropdownMenuAction _)
     {
-        await uASTemplateService.Save();
+        await templateService.Save();
         // MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine());
     }
 
@@ -241,7 +249,7 @@ internal class TemplateManager : EditorWindow
         var s = await persistenceAPI.LoadFilePanel<RestoreState>(Consts.FileExtensionsFilters);
         s.LoadedObject.FolderLocation = Path.GetDirectoryName(s.Path) + @"\";
 
-        var toCollection = uASTemplateService.GetCollection(s.ModelType);
+        var toCollection = templateService.GetCollection(s.ModelType);
         var restored = await RestoreAble.Restore(s.LoadedObject, s.ModelType);
         toCollection.Add(restored as AiObjectModel);
     }
@@ -297,7 +305,7 @@ internal class TemplateManager : EditorWindow
         {
             TemplateService.Instance.IncludeDemos = evt.newValue;
         });
-        includeDemos.value = false;
+        includeDemos.SetValueWithoutNotify(TemplateService.Instance.IncludeDemos);
 
         toolbar.Add(includeDemos);
     }
@@ -312,7 +320,7 @@ internal class TemplateManager : EditorWindow
     private void AddNewAiObject(string aiObjectName)
     {
         var aiObject = AssetDatabaseService.GetInstanceOfType<AiObjectModel>(aiObjectName);
-        uASTemplateService.Add(aiObject);
+        templateService.Add(aiObject);
         ModelSelected(aiObject);
     }
 
@@ -325,7 +333,7 @@ internal class TemplateManager : EditorWindow
         await Task.WhenAll(tasks);
         foreach (var task in tasks)
         {
-            uASTemplateService.Add(task.Result);
+            templateService.Add(task.Result);
         }
 
         SelectedModel = tasks[0].Result;
@@ -339,7 +347,7 @@ internal class TemplateManager : EditorWindow
         
         foreach(var element in toDelete)
         {
-            uASTemplateService.Remove(element);
+            templateService.Remove(element);
             if (!componentsByModels.ContainsKey(element)) continue;
             var component = componentsByModels[element];
             rightPanel.Remove(component);
@@ -383,13 +391,13 @@ internal class TemplateManager : EditorWindow
         {
             label = dropDown.value;
         }
-        var models = uASTemplateService.GetCollection(label);
+        var models = templateService.GetCollection(label);
         UpdateLeftPanelIfActiveCollectionChanged(models);
     }
 
     private void UpdateLeftPanelIfActiveCollectionChanged(ReactiveList<AiObjectModel> modifiedList)
     {
-        var activeCollection = uASTemplateService.GetCollection(dropDown.value);
+        var activeCollection = templateService.GetCollection(dropDown.value);
         if (modifiedList != activeCollection)
         {
             DebugService.Log("Skipped updating collections were equal", this);
@@ -403,7 +411,8 @@ internal class TemplateManager : EditorWindow
     private void UpdateAddElementPopup()
     {
         var type = MainWindowService.Instance.GetTypeFromString(dropDown.value);
-        addElementPopup.choices = AddCopyService.GetChoices(type);
+        var collection = templateService.GetCollection(type);
+        addElementPopup.choices = AddCopyService.GetChoices(type, collection.Values);
     }
 
     private void LoadModels(List<AiObjectModel> models)
@@ -478,7 +487,7 @@ internal class TemplateManager : EditorWindow
                 selectedObjects.Clear();
                 for(var i = selectedIndex; i <= lowestSelectedIndex; i++)
                 {
-                    var m = uASTemplateService.GetCollection(dropDown.value).Values[i];
+                    var m = templateService.GetCollection(dropDown.value).Values[i];
                     var b = buttons[i];
                     selectedObjects.Add(new KeyValuePair<AiObjectModel, Button>(m, b));
                 }
@@ -487,7 +496,7 @@ internal class TemplateManager : EditorWindow
                 selectedObjects.Clear();
                 for(var i = highestSelectedIndex; i <= selectedIndex; i++)
                 {
-                    var m = uASTemplateService.GetCollection(dropDown.value).Values[i];
+                    var m = templateService.GetCollection(dropDown.value).Values[i];
                     var b = buttons[i];
                     selectedObjects.Add(new KeyValuePair<AiObjectModel, Button>(m, b));
                 }

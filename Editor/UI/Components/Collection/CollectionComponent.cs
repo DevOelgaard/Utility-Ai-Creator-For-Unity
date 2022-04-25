@@ -109,45 +109,22 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
 
     private async void OnAddCopyValueChanged(ChangeEvent<string> evt)
     {
-        if (evt.newValue is null or Consts.LineBreakBaseTypes or Consts.LineBreakTemplates or Consts.LineBreakDemos) return;
-        await AddCopy(evt.newValue);
-        addCopyPopup.value = null;
+        if (evt.newValue != null && evt.newValue != Consts.LineBreakBaseTypes && evt.newValue != Consts.LineBreakTemplates && evt.newValue != Consts.LineBreakDemos)
+        {
+            await AddCopy(evt.newValue);
+        }
+        addCopyPopup.SetValueWithoutNotify(null);
     }
 
     private void InitAddCopyPopup()
     {
-        addCopyPopup.choices = AddCopyService.GetChoices(typeof(T));
-        
-        addCopyPopup.choices.Add(Consts.LineBreakTemplates);
-
-        addCopyPopup.choices.AddRange(templates.Values
-            .Select(t => t.Name)
-            .OrderBy(n => n)
-            .ToList());
-
-        addCopyPopup.choices = addCopyPopup.choices
-            .Select(StringService.SpaceBetweenUpperCase)
-            .ToList();
+        addCopyPopup.choices = AddCopyService.GetChoices(typeof(T), templates.Values);
     }
 
     private async Task AddCopy(string aiObjectName)
     {
-        var whiteSpaceName = StringService.SpaceBetweenUpperCase(aiObjectName);
-        var noWhiteSpace = StringService.RemoveWhiteSpaces(aiObjectName);
-        var existingElement =
-            templates.Values.FirstOrDefault(t =>
-                t.Name == aiObjectName || t.Name == whiteSpaceName || t.Name == noWhiteSpace); 
-        
-        if(existingElement != null)
-        {
-            var c = await existingElement.CloneAsync();
-            AddElement(c as T);
-
-        } else
-        {
-            var element = AssetDatabaseService.GetInstanceOfType<T>(noWhiteSpace);
-            AddElement(element);
-        }
+        var element = await AddCopyService.GetAiObjectClone(aiObjectName, templates.Values);
+        AddElement(element as T);
     }
 
     internal void AddElement(T element)

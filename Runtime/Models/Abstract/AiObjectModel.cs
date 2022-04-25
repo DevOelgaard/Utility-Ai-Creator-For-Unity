@@ -30,7 +30,7 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
     
     protected AiObjectModel(): base()
     {
-        Name = StringService.SpaceBetweenUpperCase(GetType().ToString());
+        Name = StringService.SpaceBetweenUpperCase(GetType().ToString()) + "-Template";
         ParameterContainer = new ParameterContainer(GetParameters);
     }
     
@@ -125,6 +125,10 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
         }
         set
         {
+            if (value == GetType().ToString())
+            {
+                value += "-Template";
+            }
             name = GetNameFormat(value);
             onNameChanged.OnNext(Name);
         }

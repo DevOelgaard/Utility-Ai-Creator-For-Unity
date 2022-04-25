@@ -32,7 +32,7 @@ internal class TemplateService: RestoreAble
 
     private string projectDirectory;
 
-    private bool includeDemos = true;
+    private bool includeDemos = false;
     public bool IncludeDemos
     {
         get => includeDemos;

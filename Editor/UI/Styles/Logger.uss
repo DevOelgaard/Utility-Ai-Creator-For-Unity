@@ -165,7 +165,7 @@ LoggerComponent > TemplateContainer > VisualElement > #Body > VisualElement > Vi
 #IdentifierContainer{
     -unity-font-style: bold;
     padding-bottom: 3px;
-    white-space: pre;
+    /*white-space: pre;*/
 }
 
 #TypeContainer {

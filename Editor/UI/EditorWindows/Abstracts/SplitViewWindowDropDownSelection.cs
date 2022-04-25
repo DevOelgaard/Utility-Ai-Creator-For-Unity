@@ -12,11 +12,10 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
 {
     private readonly CompositeDisposable elementNameUpdatedSub = new CompositeDisposable();
 
-    protected VisualElement Root;
+    private VisualElement root;
     private VisualElement leftContainer;
     private VisualElement rightContainer;
     private VisualElement buttonContainer;
-    //private DebuggerComponent debuggerComponent;
     private RightPanelComponent<T> rightPanelComponent;
 
     private DropdownField identifierDropdown;
@@ -26,23 +25,23 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
     private IDisposable agentCollectionUpdatedSub;
     private T selectedElement;
     private ReactiveList<T> elements;
-    private int selectedIndex => elements.Values.IndexOf(selectedElement);
+    private int SelectedIndex => elements.Values.IndexOf(selectedElement);
     private AgentManager agentManager => AgentManager.Instance;
     private StyleSheet buttonSelectedStyle;
     protected Toolbar ToolbarTop;
     public void CreateGUI()
     {
-        Root = rootVisualElement;
+        root = rootVisualElement;
         var treeAsset = AssetDatabaseService.GetVisualTreeAsset("SplitViewWindowDropDownSelection");
-        treeAsset.CloneTree(Root);
+        treeAsset.CloneTree(root);
 
-        leftContainer = Root.Q<VisualElement>("LeftContainer");
-        rightContainer = Root.Q<VisualElement>("RightContainer");
-        buttonContainer = Root.Q<VisualElement>("ButtonContainer");
+        leftContainer = root.Q<VisualElement>("LeftContainer");
+        rightContainer = root.Q<VisualElement>("RightContainer");
+        buttonContainer = root.Q<VisualElement>("ButtonContainer");
 
-        identifierDropdown = Root.Q<DropdownField>("AgentType-Dropdown");
+        identifierDropdown = root.Q<DropdownField>("AgentType-Dropdown");
         buttonSelectedStyle = StylesService.GetStyleSheet("ButtonSelected");
-        ToolbarTop = Root.Q<Toolbar>("ToolbarTop");
+        ToolbarTop = root.Q<Toolbar>("ToolbarTop");
 
         rightPanelComponent = GetRightPanelComponent();
         rightContainer.Add(rightPanelComponent);
@@ -66,7 +65,7 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
             });
 
 
-        Root.RegisterCallback<KeyDownEvent>(key =>
+        root.RegisterCallback<KeyDownEvent>(key =>
         {
             if (key.keyCode == KeyCode.UpArrow && key.ctrlKey)
             {
@@ -74,7 +73,7 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
             }
             else if (key.keyCode == KeyCode.UpArrow)
             {
-                SelectElementAtIndex(selectedIndex - ConstsEditor.Logger_StepSize);
+                SelectElementAtIndex(SelectedIndex - ConstsEditor.Logger_StepSize);
             }
             else if (key.keyCode == KeyCode.DownArrow && key.ctrlKey)
             {
@@ -82,7 +81,7 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
             }
             else if (key.keyCode == KeyCode.DownArrow)
             {
-                SelectElementAtIndex(selectedIndex + ConstsEditor.Logger_StepSize);
+                SelectElementAtIndex(SelectedIndex + ConstsEditor.Logger_StepSize);
             }
 
             KeyPressed(key);
@@ -111,7 +110,7 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
     private void InitDropDown()
     {
         identifierDropdown.choices = agentManager.AgentIdentifiers;
-        identifierDropdown.choices.Add("Demo");
+        // identifierDropdown.choices.Add("Demo");
         identifierDropdown.label = "Agent Types";
         if (agentManager.AgentIdentifiers.Count > 0)
         {
@@ -119,7 +118,7 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
         }
         else
         {
-            identifierDropdown.value = "No agents found";
+            identifierDropdown.value = "No agents found in scene";
         }
 
         identifierDropdown.RegisterCallback<ChangeEvent<string>>(evt =>
@@ -132,34 +131,33 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
 
     private void UpdateLeftPanel(string identifier = null)
     {
-        if (identifier == null)
-        {
-            identifier = identifierDropdown.value;
-        }
+        identifier ??= identifierDropdown.value;
         elements = GetLeftPanelElements(identifier);
 
         elementChangedSub?.Dispose();
         elementChangedSub = elements
             .OnValueChanged
-            .Subscribe(values =>
-            {
-                LoadElements(values);
-            });
+            .Subscribe(LoadElements);
 
         LoadElements(elements.Values);
     }
 
-    private void LoadElements(List<T> elements)
+    private void LoadElements(List<T> newElements)
     {
         SelectedElement = default(T);
         buttonContainer.Clear();
         elementNameUpdatedSub?.Clear();
 
-        foreach (var e in elements)
+        foreach (var e in newElements)
         {
-            var button = new Button();
-            button.text = GetNameFromElement(e);
-            button.style.unityTextAlign = TextAnchor.MiddleLeft;
+            var button = new Button
+            {
+                text = GetNameFromElement(e),
+                style =
+                {
+                    unityTextAlign = TextAnchor.MiddleLeft
+                }
+            };
             button.RegisterCallback<MouseUpEvent>(evt =>
             {
                 SelectedElement = e;
@@ -183,7 +181,7 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
         var buttons = buttonContainer.Query<Button>().ToList();
         buttons.ForEach(b => b.styleSheets.Remove(buttonSelectedStyle));
 
-        var button = buttonContainer.Query<Button>().AtIndex(selectedIndex);
+        var button = buttonContainer.Query<Button>().AtIndex(SelectedIndex);
         if (button == null) return;
         button.styleSheets.Add(buttonSelectedStyle);
     }

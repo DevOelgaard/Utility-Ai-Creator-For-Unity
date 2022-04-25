@@ -50,8 +50,10 @@ internal class ResponseFunctionComponent: VisualElement
 
         typeDropdown.RegisterCallback<ChangeEvent<string>>(evt =>
         {
-            responseFunction = AssetDatabaseService.GetInstancesOfType<ResponseFunction>()
+            var newResponseFunction = AssetDatabaseService.GetInstancesOfType<ResponseFunction>()
                 .First(rF => rF.Name == evt.newValue);
+            newResponseFunction.rcIndex = responseFunction.rcIndex;
+            responseFunction = newResponseFunction;
             onResponseFunctionChanged.OnNext(responseFunction);
         });
 

@@ -9,21 +9,30 @@ using System.Reflection;
 using UnityEngine;
 using static System.LambdaActivator;
 
-internal class InstantiaterService
+internal class AiObjectFactory
 {
     private Dictionary<Type, Delegate> instantiatersByType = new Dictionary<Type, Delegate>();
     private Dictionary<Type, int> instantiationTimes = new Dictionary<Type, int>();
-    private static InstantiaterService _instance;
-    public static InstantiaterService Instance
+    private static AiObjectFactory _instance;
+    public static AiObjectFactory Instance
     {
-        get { return _instance ??= new InstantiaterService(); }
+        get { return _instance ??= new AiObjectFactory(); }
     }
 
     internal static object CreateInstance(Type t, bool nonPublic = false)
     {
+        DebugService.Log("Creating instance of type: " + t, nameof(AiObjectFactory));
         var newObject = t == typeof(Parameter) ? 
             new Parameter() : 
             Activator.CreateInstance(t);
+
+        if (newObject.GetType().GetInterface(nameof(IInitializeAble)) != null)
+        {
+            DebugService.Log("Initializing: " + t, nameof(AiObjectFactory));
+            var cast = newObject as IInitializeAble;
+            cast?.Initialize();
+            return cast;
+        }
         
         return newObject;
     }
@@ -68,7 +77,7 @@ internal class InstantiaterService
 
     }
 
-    ~InstantiaterService()
+    ~AiObjectFactory()
     {
     }
 }

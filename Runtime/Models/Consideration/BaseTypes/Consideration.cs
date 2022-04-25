@@ -56,7 +56,6 @@ public abstract class Consideration : AiObjectModel
             new ScoreModel("Base", 0f),
             new ScoreModel("Score", 0f)
         };
-        PerformanceTag = GetPerformanceTag();
 
         MinFloat.OnValueChange
             .Subscribe(_ => CurrentResponseCurve.MinX = Convert.ToSingle(MinFloat.Value))
@@ -67,6 +66,13 @@ public abstract class Consideration : AiObjectModel
             .AddTo(parameterDisposables);
 
         SetMinMaxForCurves();
+        BaseAiObjectType = typeof(Consideration);
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        PerformanceTag = GetPerformanceTag();
     }
 
     public override string GetTypeDescription()
@@ -76,7 +82,7 @@ public abstract class Consideration : AiObjectModel
 
     protected override AiObjectModel InternalClone()
     {
-        var clone = (Consideration)Activator.CreateInstance(GetType());
+        var clone = (Consideration)AiObjectFactory.CreateInstance(GetType());
         foreach (var p in this.Parameters)
         {
             var c = p.Clone();

@@ -80,7 +80,7 @@ public static class AssetDatabaseService
                     if (!type.ToString().Contains("Mock") &&
                         !type.ToString().Contains("Stub"))
                     {
-                        return (T)InstantiaterService.CreateInstance(type);
+                        return (T)AiObjectFactory.CreateInstance(type);
                         //var instance = (T)Activator.CreateInstance(type);
                     }
                 }
@@ -131,7 +131,7 @@ public static class AssetDatabaseService
                     if (!type.ToString().Contains("Mock") &&
                         !type.ToString().Contains("Stub"))
                     {
-                        var instance = (T)InstantiaterService.CreateInstance(type);
+                        var instance = (T)AiObjectFactory.CreateInstance(type);
                         result.Add(instance);
                     }
                 }
@@ -164,14 +164,14 @@ public static class AssetDatabaseService
     public static T GetInstanceOfType<T>(string typeName)
     {
         var assemblies = GetAssemblies();
-        foreach (var assemblie in assemblies)
+        foreach (var assembly in assemblies)
         {
-            var types = assemblie.GetTypes();
+            var types = assembly.GetTypes();
 
             var type = types.FirstOrDefault(t => t.ToString() == typeName);
             if (type != null)
             {
-                var instance = (T)InstantiaterService.CreateInstance(type);
+                var instance = (T)AiObjectFactory.CreateInstance(type);
 
                 return instance;
             }

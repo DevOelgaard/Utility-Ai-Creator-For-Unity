@@ -130,6 +130,10 @@ public static class Consts
     public const string Text_Button_Up = "+";
     public const string Text_Button_Down = "-";
 
+    internal const string LineBreakBaseTypes = "----Base Types----";
+    internal const string LineBreakTemplates = "----Templates----";
+    internal const string LineBreakDemos = "----Demos----";
+
 
 
 }

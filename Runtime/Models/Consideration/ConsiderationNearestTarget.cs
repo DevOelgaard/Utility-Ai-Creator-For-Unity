@@ -18,13 +18,13 @@ internal class ConsiderationNearestTarget : Consideration
     {
         var agent = (AgentMono)context.Agent;
         var address = "";
-        if (context.CurrentEvalutedDecision != null)
+        if (context.CurrentEvaluatedDecision != null)
         {
-            address = context.CurrentEvalutedDecision.GetContextAddress(context);
+            address = context.CurrentEvaluatedDecision.ca.Address;
         }
         else
         {
-            address = context.CurrentEvaluatedBucket.GetContextAddress(context);
+            address = context.CurrentEvaluatedBucket.ca.Address;
         }
         var target = context.GetContext<GameObject>(address + AiContextKey.CurrentTargetGameObject);
         if (target == null)

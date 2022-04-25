@@ -1,44 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine.UIElements;
-using UnityEngine;
 using UniRx;
-using UnityEditor.UIElements;
 
 internal class LoggerComponent : RightPanelComponent<IAgent>
 {
     private readonly CompositeDisposable disposables = new CompositeDisposable();
     
     private readonly TemplateContainer root;
-    private readonly VisualElement Body;
-    private readonly VisualElement Footer;
-
-    private readonly Button backLeapButton;
-    private readonly Button backStepButton;
-    private readonly Button toggleStateButton;
-    private readonly Button forwardStepButton;
-    private readonly Button forwardLeapButton;
 
     private LoggerState state;
-
-    private readonly AgentLogComponent agentLogComponent;
-    private readonly HelpBox helpBox;
-
-    private readonly SliderInt tickSlider;
 
     private bool isPlaying => EditorApplication.isPlaying;
     private bool isPaused => EditorApplication.isPaused;
     private IAgent agent;
     internal int CurrentTick;
-    private readonly Button tickAgent;
 
     private readonly Button foldoutButton;
 
-    private bool isExpanded = false;
+    private bool isExpanded;
     
 
     public LoggerComponent()
@@ -46,55 +25,62 @@ internal class LoggerComponent : RightPanelComponent<IAgent>
         root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);
         Add(root);
         root.styleSheets.Add(StylesService.GetStyleSheet("Logger"));
-        backLeapButton = root.Q<Button>("BackLeapButton");
-        backStepButton = root.Q<Button>("BackStepButton");
-        toggleStateButton = root.Q<Button>("ToggleButton");
-        forwardStepButton = root.Q<Button>("ForwardStepButton");
-        forwardLeapButton = root.Q<Button>("ForwardLeapButton");
-        Body = root.Q<VisualElement>("Body");
-        Footer = root.Q<VisualElement>("Footer");
-        tickSlider = root.Q<SliderInt>("Tick-Slider");
+        var backLeapButton = root.Q<Button>("BackLeapButton");
+        var backStepButton = root.Q<Button>("BackStepButton");
+        var toggleStateButton = root.Q<Button>("ToggleButton");
+        var forwardStepButton = root.Q<Button>("ForwardStepButton");
+        var forwardLeapButton = root.Q<Button>("ForwardLeapButton");
+        var body = root.Q<VisualElement>("Body");
+        var footer = root.Q<VisualElement>("Footer");
+        var tickSlider = root.Q<SliderInt>("Tick-Slider");
         foldoutButton = root.Q<Button>("Foldout-Button");
-        helpBox = new HelpBox();
-        helpBox.style.display = DisplayStyle.None;
-        Body.Add(helpBox);
+        var helpBox = new HelpBox
+        {
+            style =
+            {
+                display = DisplayStyle.None
+            }
+        };
+        body.Add(helpBox);
 
-        agentLogComponent = new AgentLogComponent();
-        Body.Add(agentLogComponent);
+        var agentLogComponent = new AgentLogComponent();
+        body.Add(agentLogComponent);
         agentLogComponent.style.display = DisplayStyle.None;
 
-        tickAgent = new Button();
-        tickAgent.text = ConstsEditor.Button_TickAgent_Text;
-        tickAgent.name = ConstsEditor.Button_TickAgent_Name;
-        tickAgent.RegisterCallback<MouseUpEvent>(evt =>
+        var tickAgent = new Button
+        {
+            text = ConstsEditor.Button_TickAgent_Text,
+            name = ConstsEditor.Button_TickAgent_Name
+        };
+        tickAgent.RegisterCallback<MouseUpEvent>(_ =>
         {
             if (agent == null) return;
             AiTicker.Instance.TickAgent(agent);
         });
-        Footer.Add(tickAgent);
+        footer.Add(tickAgent);
 
 
-        backLeapButton.RegisterCallback<MouseUpEvent>(evt =>
+        backLeapButton.RegisterCallback<MouseUpEvent>(_ =>
         {
             state.BackLeapButtonPressed();
         });
 
-        backStepButton.RegisterCallback<MouseUpEvent>(evt =>
+        backStepButton.RegisterCallback<MouseUpEvent>(_ =>
         {
             state.BackStepButtonPressed();
         });
 
-        toggleStateButton.RegisterCallback<MouseUpEvent>(evt =>
+        toggleStateButton.RegisterCallback<MouseUpEvent>(_ =>
         {
             state.ToggleStateButtonPressed();
         });
 
-        forwardStepButton.RegisterCallback<MouseUpEvent>(evt =>
+        forwardStepButton.RegisterCallback<MouseUpEvent>(_ =>
         {
             state.ForwardStepButtonPressed();
         });
 
-        forwardLeapButton.RegisterCallback<MouseUpEvent>(evt =>
+        forwardLeapButton.RegisterCallback<MouseUpEvent>(_ =>
         {
             state.ForwardLeapButtonPressed();
         });
@@ -104,7 +90,7 @@ internal class LoggerComponent : RightPanelComponent<IAgent>
             state.TickSliderChanged(evt.newValue);
         });
 
-        foldoutButton.RegisterCallback<MouseUpEvent>(evt =>
+        foldoutButton.RegisterCallback<MouseUpEvent>(_ =>
         {
             ToggleFoldStatus(isExpanded);
         });
@@ -128,20 +114,13 @@ internal class LoggerComponent : RightPanelComponent<IAgent>
 
     private void SetFoldButtonText()
     {
-        if (isExpanded)
-        {
-            foldoutButton.text = "Collapse All";
-        }
-        else
-        {
-            foldoutButton.text = "Expand All";
-        }
+        foldoutButton.text = isExpanded ? "Collapse All" : "Expand All";
     }
 
-    internal void SetState(LoggerState state)
+    private void SetState(LoggerState newLoggerState)
     {
         this.state?.OnExit();
-        this.state = state;
+        this.state = newLoggerState;
         this.state.OnEnter(agent);
     }
 

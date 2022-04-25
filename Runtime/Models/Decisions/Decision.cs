@@ -29,8 +29,7 @@ public class Decision: UtilityContainer
 
     internal override void SetIndex(int value)
     {
-        index = value;
-        ContextAdress = "D" + index;
+        Index = value;
     }
 
     protected override string GetNameFormat(string name)
@@ -40,16 +39,14 @@ public class Decision: UtilityContainer
 
     public Decision()
     {
-        UpdateInfo();
         agentActionSub = agentActions.OnValueChanged
             .Subscribe(_ => UpdateInfo());
+        BaseAiObjectType = typeof(Decision);
     }
-
-
 
     protected override AiObjectModel InternalClone()
     {
-        var clone = (Decision)Activator.CreateInstance(GetType());
+        var clone = (Decision)AiObjectFactory.CreateInstance(GetType());
         
         clone.agentActionSub?.Dispose();
         clone.AgentActions = new ReactiveListNameSafe<AgentAction>();
@@ -65,12 +62,17 @@ public class Decision: UtilityContainer
         return clone;
     }
 
-    public override void SetContextAddress(string address)
+    public override void SetParent(AiObjectModel parent, int indexInParent)
     {
-        base.SetContextAddress(address);
+        base.SetParent(parent,indexInParent);
         foreach(var a in AgentActions.Values)
         {
-            a.SetContextAddress(ContextAddress + "A" + AgentActions.Values.IndexOf(a));
+            a.SetParent(this,AgentActions.Values.IndexOf(a));
+        }
+
+        foreach (var consideration in Considerations.Values)
+        {
+            consideration.SetParent(this,Considerations.Values.IndexOf(consideration));
         }
     }
 
@@ -89,7 +91,11 @@ public class Decision: UtilityContainer
         {
             Info = new InfoModel();
         }
-        SetContextAddress(ContextAddress);
+
+        foreach (var agentAction in AgentActions.Values)
+        {
+            agentAction.SetParent(this,AgentActions.Values.IndexOf(agentAction));
+        }
     }
 
     internal override RestoreState GetState()

@@ -7,9 +7,9 @@ using System.Linq;
 [Serializable]
 public abstract class UtilityContainer : AiObjectModel
 {
-    protected int index { get; set; }
-   
-    protected string ContextAdress = "";
+    protected int Index { get; set; }
+    public float Score => (float)ScoreModels.FirstOrDefault(s => s.Name == "Score").Value;
+
     private IDisposable considerationSub;
     private ReactiveListNameSafe<Consideration> considerations = new ReactiveListNameSafe<Consideration>();
     public ReactiveListNameSafe<Consideration> Considerations
@@ -47,12 +47,24 @@ public abstract class UtilityContainer : AiObjectModel
     {
         ScoreModels = new List<ScoreModel>();
         ScoreModels.Add(new ScoreModel("Score", 0f));
-        //ScoreModels.Add(new ScoreModel("Normalized", 0f));
 
-        considerationSub?.Dispose();
-        UpdateInfo();
         considerationSub = considerations.OnValueChanged
             .Subscribe(_ => UpdateInfo());
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        UpdateInfo();
+    }
+
+    protected override void UpdateInfo()
+    {
+        base.UpdateInfo();
+        foreach (var consideration in Considerations.Values)
+        {
+            consideration.SetParent(this,Considerations.Values.IndexOf(consideration));
+        }
     }
 
     protected override void SetBaseClone(AiObjectModel c)
@@ -80,15 +92,14 @@ public abstract class UtilityContainer : AiObjectModel
 
     internal virtual void SetIndex(int value)
     {
-        index = value;
-        ContextAdress = index.ToString();
+        Index = value;
     }
-    public override void SetContextAddress(string address)
+    public override void SetParent(AiObjectModel parent, int indexInParent)
     {
-        base.SetContextAddress(address);
+        base.SetParent(parent,indexInParent);
         foreach(var c in Considerations.Values)
         {
-            c.SetContextAddress(ContextAddress + "C" + Considerations.Values.IndexOf(c));
+            c.SetParent(this,Considerations.Values.IndexOf(c));
         }
     }
 

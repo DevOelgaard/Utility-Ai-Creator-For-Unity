@@ -153,6 +153,7 @@ internal class TemplateService: RestoreAble
         {
             ClearCollectionNotify();
             SubscribeToCollectionChanges();
+            SetState("Ready");
             DebugService.LogWarning("Loading failed state.LoadedObjet == null at path: " + loadPath,this);
             DebugService.LogWarning("State.ErrorMessage: " + state.ErrorMessage,this);
         }
@@ -287,6 +288,7 @@ internal class TemplateService: RestoreAble
         };
         await Task.WhenAll(tasks);
         DebugService.Log("Saving Complete", this);
+        SetState("Ready");
     }
 
     private async Task RestoreAsync(UasTemplateServiceState state)

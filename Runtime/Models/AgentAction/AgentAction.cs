@@ -11,6 +11,7 @@ public abstract class AgentAction: AiObjectModel
 
     protected AgentAction()
     {
+        BaseAiObjectType = typeof(AgentAction);
     }
 
     public override string GetTypeDescription()
@@ -19,7 +20,7 @@ public abstract class AgentAction: AiObjectModel
     }
     protected override AiObjectModel InternalClone()
     {
-        var clone = (AgentAction)Activator.CreateInstance(GetType());
+        var clone = (AgentAction)AiObjectFactory.CreateInstance(GetType());
         return clone;
     }
 

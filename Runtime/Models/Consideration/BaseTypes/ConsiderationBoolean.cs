@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 /// </summary>
 public abstract class ConsiderationBoolean : Consideration
 {
-    public ConsiderationBoolean(): base()
+    protected ConsiderationBoolean(): base()
     {
         IsScorer = false;
     }

@@ -7,8 +7,10 @@ using MoreLinq;
 using UniRxExtension;
 using UnityEngine;
 
-public abstract class AiObjectModel: RestoreAble
+public abstract class AiObjectModel: RestoreAble, IInitializeAble
 {
+    public Type BaseAiObjectType { get; protected set; }
+    public ContextAddress ca;
     internal AiObjectMetaData MetaData = new AiObjectMetaData();
     public readonly CompositeDisposable disposables = new CompositeDisposable();
     public string HelpText { get; protected set; }
@@ -22,8 +24,6 @@ public abstract class AiObjectModel: RestoreAble
     private readonly Subject<InfoModel> onInfoChanged = new Subject<InfoModel>();
 
     public List<ScoreModel> ScoreModels = new List<ScoreModel>();
-    // ReSharper disable once MemberCanBeProtected.Global
-    public string ContextAddress { get; private set; }
     // ReSharper disable once MemberCanBePrivate.Global
     public readonly ParameterContainer ParameterContainer;
     public Dictionary<string, Parameter>.ValueCollection Parameters => ParameterContainer.Parameters;
@@ -32,10 +32,19 @@ public abstract class AiObjectModel: RestoreAble
     {
         Name = StringService.SpaceBetweenUpperCase(GetType().ToString());
         ParameterContainer = new ParameterContainer(GetParameters);
+    }
+    
+    public virtual void Initialize()
+    {
+        DebugService.Log("Initializing: " + this.Name, this);
+        ca = new ContextAddress(this);
         UpdateInfo();
     }
 
-    protected virtual void UpdateInfo() { }
+    protected virtual void UpdateInfo()
+    {
+        SetParent(ca.Parent,ca.Index);
+    }
     protected override string GetFileName()
     {
         return Name;
@@ -57,7 +66,12 @@ public abstract class AiObjectModel: RestoreAble
     }
 
     protected abstract AiObjectModel InternalClone();
-    
+
+    protected override void OnRestoreComplete()
+    {
+        base.OnRestoreComplete();
+        UpdateInfo();
+    }
 
     protected virtual void SetBaseClone(AiObjectModel clone)
     {
@@ -73,7 +87,7 @@ public abstract class AiObjectModel: RestoreAble
             clone.AddParameter(parameter);
         }
     }
-    
+
     internal AiObjectModel Clone()
     {
         var clone = InternalClone();
@@ -91,10 +105,6 @@ public abstract class AiObjectModel: RestoreAble
     internal virtual string GetUiName()
     {
         return Name + " (" + this.GetType().ToString() + ")";
-    }
-    public virtual string GetContextAddress(AiContext context)
-    {
-        return ContextAddress;
     }
 
     protected virtual string GetNameFormat(string currentName)
@@ -145,9 +155,9 @@ public abstract class AiObjectModel: RestoreAble
         } 
     }
 
-    public virtual void SetContextAddress(string address)
+    public virtual void SetParent(AiObjectModel parent, int indexInParent)
     {
-        ContextAddress = address;
+        ca.SetParentAndIndex(parent,indexInParent);
     }
 
     protected virtual void ClearSubscriptions()
@@ -159,4 +169,6 @@ public abstract class AiObjectModel: RestoreAble
     {
         ClearSubscriptions();
     }
+
+
 }

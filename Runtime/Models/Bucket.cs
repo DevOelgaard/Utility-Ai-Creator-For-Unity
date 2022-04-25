@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UniRxExtension;
 using UniRx;
+using UnityEditor.Search;
+using UnityEngine;
 
 public class Bucket : UtilityContainer 
 {
@@ -30,16 +32,16 @@ public class Bucket : UtilityContainer
 
     public Bucket(): base()
     {
-        decisionSub?.Dispose();
-        UpdateInfo();
         decisionSub = decisions.OnValueChanged
             .Subscribe(_ => UpdateInfo());
         Weight = new Parameter("Weight", 1f);
+        BaseAiObjectType = typeof(Bucket);
     }
+
 
     protected override AiObjectModel InternalClone()
     {
-        var clone = (Bucket)Activator.CreateInstance(GetType());
+        var clone = (Bucket)AiObjectFactory.CreateInstance(GetType());
         clone.Decisions = new ReactiveListNameSafe<Decision>();
         foreach (var d in Decisions.Values)
         {
@@ -72,12 +74,17 @@ public class Bucket : UtilityContainer
         }
     }
 
-    public override void SetContextAddress(string address)
+    public override void SetParent(AiObjectModel parent, int indexInParent)
     {
-        base.SetContextAddress(address);
+        base.SetParent(parent,indexInParent);
         foreach (var d in Decisions.Values)
         {
-            d.SetContextAddress(ContextAddress+ "D" + Decisions.Values.IndexOf(d));
+            d.SetParent(this,Decisions.Values.IndexOf(d));
+        }
+        
+        foreach (var consideration in Considerations.Values)
+        {
+            consideration.SetParent(this,Considerations.Values.IndexOf(consideration));
         }
     }
 
@@ -94,7 +101,11 @@ public class Bucket : UtilityContainer
         {
             Info = new InfoModel();
         }
-        SetContextAddress(ContextAddress);
+
+        foreach (var decision in Decisions.Values)
+        {
+            decision.SetParent(this,Decisions.Values.IndexOf(decision));
+        }
     }
 
 

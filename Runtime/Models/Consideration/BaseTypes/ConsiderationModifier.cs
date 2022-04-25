@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 /// </summary>
 public abstract class ConsiderationModifier: Consideration
 {
-    public ConsiderationModifier(): base()
+    protected ConsiderationModifier(): base()
     {
         IsModifier = true;
         IsScorer = false;

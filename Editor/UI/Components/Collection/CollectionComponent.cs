@@ -109,7 +109,7 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
 
     private async void OnAddCopyValueChanged(ChangeEvent<string> evt)
     {
-        if (evt.newValue == null) return;
+        if (evt.newValue is null or Consts.LineBreakBaseTypes or Consts.LineBreakTemplates or Consts.LineBreakDemos) return;
         await AddCopy(evt.newValue);
         addCopyPopup.value = null;
     }
@@ -117,11 +117,17 @@ public class CollectionComponent<T> : VisualElement where T : AiObjectModel
     private void InitAddCopyPopup()
     {
         addCopyPopup.choices = AddCopyService.GetChoices(typeof(T));
+        
+        addCopyPopup.choices.Add(Consts.LineBreakTemplates);
 
-        foreach(var template in templates.Values)
-        {
-            addCopyPopup.choices.Add(template.Name);
-        }
+        addCopyPopup.choices.AddRange(templates.Values
+            .Select(t => t.Name)
+            .OrderBy(n => n)
+            .ToList());
+
+        addCopyPopup.choices = addCopyPopup.choices
+            .Select(StringService.SpaceBetweenUpperCase)
+            .ToList();
     }
 
     private async Task AddCopy(string aiObjectName)

@@ -62,7 +62,7 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
         var result = new List<UtilityContainer>();
         foreach (Decision decision in decisions)
         {
-            context.CurrentEvalutedDecision = decision;
+            context.CurrentEvaluatedDecision = decision;
             decision.GetUtility(context);
             result = UpdateList(result, decision);
         }

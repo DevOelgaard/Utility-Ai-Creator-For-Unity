@@ -17,8 +17,6 @@ public abstract class RestoreAble
         return DerivedType.ToString();
     }
 
-
-
     protected abstract string GetFileName();
 
     public string CurrentDirectory;
@@ -34,11 +32,12 @@ public abstract class RestoreAble
                 element = AssetDatabaseService.GetInstanceOfType<T>(state.AssemblyQualifiedName);
             } else
             {
-                element = (T)InstantiaterService.CreateInstance(type,true);
+                element = (T)AiObjectFactory.CreateInstance(type,true);
             }
             element.CurrentDirectory = state.FolderLocation + "/" + state.FileName + "/";
             DebugService.Log("Setting CurrentDirectory: " + element.CurrentDirectory + " of type: " + typeof(T), nameof(RestoreAble));
             await element.RestoreInternalAsync(state, restoreDebug);
+            element.OnRestoreComplete();
             return element;
         }
         catch
@@ -47,10 +46,12 @@ public abstract class RestoreAble
             throw;
         }
     }
+    
+    protected virtual void OnRestoreComplete(){}
 
     public static async Task<RestoreAble> Restore(RestoreState state, Type type, bool restoreDebug = false)
     {
-        var element = (RestoreAble)InstantiaterService.CreateInstance(type, true);
+        var element = (RestoreAble)AiObjectFactory.CreateInstance(type, true);
         element.CurrentDirectory = state.FolderLocation + "/" + state.FileName + "/";
 
         await element.RestoreInternalAsync(state, restoreDebug);

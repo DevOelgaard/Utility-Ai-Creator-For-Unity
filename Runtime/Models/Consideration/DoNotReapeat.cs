@@ -19,7 +19,7 @@ internal class DoNotReapeat : ConsiderationBoolean
         }
         else if(TypeNotToRepeat == UtilityContainerTypes.Decision)
         {
-            return context.LastSelectedDecision == context.CurrentEvalutedDecision ? 0 : 1;
+            return context.LastSelectedDecision == context.CurrentEvaluatedDecision ? 0 : 1;
         }
         return 1;
     }

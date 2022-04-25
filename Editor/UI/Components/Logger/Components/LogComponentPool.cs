@@ -30,7 +30,7 @@ internal class LogComponentPool<T> where T: LogComponent
         this.startExpanded = startExpanded;
         for(var i = 0; i < initialPoolSize; i++)
         {
-            var component = (T)InstantiaterService.CreateInstance(typeof(T));
+            var component = (T)AiObjectFactory.CreateInstance(typeof(T));
 
             //var component = (T)Activator.CreateInstance(typeof(T));
             LogComponents.Add(component);
@@ -59,7 +59,7 @@ internal class LogComponentPool<T> where T: LogComponent
         {
             if (i >= LogComponents.Count)
             {
-                var p = (T)InstantiaterService.CreateInstance(typeof(T));
+                var p = (T)AiObjectFactory.CreateInstance(typeof(T));
 
                 //var p = (T)Activator.CreateInstance(typeof(T));
                 p.UpdateUi(elements[i]);

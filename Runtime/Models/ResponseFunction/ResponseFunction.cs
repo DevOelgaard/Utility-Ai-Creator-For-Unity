@@ -6,19 +6,9 @@ using UnityEngine;
 
 public abstract class ResponseFunction: AiObjectModel
 {
-    public int RCIndex = -1;
+    public int rcIndex = -1;
     private Parameter max;
-    protected Parameter Max
-    {
-        get
-        {
-            if(max == null)
-            {
-                max = GetParameter("Max");
-            }
-            return max;
-        }
-    }
+    protected Parameter Max => max ??= GetParameter("Max");
 
     private bool Inverse => (bool)GetParameter("Inverse").Value;
 
@@ -26,6 +16,7 @@ public abstract class ResponseFunction: AiObjectModel
     {
         AddParameter(new Parameter("Inverse", false));
         AddParameter(new Parameter("Max", 1f));
+        BaseAiObjectType = typeof(ResponseFunction);
     }
 
     protected ResponseFunction(string name)
@@ -33,18 +24,19 @@ public abstract class ResponseFunction: AiObjectModel
         Name = name;
         AddParameter(new Parameter("Inverse", false ));
         AddParameter(new Parameter("Max", 1f));
+        BaseAiObjectType = typeof(ResponseFunction);
     }
     
     protected override AiObjectModel InternalClone()
     {
-        var clone = (ResponseFunction)Activator.CreateInstance(GetType());
-        // foreach (var pClone in ParametersByName
-        //              .Select(s => s.Value.Clone()))
-        // {
-        //     clone.AddParameter(pClone);
-        // }
+        var clone = (ResponseFunction)AiObjectFactory.CreateInstance(GetType());
 
         return clone;
+    }
+
+    protected override string GetFileName()
+    {
+        return rcIndex + " - " + base.GetFileName();
     }
 
     public virtual float CalculateResponse(float x, float prevResult, float maxY)
@@ -114,7 +106,7 @@ public class ResponseFunctionState : RestoreState
     {
         Name = responseFunction.Name;
         Description = responseFunction.Description;
-        RcIndex = responseFunction.RCIndex;
+        RcIndex = responseFunction.rcIndex;
         Parameters = RestoreAbleService.NamesToList(responseFunction.Parameters.ToList());
 
     }

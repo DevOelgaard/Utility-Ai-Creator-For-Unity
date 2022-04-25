@@ -29,13 +29,9 @@ public class ResponseCurve: AiObjectModel
         var firstFunction = new LinearFunction();
         ResponseFunctions = new List<ResponseFunction>();
         AddResponseFunction(firstFunction);
+        BaseAiObjectType = typeof(ResponseCurve);
+
     }
-
-    //public ResponseCurve(ResponseCurve original): base(original)
-    //{
-
-    //}
-
 
     protected ResponseCurve(string name, float minY = 0.0f, float maxY = 1.0f)
     {
@@ -46,15 +42,16 @@ public class ResponseCurve: AiObjectModel
 
         ResponseFunctions = new List<ResponseFunction>();
         AddResponseFunction(firstFunction);
+        BaseAiObjectType = typeof(ResponseCurve);
+
     }
     
-    public void AddResponseFunction(ResponseFunction newFunction)
+    public void AddResponseFunction(ResponseFunction newFunction, bool updateSegments = true)
     {
         var previousFunction = ResponseFunctions.LastOrDefault();
 
-        if (previousFunction != null) // Not First function
+        if (previousFunction != null && updateSegments) // Not First function
         {
-
             var previousSegment = Segments.LastOrDefault();
             var segmentValue = 0f;
             if (previousSegment != null)
@@ -68,8 +65,18 @@ public class ResponseCurve: AiObjectModel
             var newSegment = new Parameter(Segments.Count.ToString(), segmentValue);
             Segments.Add(newSegment);
         }
+
         ResponseFunctions.Add(newFunction);
         onFunctionsChanged.OnNext(true);
+        UpdateResponseFunctionIndexes();
+    }
+
+    private void UpdateResponseFunctionIndexes()
+    {
+        foreach (var responseFunction in ResponseFunctions)
+        {
+            responseFunction.rcIndex = ResponseFunctions.IndexOf(responseFunction);
+        }
     }
 
     internal void UpdateFunction(ResponseFunction oldFunction, ResponseFunction newFunction)
@@ -91,6 +98,7 @@ public class ResponseCurve: AiObjectModel
                 throw new Exception("Can't remove the last Response function");
             }
             ResponseFunctions.Remove(responseFunction);
+            
             RemoveSegment(Segments[0]);
         } 
         else if (functionIndex == Segments.Count) // Removing last function
@@ -104,6 +112,7 @@ public class ResponseCurve: AiObjectModel
             ResponseFunctions.Remove(responseFunction);
         }
         onFunctionsChanged.OnNext(true);
+        UpdateResponseFunctionIndexes();
     }
 
     private void RemoveSegment(Parameter segmentToRemove)
@@ -243,11 +252,11 @@ public class ResponseCurve: AiObjectModel
 
     protected override AiObjectModel InternalClone()
     {
-        var clone = new ResponseCurve();
+        var clone = (ResponseCurve)AiObjectFactory.CreateInstance(GetType());
         clone.Name = Name;
         clone.Description = Description;
-
         clone.ResponseFunctions = new List<ResponseFunction>();
+
         foreach (var rf in ResponseFunctions)
         {
             var rfClone = (ResponseFunction)rf.Clone();
@@ -285,13 +294,24 @@ public class ResponseCurve: AiObjectModel
         MinX = state.MinX;
         MaxX = state.MaxX;
             
-        Segments = await RestoreAbleService
+
+
+        var tempRestoreFunctions = await RestoreAbleService
+            .GetAiObjectsSortedByIndex<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
+        ResponseFunctions = new List<ResponseFunction>();
+        foreach (var responseFunction in tempRestoreFunctions)
+        {
+            AddResponseFunction(responseFunction, false);
+        }
+        
+        var tempSegments = await RestoreAbleService
             .GetParameters(CurrentDirectory + Consts.FolderName_Segments, restoreDebug);
-
-        ResponseFunctions = await RestoreAbleService
-        .GetAiObjectsSortedByIndex<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
+        Segments = new List<Parameter>();
+        foreach (var segment in tempSegments)
+        {
+            Segments.Add(segment);
+        }
     }
-
     ~ResponseCurve()
     {
         foreach(var disposable in segmentDisposables)

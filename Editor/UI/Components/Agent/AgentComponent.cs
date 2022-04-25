@@ -98,6 +98,7 @@ internal class AgentComponent: RightPanelComponent<IAgent>
     private void InitDropdown()
     {
         aiDropdown.choices = PlayAbleAiService.GetAis()
+            .OrderBy(a => a.Name)
             .Select(x => x.Name)
             .ToList();
 

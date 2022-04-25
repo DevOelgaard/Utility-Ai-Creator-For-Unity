@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-internal class Demo_DebugLogContextAddress : AgentAction
+internal class Demo_DebugLogScore : AgentAction
 {
-    public Demo_DebugLogContextAddress() : base()
+    public Demo_DebugLogScore() : base()
     {
     }
 
@@ -17,7 +17,7 @@ internal class Demo_DebugLogContextAddress : AgentAction
         {
         };
     }
-    
+
     public override void OnStart(AiContext context)
     {
         Print(context);
@@ -30,8 +30,7 @@ internal class Demo_DebugLogContextAddress : AgentAction
 
     private void Print(AiContext context)
     {
-        
-        //TODO make sure entire address is printed
-        DebugService.Log(ca.Address,this);
+        DebugService.Log("Bucket Score: " + context.LastSelectedBucket.Score.ToString("0.00") 
+                                          + " Decision Score: " + context.LastSelectedDecision.Score.ToString("0.00") ,this);
     }
 }

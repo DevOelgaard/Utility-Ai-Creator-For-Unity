@@ -104,7 +104,7 @@ internal static class RestoreAbleService
             if (bs.LoadedObject == null)
             {
                 DebugService.Log("GetUcs failed fo load: " + bs.Path, nameof(RestoreAbleService));
-                var error = (UtilityContainerSelector)InstantiaterService.CreateInstance(bs.ModelType);
+                var error = (UtilityContainerSelector)AiObjectFactory.CreateInstance(bs.ModelType);
                 var errorParam = new Parameter("Error", bs.Exception.ToString());
                 error.AddParameter(errorParam);
                 result.Add(error);

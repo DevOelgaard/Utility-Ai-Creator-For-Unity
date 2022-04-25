@@ -184,3 +184,7 @@ LoggerComponent > TemplateContainer > VisualElement > #Body > VisualElement > Vi
 #ActionsContainer > #ButtonContainer{
     min-height: 24px;
 }
+
+/*#DescriptionContainer{*/
+/*    text.*/
+/*}*/

@@ -21,7 +21,7 @@ internal class Cooldown : Consideration
 
     protected override float CalculateBaseScore(AiContext context)
     {
-        if(Time.time - context.CurrentEvalutedDecision.LastSelectedTickMetaData.TickTime < cooldownTime)
+        if(Time.time - context.CurrentEvaluatedDecision.LastSelectedTickMetaData.TickTime < cooldownTime)
         {
             return 0;
         } else

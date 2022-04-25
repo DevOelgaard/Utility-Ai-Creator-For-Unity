@@ -43,17 +43,19 @@ public class Ai: AiObjectModel
 
     public Ai(): base()
     {
-        UpdateInfo();
         bucketSub = buckets.OnValueChanged
             .Subscribe(_ => UpdateInfo());
 
         playableSub?.Dispose();
         playableSub = OnIsPlayableChanged
             .Subscribe(_ => UpdateInfo());
+        BaseAiObjectType = typeof(Ai);
     }
+
+
     protected override AiObjectModel InternalClone()
     {
-        var clone = (Ai) Activator.CreateInstance(GetType());
+        var clone = (Ai) AiObjectFactory.CreateInstance(typeof(Ai));
         clone.Buckets = new ReactiveListNameSafe<Bucket>();
         foreach (var c in Buckets.Values.Select(b => b.Clone() as Bucket))
         {
@@ -72,9 +74,8 @@ public class Ai: AiObjectModel
 
     protected override void UpdateInfo()
     {
-        
         base.UpdateInfo();
-        if (Buckets == null || Buckets.Count <= 0)
+        if (Buckets is not {Count: > 0})
         {
             Info = new InfoModel("No Buckets, Object won't be selected", InfoTypes.Warning);
         }
@@ -86,10 +87,14 @@ public class Ai: AiObjectModel
         {
             Info = new InfoModel();
         }
+    }
 
-        foreach(var b in Buckets.Values)
+    public override void SetParent(AiObjectModel parent, int indexInParent)
+    {
+        base.SetParent(parent,indexInParent);
+        foreach (var bucket in Buckets.Values)
         {
-            b.SetContextAddress("B" + Buckets.Values.IndexOf(b));
+            bucket.SetParent(this,Buckets.Values.IndexOf(bucket));
         }
     }
 

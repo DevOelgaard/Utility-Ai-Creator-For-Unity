@@ -48,7 +48,7 @@ public class UCSHighestScore : UtilityContainerSelector
         UtilityContainer bestContainer = null;
         foreach (var decision in decisions)
         {
-            context.CurrentEvalutedDecision = decision;
+            context.CurrentEvaluatedDecision = decision;
             bestContainer = CheckBestContainer(decision, context, bestContainer);
         }
         return bestContainer as Decision;

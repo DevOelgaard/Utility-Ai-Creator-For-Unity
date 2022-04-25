@@ -275,13 +275,13 @@ internal class TemplateManager : EditorWindow
         menu.menu.AppendAction("Timer Print", _ =>
         {
             TimerService.Instance.DebugLogTime();
-            InstantiaterService.Instance.DebugStuff();
+            AiObjectFactory.Instance.DebugStuff();
         });
 
         menu.menu.AppendAction("Timer Reset", _ =>
         {
             TimerService.Instance.Reset();
-            InstantiaterService.Instance.Reset();
+            AiObjectFactory.Instance.Reset();
         });
         toolbar.Add(menu);
     }

@@ -31,7 +31,7 @@ internal class ConsiderAllObjectsWithTag : Decision
         {
             foreach(var target in targets)
             {
-                context.SetContext(AiContextKey.CurrentTargetGameObject.ToString(), target, this);
+                context.SetContext(AiContextKey.CurrentTargetGameObject, target, this);
                 var utility = context.UtilityScorer.CalculateUtility(Considerations.Values, context);
                 if (utility > highestUtility)
                 {
@@ -44,7 +44,7 @@ internal class ConsiderAllObjectsWithTag : Decision
                 return 0f;
             } else
             {
-                context.SetContext(AiContextKey.CurrentTargetGameObject.ToString(), selectedTarget, this);
+                context.SetContext(AiContextKey.CurrentTargetGameObject, selectedTarget, this);
                 return highestUtility;
             }
         }

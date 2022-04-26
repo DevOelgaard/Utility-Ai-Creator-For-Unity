@@ -20,12 +20,13 @@ public abstract class Consideration : AiObjectModel
         { 
             if (currentResponseCurve == null)
             {
-                currentResponseCurve = new ResponseCurve();
+                currentResponseCurve = (ResponseCurve)AiObjectFactory.CreateInstance(typeof(ResponseCurve));
             }
             return currentResponseCurve; 
         }
         set
         {
+            if(value == currentResponseCurve) return;
             currentResponseCurve = value;
             onResponseCurveChanged.OnNext(currentResponseCurve);
         }
@@ -51,6 +52,7 @@ public abstract class Consideration : AiObjectModel
 
     protected Consideration() : base()
     {
+        
         ScoreModels = new List<ScoreModel>
         {
             new ScoreModel("Base", 0f),

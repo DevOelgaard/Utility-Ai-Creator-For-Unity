@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UniRx;
 using UnityEditor;
 
 internal class ResponseCurveWindow: EditorWindow
 {
     internal ResponseCurveLcComponent ResponseCurveComponent { get; private set; }
+
+    public IObservable<bool> OnOwnerChanged => onOwnerChanged;
+    private readonly Subject<bool> onOwnerChanged = new Subject<bool>();
 
     internal void CreateGUI()
     {
@@ -16,10 +16,13 @@ internal class ResponseCurveWindow: EditorWindow
 
     }
 
-    internal void UpdateUi(ResponseCurve response, bool showSelection = true)
+    internal void UpdateUi(ResponseCurve response, bool showSelection = true, string ownerName = null)
     {
-        ResponseCurveComponent.UpdateUi(response, showSelection);
+        ResponseCurveComponent.UpdateUi(response, showSelection,ownerName);
     }
 
-
+    private void OnDisable()
+    {
+        onOwnerChanged.OnNext(true);
+    }
 }

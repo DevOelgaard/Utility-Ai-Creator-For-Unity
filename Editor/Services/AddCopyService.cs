@@ -8,7 +8,7 @@ using UnityEngine;
 
 internal static class AddCopyService
 {
-    internal static List<string> GetChoices(Type type, List<AiObjectModel> templates)
+    internal static List<string> GetChoices(Type type, List<AiObjectModel> templates = null)
     {
         var namesFromFiles = AssetDatabaseService.GetActivateableTypes(type);
         var tempChoices = new List<string> {Consts.LineBreakBaseTypes};
@@ -21,7 +21,7 @@ internal static class AddCopyService
             .OrderBy(name => name)
             .ToList());
         
-        if (templates.Count > 0)
+        if (templates is {Count: > 0})
         {
             tempChoices.Add(Consts.LineBreakTemplates);
 
@@ -55,6 +55,7 @@ internal static class AddCopyService
     {
         var whiteSpaceName = StringService.SpaceBetweenUpperCase(name);
         var noWhiteSpace = StringService.RemoveWhiteSpaces(name);
+        templates ??= new List<AiObjectModel>();
         var existingElement =
             templates.FirstOrDefault(t =>
                 t.Name == name || t.Name == whiteSpaceName || t.Name == noWhiteSpace); 

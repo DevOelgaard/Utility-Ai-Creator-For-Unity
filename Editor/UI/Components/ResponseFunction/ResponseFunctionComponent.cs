@@ -10,6 +10,7 @@ using UnityEngine;
 internal class ResponseFunctionComponent: VisualElement
 {
     private readonly CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable responseFunctionDisposables = new CompositeDisposable();
 
     private readonly DropdownField typeDropdown;
     private readonly VisualElement body;
@@ -36,26 +37,8 @@ internal class ResponseFunctionComponent: VisualElement
         body = root.Q<VisualElement>("Body");
         removeButton = root.Q<Button>("RemoveButton");
 
-        //typeDropdown.choices = AssetDatabaseService
-        //    .GetInstancesOfType<ResponseFunction>()
-        //    .Select(rF => rF.Name)
-        //    .ToList();
-        typeDropdown.choices = AssetDatabaseService
-            .GetAssignableTypes<ResponseFunction>()
-            .Select(TypeToName.ResponseFunctionToName)
-            .ToList();
-            //.GetInstancesOfType<ResponseFunction>()
-            //.Select(rF => rF.Name)
-            //.ToList();
-
-        typeDropdown.RegisterCallback<ChangeEvent<string>>(evt =>
-        {
-            var newResponseFunction = AssetDatabaseService.GetInstancesOfType<ResponseFunction>()
-                .First(rF => rF.Name == evt.newValue);
-            newResponseFunction.rcIndex = responseFunction.rcIndex;
-            responseFunction = newResponseFunction;
-            onResponseFunctionChanged.OnNext(responseFunction);
-        });
+        typeDropdown.choices = AddCopyService.GetChoices(typeof(ResponseFunction));
+        typeDropdown.RegisterCallback<ChangeEvent<string>>(ChangeResponseFunction);
 
         removeButton.RegisterCallback<MouseUpEvent>(evt =>
         {
@@ -63,22 +46,37 @@ internal class ResponseFunctionComponent: VisualElement
         });
     }
 
+    private async void ChangeResponseFunction(ChangeEvent<string> evt)
+    {
+        if (evt.newValue != null && evt.newValue != Consts.LineBreakBaseTypes && evt.newValue != Consts.LineBreakTemplates && evt.newValue != Consts.LineBreakDemos)
+        {
+            var newRf = await AddCopyService.GetAiObjectClone(evt.newValue, null);
+            onResponseFunctionChanged.OnNext(newRf as ResponseFunction);
+        }
+    }
+
     internal void UpdateUi(ResponseFunction rF, bool disableRemoveButton = false)
     {
         this.responseFunction = rF;
-        typeDropdown.value = rF.Name;
+        typeDropdown.SetValueWithoutNotify(rF.Name);
+        // responseFunctionDisposables.Clear();
+        // responseFunction.OnParametersChanged
+        //     .Subscribe(_ =>
+        //     {
+        //         onParametersChanged.OnNext(true);
+        //     })
+        //     .AddTo(responseFunctionDisposables);
 
-        //Debug.LogWarning("This could be more effective by using a pool");
         body.Clear();
         disposables.Clear();
-        foreach(var parameter in rF.Parameters)
+        foreach(var parameter in responseFunction.Parameters)
         {
             var pC = new ParameterComponent();
             pC.UpdateUi(parameter);
             body.Add(pC);
-            parameter.OnValueChange
-                .Subscribe(_ => onParametersChanged.OnNext(true))
-                .AddTo(disposables);
+            // parameter.OnValueChange
+            //     .Subscribe(_ => onParametersChanged.OnNext(true))
+            //     .AddTo(disposables);
         }
 
         if (disableRemoveButton)
@@ -91,5 +89,6 @@ internal class ResponseFunctionComponent: VisualElement
     ~ResponseFunctionComponent()
     {
         disposables.Clear();
+        responseFunctionDisposables.Clear();
     }
 }

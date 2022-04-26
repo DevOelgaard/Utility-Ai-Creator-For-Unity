@@ -10,15 +10,21 @@ using UnityEditor.UIElements;
 
 internal class ResponseCurveLcComponent : VisualElement
 {
-    private readonly CompositeDisposable funcitonDisposables = new CompositeDisposable();
+    private readonly CompositeDisposable functionDisposables = new CompositeDisposable();
     private readonly CompositeDisposable responseCurveDisposables = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
+    
+    private readonly Label ownerLabel;
     private ResponseCurve responseCurve;
     private readonly LineChartComponent lineChart;
-    internal IObservable<ResponseCurve> OnResponseCurveChanged => onResponseCurveChanged;
+    // internal IObservable<ResponseCurve> OnResponseCurveChanged => onResponseCurveChanged;
+    // private readonly Subject<ResponseCurve> onResponseCurveChanged = new Subject<ResponseCurve>();
+
+    public IObservable<ResponseCurve> OnResponseCurveChanged => onResponseCurveChanged;
     private readonly Subject<ResponseCurve> onResponseCurveChanged = new Subject<ResponseCurve>();
 
-    private float min => (float)responseCurve.MinX;
-    private float max => (float)responseCurve.MaxX;
+    private float Min => (float)responseCurve.MinX;
+    private float Max => (float)responseCurve.MaxX;
     private readonly int steps = ConstsEditor.ResponseCurve_Steps;
 
     //private Label nameLabel;
@@ -27,7 +33,7 @@ internal class ResponseCurveLcComponent : VisualElement
     private readonly VisualElement header;
     private VisualElement footer;
     private IntegerField resolution;
-    private readonly DropdownField curveDropdown;
+    private readonly DropdownField curveDropDown;
 
     public ResponseCurveLcComponent()
     {
@@ -35,6 +41,7 @@ internal class ResponseCurveLcComponent : VisualElement
         Add(root);
         root.styleSheets.Add(StylesService.GetStyleSheet("ResponseCurve"));
         header = root.Q<VisualElement>("Header");
+        ownerLabel = root.Q<Label>("Name-Label");
         foldButton = root.Q<Button>("FoldButton");
         var curveContainer = root.Q<VisualElement>("CurveContainer");
         functionsContainer = root.Q<VisualElement>("FunctionsContainer");
@@ -44,7 +51,8 @@ internal class ResponseCurveLcComponent : VisualElement
         lineChart = new LineChartComponent();
         curveContainer.Add(lineChart);
 
-        curveDropdown = root.Q<DropdownField>("ResponseCurve-Dropdown");
+        curveDropDown = root.Q<DropdownField>("ResponseCurve-Dropdown");
+        curveDropDown.RegisterCallback<ChangeEvent<string>>(OnCurveDropdownValueChanged);
 
         addFunctionButton.RegisterCallback<MouseUpEvent>(evt =>
         {
@@ -52,6 +60,10 @@ internal class ResponseCurveLcComponent : VisualElement
                 .GetFirstInstanceOfType<ResponseFunction>();
             responseCurve.AddResponseFunction(function);
         });
+        
+        TemplateService.Instance.ResponseCurves.OnValueChanged
+            .Subscribe(InitCurveDropDownChoices)
+            .AddTo(disposables);
         
         saveTemplateButton.RegisterCallback<MouseUpEvent>(SaveTemplate);
     }
@@ -62,33 +74,37 @@ internal class ResponseCurveLcComponent : VisualElement
         TemplateService.Instance.Add(clone);
     }
 
-    internal void UpdateUi(ResponseCurve rCurve, bool showSelection = true)
+    internal void UpdateUi(ResponseCurve rCurve, bool showSelection = true, string newOwnerName = null)
     {
         responseCurve = rCurve;
-        onResponseCurveChanged.OnNext(this.responseCurve);
-        if (showSelection)
+        if (newOwnerName != null)
         {
-            header.Add(curveDropdown);
-            curveDropdown.SetValueWithoutNotify(rCurve.Name);
-
-            InitCurveDropdown();
-            curveDropdown.RegisterCallback<ChangeEvent<string>>(OnCurveDropdownValueChanged);
+            ownerLabel.text = "Owner: " + newOwnerName;
         }
         else
         {
-            curveDropdown.SetEnabled(false);
-            curveDropdown.style.flexGrow = 0;
+            ownerLabel.text = "Template";
+        }
+        if (showSelection)
+        {
+            header.Add(curveDropDown);
+            curveDropDown.SetValueWithoutNotify(rCurve.Name);
+        }
+        else
+        {
+            curveDropDown.SetEnabled(false);
+            curveDropDown.style.flexGrow = 0;
         }
 
         responseCurveDisposables.Clear();
-        rCurve.OnFunctionsChanged
+        responseCurve.OnCurveValueChanged
             .Subscribe(_ =>
             {
-                UpdateFunctions();
+                ReDrawChart();
             })
             .AddTo(responseCurveDisposables);
 
-        rCurve
+        responseCurve
             .OnParametersChanged
             .Subscribe(_ =>
             {
@@ -96,58 +112,71 @@ internal class ResponseCurveLcComponent : VisualElement
             })
             .AddTo(responseCurveDisposables);
 
-        UpdateFunctions();
+        responseCurve.OnFunctionsChanged
+            .Subscribe(_ => UpdateFunctionsAndRedrawChart())
+            .AddTo(responseCurveDisposables);
+
+        UpdateFunctionsAndRedrawChart();
     }
 
     private async void OnCurveDropdownValueChanged(ChangeEvent<string> evt)
     {
-        if (evt.newValue is null or null) return;
-        await ChangeResponseCurve(evt.newValue);
+        if (evt.newValue != null && evt.newValue != Consts.LineBreakBaseTypes &&
+            evt.newValue != Consts.LineBreakTemplates && evt.newValue != Consts.LineBreakDemos)
+        {
+            var rC =
+                await AddCopyService.GetAiObjectClone(evt.newValue, TemplateService.Instance.ResponseCurves.Values);
+                
+            onResponseCurveChanged.OnNext(rC as ResponseCurve);
+        }
+        curveDropDown.SetValueWithoutNotify(null);
     }
 
-    private void UpdateFunctions()
+    private void UpdateFunctionsAndRedrawChart()
     {
         //Debug.LogWarning("This could be more effective by using a pool");
         functionsContainer.Clear();
-        funcitonDisposables.Clear();
+        functionDisposables.Clear();
         foreach (var function in responseCurve.ResponseFunctions)
         {
             var functionComponent = new ResponseFunctionComponent();
-            functionComponent.UpdateUi(function);
-
             if (responseCurve.ResponseFunctions.Count <= 1)
             {
-                functionComponent = new ResponseFunctionComponent();
                 functionComponent.UpdateUi(function, true);
+            }
+            else
+            {
+                functionComponent.UpdateUi(function);
             }
             functionsContainer.Add(functionComponent);
 
             functionComponent
-                .OnParametersChanged
-                .Subscribe(_ => ReDrawChart())
-                .AddTo(funcitonDisposables);
-
-            functionComponent
                 .OnRemoveClicked
                 .Subscribe(f => responseCurve.RemoveResponseFunction(f))
-                .AddTo(funcitonDisposables);
+                .AddTo(functionDisposables);
 
             functionComponent
                 .OnResponseFunctionChanged
-                .Subscribe(f => responseCurve.UpdateFunction(function, f))
-                .AddTo(funcitonDisposables);
+                .Subscribe(f =>
+                {
+                    HandleFunctionChanged(function, f);
+                    functionComponent.UpdateUi(f);
+                })
+                .AddTo(functionDisposables);
 
-            var funcitionIndex = responseCurve.ResponseFunctions.IndexOf(function);
-            if (responseCurve.Segments.Count > funcitionIndex)
+            var functionIndex = responseCurve.ResponseFunctions.IndexOf(function);
+            if (responseCurve.Segments.Count > functionIndex)
             {
-                var segmentParam = responseCurve.Segments[funcitionIndex];
-                var paramComponent = new ParameterComponent();
-                paramComponent.name = "Segment";
+                var segmentParam = responseCurve.Segments[functionIndex];
+                var paramComponent = new ParameterComponent
+                {
+                    name = "Segment"
+                };
                 paramComponent.UpdateUi(segmentParam);
-                segmentParam
-                    .OnValueChange
-                    .Subscribe(_ => ReDrawChart())
-                    .AddTo(funcitonDisposables);
+                // segmentParam
+                //     .OnValueChange
+                //     .Subscribe(_ => ReDrawChart())
+                //     .AddTo(functionDisposables);
 
                 functionsContainer.Add(paramComponent);
             }
@@ -155,55 +184,35 @@ internal class ResponseCurveLcComponent : VisualElement
         ReDrawChart();
     }
 
-    private void InitCurveDropdown()
+    private void HandleFunctionChanged(ResponseFunction oldFunction, ResponseFunction newFunction)
     {
-        var namesFromFiles = AssetDatabaseService.GetActivateableTypes(typeof(ResponseCurve));
-        curveDropdown.choices = namesFromFiles
-            .Where(e => !e.Name.Contains("Mock") && !e.Name.Contains("Stub"))
-            .Select(e => e.Name)
-            .ToList();
-
-        foreach(var template in TemplateService.Instance.ResponseCurves.Values)
-        {
-            curveDropdown.choices.Add(template.Name);
-        }
+        responseCurve.UpdateFunction(oldFunction, newFunction);
     }
 
-    private async Task ChangeResponseCurve(string responseCurveName)
+    private void InitCurveDropDownChoices(List<AiObjectModel> responseCurveTemplates)
     {
-        var template = TemplateService
-            .Instance
-            .ResponseCurves
-            .Values
-            .FirstOrDefault(e => e.Name == responseCurveName);
-
-        if (template != null)
-        {
-            var clone = await template.CloneAsync() as ResponseCurve;
-            UpdateUi(clone);
-        } else
-        {
-            UpdateUi(AssetDatabaseService.GetInstanceOfType<ResponseCurve>(responseCurveName));
-        }
+        curveDropDown.choices = AddCopyService.GetChoices(typeof(ResponseCurve), responseCurveTemplates);
+        curveDropDown.SetValueWithoutNotify(null);
     }
 
     private void ReDrawChart()
     {
         var points = new List<Vector2>();
-        var stepSize = (max - min) / steps;
+        var stepSize = (Max - Min) / steps;
         for (var i = 0; i <= steps; i++)
         {
-            var x = i * stepSize + min;
+            var x = i * stepSize + Min;
             var y = responseCurve.CalculateResponse(x);
             points.Add(new Vector2(x, y));
         }
 
-        lineChart?.DrawCurve(points, min, max);
+        lineChart?.DrawCurve(points, Min, Max);
         onResponseCurveChanged.OnNext(responseCurve);
     }
 
     ~ResponseCurveLcComponent(){
-        funcitonDisposables.Clear();
+        functionDisposables.Clear();
         responseCurveDisposables.Clear();
+        disposables.Clear();
     }
 }

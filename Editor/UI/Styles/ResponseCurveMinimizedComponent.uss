@@ -1,0 +1,29 @@
+#ResponseCurveButton {
+    display: flex;
+    flex-grow: 1;
+    height: 128px;
+}
+
+#ResponseCurveButton  > TemplateContainer {
+    display: flex;
+    flex-grow: 1;
+}
+
+#ResponseCurveButton  > TemplateContainer > #Header{
+    display: flex;
+    flex-grow: 1;
+}
+
+#ResponseCurveButton  > TemplateContainer > #Body{
+    display: flex;
+    flex-grow: 1;
+}
+
+#ResponseCurveButton  > TemplateContainer > #Body > #ResponseCurveButton{
+    height: 64px;
+}
+
+#ResponseCurveButton  > TemplateContainer > #Footer{
+    display: flex;
+    flex-grow: 1;
+}

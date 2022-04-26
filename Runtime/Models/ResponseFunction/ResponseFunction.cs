@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UniRx;
 using UnityEngine;
 
 public abstract class ResponseFunction: AiObjectModel
 {
+    private CompositeDisposable parametersChangedDisposable = new CompositeDisposable();
     public int rcIndex = -1;
     private Parameter max;
     protected Parameter Max => max ??= GetParameter("Max");
+
+    public IObservable<bool> OnParametersChanged => onParametersChanged;
+    private readonly Subject<bool> onParametersChanged = new Subject<bool>();
 
     private bool Inverse => (bool)GetParameter("Inverse").Value;
 
@@ -26,7 +31,13 @@ public abstract class ResponseFunction: AiObjectModel
         AddParameter(new Parameter("Max", 1f));
         BaseAiObjectType = typeof(ResponseFunction);
     }
-    
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeToParameters();
+    }
+
     protected override AiObjectModel InternalClone()
     {
         var clone = (ResponseFunction)AiObjectFactory.CreateInstance(GetType());
@@ -76,6 +87,20 @@ public abstract class ResponseFunction: AiObjectModel
         }
     }
 
+    private void SubscribeToParameters()
+    {
+        foreach (var parameter in Parameters)
+        {
+            DebugService.Log("Subscribing to parameter: " +parameter.Name, this );
+            parameter.OnValueChange
+                .Subscribe(_ =>
+                {
+                    DebugService.Log("Sending on parameter changed for: " + parameter.Name, this);
+                    onParametersChanged.OnNext(true);
+                })
+                .AddTo(parametersChangedDisposable);
+        }
+    }
 
 
     internal override RestoreState GetState()
@@ -87,6 +112,12 @@ public abstract class ResponseFunction: AiObjectModel
     {
         await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_ResponseFunction);
         await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
+    }
+
+    ~ResponseFunction()
+    {
+        DebugService.Log("Destroying", this);
+        parametersChangedDisposable.Clear();
     }
 }
 

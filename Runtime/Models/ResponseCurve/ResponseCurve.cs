@@ -11,22 +11,37 @@ using UniRx;
 public class ResponseCurve: AiObjectModel
 {
     private readonly Dictionary<Parameter, IDisposable> segmentDisposables = new Dictionary<Parameter, IDisposable>();
+    private readonly Dictionary<ResponseFunction, IDisposable> responseFunctionDisposables = new Dictionary<ResponseFunction, IDisposable>();
     private float minY = 0.0f;
     private float maxY = 1.0f;
     private float minX = 0.0f;
     private float maxX = 1.0f;
+    private bool isInversed = false;
+
+    public bool IsInversed
+    {
+        get => isInversed;
+        set
+        {
+            isInversed = value;
+            onCurveValueChanged.OnNext(true);
+        }
+    }
 
     public List<ResponseFunction> ResponseFunctions;
     public List<Parameter> Segments = new List<Parameter>();
 
     public IObservable<bool> OnParametersChanged => onParametersChanged;
     private readonly Subject<bool> onParametersChanged = new Subject<bool>();
+    public IObservable<bool> OnCurveValueChanged => onCurveValueChanged;
+    private readonly Subject<bool> onCurveValueChanged = new Subject<bool>();
+    
     public IObservable<bool> OnFunctionsChanged => onFunctionsChanged;
     private readonly Subject<bool> onFunctionsChanged = new Subject<bool>();
-
+    
     public ResponseCurve()
     {
-        var firstFunction = new LinearFunction();
+        var firstFunction = (LinearFunction)AiObjectFactory.CreateInstance(typeof(LinearFunction));
         ResponseFunctions = new List<ResponseFunction>();
         AddResponseFunction(firstFunction);
         BaseAiObjectType = typeof(ResponseCurve);
@@ -63,12 +78,35 @@ public class ResponseCurve: AiObjectModel
                 segmentValue = (MaxX - MinX) / 2;
             }
             var newSegment = new Parameter(Segments.Count.ToString(), segmentValue);
-            Segments.Add(newSegment);
+            AddSegment(newSegment);
         }
 
         ResponseFunctions.Add(newFunction);
+        var sub = newFunction.OnParametersChanged
+            .Subscribe(_ => onCurveValueChanged.OnNext(true));
+        
+        responseFunctionDisposables.Add(newFunction,sub);
         onFunctionsChanged.OnNext(true);
         UpdateResponseFunctionIndexes();
+    }
+
+    private void AddSegment(Parameter newSegment)
+    {
+        var sub = newSegment.OnValueChange
+            .Subscribe(_ => onCurveValueChanged.OnNext(true));
+        segmentDisposables.Add(newSegment,sub);
+        Segments.Add(newSegment);
+    }
+
+    private void RemoveSegment(Parameter segment)
+    {
+        if (segmentDisposables.ContainsKey(segment))
+        {
+            segmentDisposables[segment].Dispose();
+            segmentDisposables.Remove(segment);
+        }
+
+        Segments.Remove(segment);
     }
 
     private void UpdateResponseFunctionIndexes()
@@ -83,7 +121,15 @@ public class ResponseCurve: AiObjectModel
     {
         var oldFunctionIndex = ResponseFunctions.IndexOf(oldFunction);
         ResponseFunctions[oldFunctionIndex] = newFunction;
-
+        var sub = newFunction.OnParametersChanged
+            .Subscribe(_ => onCurveValueChanged.OnNext(true));
+        responseFunctionDisposables.Add(newFunction,sub);
+        if (responseFunctionDisposables.ContainsKey(oldFunction))
+        {
+            responseFunctionDisposables[oldFunction].Dispose();
+            responseFunctionDisposables.Remove(oldFunction);
+        }
+        
         onFunctionsChanged.OnNext(true);
     }
 
@@ -111,13 +157,14 @@ public class ResponseCurve: AiObjectModel
             RemoveSegment(Segments[removeIndex]);
             ResponseFunctions.Remove(responseFunction);
         }
+
+        if (responseFunctionDisposables.ContainsKey(responseFunction))
+        {
+            responseFunctionDisposables[responseFunction].Dispose();
+            responseFunctionDisposables.Remove(responseFunction);
+        }
         onFunctionsChanged.OnNext(true);
         UpdateResponseFunctionIndexes();
-    }
-
-    private void RemoveSegment(Parameter segmentToRemove)
-    {
-        Segments.Remove(segmentToRemove);
     }
 
     public float CalculateResponse(float x)
@@ -152,7 +199,8 @@ public class ResponseCurve: AiObjectModel
             result = ResponseFunctions[indexOfLastFunction].CalculateResponse(normalized, result, maxY);
         }
         result = Mathf.Clamp(result,minY,maxY);
-        return result;
+
+        return IsInversed ? 1 - result : result;
     }
 
     private float Normalize(float value, float min, float max)
@@ -260,14 +308,14 @@ public class ResponseCurve: AiObjectModel
         foreach (var rf in ResponseFunctions)
         {
             var rfClone = (ResponseFunction)rf.Clone();
-            clone.ResponseFunctions.Add(rfClone);
+            clone.AddResponseFunction(rfClone);
         }
 
         clone.Segments = new List<Parameter>();
         foreach (var s in Segments)
         {
-            var pClone = s.Clone();
-            clone.Segments.Add(pClone);
+            var segmentClone = s.Clone();
+            clone.AddSegment(segmentClone);
         }
         clone.MinX = MinX;
         clone.MaxX = MaxX;
@@ -309,12 +357,16 @@ public class ResponseCurve: AiObjectModel
         Segments = new List<Parameter>();
         foreach (var segment in tempSegments)
         {
-            Segments.Add(segment);
+            AddSegment(segment);
         }
     }
     ~ResponseCurve()
     {
         foreach(var disposable in segmentDisposables)
+        {
+            disposable.Value.Dispose();
+        }
+        foreach(var disposable in responseFunctionDisposables)
         {
             disposable.Value.Dispose();
         }

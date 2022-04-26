@@ -13,6 +13,7 @@ internal class ConsiderationComponent : AiObjectComponent
 {
     private readonly CompositeDisposable minMaxSubs = new CompositeDisposable();
     private readonly CompositeDisposable rcDisposable = new CompositeDisposable();
+    private readonly CompositeDisposable disposables = new CompositeDisposable();
     private readonly TemplateContainer root;
     private Consideration considerationModel;
     private ScoreComponent baseScore => ScoreComponents[0];
@@ -29,8 +30,7 @@ internal class ConsiderationComponent : AiObjectComponent
     private readonly TabViewComponent tabView;
     private Button responseCurveTab;
     private Button parametersTab;
-    private readonly LineChartButton responseCurveButton;
-    private ResponseCurveWindow responseCurveWindow;
+    private readonly ResponseCurveMinimizedComponent responseCurveMinimized;
 
     internal ConsiderationComponent() : base()
     {
@@ -47,29 +47,21 @@ internal class ConsiderationComponent : AiObjectComponent
         tabView = new TabViewComponent();
         root.Add(tabView);
 
-        responseCurveButton = new LineChartButton();
-        responseCurveButton.name = "ResponseCurveButton";
-        responseCurveButton.RegisterCallback<MouseUpEvent>(evt =>
+        responseCurveMinimized = new ResponseCurveMinimizedComponent()
         {
-            responseCurveWindow = WindowOpener.OpenResponseCurve();
-            if (considerationModel != null)
+            name = "ResponseCurveButton"
+        };
+        responseCurveMinimized.OnResponseCurveChanged
+            .Subscribe(curve =>
             {
-                responseCurveWindow.UpdateUi(considerationModel.CurrentResponseCurve);
-
-                rcDisposable.Clear();
-                responseCurveWindow.ResponseCurveComponent.OnResponseCurveChanged
-                    .Subscribe(curve =>
-                    {
-                        considerationModel.CurrentResponseCurve = curve;
-                        responseCurveButton.UpdateUi(considerationModel.CurrentResponseCurve);
-                    })
-                    .AddTo(rcDisposable);
-            }
-        });
+                if (considerationModel != null) 
+                    considerationModel.CurrentResponseCurve = curve;
+            })
+            .AddTo(disposables);
 
         //curveContainer.Add(responseCurveLCComponent);
         tabView.AddTabGroup("Parameters", parametersContainer);
-        tabView.AddTabGroup("Response Curve", responseCurveButton);
+        tabView.AddTabGroup("Response Curve", responseCurveMinimized);
 
         minParamComp = new ParameterComponent();
         maxParamComp = new ParameterComponent();
@@ -97,9 +89,16 @@ internal class ConsiderationComponent : AiObjectComponent
             considerationModel.OnResponseCurveChanged
                 .Subscribe(curve =>
                 {
-                    responseCurveButton.UpdateUi(curve);
+                    responseCurveMinimized.UpdateUi(curve,considerationModel.GetUiName());
                 })
                 .AddTo(modelInfoChangedDisposable);
+            
+            responseCurveMinimized.OnResponseCurveChanged
+                .Subscribe(curve =>
+                {
+                    considerationModel.CurrentResponseCurve = curve;
+                });
+
 
             performanceTag.Init(PerformanceTag.Normal);
             performanceTag.value = considerationModel.PerformanceTag;
@@ -109,8 +108,7 @@ internal class ConsiderationComponent : AiObjectComponent
             });
 
             SetParameters();
-            responseCurveWindow?.UpdateUi(considerationModel.CurrentResponseCurve);
-            responseCurveButton.UpdateUi(considerationModel.CurrentResponseCurve);
+            responseCurveMinimized.UpdateUi(considerationModel.CurrentResponseCurve, considerationModel.GetUiName());
         }
 
         //responseCurveLCComponent.UpdateUi(considerationModel.CurrentResponseCurve);
@@ -162,5 +160,6 @@ internal class ConsiderationComponent : AiObjectComponent
     {
         minMaxSubs.Clear();
         rcDisposable.Clear();
+        disposables.Clear();
     }
 }

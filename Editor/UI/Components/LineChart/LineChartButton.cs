@@ -9,7 +9,6 @@ using UnityEngine;
 
 internal class LineChartButton: CurveField
 {
-
     protected override void ExecuteDefaultAction(EventBase evt)
     {
     }

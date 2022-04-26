@@ -15,6 +15,7 @@ public class Parameter: RestoreAble
         set
         {
             v = value;
+            DebugService.Log("Setting parameter: " + Name + " To: " + v,this );
             onValueChanged.OnNext(v);
         }
     }

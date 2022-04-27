@@ -288,7 +288,7 @@ internal class TemplateService: RestoreAble
         };
         await Task.WhenAll(tasks);
         DebugService.Log("Saving Complete", this);
-        SetState("Ready");
+        //SetState("Ready");
     }
 
     private async Task RestoreAsync(UasTemplateServiceState state)

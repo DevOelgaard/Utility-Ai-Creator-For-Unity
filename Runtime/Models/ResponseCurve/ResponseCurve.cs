@@ -381,7 +381,8 @@ public class ResponseCurve: AiObjectModel
         MaxY = state.MaxY;
         MinX = state.MinX;
         MaxX = state.MaxX;
-            
+        isInversed = state.IsInversed;
+
         var tempRestoreFunctions = await RestoreAbleService
             .GetAiObjectsSortedByIndex<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
         foreach (var responseFunction in tempRestoreFunctions)
@@ -420,6 +421,7 @@ public class ResponseCurveState: RestoreState
     public float MaxY;
     public float MinX;
     public float MaxX;
+    public bool IsInversed;
 
     public List<string> segments;
 
@@ -436,5 +438,6 @@ public class ResponseCurveState: RestoreState
         MaxY = maxY;
         MinX = responseCurveModel.MinX;
         MaxX = responseCurveModel.MaxX;
+        IsInversed = responseCurveModel.IsInversed;
     }
 }

@@ -38,7 +38,7 @@ public class PlayAbleAiService: RestoreAble
         if (TemplateService.Instance.isLoaded)
         {
             DebugService.Log("Loading Ais from TemplateService", instance);
-            UpdateAisFromTemplateService();                
+            UpdateAisFromTemplateService(false);                
             DebugService.Log("Loading Ais from TemplateService Complete", instance);
 
         }
@@ -52,7 +52,7 @@ public class PlayAbleAiService: RestoreAble
         TemplateService.Instance
             .AIs
             .OnValueChanged
-            .Subscribe(_ => UpdateAisFromTemplateService())
+            .Subscribe(_ => UpdateAisFromTemplateService(false))
             .AddTo(Disposables);
         
         DebugService.Log("Initialized editor mode complete Ais Count: " + _ais.Count, instance);
@@ -111,7 +111,7 @@ public class PlayAbleAiService: RestoreAble
         }
     }
 
-    internal static void UpdateAisFromTemplateService()
+    internal static void UpdateAisFromTemplateService(bool saveAfterUpdate)
     {
         _ais = new List<Ai>();
         AiDisposables.Clear();
@@ -123,11 +123,15 @@ public class PlayAbleAiService: RestoreAble
                 _ais.Add(ai);
             }
             ai.OnIsPlayableChanged
-                .Subscribe(_ => UpdateAisFromTemplateService())
+                .Subscribe(_ => UpdateAisFromTemplateService(false))
                 .AddTo(AiDisposables);
         }
         DebugService.Log("Ais Updated Count: " + _ais.Count, Instance);
-        Instance.SaveState();
+
+        if (saveAfterUpdate)
+        {
+            Instance.SaveState();
+        }
 
         onAisChanged.OnNext(_ais);
     }

@@ -122,3 +122,7 @@ AgentComponent > TemplateContainer > #Footer {
     flex-grow: 1;
     max-width: 256px;
 }
+
+#Footer{
+    margin-top: 4px;
+}

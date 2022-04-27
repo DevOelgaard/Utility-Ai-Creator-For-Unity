@@ -24,4 +24,9 @@ ResponseFunctionComponent > TemplateContainer {
     min-height: 16px;
 }
 
+#Footer{
+    margin-top: 8px;
+}
+
+
 

@@ -68,13 +68,25 @@ internal static class AddCopyService
         } else
         {
             var c = AssetDatabaseService.GetInstanceOfType<AiObjectModel>(noWhiteSpace);
-            
-            // To make sure its name is unique
-            TemplateService.Instance.Add(c);
-            TemplateService.Instance.Remove(c);
             return c;
         }
     }
 
+    internal static async Task<AiObjectModel> GetAiObjectCloneNameSafe(string name, List<AiObjectModel> templates)
+    {
+        var clone = await GetAiObjectClone(name, templates);
+        var sameNameObject = templates.Where(t => t.Name == clone.Name).ToList();
+        if (!sameNameObject.Any())
+        {
+            var collection = TemplateService.Instance.GetCollection(clone.GetType());
+            sameNameObject = collection.Values.Where(t => t.Name == clone.Name).ToList();
+        }
 
+        if (sameNameObject.Any())
+        {
+            clone.Name += "(" + sameNameObject.Count + ")";
+        }
+
+        return clone;
+    }
 }

@@ -30,7 +30,7 @@ internal class ResponseCurveLcComponent : VisualElement
     private readonly VisualElement functionsContainer;
     private readonly VisualElement header;
     private VisualElement footer;
-    private readonly Toggle inverseToggle;
+    private readonly ToolbarToggle inverseToggle;
     private IntegerField resolution;
     private readonly DropdownField curveDropDown;
 
@@ -48,7 +48,7 @@ internal class ResponseCurveLcComponent : VisualElement
         var curveContainer = root.Q<VisualElement>("CurveContainer");
         functionsContainer = root.Q<VisualElement>("FunctionsContainer");
         footer = root.Q<VisualElement>("Footer");
-        inverseToggle = root.Q<Toggle>("Inverse-Toggle");
+        inverseToggle = root.Q<ToolbarToggle>("Inverse-ToolbarToggle");
         inverseToggle.RegisterCallback<ChangeEvent<bool>>(evt =>
         {
             if (responseCurve != null)
@@ -56,8 +56,6 @@ internal class ResponseCurveLcComponent : VisualElement
                 responseCurve.IsInversed = evt.newValue;
             }
         });
-        footer.Add(inverseToggle);
-
         
         var addFunctionButton = root.Q<Button>("AddFunctionButton");
         var saveTemplateButton = root.Q<Button>("SaveTemplateButton");
@@ -66,6 +64,7 @@ internal class ResponseCurveLcComponent : VisualElement
 
         curveDropDown = root.Q<DropdownField>("ResponseCurve-Dropdown");
         curveDropDown.RegisterCallback<ChangeEvent<string>>(OnCurveDropdownValueChanged);
+        curveDropDown.label = "";
 
         addFunctionButton.RegisterCallback<MouseUpEvent>(evt =>
         {

@@ -18,3 +18,10 @@ ResponseFunctionComponent > TemplateContainer {
     justify-content: space-between;
     flex-grow: 1;
 }
+
+#RemoveButton{
+    flex-grow: 1;
+    min-height: 16px;
+}
+
+

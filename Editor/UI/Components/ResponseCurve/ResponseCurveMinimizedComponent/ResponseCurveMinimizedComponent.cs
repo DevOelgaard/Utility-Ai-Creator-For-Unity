@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UniRx;
+using UnityEditor.UIElements;
 using UnityEngine.UIElements;
     public class ResponseCurveMinimizedComponent : VisualElement
     {
@@ -9,7 +10,7 @@ using UnityEngine.UIElements;
 
         private readonly DropdownField curveDropDown;
         private readonly LineChartButton responseCurveButton;
-        private readonly Toggle inverseToggle;
+        private readonly ToolbarToggle inverseToggle;
         private ResponseCurveWindow responseCurveWindow;
         
         public IObservable<ResponseCurve> OnResponseCurveChanged => onResponseCurveChanged;
@@ -57,7 +58,7 @@ using UnityEngine.UIElements;
             var saveTemplateButton = root.Q<Button>("SaveTemplateButton");
             saveTemplateButton.RegisterCallback<MouseUpEvent>(SaveTemplate);
 
-            inverseToggle = root.Q<Toggle>("IsInversed-Toggle");
+            inverseToggle = root.Q<ToolbarToggle>("Inverse-ToolbarToggle");
             inverseToggle.RegisterCallback<ChangeEvent<bool>>(evt =>
             {
                 responseCurve.IsInversed = evt.newValue;
@@ -94,6 +95,7 @@ using UnityEngine.UIElements;
         {
             var clone = await responseCurve.CloneAsync();
             TemplateService.Instance.Add(clone);
+            curveDropDown.SetValueWithoutNotify(responseCurve.Name);
         }
 
         private async void OnCurveDropdownValueChanged(ChangeEvent<string> evt)

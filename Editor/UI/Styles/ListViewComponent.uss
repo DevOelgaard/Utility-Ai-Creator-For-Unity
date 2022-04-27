@@ -18,9 +18,9 @@
     border-color: rgb(70, 70, 70);
 }
 
-    #Center:hover {
-        border-radius: 0;
-        border-width: 1px;
-        border-color: rgb(100, 100, 100);
-    }
+#Center:hover {
+    border-radius: 0;
+    border-width: 1px;
+    border-color: rgb(100, 100, 100);
+}
     

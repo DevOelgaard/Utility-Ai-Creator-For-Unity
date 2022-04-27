@@ -68,7 +68,10 @@ internal static class AddCopyService
         } else
         {
             var c = AssetDatabaseService.GetInstanceOfType<AiObjectModel>(noWhiteSpace);
-            // var c = AssetDatabaseService.GetInstanceOfType<AiObjectModel>(noWhiteSpace);
+            
+            // To make sure its name is unique
+            TemplateService.Instance.Add(c);
+            TemplateService.Instance.Remove(c);
             return c;
         }
     }

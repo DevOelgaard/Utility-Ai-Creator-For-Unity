@@ -9,7 +9,7 @@
     </ui:VisualElement>
     <ui:VisualElement name="Footer" style="flex-direction: row; justify-content: space-between;">
         <ui:Button text="Add Function" display-tooltip-when-elided="true" name="AddFunctionButton" vertical-scroller-visibility="Hidden" />
-        <ui:Toggle label="Toggle" name="Inverse-Toggle" style="flex-direction: column; align-items: center; -unity-text-align: upper-center;" />
+        <uie:ToolbarToggle focusable="false" label="Inverse" name="Inverse-ToolbarToggle" style="-unity-text-align: upper-center; align-items: center; flex-grow: 0; flex-shrink: 1;" />
         <ui:Button text="Save Template" display-tooltip-when-elided="true" name="SaveTemplateButton" />
     </ui:VisualElement>
 </ui:UXML>

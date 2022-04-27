@@ -83,7 +83,9 @@ border-color: rgb(90, 90, 90);
 
 #Footer {
     margin: 8px;
-    height: 16px;
+    /*height: 16px;*/
+    min-height: 20px;
+    max-height: 24px;
     justify-content: space-between;
 }
 
@@ -113,4 +115,10 @@ AgentComponent > TemplateContainer > #Footer {
     -unity-font-style: italic;
     font-size: 10px;
     margin-right: 8px;
+}
+
+#ResponseCurve-Dropdown{
+    flex-shrink: 1;
+    flex-grow: 1;
+    max-width: 256px;
 }

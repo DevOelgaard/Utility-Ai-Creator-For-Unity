@@ -7,6 +7,10 @@ public class ParameterContainer
     private readonly Func<List<Parameter>> getParameters;
     private readonly Dictionary<string, Parameter> parametersByName = new Dictionary<string, Parameter>();
 
+    private ParameterContainer()
+    {
+        
+    }
     public ParameterContainer(Func<List<Parameter>> getParameters)
     {
         this.getParameters = getParameters;
@@ -49,5 +53,16 @@ public class ParameterContainer
         {
             AddParameter(param);
         }
-    } 
+    }
+
+    internal ParameterContainer Clone()
+    {
+        var clone = new ParameterContainer();
+        foreach (var parameter in Parameters)
+        {
+            clone.AddParameter(parameter.Clone());
+        }
+
+        return clone;
+    }
 }

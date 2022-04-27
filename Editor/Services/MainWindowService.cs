@@ -171,6 +171,7 @@ internal class MainWindowService
     // {
     //     mainFoldedComponentPool.Enqueue(component);
     // }
+    private static ResponseCurveMainWindowComponent _responseCurveWindow;
 
     private AiObjectComponent GetComponent(Type type)
     {

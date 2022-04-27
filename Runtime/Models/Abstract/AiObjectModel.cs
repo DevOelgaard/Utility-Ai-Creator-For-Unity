@@ -25,11 +25,12 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
 
     public List<ScoreModel> ScoreModels = new List<ScoreModel>();
     // ReSharper disable once MemberCanBePrivate.Global
-    public readonly ParameterContainer ParameterContainer;
+    public ParameterContainer ParameterContainer { get; private set; }
     public Dictionary<string, Parameter>.ValueCollection Parameters => ParameterContainer.Parameters;
-    
+    public Guid Guid { get; protected set; }
     protected AiObjectModel(): base()
     {
+        Guid = Guid.NewGuid();
         Name = StringService.SpaceBetweenUpperCase(GetType().ToString()) + "-Template";
         ParameterContainer = new ParameterContainer(GetParameters);
     }
@@ -82,23 +83,27 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
         clone.Name = Name;
         clone.Description = Description;
         clone.HelpText = HelpText;
-        foreach (var parameter in Parameters)
-        {
-            clone.AddParameter(parameter);
-        }
+        clone.CurrentDirectory = CurrentDirectory+"-Clone";
+        clone.ParameterContainer = ParameterContainer.Clone();
+
+    }
+
+    protected virtual void OnCloneComplete()
+    {
+        
     }
 
     internal AiObjectModel Clone()
     {
         var clone = InternalClone();
         SetBaseClone(clone);
+        clone.OnCloneComplete();
         return clone;
     }
 
     internal async Task<AiObjectModel> CloneAsync()
     {
         var clone = await Task.Run(InternalClone);
-        // var clone = InternalClone();
         SetBaseClone(clone);
         return clone;
     }

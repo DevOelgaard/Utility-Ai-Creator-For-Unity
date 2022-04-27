@@ -55,6 +55,7 @@ public abstract class RestoreAble
         element.CurrentDirectory = state.FolderLocation + "/" + state.FileName + "/";
 
         await element.RestoreInternalAsync(state, restoreDebug);
+        element.OnRestoreComplete();
         return element;
     }
 

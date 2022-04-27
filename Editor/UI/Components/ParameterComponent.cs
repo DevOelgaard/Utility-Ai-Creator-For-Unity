@@ -24,19 +24,18 @@ public class ParameterComponent: VisualElement
         if (parameter.GetType() == typeof(ParameterEnum))
         {
             var p = parameter as ParameterEnum;
-            var field = new EnumField(parameter.Name);
-            // var values = Enum.GetValues(p.EnumType);
-            field.Init(p.CurrentSelction);
-            field.value = p.CurrentSelction;
-            field.RegisterCallback<ChangeEvent<Enum>>(evt => parameter.Value = evt.newValue);
+            var localField = new EnumField(parameter.Name);
+            localField.Init(p.CurrentSelction);
+            localField.value = p.CurrentSelction;
+            localField.RegisterCallback<ChangeEvent<Enum>>(evt => parameter.Value = evt.newValue);
             parameter.OnValueChange
                 .Subscribe(v =>
                 {
-                    field.value = (Enum)v;
+                    localField.value = (Enum)v;
                 })
                 .AddTo(disposables);
-            Add(field);
-            this.field = field;
+            Add(localField);
+            this.field = localField;
         } else
         {
             var t = parameter.Value.GetType();
@@ -47,104 +46,118 @@ public class ParameterComponent: VisualElement
             }
             if (t == typeof(int) || t == typeof(Int16) || t == typeof(Int32) || t == typeof(Int64))
             {
-                var field = new IntegerFieldMinMax(parameter.Name);
-                field.value = Convert.ToInt32(parameter.Value);
-                field.RegisterCallback<ChangeEvent<int>>(evt => parameter.Value = evt.newValue);
+                var localField = new IntegerFieldMinMax(parameter.Name)
+                {
+                    value = Convert.ToInt32(parameter.Value)
+                };
+                localField.RegisterCallback<ChangeEvent<int>>(evt => parameter.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        field.value = (int)v;
+                        localField.value = (int)v;
                     })
                     .AddTo(disposables);
-                Add(field);
-                this.field = field;
+                Add(localField);
+                this.field = localField;
             }
             else if (t == typeof(float) || t == typeof(Single))
             {
-                var field = new FloatFieldMinMax(parameter.Name);
-                field.value = (float)parameter.Value;
-                field.RegisterCallback<ChangeEvent<float>>(evt =>
+                var localField = new FloatFieldMinMax(parameter.Name)
+                {
+                    value = (float)parameter.Value
+                };
+                localField.RegisterCallback<ChangeEvent<float>>(evt =>
                         parameter.Value = evt.newValue
                     );
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        field.value = (float)v;
+                        localField.value = (float)v;
                     })
                     .AddTo(disposables);
-                Add(field);
-                this.field = field;
+                Add(localField);
+                this.field = localField;
             }
             else if (t == typeof(string) && parameter.ParameterEnum == ParameterTypes.None)
             {
-                var field = new TextField(parameter.Name);
-                field.value = (string)parameter.Value;
-                field.RegisterCallback<ChangeEvent<string>>(evt => parameter.Value = evt.newValue);
+                var localField = new TextField(parameter.Name)
+                {
+                    value = (string)parameter.Value
+                };
+                localField.RegisterCallback<ChangeEvent<string>>(evt => parameter.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        field.value = (string)v;
+                        localField.value = (string)v;
                     })
                     .AddTo(disposables);
-                Add(field);
-                this.field = field;
+                Add(localField);
+                this.field = localField;
 
             }
             else if (parameter.ParameterEnum == ParameterTypes.Tag)
             {
-                var field = new TagField(parameter.Name);
-                field.value = (string)parameter.Value;
-                field.RegisterCallback<ChangeEvent<ParameterTypes>>(evt => parameter.Value = evt.newValue);
+                var localField = new TagField(parameter.Name)
+                {
+                    value = (string)parameter.Value
+                };
+                localField.RegisterCallback<ChangeEvent<ParameterTypes>>(evt => parameter.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        field.value = (string)v;
+                        localField.value = (string)v;
                     })
                     .AddTo(disposables);
-                Add(field);
-                this.field = field;
+                Add(localField);
+                this.field = localField;
             }
             else if (t == typeof(long))
             {
-                var field = new LongField(parameter.Name);
-                field.value = (long)parameter.Value;
-                field.RegisterCallback<ChangeEvent<long>>(evt => parameter.Value = evt.newValue);
+                var localField = new LongField(parameter.Name)
+                {
+                    value = (long)parameter.Value
+                };
+                localField.RegisterCallback<ChangeEvent<long>>(evt => parameter.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        field.value = (long)v;
+                        localField.value = (long)v;
                     })
                     .AddTo(disposables);
-                Add(field);
-                this.field = field;
+                Add(localField);
+                this.field = localField;
             }
             else if (t == typeof(bool))
             {
-                var field = new Toggle(parameter.Name);
-                field.value = (bool)parameter.Value;
-                field.RegisterCallback<ChangeEvent<bool>>(evt => parameter.Value = evt.newValue);
+                var localField = new Toggle(parameter.Name)
+                {
+                    value = (bool)parameter.Value
+                };
+                localField.RegisterCallback<ChangeEvent<bool>>(evt => parameter.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        field.value = (bool)v;
+                        localField.value = (bool)v;
                     })
                     .AddTo(disposables);
-                Add(field);
-                this.field = field;
+                Add(localField);
+                this.field = localField;
             }
             else if (t == typeof(Color))
             {
-                var field = new ColorField(parameter.Name);
-                field.value = (Color)parameter.Value;
-                field.RegisterCallback<ChangeEvent<Color>>(evt => parameter.Value = evt.newValue);
+                var localField = new ColorField(parameter.Name)
+                {
+                    value = (Color)parameter.Value
+                };
+                localField.RegisterCallback<ChangeEvent<Color>>(evt => parameter.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        field.value = (Color)v;
+                        localField.value = (Color)v;
                     })
                     .AddTo(disposables);
-                Add(field);
-                this.field = field;
+                Add(localField);
+                this.field = localField;
             }
             else if (t == typeof(List<string>))
             {

@@ -132,8 +132,9 @@ internal abstract class AiObjectComponent : VisualElement
         }
         catch (Exception ex)
         {
-            Model.Name = "Error";
+            Model.Name = "Error Updating Ui Component";
             Model.Description = ex.ToString();
+            throw;
         }
     }
 

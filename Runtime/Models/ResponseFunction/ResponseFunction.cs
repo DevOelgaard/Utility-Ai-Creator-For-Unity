@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
 public abstract class ResponseFunction: AiObjectModel
 {
-    private CompositeDisposable parametersChangedDisposable = new CompositeDisposable();
+    private readonly CompositeDisposable parametersChangedDisposable = new CompositeDisposable();
     public int rcIndex = -1;
     private Parameter max;
     protected Parameter Max => max ??= GetParameter("Max");
@@ -16,20 +17,27 @@ public abstract class ResponseFunction: AiObjectModel
     private readonly Subject<bool> onParametersChanged = new Subject<bool>();
 
     private bool Inverse => (bool)GetParameter("Inverse").Value;
-
     protected ResponseFunction()
     {
-        AddParameter(new Parameter("Inverse", false));
-        AddParameter(new Parameter("Max", 1f));
+        DebugService.Log("TT! Creating no name", this);
+
+        InitParameters();
         BaseAiObjectType = typeof(ResponseFunction);
     }
 
     protected ResponseFunction(string name)
     {
+        DebugService.Log("TT! Creating RF: " + Guid, this);
+
         Name = name;
+        InitParameters();
+        BaseAiObjectType = typeof(ResponseFunction);
+    }
+
+    private void InitParameters()
+    {
         AddParameter(new Parameter("Inverse", false ));
         AddParameter(new Parameter("Max", 1f));
-        BaseAiObjectType = typeof(ResponseFunction);
     }
 
     public override void Initialize()
@@ -38,10 +46,31 @@ public abstract class ResponseFunction: AiObjectModel
         SubscribeToParameters();
     }
 
+    protected override void OnCloneComplete()
+    {
+        base.OnCloneComplete();
+        Initialize();
+    }
+
+    protected override void OnRestoreComplete()
+    {
+        base.OnRestoreComplete();
+        Initialize();
+    }
+
     protected override AiObjectModel InternalClone()
     {
-        var clone = (ResponseFunction)AiObjectFactory.CreateInstance(GetType());
 
+        var clone = AssetDatabaseService.GetInstanceOfType<ResponseFunction>(GetType().ToString());
+        DebugService.Log("TT! cloning Original Guid: " + Guid + " Clone Guid: " + clone.Guid, this,Thread.CurrentThread);
+
+        // var clone = (ResponseFunction)AiObjectFactory.CreateInstance(GetType());
+        if (clone.Guid == Guid)
+        {
+            DebugService.LogError("Clone and original are the same", this);
+        }
+
+        DebugService.Log("RF cloning complete Name: " + Name, this);
         return clone;
     }
 
@@ -89,6 +118,8 @@ public abstract class ResponseFunction: AiObjectModel
 
     private void SubscribeToParameters()
     {
+        parametersChangedDisposable.Clear();
+        DebugService.Log("TT! Subscribing to Parameters.count: " + Parameters.Count + " Guid: " + Guid, this,Thread.CurrentThread);
         foreach (var parameter in Parameters)
         {
             DebugService.Log("Subscribing to parameter: " +parameter.Name, this );
@@ -116,7 +147,7 @@ public abstract class ResponseFunction: AiObjectModel
 
     ~ResponseFunction()
     {
-        DebugService.Log("Destroying", this);
+        DebugService.Log("TT! Destroying", this);
         parametersChangedDisposable.Clear();
     }
 }

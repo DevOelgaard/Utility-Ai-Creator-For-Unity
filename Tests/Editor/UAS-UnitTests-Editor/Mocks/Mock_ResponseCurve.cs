@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public class Mock_ResponseCurve : ResponseCurve
 {
-    public Mock_ResponseCurve(string name) : base(name)
+    public Mock_ResponseCurve(string name) //: base(name)
     {
     }
 }

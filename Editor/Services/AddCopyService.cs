@@ -10,7 +10,7 @@ internal static class AddCopyService
 {
     internal static List<string> GetChoices(Type type, List<AiObjectModel> templates = null)
     {
-        var namesFromFiles = AssetDatabaseService.GetActivateableTypes(type);
+        var namesFromFiles = AssetDatabaseService.GetActivateAbleTypes(type);
         var tempChoices = new List<string> {Consts.LineBreakBaseTypes};
         tempChoices.AddRange(namesFromFiles
             .Where(aiObject => !aiObject.Name.Contains("Mock") && 
@@ -68,6 +68,7 @@ internal static class AddCopyService
         } else
         {
             var c = AssetDatabaseService.GetInstanceOfType<AiObjectModel>(noWhiteSpace);
+            // var c = AssetDatabaseService.GetInstanceOfType<AiObjectModel>(noWhiteSpace);
             return c;
         }
     }

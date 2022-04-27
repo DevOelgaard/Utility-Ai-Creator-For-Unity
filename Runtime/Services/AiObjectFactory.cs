@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Reflection;
-using UnityEngine;
-using static System.LambdaActivator;
+using System.Runtime.Serialization.Formatters.Binary;
 
 internal class AiObjectFactory
 {
@@ -36,7 +30,7 @@ internal class AiObjectFactory
         
         return newObject;
     }
-
+    
     private Delegate GetDelegate(Type t)
     {
         if (!instantiatersByType.ContainsKey(t))

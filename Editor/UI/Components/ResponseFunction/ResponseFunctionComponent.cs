@@ -59,13 +59,6 @@ internal class ResponseFunctionComponent: VisualElement
     {
         this.responseFunction = rF;
         typeDropdown.SetValueWithoutNotify(rF.Name);
-        // responseFunctionDisposables.Clear();
-        // responseFunction.OnParametersChanged
-        //     .Subscribe(_ =>
-        //     {
-        //         onParametersChanged.OnNext(true);
-        //     })
-        //     .AddTo(responseFunctionDisposables);
 
         body.Clear();
         disposables.Clear();

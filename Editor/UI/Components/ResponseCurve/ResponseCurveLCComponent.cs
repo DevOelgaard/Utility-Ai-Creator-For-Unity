@@ -13,12 +13,11 @@ internal class ResponseCurveLcComponent : VisualElement
     private readonly CompositeDisposable functionDisposables = new CompositeDisposable();
     private readonly CompositeDisposable responseCurveDisposables = new CompositeDisposable();
     private readonly CompositeDisposable disposables = new CompositeDisposable();
+    private readonly CompositeDisposable toggleDisposable = new CompositeDisposable();
     
     private readonly Label ownerLabel;
     private ResponseCurve responseCurve;
     private readonly LineChartComponent lineChart;
-    // internal IObservable<ResponseCurve> OnResponseCurveChanged => onResponseCurveChanged;
-    // private readonly Subject<ResponseCurve> onResponseCurveChanged = new Subject<ResponseCurve>();
 
     public IObservable<ResponseCurve> OnResponseCurveChanged => onResponseCurveChanged;
     private readonly Subject<ResponseCurve> onResponseCurveChanged = new Subject<ResponseCurve>();
@@ -27,18 +26,21 @@ internal class ResponseCurveLcComponent : VisualElement
     private float Max => (float)responseCurve.MaxX;
     private readonly int steps = ConstsEditor.ResponseCurve_Steps;
 
-    //private Label nameLabel;
     private Button foldButton;
     private readonly VisualElement functionsContainer;
     private readonly VisualElement header;
     private VisualElement footer;
+    private readonly Toggle inverseToggle;
     private IntegerField resolution;
     private readonly DropdownField curveDropDown;
+
+    private Guid guid;
 
     public ResponseCurveLcComponent()
     {
         var root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);
         Add(root);
+        guid = Guid.NewGuid();
         root.styleSheets.Add(StylesService.GetStyleSheet("ResponseCurve"));
         header = root.Q<VisualElement>("Header");
         ownerLabel = root.Q<Label>("Name-Label");
@@ -46,6 +48,17 @@ internal class ResponseCurveLcComponent : VisualElement
         var curveContainer = root.Q<VisualElement>("CurveContainer");
         functionsContainer = root.Q<VisualElement>("FunctionsContainer");
         footer = root.Q<VisualElement>("Footer");
+        inverseToggle = root.Q<Toggle>("Inverse-Toggle");
+        inverseToggle.RegisterCallback<ChangeEvent<bool>>(evt =>
+        {
+            if (responseCurve != null)
+            {
+                responseCurve.IsInversed = evt.newValue;
+            }
+        });
+        footer.Add(inverseToggle);
+
+        
         var addFunctionButton = root.Q<Button>("AddFunctionButton");
         var saveTemplateButton = root.Q<Button>("SaveTemplateButton");
         lineChart = new LineChartComponent();
@@ -64,7 +77,8 @@ internal class ResponseCurveLcComponent : VisualElement
         TemplateService.Instance.ResponseCurves.OnValueChanged
             .Subscribe(InitCurveDropDownChoices)
             .AddTo(disposables);
-        
+
+        InitCurveDropDownChoices(TemplateService.Instance.ResponseCurves.Values);
         saveTemplateButton.RegisterCallback<MouseUpEvent>(SaveTemplate);
     }
 
@@ -77,6 +91,9 @@ internal class ResponseCurveLcComponent : VisualElement
     internal void UpdateUi(ResponseCurve rCurve, bool showSelection = true, string newOwnerName = null)
     {
         responseCurve = rCurve;
+        
+        inverseToggle.SetValueWithoutNotify(responseCurve.IsInversed);
+        
         if (newOwnerName != null)
         {
             ownerLabel.text = "Owner: " + newOwnerName;
@@ -173,10 +190,6 @@ internal class ResponseCurveLcComponent : VisualElement
                     name = "Segment"
                 };
                 paramComponent.UpdateUi(segmentParam);
-                // segmentParam
-                //     .OnValueChange
-                //     .Subscribe(_ => ReDrawChart())
-                //     .AddTo(functionDisposables);
 
                 functionsContainer.Add(paramComponent);
             }
@@ -214,5 +227,6 @@ internal class ResponseCurveLcComponent : VisualElement
         functionDisposables.Clear();
         responseCurveDisposables.Clear();
         disposables.Clear();
+        toggleDisposable.Clear();
     }
 }

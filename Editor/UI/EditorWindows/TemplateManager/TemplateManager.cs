@@ -9,6 +9,7 @@ using UnityEditor.UIElements;
 using System.IO;
 using System.Threading.Tasks;
 using UniRxExtension;
+using Unity.Profiling.Editor;
 
 internal class TemplateManager : EditorWindow
 {
@@ -81,6 +82,7 @@ internal class TemplateManager : EditorWindow
         // Subscribe
         copyButton.RegisterCallback<MouseUpEvent>(_ =>
         {
+            DebugService.Log("TT! Copy Pressed", this);
             CopySelectedElements();
         });
 
@@ -345,6 +347,7 @@ internal class TemplateManager : EditorWindow
             .Select(element => element.Key)
             .ToList();
         
+        
         foreach(var element in toDelete)
         {
             templateService.Remove(element);
@@ -542,10 +545,13 @@ internal class TemplateManager : EditorWindow
             }
             if (componentsByModels.ContainsKey(model))
             {
+                DebugService.Log("Updating Existing MVC", this);
                 currentMainWindowComponent = componentsByModels[model];
+                currentMainWindowComponent.UpdateUi(model);
                 currentMainWindowComponent.style.display = DisplayStyle.Flex;
             } else
             {
+                DebugService.Log("Updating new MVC", this);
                 var sw = new System.Diagnostics.Stopwatch();
                 sw.Start();
                 var mvc = MainWindowService.Instance.GetAiObjectComponent(model);
@@ -562,6 +568,7 @@ internal class TemplateManager : EditorWindow
                 sw.Restart();
 
                 currentMainWindowComponent = mvc;
+                currentMainWindowComponent.style.display = DisplayStyle.Flex;
             }
             selectionCounter = 0;
         }

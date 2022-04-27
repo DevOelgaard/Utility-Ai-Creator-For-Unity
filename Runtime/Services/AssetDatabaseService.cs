@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
@@ -12,6 +14,7 @@ public static class AssetDatabaseService
 {
     private static readonly Dictionary<string,string> cachedPaths = new Dictionary<string,string>();
     private static readonly Dictionary<string,VisualTreeAsset> cachedVisualTrees = new Dictionary<string, VisualTreeAsset>();
+    private static BinaryFormatter _binaryFormatter = new BinaryFormatter();
     public static string GetAssetPath(string filter, string type)
     {
         if (cachedPaths.ContainsKey(filter + type))
@@ -68,9 +71,9 @@ public static class AssetDatabaseService
     {
         var assemblies = GetAssemblies();
 
-        foreach (var assemblie in assemblies)
+        foreach (var assembly in assemblies)
         {
-            var types = assemblie.GetTypes();
+            var types = assembly.GetTypes();
             foreach (var type in types)
             {
                 if (typeof(T).IsAssignableFrom(type) &&
@@ -94,9 +97,9 @@ public static class AssetDatabaseService
         var result = new List<Type>();
         var assemblies = GetAssemblies();
 
-        foreach (var assemblie in assemblies)
+        foreach (var assembly in assemblies)
         {
-            var types = assemblie.GetTypes();
+            var types = assembly.GetTypes();
             foreach (var type in types)
             {
                 if (typeof(T).IsAssignableFrom(type) &&
@@ -119,9 +122,9 @@ public static class AssetDatabaseService
         var result = new List<T>();
         var assemblies = GetAssemblies();
 
-        foreach (var assemblie in assemblies)
+        foreach (var assembly in assemblies)
         {
-            var types = assemblie.GetTypes();
+            var types = assembly.GetTypes();
             foreach (var type in types)
             {
                 if (typeof(T).IsAssignableFrom(type) &&
@@ -140,25 +143,25 @@ public static class AssetDatabaseService
         return result;
     }
 
-    public static List<Type> GetActivateableTypes(Type t)
+    public static List<Type> GetActivateAbleTypes(Type t)
     {
-        var restult = new List<Type>();
+        var result = new List<Type>();
         var assemblies = GetAssemblies();
 
-        foreach (var assemblie in assemblies)
+        foreach (var assembly in assemblies)
         {
-            var types = assemblie.GetTypes();
+            var types = assembly.GetTypes();
             foreach (var type in types)
             {
                 if (t.IsAssignableFrom(type) &&
                     !type.IsAbstract)
                 {
-                    restult.Add(type);
+                    result.Add(type);
                 }
             }
         }
 
-        return restult;
+        return result;
     }
 
     public static T GetInstanceOfType<T>(string typeName)
@@ -172,11 +175,33 @@ public static class AssetDatabaseService
             if (type != null)
             {
                 var instance = (T)AiObjectFactory.CreateInstance(type);
+                // if (type.GetInterface(nameof(IInitializeAble)) != null)
+                // {
+                //     var cast = instance as IInitializeAble;
+                //     cast?.Initialize();
+                //     return (T)cast;
+                // }
 
                 return instance;
             }
         }
         return default(T);
+    }
+
+    /// <summary>
+    /// https://stackoverflow.com/questions/11336935/c-sharp-automatic-deep-copy-of-struct
+    /// Works slow but makes deep copy of object
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    internal static T DeepCopy<T>(T obj)
+    {
+        using var ms = new MemoryStream();
+        _binaryFormatter.Serialize(ms,obj);
+        ms.Position = 0;
+        var t = (T) _binaryFormatter.Deserialize(ms);
+        return t;
     }
 
     //public static object GetInstanceOfType(Type type)

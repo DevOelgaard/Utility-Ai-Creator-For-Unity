@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UniRx;
@@ -28,7 +29,20 @@ public class ResponseCurve: AiObjectModel
         }
     }
 
-    public List<ResponseFunction> ResponseFunctions;
+    private List<ResponseFunction> responseFunctions;
+
+    public List<ResponseFunction> ResponseFunctions
+    {
+        get
+        {
+            if (responseFunctions == null)
+            {
+                responseFunctions = new List<ResponseFunction>();
+            }
+
+            return responseFunctions;
+        }
+    }
     public List<Parameter> Segments = new List<Parameter>();
 
     public IObservable<bool> OnParametersChanged => onParametersChanged;
@@ -38,31 +52,29 @@ public class ResponseCurve: AiObjectModel
     
     public IObservable<bool> OnFunctionsChanged => onFunctionsChanged;
     private readonly Subject<bool> onFunctionsChanged = new Subject<bool>();
-    
+    private Guid guid;
     public ResponseCurve()
     {
-        var firstFunction = (LinearFunction)AiObjectFactory.CreateInstance(typeof(LinearFunction));
-        ResponseFunctions = new List<ResponseFunction>();
-        AddResponseFunction(firstFunction);
+        DebugService.Log("T! Creating",this);
         BaseAiObjectType = typeof(ResponseCurve);
-
     }
 
-    protected ResponseCurve(string name, float minY = 0.0f, float maxY = 1.0f)
+    public override void Initialize()
     {
-        Name = name;
-        MinY = minY;
-        MaxY = maxY;
-        var firstFunction = new LinearFunction();
-
-        ResponseFunctions = new List<ResponseFunction>();
-        AddResponseFunction(firstFunction);
-        BaseAiObjectType = typeof(ResponseCurve);
-
+        DebugService.Log("T! Initializing",this);
+        base.Initialize();
+        guid = Guid.NewGuid();
+        DebugService.Log("Subscribing to change Guid: " + guid, this);
+        OnCurveValueChanged.Subscribe(_ => DebugService.Log("CurveValue Changed", this))
+            .AddTo(disposables);
+        DebugService.Log("Created Guid: " + guid + " Name: " + Name, this);
     }
-    
+
+    #region ResponseFunctions
+
     public void AddResponseFunction(ResponseFunction newFunction, bool updateSegments = true)
     {
+        DebugService.Log("TT! Adding RF: " + newFunction.Guid, this);
         var previousFunction = ResponseFunctions.LastOrDefault();
 
         if (previousFunction != null && updateSegments) // Not First function
@@ -81,6 +93,7 @@ public class ResponseCurve: AiObjectModel
             AddSegment(newSegment);
         }
 
+        DebugService.Log("Adding response function: " +newFunction.Name, this );
         ResponseFunctions.Add(newFunction);
         var sub = newFunction.OnParametersChanged
             .Subscribe(_ => onCurveValueChanged.OnNext(true));
@@ -89,26 +102,6 @@ public class ResponseCurve: AiObjectModel
         onFunctionsChanged.OnNext(true);
         UpdateResponseFunctionIndexes();
     }
-
-    private void AddSegment(Parameter newSegment)
-    {
-        var sub = newSegment.OnValueChange
-            .Subscribe(_ => onCurveValueChanged.OnNext(true));
-        segmentDisposables.Add(newSegment,sub);
-        Segments.Add(newSegment);
-    }
-
-    private void RemoveSegment(Parameter segment)
-    {
-        if (segmentDisposables.ContainsKey(segment))
-        {
-            segmentDisposables[segment].Dispose();
-            segmentDisposables.Remove(segment);
-        }
-
-        Segments.Remove(segment);
-    }
-
     private void UpdateResponseFunctionIndexes()
     {
         foreach (var responseFunction in ResponseFunctions)
@@ -135,17 +128,21 @@ public class ResponseCurve: AiObjectModel
 
     public void RemoveResponseFunction(ResponseFunction responseFunction)
     {
+        DebugService.Log("TT! Removing RF: " + responseFunction.Guid, this);
         var functionIndex = ResponseFunctions.IndexOf(responseFunction);
         var removeIndex = functionIndex - 1;
         if (removeIndex < 0) // Removing first or only function
         {
-            if (ResponseFunctions.Count <= 0)
-            {
-                throw new Exception("Can't remove the last Response function");
-            }
+            // if (ResponseFunctions.Count <= 1)
+            // {
+            //     throw new Exception("Can't remove the last Response function");
+            // }
             ResponseFunctions.Remove(responseFunction);
             
-            RemoveSegment(Segments[0]);
+            if (Segments.Count > 0)
+            {
+                RemoveSegment(Segments[0]);
+            }
         } 
         else if (functionIndex == Segments.Count) // Removing last function
         {
@@ -167,8 +164,69 @@ public class ResponseCurve: AiObjectModel
         UpdateResponseFunctionIndexes();
     }
 
+    #endregion
+
+    #region Segments
+
+    private void AddSegment(Parameter newSegment)
+    {
+        var sub = newSegment.OnValueChange
+            .Subscribe(_ => onCurveValueChanged.OnNext(true));
+        segmentDisposables.Add(newSegment,sub);
+        Segments.Add(newSegment);
+    }
+
+    private void RemoveSegment(Parameter segment)
+    {
+        if (segmentDisposables.ContainsKey(segment))
+        {
+            segmentDisposables[segment].Dispose();
+            segmentDisposables.Remove(segment);
+        }
+
+        Segments.Remove(segment);
+    }
+    
+    private float GetSegmentMin(float x)
+    {
+        var segmentWithLowerValue = Segments
+            .LastOrDefault(s => Convert.ToSingle(s.Value) < x);
+
+        if (segmentWithLowerValue == null)
+        {
+            return MinY;
+        } else
+        {
+            return Convert.ToSingle(segmentWithLowerValue.Value);
+        }
+    }
+
+    private float GetSegmentMax(float x)
+    {
+        var segmentWithHigherValue = Segments
+            .FirstOrDefault(s => Convert.ToSingle(s.Value) >= x);
+
+        if (segmentWithHigherValue == null)
+        {
+            return maxX;
+        } else
+        {
+            return Convert.ToSingle(segmentWithHigherValue.Value);
+        }
+    }
+
+    #endregion
+
+    #region Calculate
+
     public float CalculateResponse(float x)
     {
+        if (ResponseFunctions.Count <= 0)
+        {
+            var cast = (LinearFunction) AiObjectFactory.CreateInstance(typeof(LinearFunction));
+            DebugService.Log("TT! Creating new RF Rf Guid: " + cast.Guid,this ,Thread.CurrentThread);
+            AddResponseFunction(cast);
+        }
         var result = 0f;
 
         var validSegments = Segments
@@ -210,40 +268,9 @@ public class ResponseCurve: AiObjectModel
         return x;
     }
 
+    #endregion
 
-    internal override RestoreState GetState()
-    {
-        return new ResponseCurveState(Name, MinY, MaxY, Segments, this);
-    }
-
-
-    private float GetSegmentMin(float x)
-    {
-        var segmentWithLowerValue = Segments
-            .LastOrDefault(s => Convert.ToSingle(s.Value) < x);
-
-        if (segmentWithLowerValue == null)
-        {
-            return MinY;
-        } else
-        {
-            return Convert.ToSingle(segmentWithLowerValue.Value);
-        }
-    }
-
-    private float GetSegmentMax(float x)
-    {
-        var segmentWithHigherValue = Segments
-            .FirstOrDefault(s => Convert.ToSingle(s.Value) >= x);
-
-        if (segmentWithHigherValue == null)
-        {
-            return maxX;
-        } else
-        {
-            return Convert.ToSingle(segmentWithHigherValue.Value);
-        }
-    }
+    #region Fields
 
     public float MinY
     {
@@ -298,31 +325,44 @@ public class ResponseCurve: AiObjectModel
         }
     }
 
+    #endregion
+   
     protected override AiObjectModel InternalClone()
     {
+        DebugService.Log("T! Cloning",this);
         var clone = (ResponseCurve)AiObjectFactory.CreateInstance(GetType());
         clone.Name = Name;
         clone.Description = Description;
-        clone.ResponseFunctions = new List<ResponseFunction>();
-
+        clone.MinX = MinX;
+        clone.MaxX = MaxX;
+        clone.MinY = MinY;
+        clone.MaxY = MaxY;
+        clone.isInversed = isInversed;
+        
+        if (clone.ResponseFunctions.Count > 0)
+        {
+            var tempList = new List<ResponseFunction>(clone.ResponseFunctions);
+            foreach (var responseFunction in tempList)
+            {
+                clone.RemoveResponseFunction(responseFunction);
+            }
+        }
         foreach (var rf in ResponseFunctions)
         {
             var rfClone = (ResponseFunction)rf.Clone();
             clone.AddResponseFunction(rfClone);
         }
 
-        clone.Segments = new List<Parameter>();
         foreach (var s in Segments)
         {
-            var segmentClone = s.Clone();
-            clone.AddSegment(segmentClone);
+            var i = Segments.IndexOf(s);
+            clone.Segments[i].Value = s.Value;
         }
-        clone.MinX = MinX;
-        clone.MaxX = MaxX;
-        clone.MinY = MinY;
-        clone.MaxY = MaxY;
-
         return clone;
+    }
+    internal override RestoreState GetState()
+    {
+        return new ResponseCurveState(Name, MinY, MaxY, Segments, this);
     }
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
@@ -342,11 +382,8 @@ public class ResponseCurve: AiObjectModel
         MinX = state.MinX;
         MaxX = state.MaxX;
             
-
-
         var tempRestoreFunctions = await RestoreAbleService
             .GetAiObjectsSortedByIndex<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
-        ResponseFunctions = new List<ResponseFunction>();
         foreach (var responseFunction in tempRestoreFunctions)
         {
             AddResponseFunction(responseFunction, false);
@@ -362,6 +399,7 @@ public class ResponseCurve: AiObjectModel
     }
     ~ResponseCurve()
     {
+        DebugService.Log("Destroying Guid: " + guid + " Name: " + Name, this);
         foreach(var disposable in segmentDisposables)
         {
             disposable.Value.Dispose();

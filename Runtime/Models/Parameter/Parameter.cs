@@ -39,9 +39,12 @@ public class Parameter: RestoreAble
 
     public virtual Parameter Clone()
     {
+        // return AssetDatabaseService.DeepCopy(this);
+        
+        
         var clone = (Parameter)Activator.CreateInstance(GetType());
         clone.Name = Name;
-        clone.Value = Value;
+        clone.Value = AssetDatabaseService.DeepCopy(Value);
         clone.ParameterEnum = ParameterEnum;
         return clone;
     }

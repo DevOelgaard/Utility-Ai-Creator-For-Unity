@@ -10,20 +10,20 @@ internal class RunTimeInspector : SplitViewWindowDropDownSelection<IAgent>
 {
     protected override void Init()
     {
-        UASTemplateService.Instance.LoadAutoSave();
+        // UasTemplateService.Instance.LoadCurrentProject(true);
         var debugMenu = new ToolbarMenu();
         debugMenu.text = "Debug";
 
         debugMenu.menu.AppendAction("Timer", _ =>
         {
             TimerService.Instance.DebugLogTime();
-            InstantiaterService.Instance.DebugStuff();
+            AiObjectFactory.Instance.DebugStuff();
         });
 
         debugMenu.menu.AppendAction("Reset Timer", _ =>
         {
             TimerService.Instance.Reset();
-            InstantiaterService.Instance.Reset();
+            AiObjectFactory.Instance.Reset();
         });
 
         ToolbarTop.Add(debugMenu);

@@ -235,7 +235,7 @@ internal class TemplateManager : EditorWindow
         };
         reloadPlayAbleAis.RegisterCallback<MouseUpEvent>(_ =>
         {
-            PlayAbleAiService.UpdateAisFromTemplateService();
+            PlayAbleAiService.UpdateAisFromTemplateService(true);
         });
         toolbar.Add(reloadPlayAbleAis);
     }

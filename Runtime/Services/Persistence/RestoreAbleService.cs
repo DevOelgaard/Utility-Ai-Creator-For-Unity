@@ -137,13 +137,21 @@ internal static class RestoreAbleService
     internal static async Task SaveRestoreAblesToFile<T>(IEnumerable<T> collection, string path, IPersister persister) where T: RestoreAble
     {
         var restoreAbles = collection.ToList();
-        foreach (var element in restoreAbles)
+        if (restoreAbles.Count == 0)
         {
-            if (string.IsNullOrEmpty(element.FileName) || string.IsNullOrWhiteSpace(element.FileName))
+            // Cleaning up to delete previously created files
+            await PersistenceAPI.CleanUpAsync(path, DateTime.Now);
+        }
+        else
+        {
+            foreach (var element in restoreAbles)
             {
-                throw new ArgumentException("A valid name must be set for element: " + element);
+                if (string.IsNullOrEmpty(element.FileName) || string.IsNullOrWhiteSpace(element.FileName))
+                {
+                    throw new ArgumentException("A valid name must be set for element: " + element);
+                }
+                await element.SaveToFile(path,persister,restoreAbles.IndexOf(element));
             }
-            await element.SaveToFile(path,persister,restoreAbles.IndexOf(element));
         }
     }
 }

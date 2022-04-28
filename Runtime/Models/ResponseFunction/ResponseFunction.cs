@@ -76,7 +76,8 @@ public abstract class ResponseFunction: AiObjectModel
 
     protected override string GetFileName()
     {
-        return rcIndex + " - " + base.GetFileName();
+        return base.GetFileName();
+        // return rcIndex + " - " + base.GetFileName();
     }
 
     public virtual float CalculateResponse(float x, float prevResult, float maxY)

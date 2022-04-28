@@ -119,6 +119,7 @@ public static class Consts
         "Executes as many ticks as possible in a given timeframe. The Time budget may be exceeded by the execution time of one agent";
 
 
+    public const int LengthOfLongestExtension = 8;
     // File extensions
     public const string FileExtension_TemplateService = "uasproj";
     public const string FileExtension_PlayAble = "uasplay";

@@ -215,7 +215,7 @@ internal class PersistenceAPI
             var lastWriteTime = File.GetLastWriteTime(file);
             if (lastWriteTime < startTime)
             {
-                File.Delete(file);
+                DeleteFileIfAllowed(file);
             }
         }
         DeleteEmptyFolders(path);
@@ -223,7 +223,7 @@ internal class PersistenceAPI
 
     }
     
-    private static async Task CleanUpAsync(string path, DateTime startTime)
+    internal static async Task CleanUpAsync(string path, DateTime startTime)
     {
         var directoryInfo = new DirectoryInfo(path);
         if (directoryInfo.Name == "Assets")
@@ -245,7 +245,7 @@ internal class PersistenceAPI
                     {
                         continue;
                     }
-                    File.Delete(file);
+                    DeleteFileIfAllowed(file);
                 }
             }
         });
@@ -295,7 +295,7 @@ internal class PersistenceAPI
                                      childDirectoryNames.All(directory => directory != metaFileName);
         
                      if (!canDelete) continue;
-                     File.Delete(metaFile);
+                     DeleteFileIfAllowed(metaFile);
                  }
         
                  // Delete empty folders
@@ -315,7 +315,8 @@ internal class PersistenceAPI
                  }
                  foreach (var file in Directory.GetFiles(d))
                  {
-                     File.Delete(file);
+                     DeleteFileIfAllowed(file);
+
                  }
         
                  Directory.Delete(d,false);
@@ -362,7 +363,7 @@ internal class PersistenceAPI
                                 childDirectoryNames.All(directory => directory != metaFileName);
         
                 if (!canDelete) continue;
-                File.Delete(metaFile);
+                DeleteFileIfAllowed(metaFile);
             }
         
             // Delete empty folders
@@ -382,7 +383,7 @@ internal class PersistenceAPI
             }
             foreach (var file in Directory.GetFiles(d))
             {
-                File.Delete(file);
+                DeleteFileIfAllowed(file);
             }
         
             Directory.Delete(d,false);
@@ -390,17 +391,25 @@ internal class PersistenceAPI
 
     }
 
+    private static void DeleteFileIfAllowed(string file)
+    {
+        if (FileIsUasFile(file))
+        {
+            File.Delete(file);
+        }
+    }
+
     private static bool FileIsUasFile(string file)
     {
         foreach (var fileExtension in Consts.FileExtensions)
         {
-            if (file.Contains(fileExtension))
+            if (file.Contains("."+fileExtension))
             {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     #endregion

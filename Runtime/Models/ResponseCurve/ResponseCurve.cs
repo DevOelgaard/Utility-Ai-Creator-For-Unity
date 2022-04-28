@@ -93,7 +93,7 @@ public class ResponseCurve: AiObjectModel
             AddSegment(newSegment);
         }
 
-        DebugService.Log("Adding response function: " +newFunction.Name, this );
+        DebugService.Log("Adding response function: " + newFunction.Name, this );
         ResponseFunctions.Add(newFunction);
         var sub = newFunction.OnParametersChanged
             .Subscribe(_ => onCurveValueChanged.OnNext(true));

@@ -19,6 +19,18 @@ internal class ProjectSettingsModel
         }
     }
     private string currentProjectPath = "";
+
+    public string CurrentProjectName
+    {
+        get => currentProjectName;
+        set
+        {
+            currentProjectName = value;
+            onCurrentProjectPathChanged.OnNext(CurrentProjectPath);
+        }
+    }
+    private string currentProjectName;
+    
     public ProjectSettingsModel()
     {
 

@@ -158,7 +158,7 @@ internal class FileExtensionService
 
         if (type.IsAssignableFrom(typeof(TemplateService)))
         {
-            start = Consts.FileExtension_UasProject;
+            start = Consts.FileExtension_TemplateService;
         }
 
         if (type.IsAssignableFrom(typeof(AiTickerSettingsModel)))
@@ -173,7 +173,7 @@ internal class FileExtensionService
     {
         if (type.IsAssignableFrom(typeof(TemplateService)))
         {
-            return Consts.FileExtension_UasProject;
+            return Consts.FileExtension_TemplateService;
         }
 
         if (type.IsAssignableFrom(typeof(Ai)))
@@ -224,13 +224,13 @@ internal class FileExtensionService
         // {
         //     return Consts.FileExtension_RestoreAbleCollection;
         // }
-        if (type.IsAssignableFrom(typeof(AiTickerState)))
-        {
-            return Consts.FileExtension_AiTicker;
-        }
+        // if (type.IsAssignableFrom(typeof(AiTickerState)))
+        // {
+        //     return Consts.FileExtension_AiTicker;
+        // }
         if (type.IsAssignableFrom(typeof(ProjectSettingsModel)))
         {
-            return Consts.FileExtension_UasProject;
+            return Consts.FileExtension_TemplateService;
         }
         if (type.IsAssignableFrom(typeof(AiTickerSettingsModel)))
         {
@@ -239,7 +239,7 @@ internal class FileExtensionService
 
         if (type.IsAssignableFrom(typeof(UasTemplateServiceState)))
         {
-            return Consts.FileExtension_UasProject;
+            return Consts.FileExtension_TemplateService;
         }
 
         if (type.IsAssignableFrom(typeof(AiState)))
@@ -290,13 +290,13 @@ internal class FileExtensionService
         // {
         //     return Consts.FileExtension_RestoreAbleCollection;
         // }
-        if (type.IsAssignableFrom(typeof(AiTickerState)))
-        {
-            return Consts.FileExtension_AiTicker;
-        }
+        // if (type.IsAssignableFrom(typeof(AiTickerState)))
+        // {
+        //     return Consts.FileExtension_AiTicker;
+        // }
         if (type.IsAssignableFrom(typeof(ProjectSettingsModel)))
         {
-            return Consts.FileExtension_UasProject;
+            return Consts.FileExtension_TemplateService;
         }
         if (type.IsAssignableFrom(typeof(AiTickerSettingsState)))
         {

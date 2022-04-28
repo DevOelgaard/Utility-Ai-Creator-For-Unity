@@ -52,9 +52,9 @@ internal class AiTickerSettingsWindow: EditorWindow
         header.Add(description);
         aiTicker = AiTicker.Instance;
         modes.Init(AiTickerMode.Unrestricted);
-        modes.value = aiTicker.Settings.TickerMode.Name;
+        modes.value = aiTicker.Settings.CurrentTickerMode.Name;
         
-        LoadTicker(aiTicker.Settings.TickerMode);
+        LoadTicker(aiTicker.Settings.CurrentTickerMode);
         tickCount.text = aiTicker.TickCount.ToString();
 
         

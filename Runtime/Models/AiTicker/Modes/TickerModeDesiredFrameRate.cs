@@ -42,7 +42,7 @@ internal class TickerModeDesiredFrameRate : TickerMode
 
     protected override string GetFileName()
     {
-        return "DesiredFrameRate";
+        return Consts.FileName_TickerModeDesiredFrameRate;
     }
 
     internal override void Tick(List<IAgent> agents, TickMetaData metaData)

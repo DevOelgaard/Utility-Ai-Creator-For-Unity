@@ -115,27 +115,32 @@ internal class TemplateService: RestoreAble
         await LoadCurrentProject(true);
     }
 
-    internal async Task LoadCurrentProject(bool backup = false)
+    internal async Task LoadCurrentProject(bool temporaryProject = false)
     {
         SetState("Loading");
-        var loadPath = backup
-            ? ProjectSettingsService.Instance.GetProjectBackupPath()
+        var loadPath = temporaryProject
+            ? ProjectSettingsService.Instance.GetProjectTemporaryPath()
             : ProjectSettingsService.Instance.GetCurrentProjectPath();
-        DebugService.Log("Loading path: " + loadPath,this);
 
         if (loadPath == null)
         {
-            DebugService.Log("Failed to load", this);
+            DebugService.Log("Failed to load no project directory found", this);
             ClearCollectionNotify();
             
             return;
         }
 
+        projectDirectory = loadPath;
+
+        loadPath += "/" + Consts.FileName_Templates + "." + Consts.FileExtension_TemplateService;
+
+        DebugService.Log("Loading path: " + loadPath,this);
+
         if (loadedPath == loadPath)
         {
             DebugService.Log("Reloading path: " + loadPath, this);
         }
-        projectDirectory = ProjectSettingsService.Instance.GetDirectory(loadPath);
+
         DebugService.Log("ProjectDirectory: " + projectDirectory, this);
 
 
@@ -174,7 +179,7 @@ internal class TemplateService: RestoreAble
             {
                 DebugService.LogError("Loading failed: " + ex, this);
                 SetState("Error");
-                throw new Exception("UAS Template Service Restore Failed : ", ex);
+                throw new Exception("Template Service Restore Failed : ", ex);
             }
         }
     }
@@ -189,18 +194,17 @@ internal class TemplateService: RestoreAble
             ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
             : ProjectSettingsService.Instance.GetBackupDirectory();
 
-
         DebugService.Log("Saving path: " + path, this);
 
         var perstistAPI = PersistenceAPI.Instance;
-        var currentProjectName = ProjectSettingsService.Instance.GetCurrentProjectName(true);
-        await perstistAPI.SaveObjectDestructivelyAsync(this, path, currentProjectName);
+        await perstistAPI.SaveObjectDestructivelyAsync(this, path);
         SetState("Ready");
     }
 
     protected override string GetFileName()
     {
-        return ProjectSettingsService.Instance.GetCurrentProjectName();
+        var name = Consts.FileName_Templates;
+        return string.IsNullOrEmpty(name) ? Consts.FileName_Templates : name;
     }
 
     internal void Reset()
@@ -263,10 +267,10 @@ internal class TemplateService: RestoreAble
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
         DebugService.Log("Saving Ais: " + AIs.Values.Count, this);
-        var directoryPath = Path.GetDirectoryName(path);
-        if (!path.Contains(Consts.FileExtension_UasProject))
+        var directoryPath = Path.GetDirectoryName(path) + "/" + Consts.FolderName_Templates;
+        if (!path.Contains(Consts.FileExtension_TemplateService))
         {
-            path += "." + Consts.FileExtension_UasProject;
+            path += "." + Consts.FileExtension_TemplateService;
         }
         await persister.SaveObjectAsync(state, path) ;
 
@@ -366,26 +370,27 @@ internal class TemplateService: RestoreAble
         DebugService.Log("Start Restore: " + s.FileName, this);
         ClearCollectionNoNotify();
         SubscribeToCollectionChanges();
+        var loadDirectory = projectDirectory + "/" + Consts.FolderName_Templates;
         var state = (UasTemplateServiceState)s;
         var tasks = new List<Task>
         {
             RestoreAbleService
-                .LoadObjectsAndSortToCollection<Ai>(projectDirectory + Consts.FolderName_Ais, 
+                .LoadObjectsAndSortToCollection<Ai>(loadDirectory + Consts.FolderName_Ais, 
                     state.aIs,AIs,restoreDebug),
             RestoreAbleService
-                .LoadObjectsAndSortToCollection<Bucket>(projectDirectory + Consts.FolderName_Buckets, 
+                .LoadObjectsAndSortToCollection<Bucket>(loadDirectory + Consts.FolderName_Buckets, 
                     state.buckets,Buckets,restoreDebug),
             RestoreAbleService
-                .LoadObjectsAndSortToCollection<Decision>(projectDirectory + Consts.FolderName_Decisions, 
+                .LoadObjectsAndSortToCollection<Decision>(loadDirectory + Consts.FolderName_Decisions, 
                     state.decisions,Decisions,restoreDebug),
             RestoreAbleService
-                .LoadObjectsAndSortToCollection<Consideration>(projectDirectory + Consts.FolderName_Considerations,
+                .LoadObjectsAndSortToCollection<Consideration>(loadDirectory + Consts.FolderName_Considerations,
                     state.considerations,Considerations,restoreDebug),
             RestoreAbleService
-                .LoadObjectsAndSortToCollection<AgentAction>(projectDirectory + Consts.FolderName_AgentActions, 
+                .LoadObjectsAndSortToCollection<AgentAction>(loadDirectory + Consts.FolderName_AgentActions, 
                     state.agentActions,AgentActions,restoreDebug),
             RestoreAbleService
-                .LoadObjectsAndSortToCollection<ResponseCurve>(projectDirectory + Consts.FolderName_ResponseCurves, 
+                .LoadObjectsAndSortToCollection<ResponseCurve>(loadDirectory + Consts.FolderName_ResponseCurves, 
                     state.responseCurves,ResponseCurves,restoreDebug)
         };
 

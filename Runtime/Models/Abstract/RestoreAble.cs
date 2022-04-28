@@ -59,7 +59,7 @@ public abstract class RestoreAble
         return element;
     }
 
-    internal virtual async Task SaveToFile(string path, IPersister persister, int index = -1, string className = null)
+    internal virtual async Task SaveToFile(string path, IPersister persister, int index = -1)
     {
         var task = Task.Factory.StartNew(async () =>
         {
@@ -71,10 +71,18 @@ public abstract class RestoreAble
             }
 
             var state = GetState();
-            path = path + "/" + FileName;
             state.Index = index;
+            if (!path.Contains("."))
+            {
+                state.FileName = PathService.FormatFileName(state);
+                path = path + "/" + state.FileName;
+            }
+            else
+            {
+                state.FileName = GetFileName();
+            }
             state.FolderLocation = Path.GetDirectoryName(path);
-            DebugService.Log("Setting folder location of " + state.FileName + " Folder location: " + state.FolderLocation + " Path: " + path, this);
+            // DebugService.Log("Setting folder location of " + state.FileName + " Folder location: " + state.FolderLocation + " Path: " + path, this);
 
 
             await InternalSaveToFile(path, persister, state);
@@ -115,6 +123,7 @@ public abstract class RestoreState
         // DerivedTypeString = o.DerivedType.ToString();
         AssemblyName = o.DerivedType.Assembly.FullName;
         AssemblyQualifiedName = o.DerivedType.AssemblyQualifiedName;
+        Index = -1;
     }
 
     public Type OriginalType => Type.GetType(AssemblyQualifiedName);

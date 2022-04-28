@@ -235,7 +235,6 @@ public abstract class Consideration : AiObjectModel
         await MaxFloat.SaveToFile(maxPath, persister);
     }
 
-
     ~Consideration()
     {
         parameterDisposables.Clear();

@@ -33,35 +33,37 @@ internal class ProjectSettingsService
     
     internal string GetCurrentProjectDirectory()
     {
-        if (model == null || string.IsNullOrEmpty(model.CurrentProjectPath))
-        {
-            return "";
-        }
-        return new DirectoryInfo(Path.GetDirectoryName(model.CurrentProjectPath) ?? 
-                                          string.Empty).FullName+"/";
+        return model.CurrentProjectPath;
+        // if (model == null || string.IsNullOrEmpty(model.CurrentProjectPath))
+        // {
+        //     return "";
+        // }
+        // return new DirectoryInfo(Path.GetDirectoryName(model.CurrentProjectPath) ?? 
+        //                                   string.Empty).FullName+"/";
     }
 
     internal string GetBackupDirectory()
     {
-        var backUpPath = GetProjectBackupPath();
+        var backUpPath = GetProjectTemporaryPath();
         return new DirectoryInfo(Path.GetDirectoryName(backUpPath) ?? 
                                  string.Empty).FullName+"/";
     }
 
-    internal string GetCurrentProjectName(bool includeExtension = false) 
+    internal string GetCurrentProjectName(bool includeExtension = false)
     {
-        if (model == null || string.IsNullOrEmpty(model.CurrentProjectPath))
-        {
-            return null;
-        }
-        if (includeExtension)
-        {
-            return Path.GetFileName(model.CurrentProjectPath);
-        } else
-        {
-            var path = Path.GetFileName(model.CurrentProjectPath);
-            return path.Substring(0, path.IndexOf('.'));
-        }
+        return model.CurrentProjectName;
+        // if (model == null || string.IsNullOrEmpty(model.CurrentProjectPath))
+        // {
+        //     return null;
+        // }
+        // if (includeExtension)
+        // {
+        //     return Path.GetFileName(model.CurrentProjectPath);
+        // } else
+        // {
+        //     var path = Path.GetFileName(model.CurrentProjectPath);
+        //     return path.Substring(0, path.IndexOf('.'));
+        // }
     }
 
     internal string GetCurrentProjectPath()
@@ -75,27 +77,33 @@ internal class ProjectSettingsService
         return new DirectoryInfo(Path.GetDirectoryName(path) ?? string.Empty).FullName+"/";
     }
     
-    public string GetProjectBackupPath()
+    public string GetProjectTemporaryPath()
     {
         var currentProjectName = GetCurrentProjectName(true);
-        return Consts.FileUasProjectBackUp + currentProjectName;
+        return Consts.FileUasProjectTemp + currentProjectName;
     }
 
     private void SetProjectPath(string path)
     {
-        model.CurrentProjectPath = path;
+        model.CurrentProjectPath = path + "/";
         SaveSettings();
     }
 
     internal async Task CreateProject()
     {
         var path = EditorUtility
-            .SaveFilePanel("New Project", "", "New Project", 
-                Consts.FileExtension_UasProject);
+            .SaveFolderPanel("New Project", "", "New Project");
+        DebugService.Log("Creating new Project at path: " + path, this);
 
         SetProjectPath(path);
+        SetProjectName(path);
         TemplateService.Instance.Reset();
         await TemplateService.Instance.Save();
+    }
+
+    private void SetProjectName(string path)
+    {
+        model.CurrentProjectName = new DirectoryInfo(path).Name;
         SaveSettings();
     }
 
@@ -103,7 +111,7 @@ internal class ProjectSettingsService
     {
         var path = EditorUtility
             .SaveFilePanel("New Project", "", "New Project", 
-                Consts.FileExtension_UasProject);
+                Consts.FileExtension_TemplateService);
         
         SetProjectPath(path);
         await TemplateService.Instance.Save();
@@ -114,7 +122,7 @@ internal class ProjectSettingsService
     {
         var filters = new string[8];
         filters[0] = "UAS Project";
-        filters[1] = Consts.FileExtension_UasProject;
+        filters[1] = Consts.FileExtension_TemplateService;
         filters[2] = "All Files";
         filters[3] = "*";
 

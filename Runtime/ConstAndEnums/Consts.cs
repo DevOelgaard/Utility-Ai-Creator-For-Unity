@@ -9,32 +9,36 @@ public static class Consts
     // Paths
     internal const string MenuName = "Utility Ai System/";
     internal const string PathMainFolder = "Assets/UAS/bin/";
-    internal const string FileTickerSettings = PathMainFolder + "Settings/TickerSettings" + "." + FileExtension_TickerSettings;
     internal const string ProjectSettingsPath = PathMainFolder + "Settings/ProjectSettings." + FileExtension_ProjectSettings;
+    internal static string CurrentProjectPath => ProjectSettingsService.Instance.GetCurrentProjectDirectory();
+    internal static string Folder_TickerSettings_Complete => Folder_TickerSettings + FileName_TickerSettings + "/";
+    internal static string FilePath_TickerSettingsWithExtention => Folder_TickerSettings + FileName_TickerSettings + "." + FileExtension_TickerSettings;
+    internal static string Folder_TickerSettings => CurrentProjectPath + "Settings/";
+    internal const string FileName_TickerSettings = "TickerSettings";
 
-
-    //internal const string File_PlayAi = Path_MainFolder + "Ai/Playable" + "." + FileExtension_UasTemplateCollection;
-    internal const string File_UASTemplateService_AutoSave = PathMainFolder + "Saves/AutoSave" + "." + FileExtension_UasProject;
-    internal const string FileUasProjectBackUp = PathMainFolder + "BackUp/";
-    internal const string FileUasPlayAblePathWithNameAndExtension = FileUasPlayAblePath + FileUasPlayAbleFileName + "." + FileExtension_UasPlayAble;
-    internal const string FileUasPlayAblePath = PathMainFolder + FileUasPlayAbleFileName+"/";
+    internal static string FolderPath_TickerModes_Complete => Folder_TickerSettings_Complete + FolderName_TickerModes;
+    internal static string FileUasProjectTemp => CurrentProjectPath + "Temp/";
+    internal static string FileUasPlayAblePathWithNameAndExtension => FileUasPlayAblePath + FileUasPlayAbleFileName + "." + FileExtension_UasPlayAble;
+    internal static string FileUasPlayAblePath => CurrentProjectPath + FileUasPlayAbleFileName+"/";
     internal const string FileUasPlayAbleFileName = "PlayAble";
-    internal const string File_UASTemplateServicel_Playable = PathMainFolder + "Saves/Playable" + "." + FileExtension_UasProject;
 
+    
     // Folder Names
-    internal const string FolderName_Parameters = "Parameters/";
-    internal const string FolderName_ResponseFunctions = "ResponseFunctions/";
-    internal const string FolderName_Segments = "Segments/";
-    internal const string FolderName_ResponseCurves = "ResponseCurves/";
-    internal const string FolderName_AgentActions = "AgentActions/";
-    internal const string FolderName_Considerations = "Considerations/";
-    internal const string FolderName_Decisions = "Decisions/";
-    internal const string FolderName_Buckets = "Buckets/";
-    internal const string FolderName_BucketSelectors = "BucketSelector/";
-    internal const string FolderName_DecisionSelectors = "DecisionSelectors/";
+    internal const string FileName_Templates = "Te";
+    internal const string FolderName_Templates = FileName_Templates+"/";
+    internal const string FolderName_Parameters = "Pa/";
+    internal const string FolderName_ResponseFunctions = "RF/";
+    internal const string FolderName_Segments = "Se/";
+    internal const string FolderName_ResponseCurves = "RC/";
+    internal const string FolderName_AgentActions = "Act/";
+    internal const string FolderName_Considerations = "Co/";
+    internal const string FolderName_Decisions = "Dec/";
+    internal const string FolderName_Buckets = "Buc/";
+    internal const string FolderName_BucketSelectors = "BuS/";
+    internal const string FolderName_DecisionSelectors = "DeS/";
     internal const string FolderName_Ais = "Ais/";
-    internal const string FolderName_TickerModes = "TickerModes/";
-    internal const string FolderName_Weight = "Weight/";
+    internal const string FolderName_TickerModes = "TM/";
+    internal const string FolderName_Weight = "W/";
     internal const string FolderName_MinParameter = "Min/";
     internal const string FolderName_MaxParameter = "Max/";
 
@@ -89,7 +93,7 @@ public static class Consts
 
 
     // File extensions
-    public const string FileExtension_UasProject = "uasproj";
+    public const string FileExtension_TemplateService = "uasproj";
     public const string FileExtension_UasPlayAble = "uasplay";
     public const string FileExtension_UAI = "uasuai";
     public const string FileExtension_Bucket = "uasbuc";
@@ -112,7 +116,7 @@ public static class Consts
     public static readonly string[] FileExtensionsFilters =
     {
         "UAS Objects", "uas*",
-        "Project", FileExtension_UasProject,
+        "Project", FileExtension_TemplateService,
         "Ais", FileExtension_UAI,
         "Buckets", FileExtension_Bucket,
         "Decisions", FileExtension_Decision,
@@ -135,5 +139,8 @@ public static class Consts
     internal const string LineBreakDemos = "----Demos----";
 
 
+    public const string FileName_TickerModeDesiredFrameRate = "DsFr";
+    public const string FileName_TickerModeUnrestrictedFrameRate = "Unre";
+    public const string FileName_TickerModeTimeBudgetFrameRate = "TiBu";
 
 }

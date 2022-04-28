@@ -177,8 +177,7 @@ public class PlayAbleAiService: RestoreAble
         DebugService.Log("Saving", this);
         if (EditorApplication.isPlaying) return;
         var state = GetState();
-        await PersistenceAPI.Instance.SaveObjectDestructivelyAsync(this, Consts.FileUasPlayAblePath,
-            Consts.FileUasPlayAblePathWithNameAndExtension);
+        await PersistenceAPI.Instance.SaveObjectDestructivelyAsync(this, Consts.FileUasPlayAblePath);
         DebugService.Log("Saving Complete ais count: " + _ais.Count, this);
 
     }

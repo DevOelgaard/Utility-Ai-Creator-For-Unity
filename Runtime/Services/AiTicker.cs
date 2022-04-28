@@ -6,7 +6,7 @@ using UniRx;
 using UnityEditor;
 using Debug = UnityEngine.Debug;
 
-internal class AiTicker: RestoreAble
+internal class AiTicker//: RestoreAble
 {
     private readonly CompositeDisposable disposables = new CompositeDisposable();
     private IDisposable tickUntilTargetTickSub;
@@ -55,24 +55,25 @@ internal class AiTicker: RestoreAble
         {
             DebugService.Log("Handling playMode: " + playModeChange, this);
 
-            AsyncHelpers.RunSync(Save);
+            AsyncHelpers.RunSync(SaveSettings);
         }
     }
 
     private async Task Init()
     {
-        var loadedState = await persistenceAPI
-            .LoadObjectPathAsync<AiTickerSettingsState>(Consts.FileTickerSettings);
+        var loadedSettings = await persistenceAPI
+            .LoadObjectPathAsync<AiTickerSettingsState>(Consts.FilePath_TickerSettingsWithExtention);
         
-        if (loadedState.LoadedObject != null)
+        if (loadedSettings.LoadedObject != null)
         {
-            Settings = await Restore<AiTickerSettingsModel>(loadedState.LoadedObject);
+            Settings = await RestoreAble.Restore<AiTickerSettingsModel>(loadedSettings.LoadedObject);
         } else
         {
-            DebugService.LogWarning("Failed to load AiTicker settings Error: " + loadedState.ErrorMessage + " Exception: " + loadedState.Exception, this);
+            DebugService.LogWarning("Failed to load AiTicker settings Error: " + loadedSettings.ErrorMessage + " Exception: " + loadedSettings.Exception, this);
             Reload();
         }
     }
+    
     
     internal void Start()
     {
@@ -86,10 +87,10 @@ internal class AiTicker: RestoreAble
         disposables.Clear();
     }
 
-    protected override string GetFileName()
-    {
-        return "AiTicker";
-    }
+    // protected override string GetFileName()
+    // {
+    //     return Consts.FileName_TickerSettings;
+    // }
 
     internal void TickAgent(IAgent agent)
     {
@@ -100,7 +101,7 @@ internal class AiTicker: RestoreAble
         {
             TickCount = TickCount
         };
-        Settings.TickerMode.Tick(agent, metaData);
+        Settings.CurrentTickerMode.Tick(agent, metaData);
         onTickComplete.OnNext(TickCount);
     }
 
@@ -122,6 +123,7 @@ internal class AiTicker: RestoreAble
         EditorApplication.isPlaying = true;
     }
 
+    
     internal void TickAis()
     {
         if (!EditorApplication.isPlaying) return;
@@ -131,7 +133,7 @@ internal class AiTicker: RestoreAble
         {
             TickCount = TickCount
         };
-        Settings.TickerMode
+        Settings.CurrentTickerMode
             .Tick(agentManager
                 .Model
                 .Agents
@@ -146,25 +148,25 @@ internal class AiTicker: RestoreAble
     {
         var newMode = Settings.TickerModes.FirstOrDefault(m => m.Name == tickerMode);
         if (newMode == null) return;
-        Settings.TickerMode = newMode;
+        Settings.CurrentTickerMode = newMode;
     }
 
-    protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
-    {
-        var s = state as AiTickerState;
-        // ReSharper disable once PossibleNullReferenceException
-        Settings = await Restore<AiTickerSettingsModel>(s.settings, restoreDebug);
-    }
+    // protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
+    // {
+    //     var s = state as AiTickerState;
+    //     // ReSharper disable once PossibleNullReferenceException
+    //     Settings = await Restore<AiTickerSettingsModel>(s.settings, restoreDebug);
+    // }
+    //
+    // internal override RestoreState GetState()
+    // {   
+    //     return new AiTickerState(Settings, this);
+    // }
 
-    internal override RestoreState GetState()
-    {   
-        return new AiTickerState(Settings, this);
-    }
-
-    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
-    {
-        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_AiTicker);
-    }
+    // protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    // {
+    //     // await persister.SaveObjectAsync(state, path);
+    // }
 
     internal void Reload()
     {
@@ -175,16 +177,16 @@ internal class AiTicker: RestoreAble
             new TickerModeUnrestricted()
         };
 
-        Settings.TickerMode = Settings.TickerModes.First(m => m.Name == AiTickerMode.Unrestricted);
+        Settings.CurrentTickerMode = Settings.TickerModes.First(m => m.Name == AiTickerMode.Unrestricted);
     }
-
-    private async Task Save()
+    
+    private async Task SaveSettings()
     {
         DebugService.Log("Saving",this);
-        await persistenceAPI.SaveObjectPathAsync(Settings, Consts.FileTickerSettings, "TickerSettings");
+        await Settings.SaveToFile(Consts.FilePath_TickerSettingsWithExtention, persistenceAPI.Persister);
         DebugService.Log("Saving Complete",this);
     }
-
+    
     ~AiTicker()
     {
         DebugService.Log("Destroying",this);
@@ -195,18 +197,18 @@ internal class AiTicker: RestoreAble
 
     }
 }
-
-[Serializable]
-public class AiTickerState: RestoreState
-{
-    public AiTickerSettingsState settings;
-
-    public AiTickerState()
-    {
-    }
-
-    internal AiTickerState(AiTickerSettingsModel settings, AiTicker o) : base(o)
-    {
-        this.settings = settings.GetState() as AiTickerSettingsState;
-    }
-}
+//
+// [Serializable]
+// public class AiTickerState: RestoreState
+// {
+//     public AiTickerSettingsState settings;
+//
+//     public AiTickerState()
+//     {
+//     }
+//
+//     internal AiTickerState(AiTickerSettingsModel settings, AiTicker o) : base(o)
+//     {
+//         this.settings = settings.GetState() as AiTickerSettingsState;
+//     }
+// }

@@ -196,7 +196,7 @@ internal class TemplateManager : EditorWindow
             Task.Factory.StartNew(() => templateService.Save(true));
         });
 
-        menu.menu.AppendAction("Load Backup - TEST", LoadBackup);
+        menu.menu.AppendAction("Load Backup - TEST", LoadTemporary);
 
         menu.menu.AppendAction("Exit", _ =>
         {
@@ -206,7 +206,7 @@ internal class TemplateManager : EditorWindow
         toolbar.Add(menu);
     }
 
-    private async void LoadBackup(DropdownMenuAction _)
+    private async void LoadTemporary(DropdownMenuAction _)
     {
         await templateService.LoadCurrentProject(true);
     }

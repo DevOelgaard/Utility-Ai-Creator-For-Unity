@@ -23,6 +23,11 @@ internal class TickerModeTimeBudget : TickerMode
         };
     }
 
+    protected override string GetFileName()
+    {
+        return Consts.FileName_TickerModeTimeBudgetFrameRate;
+    }
+
     internal override void Tick(List<IAgent> agents, TickMetaData metaData)
     {
         stopwatch.Reset();

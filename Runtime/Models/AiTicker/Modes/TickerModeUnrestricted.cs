@@ -21,6 +21,11 @@ internal class TickerModeUnrestricted : TickerMode
 
     }
 
+    protected override string GetFileName()
+    {
+        return Consts.FileName_TickerModeUnrestrictedFrameRate;
+    }
+
     internal override List<Parameter> GetParameters()
     {
         return new List<Parameter>()

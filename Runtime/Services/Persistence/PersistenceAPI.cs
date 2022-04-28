@@ -33,7 +33,7 @@ internal class PersistenceAPI
             return;
         }
 
-        await SaveObjectPathAsync(o, Path.GetDirectoryName(path) + @"\", Path.GetFileName(path));
+        await SaveObjectPathAsync(o, Path.GetDirectoryName(path));
     }
 
     internal async Task SaveObjectsPanelAsync(List<RestoreAble> restoreables)
@@ -41,23 +41,23 @@ internal class PersistenceAPI
         var path = EditorUtility.SaveFolderPanel("Save object", "folder", "default name");
         foreach (var r in restoreables)
         {
-            await SaveObjectPathAsync(r, path, r.FileName);
+            await SaveObjectPathAsync(r, path);
         }
     }
 
 
 
-    internal async Task SaveObjectDestructivelyAsync(RestoreAble o, string path, string fileName)
+    internal async Task SaveObjectDestructivelyAsync(RestoreAble o, string path)
     {
         var startTime = DateTime.Now;
-        await SaveObjectPathAsync(o,path,fileName);
+        await SaveObjectPathAsync(o,path);
         DebugService.Log("Done saving destructively path: " + path, this);
         await CleanUpAsync(path, startTime);
     }
     
-    internal async Task SaveObjectPathAsync(RestoreAble o, string path, string fileName)
+    internal async Task SaveObjectPathAsync(RestoreAble o, string path)
     {
-        var task = o.SaveToFile(path, Persister, -2, fileName);
+        var task = o.SaveToFile(path, Persister, -2);
         if (await Task.WhenAny(task, Task.Delay(Settings.TimeOutMs)) == task)
         {
             return;
@@ -97,6 +97,7 @@ internal class PersistenceAPI
 
     internal async Task<ObjectMetaData<T>> LoadObjectPathAsync<T>(string path)
     {
+        DebugService.Log("Loading object of type: " + typeof(T) + " at path: " + path, this );
         var task = Persister.LoadObjectAsync<T>(path);
         if (await Task.WhenAny(task, Task.Delay(Settings.TimeOutMs)) == task)
         {
@@ -209,6 +210,7 @@ internal class PersistenceAPI
     private static async Task CleanUpAsync(string path, DateTime startTime)
     {
         DebugService.Log("Clean up Start path: " + path, nameof(PersistenceAPI));
+        if (!Directory.Exists(path)) return;
         var t = Task.Factory.StartNew(() =>
         {
             var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
@@ -235,6 +237,8 @@ internal class PersistenceAPI
          {
              path = new DirectoryInfo(Path.GetDirectoryName(path) ?? string.Empty).FullName;
          }
+         DebugService.Log("Getting directories at path: " + path, nameof(PersistenceAPI));
+
          var directories = Directory.GetDirectories(path);
          var tasks = new List<Task>();
          

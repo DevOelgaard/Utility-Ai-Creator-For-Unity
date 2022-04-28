@@ -7,14 +7,14 @@ using UniRx;
 
 public class AiTickerSettingsModel: RestoreAble
 {
-    private TickerMode tickerMode;
-    internal TickerMode TickerMode
+    private TickerMode currentTickerMode;
+    internal TickerMode CurrentTickerMode
     {
-        get => tickerMode;
+        get => currentTickerMode;
         set
         {
-            tickerMode = value;
-            onTickerModeChanged.OnNext(tickerMode);
+            currentTickerMode = value;
+            onTickerModeChanged.OnNext(currentTickerMode);
         }
     }
     internal IObservable<TickerMode> OnTickerModeChanged => onTickerModeChanged;
@@ -25,16 +25,15 @@ public class AiTickerSettingsModel: RestoreAble
 
     protected override string GetFileName()
     {
-        return "AiTickerSettings";
+        return Consts.FileName_TickerSettings;
     }
 
     protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
     {
         var s = state as AiTickerSettingsState;
-        TickerMode = await Restore<TickerMode>(s.TickerMode);
         TickerModes = new List<TickerMode>();
         var modeStates = await PersistenceAPI.Instance
-            .LoadObjectsPathWithFilters<TickerModeState>(CurrentDirectory + Consts.FolderName_TickerModes, typeof(TickerMode));
+            .LoadObjectsPathWithFilters<TickerModeState>(Consts.FolderPath_TickerModes_Complete, typeof(TickerMode));
         foreach(var mode in modeStates)
         {
             if(mode.LoadedObject == null)
@@ -50,23 +49,27 @@ public class AiTickerSettingsModel: RestoreAble
                 TickerModes.Add(tickerModeLocal);
             }
         }
+
+        CurrentTickerMode = TickerModes.FirstOrDefault(tm => tm.Name == s.CurrentTickerMode);
+        // CurrentTickerMode = await Restore<TickerMode>(s.Cu);
     }
     internal override RestoreState GetState()
     {
-        return new AiTickerSettingsState(TickerMode, TickerModes, this);
+        return new AiTickerSettingsState(CurrentTickerMode, TickerModes, this);
     }
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        await persister.SaveObjectAsync(state, path + Consts.FileExtension_TickerSettings);
-        await RestoreAbleService.SaveRestoreAblesToFile(TickerModes,path + "/" + Consts.FolderName_TickerModes, persister);
+        await persister.SaveObjectAsync(state, Consts.FilePath_TickerSettingsWithExtention);
+        await RestoreAbleService.SaveRestoreAblesToFile(TickerModes,Consts.FolderPath_TickerModes_Complete, persister);
     }
 }
 
 [Serializable]
 public class AiTickerSettingsState: RestoreState
 {
-    public TickerModeState TickerMode;
+    // public TickerModeState TickerMode;
+    public AiTickerMode CurrentTickerMode;
 
     public AiTickerSettingsState()
     {
@@ -74,7 +77,8 @@ public class AiTickerSettingsState: RestoreState
 
     public AiTickerSettingsState(TickerMode tickerMode, List<TickerMode> tickerModes, AiTickerSettingsModel o) : base(o)
     {
-        TickerMode = tickerMode.GetState() as TickerModeState;
+        CurrentTickerMode = tickerMode.Name;
+        // TickerMode = tickerMode.GetState() as TickerModeState;
     }
 }
 

@@ -18,7 +18,7 @@ internal class TickerModeTimeBudget : TickerMode
     {
         return new List<Parameter>()
         {
-            new Parameter("Time Budget MS", (int)23),
+            new Parameter("Time Budget MS", 23),
             new Parameter("Debug", false),
         };
     }
@@ -36,7 +36,7 @@ internal class TickerModeTimeBudget : TickerMode
 
         while(TickedAgentsThisFrame < agents.Count)
         {
-            if (stopwatch.ElapsedMilliseconds >= (float)ParameterContainer.GetParameter("Time Budget MS").Value)
+            if (stopwatch.ElapsedMilliseconds >= Convert.ToSingle(ParameterContainer.GetParameter("Time Budget MS").Value))
             {
                 if ((bool)ParameterContainer.GetParameter("Debug").Value)
                 {

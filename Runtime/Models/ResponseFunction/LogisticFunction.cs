@@ -23,7 +23,7 @@ public class LogisticFunction : ResponseFunction
     protected override float CalculateResponseInternal(float x)
     {
         // L / 1 + e^-k(x-x0)
-        return Convert.ToSingle(Max.Value) / (1.0f + (float)Mathf.Exp(-Convert.ToSingle(GetParameter("Growth Rate").Value) * 
+        return Convert.ToSingle(Max.Value) / (1.0f + Mathf.Exp(-Convert.ToSingle(GetParameter("Growth Rate").Value) * 
                                                                       (x - Convert.ToSingle(GetParameter("Mid Point").Value))));
     }
 }

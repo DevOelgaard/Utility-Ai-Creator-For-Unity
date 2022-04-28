@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -57,6 +58,14 @@ internal class PersistenceAPI
     
     internal async Task SaveObjectPathAsync(RestoreAble o, string path)
     {
+        if (path.Length > Consts.MaxPathLengthWindows)
+        {
+            var message = "The path you are trying to save is: " + path.Length +
+                          " chars long. The max allowed path length is: " +
+                          Consts.MaxPathLengthWindows;
+            DebugService.LogError(message,this);
+            throw new ConstraintException(message);
+        }
         var task = o.SaveToFile(path, Persister, -2);
         if (await Task.WhenAny(task, Task.Delay(Settings.TimeOutMs)) == task)
         {

@@ -21,6 +21,6 @@ internal class LogarithmicFunction : ResponseFunction
 
     protected override float CalculateResponseInternal(float x)
     {
-        return (float)Mathf.Log(x, Convert.ToSingle(GetParameter("Base").Value)/10)/10;
+        return Mathf.Log(x, Convert.ToSingle(GetParameter("Base").Value)/10)/10;
     }
 }

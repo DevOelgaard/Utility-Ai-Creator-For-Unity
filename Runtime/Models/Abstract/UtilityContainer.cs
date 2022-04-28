@@ -8,7 +8,7 @@ using System.Linq;
 public abstract class UtilityContainer : AiObjectModel
 {
     protected int Index { get; set; }
-    public float Score => (float)ScoreModels.FirstOrDefault(s => s.Name == "Score").Value;
+    public float Score => Convert.ToSingle(ScoreModels.FirstOrDefault(s => s.Name == "Score").Value);
 
     private IDisposable considerationSub;
     private ReactiveListNameSafe<Consideration> considerations = new ReactiveListNameSafe<Consideration>();

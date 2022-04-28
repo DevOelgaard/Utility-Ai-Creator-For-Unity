@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 internal class TickerModeUnrestricted : TickerMode
 {
     public int TotalTicks = 0;
-    public long SampleTime => (int)ParameterContainer.GetParameter("Sample Time").Value;
+    public long SampleTime => Convert.ToInt32(ParameterContainer.GetParameter("Sample Time").Value);
     private bool isStarted = false;
     private bool isLogged = false;
     private readonly Stopwatch sampleTimeSW = new Stopwatch();

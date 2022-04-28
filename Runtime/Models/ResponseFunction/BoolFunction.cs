@@ -35,7 +35,7 @@ internal class BoolFunction : ResponseFunction
 
     protected override float CalculateResponseInternal(float x)
     {
-        if (x < (float)GetParameter("CutOff").Value)
+        if (x < Convert.ToSingle(GetParameter("CutOff").Value))
         {
             return (bool)GetParameter("First Value").Value == true ? Convert.ToSingle(Max.Value) : Convert.ToSingle(Min.Value);
         }
@@ -47,7 +47,7 @@ internal class BoolFunction : ResponseFunction
 
     public override float CalculateResponse(float x, float prevResult, float maxY)
     {
-        if (x < (float)GetParameter("CutOff").Value)
+        if (x < Convert.ToSingle(GetParameter("CutOff").Value))
         {
             return (bool)GetParameter("First Value").Value == true ? Convert.ToSingle(Max.Value) : Convert.ToSingle(Min.Value);
         }

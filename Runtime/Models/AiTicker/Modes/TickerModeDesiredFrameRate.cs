@@ -19,8 +19,8 @@ internal class TickerModeDesiredFrameRate : TickerMode
 
     internal IObservable<float> OnLastFrameRateChanged => onLastFrameRateChanged;
     private readonly Subject<float> onLastFrameRateChanged = new Subject<float>();
-    internal float SampelTimeInSeconds => (float)ParameterContainer.GetParameter("Sample Time Seconds").Value;
-    internal float TargetFrameRate => (float)ParameterContainer.GetParameter("Target Framerate").Value;
+    internal float SampelTimeInSeconds => Convert.ToSingle(ParameterContainer.GetParameter("Sample Time Seconds").Value);
+    internal float TargetFrameRate => Convert.ToSingle(ParameterContainer.GetParameter("Target Framerate").Value);
     private int debugTickCount = 0;
 
 
@@ -54,7 +54,7 @@ internal class TickerModeDesiredFrameRate : TickerMode
         }
         else
         {
-            LastFrameRate = (float)framesThisSample / elapsedTime;
+            LastFrameRate = framesThisSample / elapsedTime;
             onLastFrameRateChanged.OnNext(LastFrameRate);
 
             if (LastFrameRate < TargetFrameRate)
@@ -107,7 +107,7 @@ internal class TickerModeDesiredFrameRate : TickerMode
         }
 
         debugTickCount++;
-        if ((bool)ParameterContainer.GetParameter("Debug").Value && debugTickCount >= (int)ParameterContainer.GetParameter("DebugTickCount").Value)
+        if ((bool)ParameterContainer.GetParameter("Debug").Value && debugTickCount >= Convert.ToInt32(ParameterContainer.GetParameter("DebugTickCount").Value))
         {
             debugTickCount = 0;
             DebugService.Log("Framerate: " + LastFrameRate + " Allowed TicksPrFrame: " + allowedTicksPrFrame + " FrameCount: " + framesThisSample, this);

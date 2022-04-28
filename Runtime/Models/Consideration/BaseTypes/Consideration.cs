@@ -259,7 +259,7 @@ public class ConsiderationState: RestoreState
     {
         Name = name;
         Description = description;
-        PerformanceTag = (int)consideration.PerformanceTag;
+        PerformanceTag = Convert.ToInt32(consideration.PerformanceTag);
         BaseScore = consideration.BaseScore;
         NormalizedScore = consideration.NormalizedScore;
         Parameters = RestoreAbleService.NamesToList(parameters);

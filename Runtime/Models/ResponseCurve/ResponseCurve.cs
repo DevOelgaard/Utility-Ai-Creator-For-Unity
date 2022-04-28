@@ -83,7 +83,7 @@ public class ResponseCurve: AiObjectModel
             var segmentValue = 0f;
             if (previousSegment != null)
             {
-                segmentValue = (float)(MaxX - Convert.ToSingle(previousSegment.Value)) / 2 + Convert.ToSingle(previousSegment.Value);
+                segmentValue = (MaxX - Convert.ToSingle(previousSegment.Value)) / 2 + Convert.ToSingle(previousSegment.Value);
 
             } else
             {
@@ -247,7 +247,7 @@ public class ResponseCurve: AiObjectModel
             for (var i = 0; i < indexOfLastFunction; i++)
             {
                 // Getting max of previous functions
-                var currentMax = (float)Convert.ToSingle(validSegments[i].Value);
+                var currentMax = Convert.ToSingle(validSegments[i].Value);
                 normalized = Normalize(x, previousMax, currentMax);
                 previousMax = currentMax;
                 result = ResponseFunctions[i].CalculateResponse(normalized, result,maxY);

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 public static class Consts
 {
+    public const int MaxPathLengthWindows = 260;
     // Paths
     internal const string MenuName = "Utility Ai System/";
     internal const string PathMainFolder = "Assets/UAS/bin/";

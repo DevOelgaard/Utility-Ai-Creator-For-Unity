@@ -12,20 +12,25 @@ public static class Consts
     internal const string ProjectSettingsPath = PathMainFolder + "Settings/ProjectSettings." + FileExtension_ProjectSettings;
     internal static string CurrentProjectPath => ProjectSettingsService.Instance.GetCurrentProjectDirectory();
     internal static string Folder_TickerSettings_Complete => Folder_TickerSettings + FileName_TickerSettings + "/";
+    internal static string Folder_PlayAbleAi_Complete => Folder_PLayAbleAi + FileName_PLayAbleAi + "/";
     internal static string FilePath_TickerSettingsWithExtention => Folder_TickerSettings + FileName_TickerSettings + "." + FileExtension_TickerSettings;
+    internal static string FilePath_PlayAbleAiWithExtention => Folder_PLayAbleAi + FileName_PLayAbleAi + "." + FileExtension_PlayAble;
     internal static string Folder_TickerSettings => CurrentProjectPath + "Settings/";
+    internal static string Folder_PLayAbleAi => CurrentProjectPath + FileName_PLayAbleAi + "/";
     internal const string FileName_TickerSettings = "TickerSettings";
 
     internal static string FolderPath_TickerModes_Complete => Folder_TickerSettings_Complete + FolderName_TickerModes;
+    internal static string FolderPath_PlayAbleAi_Complete => Folder_PlayAbleAi_Complete + FolderName_PlayAbleAis;
     internal static string FileUasProjectTemp => CurrentProjectPath + "Temp/";
-    internal static string FileUasPlayAblePathWithNameAndExtension => FileUasPlayAblePath + FileUasPlayAbleFileName + "." + FileExtension_UasPlayAble;
-    internal static string FileUasPlayAblePath => CurrentProjectPath + FileUasPlayAbleFileName+"/";
-    internal const string FileUasPlayAbleFileName = "PlayAble";
+    // internal static string FileUasPlayAblePathWithNameAndExtension => FileUasPlayAblePath + FileName_PLayAbleAi + "." + FileExtension_PlayAble;
+    // internal static string FileUasPlayAblePath => CurrentProjectPath + FileName_PLayAbleAi+"/";
+    internal const string FileName_PLayAbleAi = "PlAi";
 
     
     // Folder Names
     internal const string FileName_Templates = "Te";
     internal const string FolderName_Templates = FileName_Templates+"/";
+    internal const string FolderName_PlayAbleAis = FileName_PLayAbleAi+"/";
     internal const string FolderName_Parameters = "Pa/";
     internal const string FolderName_ResponseFunctions = "RF/";
     internal const string FolderName_Segments = "Se/";
@@ -94,7 +99,7 @@ public static class Consts
 
     // File extensions
     public const string FileExtension_TemplateService = "uasproj";
-    public const string FileExtension_UasPlayAble = "uasplay";
+    public const string FileExtension_PlayAble = "uasplay";
     public const string FileExtension_UAI = "uasuai";
     public const string FileExtension_Bucket = "uasbuc";
     public const string FileExtension_Decision = "uasdec";

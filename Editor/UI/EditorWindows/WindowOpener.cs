@@ -10,15 +10,17 @@ using UniRxExtension;
 internal class WindowOpener: EditorWindow
 {
     public static Rect windowPosition = new Rect(0f, 0f, 1920*0.6f, 1080f / 2f);
+    public static Vector2 windowMinSize = new Vector2(1400f, 624f);
     private static EditorWindow _templateManager;
 
     [MenuItem(Consts.MenuName + Consts.Window_AiInspector_Name)]
-    public static void OpenRuntimInspector()
+    public static void OpenRuntimeInspector()
     {
         RunTimeInspector wnd = GetWindow<RunTimeInspector>();
         wnd.titleContent = new GUIContent(Consts.Window_AiInspector_Name);
         wnd.Show();
         wnd.position = windowPosition;
+        SetWindowSizeAboveMin(wnd);
     }
 
 
@@ -30,8 +32,10 @@ internal class WindowOpener: EditorWindow
             var wnd = GetWindow<SelectProjectWindow>();
             wnd.titleContent = new GUIContent(Consts.Window_SelectProject_Name);
             wnd.SetOnComplete(OpenTemplateManagerPrivate);
-            wnd.Show();
             wnd.position = windowPosition;
+            SetWindowSizeAboveMin(wnd);
+            wnd.Show();
+
         } else
         {
             OpenTemplateManagerPrivate();
@@ -40,11 +44,13 @@ internal class WindowOpener: EditorWindow
 
     private static void OpenTemplateManagerPrivate()
     {
-        TemplateManager wnd = GetWindow<TemplateManager>();
+        var wnd = GetWindow<TemplateManager>();
         wnd.titleContent = new GUIContent(Consts.Window_TemplateManager_Name);
-        wnd.Show();
         wnd.position = windowPosition;
+
+        SetWindowSizeAboveMin(wnd);
         _templateManager = wnd;
+        wnd.Show();
     }
 
     [MenuItem(Consts.MenuName + Consts.Window_Logger_Name)]
@@ -54,6 +60,7 @@ internal class WindowOpener: EditorWindow
         wnd.titleContent = new GUIContent(Consts.Window_Logger_Name);
         wnd.Show();
         wnd.position = windowPosition;
+        SetWindowSizeAboveMin(wnd);
     }
 
     [MenuItem(Consts.MenuName + Consts.Window_AiTickerManager_Name)]
@@ -61,8 +68,10 @@ internal class WindowOpener: EditorWindow
     {
         AiTickerSettingsWindow wnd = GetWindow<AiTickerSettingsWindow>();
         wnd.titleContent = new GUIContent(Consts.Window_AiTickerManager_Name);
-        wnd.Show();
         wnd.position = windowPosition;
+        SetWindowSizeAboveMin(wnd);
+        wnd.Show();
+
     }
 
     public static ResponseCurveWindow GetNewResponseCurveWindow()
@@ -78,6 +87,20 @@ internal class WindowOpener: EditorWindow
         {
             wnd.position = windowPosition;
         }
+        SetWindowSizeAboveMin(wnd);
         return wnd;
+    }
+
+    private static void SetWindowSizeAboveMin(EditorWindow wnd)
+    {
+        if (wnd.position.x < windowMinSize.x)
+        {
+            windowPosition.x = windowMinSize.x;
+        }
+
+        if (windowPosition.y < windowMinSize.y)
+        {
+            windowPosition.y = windowMinSize.y;
+        }
     }
 }

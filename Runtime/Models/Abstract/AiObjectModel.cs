@@ -130,10 +130,10 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
         }
         set
         {
-            if (value == GetType().ToString())
-            {
-                value += "-Template";
-            }
+            // if (value == GetType().ToString())
+            // {
+            //     value += "-Template";
+            // }
             name = GetNameFormat(value);
             onNameChanged.OnNext(Name);
         }

@@ -98,7 +98,7 @@ public class PlayAbleAiService: RestoreAble
     {
         DebugService.Log("Restoring", this);
         var objectMetaData = await PersistenceAPI.Instance
-            .LoadObjectPathAsync<PlayAbleAiServiceState>(Consts.FileUasPlayAblePathWithNameAndExtension);
+            .LoadObjectPathAsync<PlayAbleAiServiceState>(Consts.FilePath_PlayAbleAiWithExtention);
         if (objectMetaData.IsSuccessFullyLoaded)
         {
             var state = objectMetaData.LoadedObject;
@@ -137,33 +137,32 @@ public class PlayAbleAiService: RestoreAble
     }
     protected override string GetFileName()
     {
-        return Consts.FileUasPlayAbleFileName;
+        return Consts.FileName_PLayAbleAi;
     }
     
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
         DebugService.Log("RestoringInternal", this);
-        var state = (PlayAbleAiServiceState)s;
-        var directoryPath = Consts.FileUasPlayAblePath + Consts.FolderName_Ais;
-        _ais = await RestoreAbleService.GetAiObjectsSortedByIndex<Ai>(directoryPath, restoreDebug);
+        // var state = (PlayAbleAiServiceState)s;
+        // var directoryPath = Consts.FileUasPlayAblePath + Consts.FolderName_Ais;
+        _ais = await RestoreAbleService.GetAiObjectsSortedByIndex<Ai>(Consts.Folder_PlayAbleAi_Complete, restoreDebug);
 
         DebugService.Log("RestoringInternal Complete Ai count: " + _ais.Count, this);
     }
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
-        DebugService.Log("Saving", this);
-        var directoryPath = Path.GetDirectoryName(path);
-        if (!path.Contains(Consts.FileExtension_UasPlayAble))
-        {
-            path += "." + Consts.FileExtension_UasPlayAble;
-        }
-        await persister.SaveObjectAsync(state, path);
+        // DebugService.Log("Saving", this);
+        // var directoryPath = Path.GetDirectoryName(path);
+        // if (!path.Contains(Consts.FileExtension_PlayAble))
+        // {
+        //     path += "." + Consts.FileExtension_PlayAble;
+        // }
+        await persister.SaveObjectAsync(state, Consts.FilePath_PlayAbleAiWithExtention);
         
         
         DebugService.Log("Starting save AI tasks", this);
-        await RestoreAbleService.SaveRestoreAblesToFile(_ais,
-            directoryPath + "/" + Consts.FolderName_Ais, persister);
+        await RestoreAbleService.SaveRestoreAblesToFile(_ais, Consts.Folder_PlayAbleAi_Complete, persister);
         DebugService.Log("Saving Complete", this);
     }
 
@@ -177,7 +176,7 @@ public class PlayAbleAiService: RestoreAble
         DebugService.Log("Saving", this);
         if (EditorApplication.isPlaying) return;
         var state = GetState();
-        await PersistenceAPI.Instance.SaveObjectDestructivelyAsync(this, Consts.FileUasPlayAblePath);
+        await PersistenceAPI.Instance.SaveObjectDestructivelyAsync(this, Consts.FilePath_PlayAbleAiWithExtention);
         DebugService.Log("Saving Complete ais count: " + _ais.Count, this);
 
     }

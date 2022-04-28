@@ -42,7 +42,7 @@ internal class ProjectSettingsService
         //                                   string.Empty).FullName+"/";
     }
 
-    internal string GetBackupDirectory()
+    internal string GetTemporaryDirectory()
     {
         var backUpPath = GetProjectTemporaryPath();
         return new DirectoryInfo(Path.GetDirectoryName(backUpPath) ?? 
@@ -142,16 +142,16 @@ internal class ProjectSettingsService
     internal bool ProjectSaved()
     {
         // Current Project Directory
-        var cpd = GetCurrentProjectDirectory();
+        var currentProjectDirectory = GetCurrentProjectDirectory();
         //Back Up Directory
-        var bud =  GetBackupDirectory();
+        var temporaryDirectory =  GetTemporaryDirectory();
 
-        if (string.IsNullOrEmpty(cpd) || string.IsNullOrEmpty(bud))
+        if (string.IsNullOrEmpty(currentProjectDirectory) || string.IsNullOrEmpty(temporaryDirectory))
         {
             return false;
         }
-        var cpdInfo = new DirectoryInfo(cpd);
-        var budInfo = new DirectoryInfo(bud);
+        var cpdInfo = new DirectoryInfo(currentProjectDirectory);
+        var budInfo = new DirectoryInfo(temporaryDirectory);
 
         var fileComparer = new FileComparer();
 
@@ -172,7 +172,8 @@ internal class ProjectSettingsService
             {
                 return false;
             }
-            throw;
+            DebugService.LogWarning("Could not validate if project was saved. Exception: " + e, this);
+            return false;
         }
     }
 

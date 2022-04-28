@@ -192,7 +192,7 @@ internal class TemplateService: RestoreAble
         DebugService.Log("Saving Backup: " + backup, this);
         var path = !backup
             ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
-            : ProjectSettingsService.Instance.GetBackupDirectory();
+            : ProjectSettingsService.Instance.GetTemporaryDirectory();
 
         DebugService.Log("Saving path: " + path, this);
 

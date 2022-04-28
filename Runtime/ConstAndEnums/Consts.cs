@@ -7,31 +7,42 @@ using System.Threading.Tasks;
 public static class Consts
 {
     public const int MaxPathLengthWindows = 260;
+
     // Paths
     internal const string MenuName = "Utility Ai System/";
     internal const string PathMainFolder = "Assets/UAS/bin/";
-    internal const string ProjectSettingsPath = PathMainFolder + "Settings/ProjectSettings." + FileExtension_ProjectSettings;
+
+    internal const string ProjectSettingsPath =
+        PathMainFolder + "Settings/ProjectSettings." + FileExtension_ProjectSettings;
+
     internal static string CurrentProjectPath => ProjectSettingsService.Instance.GetCurrentProjectDirectory();
     internal static string Folder_TickerSettings_Complete => Folder_TickerSettings + FileName_TickerSettings + "/";
     internal static string Folder_PlayAbleAi_Complete => Folder_PLayAbleAi + FileName_PLayAbleAi + "/";
-    internal static string FilePath_TickerSettingsWithExtention => Folder_TickerSettings + FileName_TickerSettings + "." + FileExtension_TickerSettings;
-    internal static string FilePath_PlayAbleAiWithExtention => Folder_PLayAbleAi + FileName_PLayAbleAi + "." + FileExtension_PlayAble;
+
+    internal static string FilePath_TickerSettingsWithExtention =>
+        Folder_TickerSettings + FileName_TickerSettings + "." + FileExtension_TickerSettings;
+
+    internal static string FilePath_PlayAbleAiWithExtention =>
+        Folder_PLayAbleAi + FileName_PLayAbleAi + "." + FileExtension_PlayAble;
+
     internal static string Folder_TickerSettings => CurrentProjectPath + "Settings/";
     internal static string Folder_PLayAbleAi => CurrentProjectPath + FileName_PLayAbleAi + "/";
     internal const string FileName_TickerSettings = "TickerSettings";
 
     internal static string FolderPath_TickerModes_Complete => Folder_TickerSettings_Complete + FolderName_TickerModes;
     internal static string FolderPath_PlayAbleAi_Complete => Folder_PlayAbleAi_Complete + FolderName_PlayAbleAis;
+
     internal static string FileUasProjectTemp => CurrentProjectPath + "Temp/";
+
     // internal static string FileUasPlayAblePathWithNameAndExtension => FileUasPlayAblePath + FileName_PLayAbleAi + "." + FileExtension_PlayAble;
     // internal static string FileUasPlayAblePath => CurrentProjectPath + FileName_PLayAbleAi+"/";
     internal const string FileName_PLayAbleAi = "PlAi";
 
-    
+
     // Folder Names
     internal const string FileName_Templates = "Te";
-    internal const string FolderName_Templates = FileName_Templates+"/";
-    internal const string FolderName_PlayAbleAis = FileName_PLayAbleAi+"/";
+    internal const string FolderName_Templates = FileName_Templates + "/";
+    internal const string FolderName_PlayAbleAis = FileName_PLayAbleAi + "/";
     internal const string FolderName_Parameters = "Pa/";
     internal const string FolderName_ResponseFunctions = "RF/";
     internal const string FolderName_Segments = "Se/";
@@ -72,14 +83,20 @@ public static class Consts
     public const string UCS_HighestScore_Description = "Selects the highest scored object";
 
     public const string UCS_RandomXHighest_Name = "Random X Highest";
-    public const string UCS_RandomXHighest_Description = "Returns random element among X highest. If X < 1, all valid AiObjects are considered. Can be completely random or relative to score.";
+
+    public const string UCS_RandomXHighest_Description =
+        "Returns random element among X highest. If X < 1, all valid AiObjects are considered. Can be completely random or relative to score.";
 
 
     public const string Name_USAverageScore = "Average";
-    public const string Description_USAverageScore = "Returns the average score of all considerations. Returns 0 if one consideration is 0";
+
+    public const string Description_USAverageScore =
+        "Returns the average score of all considerations. Returns 0 if one consideration is 0";
 
     public const string Name_USCompensationScorer = "Compensation";
-    public const string Description_USCompensationScorer = "Returns all considerations scores multiplied and compensates for multiplying by <1.";
+
+    public const string Description_USCompensationScorer =
+        "Returns all considerations scores multiplied and compensates for multiplying by <1.";
 
     public const string Name_DefaultDSE = "Default DSE";
     public const string Description_DefaultDSE = "Selects the highest scored object";
@@ -94,8 +111,12 @@ public static class Consts
 
     // Ticker Modes
     public const string Description_TickerModeUnrestricted = "No restrictions to execution time";
-    public const string Description_TickerModeDesiredFrameRate = "Dynamically alters ticks/frame to stay above target framerate. Increasing samplerate trades Reaction time for framerate precision.";
-    public const string Description_TickerModeTimeBudget = "Executes as many ticks as possible in a given timeframe. The Time budget may be exceeded by the execution time of one agent";
+
+    public const string Description_TickerModeDesiredFrameRate =
+        "Dynamically alters ticks/frame to stay above target framerate. Increasing samplerate trades Reaction time for framerate precision.";
+
+    public const string Description_TickerModeTimeBudget =
+        "Executes as many ticks as possible in a given timeframe. The Time budget may be exceeded by the execution time of one agent";
 
 
     // File extensions
@@ -107,7 +128,7 @@ public static class Consts
     public const string FileExtension_Consideration = "uascons";
     public const string FileExtension_AgentAction = "uasact";
     public const string FileExtension_ResponseCurve = "uasrcrv";
-    public const string FileExtension_ResponseFunction= "uasrfunc";
+    public const string FileExtension_ResponseFunction = "uasrfunc";
     public const string FileExtension_Parameter = "uasparam";
     public const string FileExtension_TickerSettings = "uasttset";
     public const string FileExtension_TickerModes = "uastmod";
@@ -118,7 +139,26 @@ public static class Consts
 
     public const string FileExtension_JSON = ".json";
 
+    public static readonly List<string> FileExtensions = new List<string>()
+    {
+        FileExtension_AgentAction,
+        FileExtension_AiTicker,
+        FileExtension_Bucket,
+        FileExtension_Consideration,
+        FileExtension_Decision,
+        FileExtension_Parameter,
+        FileExtension_PlayAble,
+        FileExtension_ProjectSettings,
+        FileExtension_ResponseCurve,
+        FileExtension_ResponseFunction,
+        FileExtension_TemplateService,
+        FileExtension_TickerModes,
+        FileExtension_RestoreAbleCollection,
+        FileExtension_UAI,
+        FileExtension_UtilityContainerSelector,
+    };
 
+    
     public static readonly string[] FileExtensionsFilters =
     {
         "UAS Objects", "uas*",

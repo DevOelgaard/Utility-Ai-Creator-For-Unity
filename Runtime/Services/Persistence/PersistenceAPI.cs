@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Codice.Client.BaseCommands.Changelist;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -76,7 +77,6 @@ internal class PersistenceAPI
             throw new TimeoutException("SaveObjectAsync timed out after: " +
                                        Settings.TimeOutMs + "ms. " + " FileName: " + o.FileName + " Path: " + path);
         }
-        
     }
 
     #endregion
@@ -194,8 +194,15 @@ internal class PersistenceAPI
 
     #region Div
 
-        private static void CleanUp(string path, DateTime startTime)
+    private static void CleanUp(string path, DateTime startTime)
     {
+        var directoryInfo = new DirectoryInfo(path);
+        if (directoryInfo.Name == "Assets")
+        {
+            DebugService.LogError("Trying to edit Assets folder. Returning path: " + path, nameof(PersistenceAPI));
+            return;
+        }
+            
         DebugService.Log("Clean up Start path: " + path, nameof(PersistenceAPI));
         if (path.Contains("."))
         {
@@ -218,6 +225,12 @@ internal class PersistenceAPI
     
     private static async Task CleanUpAsync(string path, DateTime startTime)
     {
+        var directoryInfo = new DirectoryInfo(path);
+        if (directoryInfo.Name == "Assets")
+        {
+            DebugService.LogError("Trying to edit Assets folder. Returning path: " + path, nameof(PersistenceAPI));
+            return;
+        }
         DebugService.Log("Clean up Start path: " + path, nameof(PersistenceAPI));
         if (!Directory.Exists(path)) return;
         var t = Task.Factory.StartNew(() =>
@@ -228,6 +241,10 @@ internal class PersistenceAPI
                 var lastWriteTime = File.GetLastWriteTime(file);
                 if (lastWriteTime < startTime)
                 {
+                    if (!FileIsUasFile(file))
+                    {
+                        continue;
+                    }
                     File.Delete(file);
                 }
             }
@@ -241,6 +258,12 @@ internal class PersistenceAPI
     // https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories
     private static async Task DeleteEmptyFoldersAsync(string path)
     {
+        var directoryInfo = new DirectoryInfo(path);
+        if (directoryInfo.Name == "Assets")
+        {
+            DebugService.LogError("Trying to edit Assets folder. Returning path: " + path, nameof(PersistenceAPI));
+            return;
+        }
         DebugService.Log("Deleting Folders at path: " + path, nameof(PersistenceAPI));
          if (path.Contains("."))
          {
@@ -307,56 +330,77 @@ internal class PersistenceAPI
         // https://stackoverflow.com/questions/2811509/c-sharp-remove-all-empty-subdirectories
     private static void DeleteEmptyFolders(string path)
     {
-         if (path.Contains("."))
-         {
-             path = new DirectoryInfo(Path.GetDirectoryName(path) ?? string.Empty).FullName;
-         }
-         var directories = Directory.GetDirectories(path);
+        var directoryInfo = new DirectoryInfo(path);
+        if (directoryInfo.Name == "Assets")
+        {
+            DebugService.LogError("Trying to edit Assets folder. Returning path: " + path, nameof(PersistenceAPI));
+            return;
+        }
+        if (path.Contains("."))
+        {
+            path = new DirectoryInfo(Path.GetDirectoryName(path) ?? string.Empty).FullName;
+        }
+        var directories = Directory.GetDirectories(path);
          
-         foreach (var d in directories.Where((d => !d.Contains("."))))
-         {
-             DeleteEmptyFolders(d);
-             var metaFiles = Directory.GetFiles(d).Where(f => f.Contains(".meta"));
-             var fileNamesWithoutMeta = Directory.GetFiles(d)
-                 .Where(f => !f.Contains(".meta"))
-                 .Select(Path.GetFileName)
-                 .ToList();
-             var childDirectoryNames = Directory.GetDirectories(d)
-                 .Select(Path.GetFileNameWithoutExtension)
-                 .ToList();
+        foreach (var d in directories.Where((d => !d.Contains("."))))
+        {
+            DeleteEmptyFolders(d);
+            var metaFiles = Directory.GetFiles(d).Where(f => f.Contains(".meta"));
+            var fileNamesWithoutMeta = Directory.GetFiles(d)
+                .Where(f => !f.Contains(".meta"))
+                .Select(Path.GetFileName)
+                .ToList();
+            var childDirectoryNames = Directory.GetDirectories(d)
+                .Select(Path.GetFileNameWithoutExtension)
+                .ToList();
                  
-             foreach (var metaFile in metaFiles)
-             {
-                 var metaFileName = Path.GetFileNameWithoutExtension(metaFile);
-                 var canDelete = fileNamesWithoutMeta.All(file => file != metaFileName) &&
-                                 childDirectoryNames.All(directory => directory != metaFileName);
+            // Clean up meta files
+            foreach (var metaFile in metaFiles)
+            {
+                var metaFileName = Path.GetFileNameWithoutExtension(metaFile);
+                var canDelete = fileNamesWithoutMeta.All(file => file != metaFileName) &&
+                                childDirectoryNames.All(directory => directory != metaFileName);
         
-                 if (!canDelete) continue;
-                 File.Delete(metaFile);
-             }
+                if (!canDelete) continue;
+                File.Delete(metaFile);
+            }
         
-             // Delete empty folders
-             var childDirectories = Directory.GetDirectories(d);
-             if (childDirectories.Length > 0)
-             {
-                 return;
-             }
+            // Delete empty folders
+            var childDirectories = Directory.GetDirectories(d);
+            if (childDirectories.Length > 0)
+            {
+                return;
+            }
         
-             var filesWithoutMeta = Directory.GetFiles(d)
-                 .Where(f => !f.Contains(".meta"))
-                 .ToList();
+            var filesWithoutMeta = Directory.GetFiles(d)
+                .Where(f => !f.Contains(".meta"))
+                .ToList();
              
-             if (filesWithoutMeta.Count > 0)
-             {
-                 return;
-             }
-             foreach (var file in Directory.GetFiles(d))
-             {
-                 File.Delete(file);
-             }
+            if (filesWithoutMeta.Count > 0)
+            {
+                return;
+            }
+            foreach (var file in Directory.GetFiles(d))
+            {
+                File.Delete(file);
+            }
         
-             Directory.Delete(d,false);
-         }
+            Directory.Delete(d,false);
+        }
+
+    }
+
+    private static bool FileIsUasFile(string file)
+    {
+        foreach (var fileExtension in Consts.FileExtensions)
+        {
+            if (file.Contains(fileExtension))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     #endregion

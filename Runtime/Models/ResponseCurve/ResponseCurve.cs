@@ -176,6 +176,20 @@ public class ResponseCurve: AiObjectModel
         Segments.Add(newSegment);
     }
 
+    private void SetSegmentValue(float value, int index)
+    {
+        if (index > Segments.Count)
+        {
+            DebugService.LogError("Can't access segment at index: " + index + " Segments.Count: " + Segments.Count, this + " " + Name);
+        }
+        else
+        {
+            DebugService.Log("Setting Segment value at index: " + index + " to: " + value, this + " " + Name);
+            Segments[index].Value = value;
+        }
+        // onCurveValueChanged.OnNext(true);
+    }
+
     private void RemoveSegment(Parameter segment)
     {
         if (segmentDisposables.ContainsKey(segment))
@@ -331,33 +345,37 @@ public class ResponseCurve: AiObjectModel
     {
         DebugService.Log("T! Cloning",this);
         var clone = (ResponseCurve)AiObjectFactory.CreateInstance(GetType());
-        clone.Name = Name;
-        clone.Description = Description;
-        clone.MinX = MinX;
-        clone.MaxX = MaxX;
-        clone.MinY = MinY;
-        clone.MaxY = MaxY;
-        clone.isInversed = isInversed;
-        
-        if (clone.ResponseFunctions.Count > 0)
-        {
-            var tempList = new List<ResponseFunction>(clone.ResponseFunctions);
-            foreach (var responseFunction in tempList)
-            {
-                clone.RemoveResponseFunction(responseFunction);
-            }
-        }
-        foreach (var rf in ResponseFunctions)
-        {
-            var rfClone = (ResponseFunction)rf.Clone();
-            clone.AddResponseFunction(rfClone);
-        }
+        // clone.Name = Name;
+        // clone.Description = Description;
+        // clone.MinX = MinX;
+        // clone.MaxX = MaxX;
+        // clone.MinY = MinY;
+        // clone.MaxY = MaxY;
+        // clone.isInversed = isInversed;
+        //
+        // if (clone.ResponseFunctions.Count > 0)
+        // {
+        //     var tempList = new List<ResponseFunction>(clone.ResponseFunctions);
+        //     foreach (var responseFunction in tempList)
+        //     {
+        //         clone.RemoveResponseFunction(responseFunction);
+        //     }
+        // }
+        //
+        // foreach (var rf in ResponseFunctions)
+        // {
+        //     var rfClone = (ResponseFunction)rf.Clone();
+        //     clone.AddResponseFunction(rfClone);
+        // }
+        //
+        // foreach (var s in Segments)
+        // {
+        //     clone.SetSegmentValue(Convert.ToSingle(s.Value),Segments.IndexOf(s));
+        // }
 
-        foreach (var s in Segments)
-        {
-            var i = Segments.IndexOf(s);
-            clone.Segments[i].Value = s.Value;
-        }
+        var state = GetState() as ResponseCurveState;
+        clone.SetBaseValues(state,ResponseFunctions,Segments);
+        
         return clone;
     }
     internal override RestoreState GetState()
@@ -374,7 +392,16 @@ public class ResponseCurve: AiObjectModel
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var state = (ResponseCurveState)s;
+        var tempRestoreFunctions = await RestoreAbleService
+            .GetAiObjectsSortedByIndex<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
+        var tempSegments = await RestoreAbleService
+            .GetParameters(CurrentDirectory + Consts.FolderName_Segments, restoreDebug);
+        
+        SetBaseValues(s as ResponseCurveState, tempRestoreFunctions, tempSegments);
+    }
+
+    private void SetBaseValues(ResponseCurveState state, List<ResponseFunction> rFs, List<Parameter> segments)
+    {
         Name = state.Name;
         Description = state.Description;
         MinY = state.MinY;
@@ -382,20 +409,14 @@ public class ResponseCurve: AiObjectModel
         MinX = state.MinX;
         MaxX = state.MaxX;
         isInversed = state.IsInversed;
-
-        var tempRestoreFunctions = await RestoreAbleService
-            .GetAiObjectsSortedByIndex<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
-        foreach (var responseFunction in tempRestoreFunctions)
-        {
-            AddResponseFunction(responseFunction, false);
-        }
         
-        var tempSegments = await RestoreAbleService
-            .GetParameters(CurrentDirectory + Consts.FolderName_Segments, restoreDebug);
-        Segments = new List<Parameter>();
-        foreach (var segment in tempSegments)
+        foreach (var responseFunction in rFs)
         {
-            AddSegment(segment);
+            AddResponseFunction(responseFunction, true);
+        }
+        foreach (var seg in segments)
+        {
+            SetSegmentValue(Convert.ToSingle(seg.Value),segments.IndexOf(seg));
         }
     }
     ~ResponseCurve()

@@ -35,6 +35,9 @@ internal class TemplateManager : EditorWindow
 
     private readonly Dictionary<AiObjectModel, AiObjectComponent> componentsByModels = new Dictionary<AiObjectModel, AiObjectComponent>();
     private Toolbar toolbar;
+    private long lastClearClick;
+    private long clickConfirmationTimeMs = 200;
+    
     private AiObjectModel SelectedModel
     {
         get => selectedModel;
@@ -93,8 +96,16 @@ internal class TemplateManager : EditorWindow
 
         clearButton.RegisterCallback<MouseUpEvent>(_ =>
         {
-            templateService.Reset();
-            UpdateLeftPanel();
+            var clickTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+            if (clickTime > lastClearClick + clickConfirmationTimeMs)
+            {
+                lastClearClick = clickTime;
+            }
+            else
+            {
+                templateService.Reset();
+                UpdateLeftPanel();
+            }
         });
         
         addElementPopup.RegisterCallback<ChangeEvent<string>>(AddAiObject);
@@ -336,6 +347,12 @@ internal class TemplateManager : EditorWindow
         foreach (var task in tasks)
         {
             templateService.Add(task.Result);
+        }
+
+        if (tasks.Count == 0)
+        {
+            DebugService.Log("No element selected to copy", this);
+            return;
         }
 
         SelectedModel = tasks[0].Result;

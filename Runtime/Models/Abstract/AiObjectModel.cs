@@ -85,7 +85,6 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
         clone.HelpText = HelpText;
         clone.CurrentDirectory = CurrentDirectory+"-Clone";
         clone.ParameterContainer = ParameterContainer.Clone();
-
     }
 
     protected virtual void OnCloneComplete()
@@ -174,10 +173,28 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
         disposables.Clear();
     }
 
+    protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
+    {
+        var s = state as AiObjectState;
+        ParameterContainer.RestoreFromState(s.ParameterContainerState);
+    }
+
     ~AiObjectModel()
     {
         ClearSubscriptions();
     }
+}
 
+public abstract class AiObjectState : RestoreState
+{
+    public ParameterContainerState ParameterContainerState;
 
+    protected AiObjectState(): base()
+    {
+    }
+
+    protected AiObjectState(AiObjectModel o) : base(o)
+    {
+        ParameterContainerState = o.ParameterContainer.GetState();
+    }
 }

@@ -85,11 +85,11 @@ public abstract class Consideration : AiObjectModel
     protected override AiObjectModel InternalClone()
     {
         var clone = (Consideration)AiObjectFactory.CreateInstance(GetType());
-        foreach (var p in this.Parameters)
-        {
-            var c = p.Clone();
-            clone.AddParameter(c);
-        }
+        // foreach (var p in this.Parameters)
+        // {
+        //     var c = p.Clone();
+        //     clone.AddParameter(c);
+        // }
 
         clone.ScoreModels = new List<ScoreModel>();
         foreach (var sm in this.ScoreModels)
@@ -156,6 +156,8 @@ public abstract class Consideration : AiObjectModel
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
+        await base.RestoreInternalAsync(s, restoreDebug);
+
         var state = (ConsiderationState)s;
             Name = state.Name;
             Description = state.Description;
@@ -193,8 +195,8 @@ public abstract class Consideration : AiObjectModel
             CurrentResponseCurve = rC.First();
                 
 
-            var parameters = await RestoreAbleService
-                .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+            // var parameters = await RestoreAbleService
+            //     .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
 
             PerformanceTag = (PerformanceTag)state.PerformanceTag;
             parameterDisposables.Clear();
@@ -224,7 +226,7 @@ public abstract class Consideration : AiObjectModel
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
         await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_Consideration);
-        await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
+        //await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
 
         var rcPath = path + "/" + Consts.FolderName_ResponseCurves;
         await CurrentResponseCurve.SaveToFile(rcPath, persister);
@@ -242,7 +244,7 @@ public abstract class Consideration : AiObjectModel
 }
 
 [Serializable]
-public class ConsiderationState: RestoreState
+public class ConsiderationState: AiObjectState
 {
     public string Name;
     public string Description;

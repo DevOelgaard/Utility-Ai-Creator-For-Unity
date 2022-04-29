@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class ParameterContainer
 {
@@ -64,5 +65,55 @@ public class ParameterContainer
         }
 
         return clone;
+    }
+
+    public void RestoreFromState(ParameterContainerState state)
+    {
+        foreach (var parameterState in state.parameterStates)
+        {
+            var param = GetParameter(parameterState.Name);
+            if (param == null)
+            {
+                DebugService.LogError("Parameter with name: " + parameterState.Name + " not found", this);
+                continue;
+            }
+
+            if (parameterState.OriginalType == typeof(ParameterEnum))
+            {
+                var s = parameterState as ParameterEnumState;
+                var p = param as ParameterEnum;
+                p.EnumType = s.EnumType;
+                p.Value = Enum.Parse(p.EnumType, s.CurrentEnumSelection);
+            }
+            else
+            {
+                param.Value = parameterState.Value;
+            }
+        }
+    }
+
+    internal ParameterContainerState GetState()
+    {
+        return new ParameterContainerState(this);
+    }
+}
+
+[Serializable]
+public class ParameterContainerState
+{
+    public List<ParameterState> parameterStates;
+
+    public ParameterContainerState()
+    {
+    }
+
+    public ParameterContainerState(ParameterContainer parameterContainer)
+    {
+        parameterStates = new List<ParameterState>();
+        if (parameterContainer == null) return;
+        foreach (var parameter in parameterContainer.Parameters)
+        {
+            parameterStates.Add(parameter.GetState() as ParameterState);
+        }
     }
 }

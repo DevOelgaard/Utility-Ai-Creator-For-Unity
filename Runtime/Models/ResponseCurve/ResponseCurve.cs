@@ -345,34 +345,6 @@ public class ResponseCurve: AiObjectModel
     {
         DebugService.Log("T! Cloning",this);
         var clone = (ResponseCurve)AiObjectFactory.CreateInstance(GetType());
-        // clone.Name = Name;
-        // clone.Description = Description;
-        // clone.MinX = MinX;
-        // clone.MaxX = MaxX;
-        // clone.MinY = MinY;
-        // clone.MaxY = MaxY;
-        // clone.isInversed = isInversed;
-        //
-        // if (clone.ResponseFunctions.Count > 0)
-        // {
-        //     var tempList = new List<ResponseFunction>(clone.ResponseFunctions);
-        //     foreach (var responseFunction in tempList)
-        //     {
-        //         clone.RemoveResponseFunction(responseFunction);
-        //     }
-        // }
-        //
-        // foreach (var rf in ResponseFunctions)
-        // {
-        //     var rfClone = (ResponseFunction)rf.Clone();
-        //     clone.AddResponseFunction(rfClone);
-        // }
-        //
-        // foreach (var s in Segments)
-        // {
-        //     clone.SetSegmentValue(Convert.ToSingle(s.Value),Segments.IndexOf(s));
-        // }
-
         var state = GetState() as ResponseCurveState;
         clone.SetBaseValues(state,ResponseFunctions,Segments);
         
@@ -392,6 +364,7 @@ public class ResponseCurve: AiObjectModel
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
+        await base.RestoreInternalAsync(s, restoreDebug);
         var tempRestoreFunctions = await RestoreAbleService
             .GetAiObjectsSortedByIndex<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
         var tempSegments = await RestoreAbleService
@@ -434,7 +407,7 @@ public class ResponseCurve: AiObjectModel
 }
 
 [Serializable]
-public class ResponseCurveState: RestoreState
+public class ResponseCurveState: AiObjectState
 {
     public string Name;
     public string Description;

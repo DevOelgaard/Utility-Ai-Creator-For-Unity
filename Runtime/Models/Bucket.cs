@@ -171,7 +171,7 @@ public class Bucket : UtilityContainer
 }
 
 [Serializable]
-public class BucketState: RestoreState  
+public class BucketState: AiObjectState  
 {
     public string Name;
     public string Description;

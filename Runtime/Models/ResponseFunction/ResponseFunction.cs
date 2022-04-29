@@ -106,15 +106,16 @@ public abstract class ResponseFunction: AiObjectModel
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
+        await base.RestoreInternalAsync(s, restoreDebug);
         var state = (ResponseFunctionState) s;
         Name = state.Name;
 
-        var parameters = await RestoreAbleService
-                .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        foreach (var parameter in parameters)
-        {
-            AddParameter(parameter);
-        }
+        // var parameters = await RestoreAbleService
+        //         .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+        // foreach (var parameter in parameters)
+        // {
+        //     AddParameter(parameter);
+        // }
     }
 
     private void SubscribeToParameters()
@@ -143,7 +144,7 @@ public abstract class ResponseFunction: AiObjectModel
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
         await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_ResponseFunction);
-        await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
+        // await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
     }
 
     ~ResponseFunction()
@@ -154,7 +155,7 @@ public abstract class ResponseFunction: AiObjectModel
 }
 
 [Serializable]
-public class ResponseFunctionState : RestoreState
+public class ResponseFunctionState : AiObjectState
 {
     public string Name;
     public string Description;

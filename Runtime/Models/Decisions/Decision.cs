@@ -106,6 +106,7 @@ public class Decision: UtilityContainer
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
+        await base.RestoreInternalAsync(s, restoreDebug);
         var state = (DecisionState) s;
         Name = state.Name;
         Description = state.Description;
@@ -123,9 +124,6 @@ public class Decision: UtilityContainer
                 restoreDebug);
         
         Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
-
-        var parameters = await RestoreAbleService
-            .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
 
         if (restoreDebug)
         {
@@ -162,12 +160,12 @@ public class Decision: UtilityContainer
         await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_Decision);
         await RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values,path + "/" + Consts.FolderName_AgentActions, persister);
         await RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values,path + "/" + Consts.FolderName_Considerations, persister);
-        await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
+        // await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
     }
 }
 
 [Serializable]
-public class DecisionState: RestoreState
+public class DecisionState: AiObjectState
 {
     public string Name;
     public string Description;

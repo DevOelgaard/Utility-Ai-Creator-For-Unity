@@ -25,8 +25,8 @@ public class ParameterComponent: VisualElement
         {
             var p = parameter as ParameterEnum;
             var localField = new EnumField(parameter.Name);
-            localField.Init(p.CurrentSelction);
-            localField.value = p.CurrentSelction;
+            localField.Init(p.CurrentSelection);
+            localField.value = p.CurrentSelection;
             localField.RegisterCallback<ChangeEvent<Enum>>(evt => parameter.Value = evt.newValue);
             parameter.OnValueChange
                 .Subscribe(v =>
@@ -41,7 +41,7 @@ public class ParameterComponent: VisualElement
             var t = parameter.Value.GetType();
             if (t == typeof(double))
             {
-                parameter.Value = (float)parameter.Value;
+                parameter.Value = Convert.ToDouble(parameter.Value);
                 t = typeof(float);
             }
             if (t == typeof(int) || t == typeof(Int16) || t == typeof(Int32) || t == typeof(Int64))
@@ -54,7 +54,7 @@ public class ParameterComponent: VisualElement
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        localField.value = (int)v;
+                        localField.value = Convert.ToInt32(v);
                     })
                     .AddTo(disposables);
                 Add(localField);
@@ -64,7 +64,7 @@ public class ParameterComponent: VisualElement
             {
                 var localField = new FloatFieldMinMax(parameter.Name)
                 {
-                    value = (float)parameter.Value
+                    value = Convert.ToSingle(parameter.Value)
                 };
                 localField.RegisterCallback<ChangeEvent<float>>(evt =>
                         parameter.Value = evt.newValue
@@ -72,7 +72,7 @@ public class ParameterComponent: VisualElement
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        localField.value = (float)v;
+                        localField.value = Convert.ToSingle(v);
                     })
                     .AddTo(disposables);
                 Add(localField);
@@ -82,13 +82,13 @@ public class ParameterComponent: VisualElement
             {
                 var localField = new TextField(parameter.Name)
                 {
-                    value = (string)parameter.Value
+                    value = parameter.Value.ToString()
                 };
                 localField.RegisterCallback<ChangeEvent<string>>(evt => parameter.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        localField.value = (string)v;
+                        localField.value = v.ToString();
                     })
                     .AddTo(disposables);
                 Add(localField);
@@ -99,13 +99,13 @@ public class ParameterComponent: VisualElement
             {
                 var localField = new TagField(parameter.Name)
                 {
-                    value = (string)parameter.Value
+                    value = parameter.Value.ToString()
                 };
                 localField.RegisterCallback<ChangeEvent<ParameterTypes>>(evt => parameter.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        localField.value = (string)v;
+                        localField.value = v.ToString();
                     })
                     .AddTo(disposables);
                 Add(localField);

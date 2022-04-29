@@ -40,26 +40,27 @@ public abstract class AgentAction: AiObjectModel
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
+        await base.RestoreInternalAsync(s, restoreDebug);
         var state = (AgentActionState)s;
         Name = state.Name;
         Description = state.Description;
-
-        var parameters = await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        foreach (var parameter in parameters)
-        {
-            AddParameter(parameter);
-        }
+        //
+        // var parameters = await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+        // foreach (var parameter in parameters)
+        // {
+        //     AddParameter(parameter);
+        // }
     }
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
         await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_AgentAction);
-        await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
+        //await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
     }
 }
 
 [Serializable]
-public class AgentActionState: RestoreState
+public class AgentActionState: AiObjectState
 {
     public string Name;
     public string Description;

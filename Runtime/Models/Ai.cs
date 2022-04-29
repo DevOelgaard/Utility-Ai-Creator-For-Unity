@@ -196,7 +196,7 @@ public class Ai: AiObjectModel
     }
 }
 
-public class AiState: RestoreState
+public class AiState: AiObjectState
 {
     public string Name;
     public string Description;

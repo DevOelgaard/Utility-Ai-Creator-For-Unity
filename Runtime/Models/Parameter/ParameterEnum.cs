@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public class ParameterEnum: Parameter
 {
-    public Enum CurrentSelction => Value as Enum;
+    public Enum CurrentSelection => Value as Enum;
     public Type EnumType;
 
     public ParameterEnum() : base()
@@ -20,7 +20,7 @@ public class ParameterEnum: Parameter
 
     internal override RestoreState GetState()
     {
-        return new ParameterEnumState(Name, CurrentSelction, EnumType, this);
+        return new ParameterEnumState(Name, CurrentSelection, EnumType, this);
     }
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)

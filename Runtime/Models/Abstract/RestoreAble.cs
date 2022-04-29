@@ -40,10 +40,10 @@ public abstract class RestoreAble
             element.OnRestoreComplete();
             return element;
         }
-        catch
+        catch(Exception ex)
         {
-            DebugService.LogError("Failed to restore: " + state.FileName + " path: " + state.FolderLocation, nameof(RestoreAble));
-            throw;
+            DebugService.LogError("Failed to restore: " + state.FileName + " path: " + state.FolderLocation, nameof(RestoreAble), ex);
+            throw ex;
         }
     }
     

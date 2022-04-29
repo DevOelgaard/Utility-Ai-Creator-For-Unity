@@ -9,7 +9,7 @@ using UniRxExtension;
 
 internal class WindowOpener: EditorWindow
 {
-    public static Rect windowPosition = new Rect(0f, 0f, 1920*0.6f, 1080f / 2f);
+    public static Rect windowPosition = new Rect(0f, 0f, 1400f, 624f);
     public static Vector2 windowMinSize = new Vector2(1400f, 624f);
     private static EditorWindow _templateManager;
 

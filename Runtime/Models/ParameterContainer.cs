@@ -74,7 +74,8 @@ public class ParameterContainer
             var param = GetParameter(parameterState.Name);
             if (param == null)
             {
-                DebugService.LogError("Parameter with name: " + parameterState.Name + " not found", this);
+                DebugService.LogWarning("Parameter with name: " + parameterState.Name + " not found! " +
+                                        " If this was a parameter you recently removed from the code don't worry about it.", this);
                 continue;
             }
 

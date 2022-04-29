@@ -102,7 +102,7 @@ internal class AgentComponent: RightPanelComponent<IAgent>
             .Select(x => x.Name)
             .ToList();
 
-        if (agent.Ai != null && aiDropdown.choices.Contains(agent.Ai.Name))
+        if (agent?.Ai != null && aiDropdown.choices.Contains(agent.Ai.Name))
         {
             aiDropdown.SetValueWithoutNotify(agent.Ai.Name);
         }

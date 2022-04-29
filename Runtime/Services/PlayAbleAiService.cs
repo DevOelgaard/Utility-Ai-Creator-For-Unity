@@ -107,7 +107,8 @@ public class PlayAbleAiService: RestoreAble
         }
         else
         {
-            DebugService.LogError("Failed to load playable service", this);
+            DebugService.LogError("Failed to load playable service. Error Message: " + objectMetaData?.ErrorMessage, this, objectMetaData?.Exception);
+
         }
     }
 

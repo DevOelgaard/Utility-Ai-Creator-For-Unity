@@ -75,7 +75,7 @@ public class Uai: AiObjectModel
     protected override void UpdateInfo()
     {
         base.UpdateInfo();
-        if (Buckets is not {Count: > 0})
+        if(Buckets == null || Buckets.Count == 0)
         {
             Info = new InfoModel("No Buckets, Object won't be selected", InfoTypes.Warning);
         }

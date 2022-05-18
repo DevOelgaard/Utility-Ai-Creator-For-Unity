@@ -10,18 +10,8 @@ using Debug = System.Diagnostics.Debug;
 
 internal class TimerService
 {
-    private static TimerService instance;
-    public static TimerService Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new TimerService();
-            }
-            return instance;
-        }
-    }
+    private static TimerService _instance;
+    public static TimerService Instance => _instance ??= new TimerService();
 
     public bool IsRecordingSequence = true;
 

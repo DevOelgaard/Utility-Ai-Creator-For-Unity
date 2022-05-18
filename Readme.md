@@ -199,6 +199,7 @@ Persistence
 •	Reuse .meta files to prevent unnecessary Unity process
 •	JSON
  
+ 
 #Known Issues
 Ui
 •	Long initial load time
@@ -218,6 +219,24 @@ Persistence
 •	Saving / Loading time is high
 o	Due to the number of individual files Created and deleted on each operation
 o	A fix is in the pipeline
+
+#Pipeline
+•	Improve initial load speed of all Editor Windows
+•	Convert persistence to a single file
+o	To increase save / load speed
+o	This will be done later in development, as the current approach improves debugging
+•	Generic parameters
+o	To reduce Garbage Collection by avoiding boxing and unboxing when storing values as object
+o	Improve UX by not having to write Convert.ToX(GetPara…) to access a parameter value
+•	Improve UIs resistance to scaling
+•	Reduce garbage collection
+•	Improve color coding in Logger
+•	Referenced Templates
+•	Utility Container selector with threshold
+o	To eliminate unnecessary evaluation of UAI Objects
+•	API to control the AI from code
+•	Name change. The projects name has recently been changed from “Utility Ai System” to “UAI Creator” the renaming of folders and objects isn’t complete
+
 
 
 

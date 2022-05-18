@@ -40,7 +40,6 @@ namespace Models
             {
                 exectutions++;
             }
-            DebugService.Log("Logging sequence: " + Name + " - Method: " + methodName + ", Time: " + TicksToMs(ticks) + ", totalTime: " + TotalTimeUs/1000 + ", averageTime: " + AverageTimeUs/1000, this);
 
         }
 
@@ -69,8 +68,8 @@ namespace Models
 
             var totalTimeUs = TicksToUs(totalTicks);
             var averageTotalTime = totalTimeUs / exectutions;
-            Debug.Log("Sequence: " + Name + " Total Time: " + $"{totalTimeUs:0,0.0}"  + "us. Number of sequences: " + exectutions);
-            Debug.Log("Sequence: " + Name + " Average Time: " + $"{averageTotalTime:0,0.0}" + "us. new avg time: " + AverageTimeUs);
+            DebugService.Log("Sequence: " + Name + " Total Time: " + $"{totalTimeUs:0,0.0}"  + "us. Number of sequences: " + exectutions, this);
+            DebugService.Log("Sequence: " + Name + " Average Time: " + $"{averageTotalTime:0,0.0}" + "us. new avg time: " + AverageTimeUs, this);
         }
 
         private float TicksToUs(float ticks)

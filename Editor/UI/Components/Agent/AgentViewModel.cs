@@ -55,7 +55,7 @@ internal class AgentViewModel: RightPanelComponent<IAgent>
         });
         footer.Add(applyToAllButton);
 
-        PlayAbleAiService.OnAisChanged
+        PlayAbleAiService.Instance.OnAisChanged
             .Subscribe(_ =>
             {
                 InitDropdown();
@@ -97,7 +97,7 @@ internal class AgentViewModel: RightPanelComponent<IAgent>
 
     private void InitDropdown()
     {
-        aiDropdown.choices = PlayAbleAiService.GetAis()
+        aiDropdown.choices = PlayAbleAiService.Instance.PlayAbleAIs
             .OrderBy(a => a.Name)
             .Select(x => x.Name)
             .ToList();

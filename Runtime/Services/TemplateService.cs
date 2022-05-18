@@ -23,7 +23,7 @@ internal class TemplateService: RestoreAble
     private readonly Subject<string> onStateChanged = new Subject<string>();
 
     private string loadedPath = "";
-    internal bool isLoaded;
+    // internal bool isLoaded;
     internal IObservable<bool> OnLoadComplete => onLoadComplete;
     private readonly Subject<bool> onLoadComplete = new Subject<bool>();
 
@@ -117,7 +117,6 @@ internal class TemplateService: RestoreAble
 
     internal async Task LoadCurrentProject(bool temporaryProject = false)
     {
-        TimerService.Instance.LogSequenceStart(Consts.Sequence_Persistence_Load,"LoadCurrentProject");
         SetState("Loading");
         var loadPath = temporaryProject
             ? ProjectSettingsService.Instance.GetProjectTemporaryPath()
@@ -149,7 +148,6 @@ internal class TemplateService: RestoreAble
         {
             SetState("Ready");
             ClearCollectionNotify();
-            TimerService.Instance.LogSequenceStop(Consts.Sequence_Persistence_Load,"LoadCurrentProject",true);
 
             return;
         }
@@ -161,6 +159,7 @@ internal class TemplateService: RestoreAble
         {
             ClearCollectionNotify();
             SubscribeToCollectionChanges();
+            // PlayAbleAiService.Instance.UpdateAisFromTemplateService(true);
             SetState("Ready");
             DebugService.LogWarning("Loading failed state.LoadedObjet == null at path: " + loadPath  + "State.ErrorMessage: " + state.ErrorMessage,this);
         }
@@ -171,12 +170,12 @@ internal class TemplateService: RestoreAble
                 await RestoreAsync(state.LoadedObject);
                 DebugService.Log("Restore Complete AIs: " + AIs.Values.Count,this);
 
-                isLoaded = true;
+                // isLoaded = true;
                 loadedPath = loadPath;
                 onLoadComplete.OnNext(true);
                 DebugService.Log("Load complete",this);
+                // PlayAbleAiService.Instance.UpdateAisFromTemplateService(true);
                 SetState("Ready");
-                TimerService.Instance.LogSequenceStop(Consts.Sequence_Persistence_Load,"LoadCurrentProject",true);
             }
             catch (Exception ex)
             {

@@ -33,30 +33,35 @@ internal class AgentMonoInspector: Editor
         agents = targets.Cast<AgentMono>().ToList();
         //serializedObject.Update();
 
-        SetAiFieldChoices(TemplateService.Instance.AIs.Values);
-        TemplateService.Instance.AIs
-            .OnValueChanged
+        // SetAiFieldChoices(TemplateService.Instance.AIs.Values);
+        // TemplateService.Instance.AIs
+        //     .OnValueChanged
+        //     .Subscribe(values => SetAiFieldChoices(values))
+        //     .AddTo(disposables);
+        
+        SetAiFieldChoices(PlayAbleAiService.Instance.PlayAbleAIs);
+        PlayAbleAiService.Instance.OnAisChanged
             .Subscribe(values => SetAiFieldChoices(values))
             .AddTo(disposables);
 
-        TemplateService.Instance.AIs.Values
-            .ForEach(ai =>
-            {
-                var aiCast = ai as Uai;
-                aiCast?.OnIsPlayableChanged
-                    .Subscribe(isPlayable =>
-                    {
-                        if (isPlayable)
-                        {
-                            aiField.choices.Add(ai.Name);
-                        }
-                        else
-                        {
-                            aiField.choices.Remove(ai.Name);
-                        }
-                    })
-                    .AddTo(disposables);
-            });
+        // TemplateService.Instance.AIs.Values
+        //     .ForEach(ai =>
+        //     {
+        //         var aiCast = ai as Uai;
+        //         aiCast?.OnIsPlayableChanged
+        //             .Subscribe(isPlayable =>
+        //             {
+        //                 if (isPlayable)
+        //                 {
+        //                     aiField.choices.Add(ai.Name);
+        //                 }
+        //                 else
+        //                 {
+        //                     aiField.choices.Remove(ai.Name);
+        //                 }
+        //             })
+        //             .AddTo(disposables);
+        //     });
 
         aiField.RegisterCallback<ChangeEvent<string>>(evt =>
         {
@@ -75,25 +80,25 @@ internal class AgentMonoInspector: Editor
         disposables.Clear();
     }
 
-    private void SetAiFieldChoices(List<AiObjectModel> ais)
+    private void SetAiFieldChoices(List<Uai> ais)
     {
         aiField.choices.Clear();
-        var playableAis = ais
-            .Cast<Uai>()
-            .Where(ai => ai.IsPLayAble);
+        // var playableAis = ais
+        //     .Cast<Uai>()
+        //     .Where(ai => ai.IsPLayAble);
 
-        var playAbleAis = playableAis.ToList();
-        foreach (Uai ai in playAbleAis)
+        // var playAbleAis = ais.ToList();
+        foreach (Uai ai in ais)
         {
             aiField.choices.Add(ai.Name);
         }
 
         var agent = agents.FirstOrDefault();
 
-        var currentAiName = playAbleAis.FirstOrDefault(c => agent != null && c.Name == agent.defaultAiName)?.Name;
+        var currentAiName = ais.FirstOrDefault(c => agent != null && c.Name == agent.defaultAiName)?.Name;
         if (string.IsNullOrEmpty(currentAiName))
         {
-            currentAiName = playAbleAis.FirstOrDefault()?.Name;
+            currentAiName = ais.FirstOrDefault()?.Name;
         }
         aiField.SetValueWithoutNotify(currentAiName);
     }

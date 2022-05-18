@@ -5,7 +5,9 @@ UAI Creator – Guide
 Welcome
 This is the official guide for the Unity tool UAI Creator.
 Make sure to use the newest version of the guide, which can be found at: https://github.com/DevOelgaard/UnityUtilityAiSystem/tree/master
+
 -- If you are one of those types, who likes a visual description you can use: [UAI Creator - Guide.pdf](https://github.com/DevOelgaard/UnityUtilityAiSystem/files/8715986/UAI.Creator.-.Guide.pdf)
+
 --- Yes I know it should all be avaiable here, and it will be in time :)
 
 

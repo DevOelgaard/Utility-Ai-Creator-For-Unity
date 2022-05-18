@@ -138,7 +138,86 @@ Make the agent:
 3: Add the change color action to the Hello World UAI
 
 
+#Features
+Below is a list of the UAI Creators features. 
+General
+•	Create performant Object Oriented Utility Ais with a minimum of coding.
+•	Only define inputs (considerations) and outputs (Agent Actions)
+•	Highly customizable
+o	Almost all UAi objects can be inherited with valid virtual methods
+•	No restrictions to folder structure
+o	All UAI objects are detected in your Unity 3D project regardless of file location or assembly definitions
+•	Manage multiple projects
+•	Easily share Ais
+•	Reactive UI - powered by UniRX
+•	Extensive logging (Toggleable) 
 
+Runtime
+•	Agent Mono
+o	Auto Tick / On Demand
+o	Ms between ticks
+o	Frames between ticks
+•	AiTicker
+o	Target Framerate
+o	Time budget
+•	UAI
+o	Decision Score Evaluator
+	Customize how the agent evaluates decisions
+o	Utility Container Selector
+	Customize how the agent selects a decision
+o	Utility Scorer
+	Define how the utility scores are calculated
+
+Editor
+•	Settings
+•	Template Manager
+o	6 Template categories
+o	Copy templates
+o	Delete templates
+o	Multi select objects
+o	Execution order of UAS Objects optimized by the click of a button
+o	Error messages and help text displayed directly in the UI
+•	Runtime Inspector
+o	Edit Ai at runtime 
+	No need to switch in and out of play mode
+•	Add changes to all agents of same type
+•	Save changes as template
+	Logger
+•	Pause/Resume game
+•	Skip X ticks forward
+•	Previous ticks logged
+•	Color toggle for easier Identification (Not complete)
+	AgentMono - Custom inspector
+•	Select default ai
+	Response Curve
+•	Easily create complex response values for your agent
+
+Persistence
+•	Folder structure matching objects
+•	Removal of deleted files
+•	Guard against deleting non-UAS files
+•	Reuse .meta files to prevent unnecessary Unity process
+•	JSON
+ 
+#Known Issues
+Ui
+•	Long initial load time
+o	Due to the high amount of visual tree assets that need to be instantiated.
+o	The severity of this issue is increased because Unity destroys all Visual objects on entering / exiting play mode.
+o	A fix is in the pipeline
+•	Some values aren’t updated reactively
+•	The UI isn’t resistant to scaling
+o	By decreasing window size objects are rendered on top of one another
+o	A fix is in the pipeline
+Logger
+•	Objects are marked as not evaluated even though they are
+•	Coloring doesn’t highlight which decision was selected
+•	Not able to cycle through logged ticks after exiting play mode
+
+Persistence
+•	Saving / Loading time is high
+o	Due to the number of individual files Created and deleted on each operation
+o	A fix is in the pipeline
 
 
 

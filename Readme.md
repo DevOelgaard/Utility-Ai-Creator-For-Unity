@@ -10,7 +10,9 @@ This is the official guide for the Unity tool UAI Creator.
 -- If you are one of those types, who likes a visual description you can use: [UAI Creator - Guide.pdf](https://github.com/DevOelgaard/UnityUtilityAiSystem/files/8715986/UAI.Creator.-.Guide.pdf)
 
 This tool is currently a prototype and by no means ready for production. You are free to use it as you see fit but be aware that it isn’t a priority to make the updates backwards compatible at this point.
+
 Feedback is much welcomed, you can reach me at: DevOelgaard@gmail.com.
+
 Thank you for trying the UAI Creator.
 
 

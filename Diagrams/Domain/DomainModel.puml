@@ -1,0 +1,37 @@
+﻿@startuml
+'https://plantuml.com/object-diagram
+allow_mixing
+
+actor GameDesigner
+actor Developer
+
+object UAI
+object AiData
+object AiLog
+object GameProject
+object PerformanceSettings
+object AiObject
+object Code
+object ResourceUsage
+object Platforms
+
+GameDesigner --> UAI : Designs, Reuses and Debugs
+GameDesigner --> AiData : Sees
+GameDesigner --> AiLog : Inspects
+Developer --> AiLog : Inspects
+UAI --> Platforms : Is Exported/Imported to
+
+Developer --> UAI : Debugs
+
+UAI --> AiObject : Consists of
+
+UAI --> AiData : Has 
+AiData --> AiLog : Is Recorded as
+
+GameDesigner --> PerformanceSettings : Adjusts
+UAI --> PerformanceSettings : Has
+Developer --> Code : Customizes
+GameDesigner --> ResourceUsage : Restricts
+UAI --> ResourceUsage : Has
+
+@enduml

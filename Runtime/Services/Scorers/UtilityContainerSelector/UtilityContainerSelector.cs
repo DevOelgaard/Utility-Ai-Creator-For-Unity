@@ -23,8 +23,8 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
         return ParameterContainer.GetParameter(parameterName);
     }
 
-    public abstract Bucket GetBestUtilityContainer(List<Bucket> containers, AiContext context);
-    public abstract Decision GetBestUtilityContainer(List<Decision> containers, AiContext context);
+    public abstract Bucket GetBestUtilityContainer(List<Bucket> containers, IAiContext context);
+    public abstract Decision GetBestUtilityContainer(List<Decision> containers, IAiContext context);
 
     public abstract string GetDescription();
 
@@ -34,7 +34,7 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
 
     internal override RestoreState GetState()
     {
-        return new UCSState(ParameterContainer.Parameters.ToList(), this);
+        return new UtilityContainerSelectorState(ParameterContainer.Parameters.ToList(), this);
     }
 
     protected override string GetFileName()
@@ -44,7 +44,7 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
     {
-        var state = s as UCSState;
+        var state = s as UtilityContainerSelectorState;
         var parameters = await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
         foreach (var parameter in parameters)
         {
@@ -60,14 +60,14 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
 }
 
 [Serializable]
-public class UCSState: RestoreState
+public class UtilityContainerSelectorState: RestoreState
 {
     public List<string> Parameters;
-    public UCSState()
+    public UtilityContainerSelectorState()
     {
     }
 
-    public UCSState(List<Parameter> parameters, UtilityContainerSelector ucs): base(ucs)
+    public UtilityContainerSelectorState(List<Parameter> parameters, UtilityContainerSelector ucs): base(ucs)
     {
         Parameters = ucs.ParameterContainer.Parameters.Select(p => p.Name).ToList();
     }

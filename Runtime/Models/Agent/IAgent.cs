@@ -9,7 +9,7 @@ public interface IAgent
     AgentModel Model { get; }
     string TypeIdentifier { get; }
     void Tick(TickMetaData metaData);
-    void SetAi(Ai model);
-    Ai Ai { get; set; }
+    void SetAi(Uai model);
+    Uai Uai { get; set; }
     bool CanAutoTick();
 }

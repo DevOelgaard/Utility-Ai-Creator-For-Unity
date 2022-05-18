@@ -1,0 +1,21 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml
+'LAYOUT_WITH_LEGEND()
+hide stereotype
+title Dynamic Diagram Create AI Template
+
+Person(gameDesigner, "Game Designer")
+Component_Ext(templateService,"Template Service", Singleton, Manages Ai templates)
+Component(assetService, "Asset Service", Singleton, Scans assemblies for implementations of Ai Object)
+Component(aiFactory, "Ai Factory", Singleton, Instantiates Ai Objects)
+Component(aiObject, "Ai Object", Abstract Class, Base class for all Ai Objects)
+
+Rel(gameDesigner,templateService, "Browse available Ai objects")
+Rel(templateService,assetService,"Get Ai Object Implementations")
+Rel(gameDesigner,templateService, "Select Ai Object to instantiate")
+Rel(templateService,aiFactory,"Instantiate Ai")
+Rel(aiFactory,aiObject,"Create instance")
+Rel(aiFactory,aiObject,"Call Initialize()")
+Rel(aiFactory,templateService,"Return ai object")
+
+@enduml

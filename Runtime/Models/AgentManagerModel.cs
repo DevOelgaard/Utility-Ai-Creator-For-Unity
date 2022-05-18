@@ -6,8 +6,8 @@ using UnityEngine;
 
 internal class AgentManagerModel
 {
-    internal Dictionary<string, ReactiveList<IAgent>> AgentsByIdentifier = new Dictionary<string, ReactiveList<IAgent>>();
-    internal List<string> AgentIdentifiers = new List<string>();
-    internal ReactiveList<IAgent> Agents = new ReactiveList<IAgent>();
+    internal readonly Dictionary<string, ReactiveList<IAgent>> AgentsByIdentifier = new Dictionary<string, ReactiveList<IAgent>>();
+    internal readonly List<string> AgentIdentifiers = new List<string>();
+    internal readonly ReactiveList<IAgent> Agents = new ReactiveList<IAgent>();
 
 }

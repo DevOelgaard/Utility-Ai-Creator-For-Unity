@@ -44,7 +44,14 @@ public class Parameter: RestoreAble
         
         var clone = (Parameter)Activator.CreateInstance(GetType());
         clone.Name = Name;
-        clone.Value = AssetDatabaseService.DeepCopy(Value);
+        if (Value.GetType() != typeof(Color))
+        {
+            clone.Value = AssetService.DeepCopy(Value);
+        }
+        else
+        {
+            clone.Value = (Color)Value;
+        }
         clone.ParameterEnum = ParameterEnum;
         return clone;
     }

@@ -8,17 +8,17 @@ internal sealed class Error_Consideration : Consideration
 {
     public Error_Consideration() : base()
     {
-        //Name = "";
-        //Description = "";
-        //HelpText = "";
+
+
     }
+
 
     protected override List<Parameter> GetParameters()
     {
         return new List<Parameter>();
     }
 
-    protected override float CalculateBaseScore(AiContext context)
+    protected override float CalculateBaseScore(IAiContext context)
     {
         return -1;
     }

@@ -5,30 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 
 [Serializable]
-public class AiContext
+public class AiContext: IAiContext
 {
-    public IAgent Agent;
-    private Dictionary<object, object> context = new Dictionary<object, object>();
-    public IUtilityScorer UtilityScorer = new UsAverageScorer();
-    public List<AgentAction> LastActions = new List<AgentAction>();
+    public IAgent Agent { get; set; }
+    private Dictionary<object, object> context;
+    public IUtilityScorer UtilityScorer { get; set; }
+    public List<AgentAction> LastActions { get; set; }
     /// <summary>
     /// If called from an AgentAction this will be the object selected this tick.
     /// If called from another AiObject this will be the object selected last tick.
     /// </summary>
-    public Decision LastSelectedDecision { get; internal set; }
-    public Decision CurrentEvaluatedDecision { get; internal set; }
+    public Decision LastSelectedDecision { get; set; }
+
+    public Decision CurrentEvaluatedDecision { get; set; }
     
     /// <summary>
     /// If called from an AgentAction this will be the object selected this tick.
     /// If called from another AiObject this will be the object selected last tick.
     /// </summary>public Bucket LastSelectedBucket { get; internal set; }
-    public Bucket LastSelectedBucket { get; internal set; }
-    public Bucket CurrentEvaluatedBucket { get; internal set; }
-    public TickMetaData TickMetaData { get; internal set; }
+    public Bucket LastSelectedBucket { get; set; }
+    public Bucket CurrentEvaluatedBucket { get; set; }
+    private TickMetaData tickMetaData;
+
+    public TickMetaData TickMetaData
+    {
+        get => tickMetaData ?? (tickMetaData = new TickMetaData());
+        set => tickMetaData = value;
+    }
+
     private const int IterationMax = 20;
 
     public AiContext()
     {
+        UtilityScorer = new UsAverageScorer();
+        LastActions = new List<AgentAction>();
+        context = new Dictionary<object, object>();
+        // TickMetaData = new TickMetaData();
     }
 
     /// <summary>
@@ -62,7 +74,7 @@ public class AiContext
                 return (T) context[requesterKey];
             }
 
-            requester = requester.ca.Parent;
+            requester = requester.ContextAddress.Parent;
 
             numberOfIterations++;
             if (numberOfIterations > IterationMax)
@@ -109,6 +121,6 @@ public class AiContext
     
     private string GetKey(object key, AiObjectModel requester)
     {
-        return key + requester?.ca.Address;
+        return key + requester?.ContextAddress.Address;
     }
 }

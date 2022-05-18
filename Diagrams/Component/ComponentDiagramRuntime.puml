@@ -1,0 +1,34 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram for UAI Creator - Runtime
+'LAYOUT_LANDSCAPE()
+
+
+System_Ext(unityGame, "Unity Game", "Game developed using Unity")
+Container(editor, "Editor", "Assembly: C#, UXML, USS, .NET", Holds the UAI creators UIs and provides logic for creating and managing UAIs)
+
+Boundary(runTime, "Runtime", "Assembly: C#, .NET"){
+    Component(persistenceService, "Persistence Service", "C#, .NET", "Persists data as JSON to disc")
+    Component(dse, "Decision Score Evaluator", "C#, .NET", "Finds the best action for an agent from the agents active UAIs")
+    Component(agentManager, "Agent Manager", "C#, .NET", "Tracks active agents in the Unity Scene")
+    Component(playAbleAiService, "UAi Service", "C#, .NET", "Manages active UAIs in the Unity Scene")
+    Component(aiTicker, "UAi Ticker", "C#, .NET", "Controls the frequency of the agents decision-making in regards to performance requirements")
+    Component(uai, "UAI", "C#, .NET", "The UAI Models")
+    Component(aiFactory, "Ai Factory", "C#, .NET", "Instantiates AI objects")
+}
+
+Rel_Up(playAbleAiService, persistenceService, "Loads UAIs")
+Rel_Down(agentManager,unityGame, "Tracks active agents")
+Rel_Down(dse, unityGame, "Executes actions")
+Rel_Down(dse, persistenceService, "Loads Settings")
+Rel_Up(aiTicker, persistenceService, "Loads Settings")
+
+Rel(dse,uai,"Evaluates")
+Rel(playAbleAiService,uai,"Manages")
+
+Rel_Right(editor, persistenceService, "Saves UAIs and Settings")
+Rel_Right(editor, dse, "Inspects, edits and logs")
+Rel_Right(editor, aiTicker, "Configures settings")
+Rel_Right(editor, aiFactory, "Creates AIs")
+
+@enduml

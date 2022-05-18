@@ -19,7 +19,7 @@ internal class Cooldown : Consideration
                 cooldownTime = Convert.ToSingle(GetParameter("Cooldown Time MS").Value) / 1000f);
     }
 
-    protected override float CalculateBaseScore(AiContext context)
+    protected override float CalculateBaseScore(IAiContext context)
     {
         if(Time.time - context.CurrentEvaluatedDecision.LastSelectedTickMetaData.TickTime < cooldownTime)
         {

@@ -5,27 +5,34 @@ using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
 
-public class Stub_Consideration_UT : Consideration
+namespace Mocks
 {
-    public float ReturnValue;
-
-    public Stub_Consideration_UT(float returnValue, List<Parameter> parameters)
+    public class Stub_Consideration_UT : Consideration
     {
-        ReturnValue = returnValue;
-        foreach (var parameter in parameters)
+        public float ReturnValue;
+
+        public Stub_Consideration_UT()
         {
-            AddParameter(parameter);
         }
 
-        CurrentResponseCurve = new Mock_ResponseCurve("Mock");
-    }
-    protected override float CalculateBaseScore(AiContext context)
-    {
-        return ReturnValue;
-    }
+        public Stub_Consideration_UT(float returnValue, List<Parameter> parameters)
+        {
+            ReturnValue = returnValue;
+            foreach (var parameter in parameters)
+            {
+                AddParameter(parameter);
+            }
 
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
+            CurrentResponseCurve = new Mock_ResponseCurve("Mock");
+        }
+        protected override float CalculateBaseScore(IAiContext context)
+        {
+            return ReturnValue;
+        }
+
+        protected override List<Parameter> GetParameters()
+        {
+            return new List<Parameter>();
+        }
     }
 }

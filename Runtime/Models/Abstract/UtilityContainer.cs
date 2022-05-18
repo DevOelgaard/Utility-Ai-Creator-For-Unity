@@ -103,12 +103,12 @@ public abstract class UtilityContainer : AiObjectModel
         }
     }
 
-    protected virtual float CalculateUtility(AiContext context)
+    protected virtual float CalculateUtility(IAiContext context)
     {
         return context.UtilityScorer.CalculateUtility(Considerations.Values, context);
     }
 
-    internal float GetUtility(AiContext context)
+    internal float GetUtility(IAiContext context)
     {
         MetaData.LastTickEvaluated = context.TickMetaData.TickCount;
         LastCalculatedUtility = CalculateUtility(context);

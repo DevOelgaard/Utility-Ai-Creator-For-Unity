@@ -4,26 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Mock_ConsiderationSimple : Consideration
+namespace Mocks
 {
-    public float ReturnValue = 0f;
-
-    public Mock_ConsiderationSimple()
+    public class Mock_ConsiderationSimple : Consideration
     {
-    }
+        public float ReturnValue = 0f;
 
-    protected override float CalculateBaseScore(AiContext context)
-    {
-        return ReturnValue;
-    }
+        public Mock_ConsiderationSimple()
+        {
+        }
 
-    public override float CalculateScore(AiContext context)
-    {
-        return ReturnValue;
-    }
+        public void SetIsModifier(bool isModifier)
+        {
+            IsModifier = isModifier;
+        }
 
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
+        public void SetIsScorer(bool isScorer)
+        {
+            IsScorer = isScorer;
+        }
+
+        protected override float CalculateBaseScore(IAiContext context)
+        {
+            return ReturnValue;
+        }
+
+        public override float CalculateScore(IAiContext context)
+        {
+            return ReturnValue;
+        }
+
+        protected override List<Parameter> GetParameters()
+        {
+            return new List<Parameter>();
+        }
     }
 }

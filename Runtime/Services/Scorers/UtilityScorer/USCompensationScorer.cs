@@ -8,7 +8,7 @@ public class USCompensationScorer : IUtilityScorer
 {
 
 
-    public float CalculateUtility(List<Consideration> considerations, AiContext context)
+    public float CalculateUtility(List<Consideration> considerations, IAiContext context)
     {
         var modificationFactor = 1 - (1 / considerations.Count);
         var utility = 1f;

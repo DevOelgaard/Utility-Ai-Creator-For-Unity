@@ -1,0 +1,59 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+hide stereotype
+
+title Inheritance Diagram for Utility Ai System (UAI)
+
+    Component(uaiObjectModel, "UaiObjectModel", "Abstract", )
+    Component(uai, "Uai", "Customizable", )
+    Component(bucket, "Bucket", "Abstract", )
+    Component(agentAction, "AgentAction", "Abstract", )
+    Component(consideration, "Consideration", "Abstract", )
+    Component(considerationBoolean, "ConsiderationBoolean", "Abstract", )
+    Component(considerationModifier, "ConsiderationModifier", "Abstract", )
+    Component(decision, "Decision", "Customizable", )
+    Component(rC, "ResponseCurve", "Sealed", )
+    Component(rF, "ResponseFunction", "Abstract", )
+    
+    Component(ucs, "UtilityContainerSelector", "Abstract", )
+    Component(ucsHigh, "UCSHighestScore", "Customizable", )
+    Component(ucsRandom, "UCSRandomFromXHighest", "Customizable", )
+    
+    Component(us, "IUtilityScorer", "Interface", )
+    Component(usAverage, "UsAverage", "Customizable", )
+    
+    Component(dse, "DecisionScoreEvaluator", "Customizable", )
+    Component(agentManager, "AgentManager", "Singleton", )
+    Component(uaiTicker, "UaiTicker", "Singleton", )
+    Component(aiContext, "UaiContext", "Sealed", )
+    
+    Component(iAgent, "IAgent", "Interface", )
+    Component(agentMono, "AgentMono", "Customizable", )
+    Component(agentScript, "AgentScript", "Customizable", )
+    
+    Rel_Up(uai, uaiObjectModel, " ")
+    Rel_Up(bucket, uaiObjectModel, " ")
+    Rel_Up(decision, uaiObjectModel, " ")
+    Rel_Up(consideration, uaiObjectModel, " ")
+        Rel_Up(considerationBoolean, consideration, " ")
+        Rel_Up(considerationModifier, consideration, " ")
+
+    Rel_Up(rC, uaiObjectModel, " ")
+    Rel_Up(rF, uaiObjectModel, " ")
+    Rel_Up(agentAction, uaiObjectModel, " ")
+    
+
+    Rel_Up(ucsHigh, ucs, " ")
+    Rel_Up(ucsRandom, ucs, " ")
+    
+    Rel_Up(usAverage, us, " ")
+    
+    Rel_Up(agentMono, iAgent, " ")
+    Rel_Up(agentScript, iAgent, " ")
+    
+Lay_Down(agentAction, ucs)
+Lay_Right(ucs,us)
+Lay_Right(us,dse)
+Lay_Right(dse,iAgent)
+Lay_Left(uaiObjectModel,aiContext)
+@enduml

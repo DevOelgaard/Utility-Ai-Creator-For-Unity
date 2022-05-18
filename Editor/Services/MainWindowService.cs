@@ -75,9 +75,9 @@ internal class MainWindowService
     //     onUpdateStateChanged.OnNext(false);
     // }
     //
-    internal MainWindowFoldedComponent GetMainWindowFoldedComponent()
+    internal MainWindowFoldedViewModel GetMainWindowFoldedComponent()
     {
-        return new MainWindowFoldedComponent();
+        return new MainWindowFoldedViewModel();
         // if (mainFoldedComponentPool.Count == 0)
         // {
         //     if (!updatingPool)
@@ -118,13 +118,13 @@ internal class MainWindowService
     //     return mainFoldedComponentPool.Dequeue();
     // }
 
-    internal AiObjectComponent GetAiObjectComponent(AiObjectModel model)
+    internal AiObjectViewModel GetAiObjectComponent(AiObjectModel model)
     {
         var type = model.GetType();
         return GetAiObjectComponent(type);
     }
     
-    internal AiObjectComponent GetAiObjectComponent(Type modelType)
+    internal AiObjectViewModel GetAiObjectComponent(Type modelType)
     {
         return GetComponent(modelType);
     }
@@ -171,33 +171,33 @@ internal class MainWindowService
     // {
     //     mainFoldedComponentPool.Enqueue(component);
     // }
-    private static ResponseCurveMainWindowComponent _responseCurveWindow;
+    private static ResponseCurveMainWindowViewModel _responseCurveWindow;
 
-    private AiObjectComponent GetComponent(Type type)
+    private AiObjectViewModel GetComponent(Type type)
     {
-        if (type == typeof(Ai) || type.IsSubclassOf(typeof(Ai)))
+        if (type == typeof(Uai) || type.IsSubclassOf(typeof(Uai)))
         {
-            return new AiComponent();
+            return new AiViewModel();
         }
         else if (type == typeof(Bucket) || type.IsSubclassOf(typeof(Bucket)))
         {
-            return new BucketComponent();
+            return new BucketViewModel();
         }
         else if (type == typeof(Decision) || type.IsSubclassOf(typeof(Decision)))
         {
-            return new DecisionComponent();
+            return new DecisionViewModel();
         }
         else if (type == typeof(Consideration) || type.IsSubclassOf(typeof(Consideration)))
         {
-            return new ConsiderationComponent();
+            return new ConsiderationViewModel();
         }
         else if (type == typeof(AgentAction) || type.IsSubclassOf(typeof(AgentAction)))
         {
-            return new AgentActionComponent();
+            return new AgentActionViewModel();
         }
         else if (type == typeof(ResponseCurve) || type.IsSubclassOf(typeof(ResponseCurve)))
         {
-            return new ResponseCurveMainWindowComponent();
+            return new ResponseCurveMainWindowViewModel();
         }
         Debug.LogError(type.ToString());
         throw new NotImplementedException();
@@ -209,7 +209,7 @@ internal class MainWindowService
         switch (label)
         {
             case Consts.Label_UAIModel:
-                return typeof(Ai);
+                return typeof(Uai);
             case Consts.Label_BucketModel:
                 return typeof(Bucket);
             case Consts.Label_DecisionModel:

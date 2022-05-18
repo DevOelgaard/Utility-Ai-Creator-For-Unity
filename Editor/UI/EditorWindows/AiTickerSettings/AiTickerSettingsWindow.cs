@@ -28,12 +28,12 @@ internal class AiTickerSettingsWindow: EditorWindow
     private Toggle autoRunToggle;
 
 
-    private AiTicker aiTicker;
+    private UaiTicker uaiTicker;
 
     public void CreateGUI()
     {
         root = rootVisualElement;
-        var treeAsset = AssetDatabaseService.GetVisualTreeAsset(GetType().FullName);
+        var treeAsset = AssetService.GetVisualTreeAsset(GetType().FullName);
         treeAsset.CloneTree(root);
 
         modes = root.Q<EnumField>("Mode-EnumField");
@@ -50,46 +50,46 @@ internal class AiTickerSettingsWindow: EditorWindow
 
         description = new HelpBox("",HelpBoxMessageType.Info);
         header.Add(description);
-        aiTicker = AiTicker.Instance;
-        modes.Init(AiTickerMode.Unrestricted);
-        modes.value = aiTicker.Settings.CurrentTickerMode.Name;
+        uaiTicker = UaiTicker.Instance;
+        modes.Init(UaiTickerMode.Unrestricted);
+        modes.value = uaiTicker.Settings.CurrentTickerMode.Name;
         
-        LoadTicker(aiTicker.Settings.CurrentTickerMode);
-        tickCount.text = aiTicker.TickCount.ToString();
+        LoadTicker(uaiTicker.Settings.CurrentTickerMode);
+        tickCount.text = uaiTicker.TickCount.ToString();
 
         
         modes.RegisterCallback<ChangeEvent<Enum>>(evt =>
         {
-            aiTicker.SetTickerMode((AiTickerMode)evt.newValue);
+            uaiTicker.SetTickerMode((UaiTickerMode)evt.newValue);
         });
 
-        aiTicker.Settings.OnTickerModeChanged
+        uaiTicker.Settings.OnTickerModeChanged
             .Subscribe(LoadTicker)
             .AddTo(disposables);
 
         startButton.RegisterCallback<MouseUpEvent>(evt =>
         {
-            aiTicker.Start();
+            uaiTicker.Start();
         });
 
         stopButton.RegisterCallback<MouseUpEvent>(evt =>
         {
-            aiTicker.Stop();
+            uaiTicker.Stop();
         });
 
         reloadButton.RegisterCallback<MouseUpEvent>(evt =>
         {
-            aiTicker.Reload();
+            uaiTicker.InitSettings();
         });
 
-        autoRunToggle.value = aiTicker.Settings.AutoRun;
+        autoRunToggle.value = uaiTicker.Settings.AutoRun;
         autoRunToggle.RegisterCallback<ChangeEvent<bool>>(evt =>
         {
-            aiTicker.Settings.AutoRun = evt.newValue;
+            uaiTicker.Settings.AutoRun = evt.newValue;
         });
 
 
-        aiTicker.OnTickCountChanged
+        uaiTicker.OnTickCountChanged
             .Subscribe(value => tickCount.text = value.ToString())
             .AddTo(disposables);
     }
@@ -122,7 +122,7 @@ internal class AiTickerSettingsWindow: EditorWindow
             var cast = tickerMode as TickerModeTimeBudget;
             info2Label.text = "TPS: ";
             info2Value.text = "0";
-            tickerModeSub = AiTicker.Instance.OnTickComplete
+            tickerModeSub = UaiTicker.Instance.OnTickComplete
                 .Subscribe(_ =>
                 {
                     info2Value.text = cast.TickedAgentsThisFrame.ToString();

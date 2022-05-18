@@ -36,7 +36,7 @@ public class ContextAddress
               var address = "";
               if (Parent != null)
               {
-                     address += Parent.ca.Address + "-";
+                     address += Parent.ContextAddress.Address + "-";
               }
 
               if (Parent == null)

@@ -6,29 +6,27 @@ using System;
 
 internal class AgentManager
 {
-    private static AgentManager instance;
+    private static AgentManager _instance;
     internal AgentManagerModel Model { get; } = new AgentManagerModel();
     internal List<string> AgentIdentifiers => Model.AgentIdentifiers;
 
-    internal IObservable<bool> AgentTypesUpdated => agentIdentifiersUpdated;
+    internal IObservable<bool> AgentIdentifiersUpdated => agentIdentifiersUpdated;
     private readonly Subject<bool> agentIdentifiersUpdated = new Subject<bool>();
 
     internal IObservable<IAgent> AgentsUpdated => agentsUpdated;
     private readonly Subject<IAgent> agentsUpdated = new Subject<IAgent>();
-    internal AgentManager()
+    private AgentManager()
     {
         //AiTicker.Instance.Start();
     }
 
     internal static AgentManager Instance { 
-        get 
-        { 
-            if (instance == null)
-            {
-                instance = new AgentManager();
-            } 
-            return instance; 
-        } 
+        get { return _instance ??= new AgentManager(); } 
+    }
+
+    internal void Reset()
+    {
+        _instance = new AgentManager();
     }
 
     internal void Register(IAgent agent)
@@ -39,7 +37,6 @@ internal class AgentManager
             Model.AgentsByIdentifier.Add(identifier, new ReactiveList<IAgent>());
             AgentIdentifiers.Add(identifier);
             agentIdentifiersUpdated.OnNext(true);
-
         }
 
         Model.AgentsByIdentifier[identifier].Add(agent);

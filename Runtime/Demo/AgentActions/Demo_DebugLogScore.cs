@@ -18,17 +18,17 @@ internal class Demo_DebugLogScore : AgentAction
         };
     }
 
-    public override void OnStart(AiContext context)
+    public override void OnStart(IAiContext context)
     {
         Print(context);
     }
 
-    public override void OnGoing(AiContext context)
+    public override void OnGoing(IAiContext context)
     {
         Print(context);
     }
 
-    private void Print(AiContext context)
+    private void Print(IAiContext context)
     {
         DebugService.Log("Bucket Score: " + context.LastSelectedBucket.Score.ToString("0.00") 
                                           + " Decision Score: " + context.LastSelectedDecision.Score.ToString("0.00") ,this);

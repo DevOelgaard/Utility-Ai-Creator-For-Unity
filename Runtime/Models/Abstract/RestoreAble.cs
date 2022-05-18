@@ -29,7 +29,7 @@ public abstract class RestoreAble
             T element = default(T);
             if (type == null)
             {
-                element = AssetDatabaseService.GetInstanceOfType<T>(state.AssemblyQualifiedName);
+                element = AssetService.GetInstanceOfType<T>(state.AssemblyQualifiedName);
             } else
             {
                 element = (T)AiObjectFactory.CreateInstance(type,true);

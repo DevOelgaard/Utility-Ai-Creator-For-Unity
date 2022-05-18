@@ -34,12 +34,6 @@ internal class ProjectSettingsService
     internal string GetCurrentProjectDirectory()
     {
         return model.CurrentProjectPath;
-        // if (model == null || string.IsNullOrEmpty(model.CurrentProjectPath))
-        // {
-        //     return "";
-        // }
-        // return new DirectoryInfo(Path.GetDirectoryName(model.CurrentProjectPath) ?? 
-        //                                   string.Empty).FullName+"/";
     }
 
     internal string GetTemporaryDirectory()
@@ -52,18 +46,6 @@ internal class ProjectSettingsService
     internal string GetCurrentProjectName(bool includeExtension = false)
     {
         return model.CurrentProjectName;
-        // if (model == null || string.IsNullOrEmpty(model.CurrentProjectPath))
-        // {
-        //     return null;
-        // }
-        // if (includeExtension)
-        // {
-        //     return Path.GetFileName(model.CurrentProjectPath);
-        // } else
-        // {
-        //     var path = Path.GetFileName(model.CurrentProjectPath);
-        //     return path.Substring(0, path.IndexOf('.'));
-        // }
     }
 
     internal string GetCurrentProjectPath()
@@ -127,7 +109,7 @@ internal class ProjectSettingsService
         filters[3] = "*";
 
 
-        var path = EditorUtility.OpenFilePanelWithFilters("Open Project", "", filters);
+        var path = EditorUtility.OpenFolderPanel("Open Project","","UAI Project");
         if (path.Length == 0) return;
         SetProjectPath(path);
     }

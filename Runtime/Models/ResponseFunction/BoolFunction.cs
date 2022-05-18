@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 internal class BoolFunction : ResponseFunction
 {
     private Parameter min;
-    private Parameter Min
+    public Parameter Min
     {
         get
         {

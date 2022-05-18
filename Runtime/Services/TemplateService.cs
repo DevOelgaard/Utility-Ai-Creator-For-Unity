@@ -117,6 +117,7 @@ internal class TemplateService: RestoreAble
 
     internal async Task LoadCurrentProject(bool temporaryProject = false)
     {
+        TimerService.Instance.LogSequenceStart(Consts.Sequence_Persistence_Load,"LoadCurrentProject");
         SetState("Loading");
         var loadPath = temporaryProject
             ? ProjectSettingsService.Instance.GetProjectTemporaryPath()
@@ -148,6 +149,8 @@ internal class TemplateService: RestoreAble
         {
             SetState("Ready");
             ClearCollectionNotify();
+            TimerService.Instance.LogSequenceStop(Consts.Sequence_Persistence_Load,"LoadCurrentProject",true);
+
             return;
         }
         
@@ -159,8 +162,7 @@ internal class TemplateService: RestoreAble
             ClearCollectionNotify();
             SubscribeToCollectionChanges();
             SetState("Ready");
-            DebugService.LogWarning("Loading failed state.LoadedObjet == null at path: " + loadPath,this);
-            DebugService.LogWarning("State.ErrorMessage: " + state.ErrorMessage,this);
+            DebugService.LogWarning("Loading failed state.LoadedObjet == null at path: " + loadPath  + "State.ErrorMessage: " + state.ErrorMessage,this);
         }
         else
         {
@@ -174,11 +176,13 @@ internal class TemplateService: RestoreAble
                 onLoadComplete.OnNext(true);
                 DebugService.Log("Load complete",this);
                 SetState("Ready");
+                TimerService.Instance.LogSequenceStop(Consts.Sequence_Persistence_Load,"LoadCurrentProject",true);
             }
             catch (Exception ex)
             {
                 DebugService.LogError("Loading failed: " + ex, this);
                 SetState("Error");
+                TimerService.Instance.LogSequenceStop(Consts.Sequence_Persistence_Load,"LoadCurrentProject",true);
                 throw new Exception("Template Service Restore Failed : ", ex);
             }
         }
@@ -187,6 +191,7 @@ internal class TemplateService: RestoreAble
 
     internal async Task Save(bool backup = false)
     {
+        TimerService.Instance.LogSequenceStart(Consts.Sequence_Persistence_Save,"Save");
         var currentState = stateString;
         SetState("Saving");
         DebugService.Log("Saving Backup: " + backup, this);
@@ -199,6 +204,7 @@ internal class TemplateService: RestoreAble
         var perstistAPI = PersistenceAPI.Instance;
         await perstistAPI.SaveObjectDestructivelyAsync(this, path);
         SetState("Ready");
+        TimerService.Instance.LogSequenceStop(Consts.Sequence_Persistence_Save,"Save",true);
     }
 
     protected override string GetFileName()
@@ -227,7 +233,7 @@ internal class TemplateService: RestoreAble
 
     internal ReactiveList<AiObjectModel> GetCollection(Type t)
     {
-        if (t.IsAssignableFrom(typeof(Ai)))
+        if (t.IsAssignableFrom(typeof(Uai)))
         {
             return AIs;
         }
@@ -277,7 +283,7 @@ internal class TemplateService: RestoreAble
         persister = new JsonPersister();
         var tasks = new List<Task>()
         {
-            RestoreAbleService.SaveRestoreAblesToFile(AIs.Values.Cast<Ai>(),
+            RestoreAbleService.SaveRestoreAblesToFile(AIs.Values.Cast<Uai>(),
                 directoryPath + "/" + Consts.FolderName_Ais, persister),
             RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values.Cast<Bucket>(),
                 directoryPath + "/" + Consts.FolderName_Buckets, persister),
@@ -350,7 +356,7 @@ internal class TemplateService: RestoreAble
         } else if (TypeMatches(type, typeof(Bucket)))
         {
             return Buckets;
-        } else if (TypeMatches(type, typeof(Ai)))
+        } else if (TypeMatches(type, typeof(Uai)))
         {
             return AIs;
         } else if (TypeMatches(type, typeof(ResponseCurve)))
@@ -375,7 +381,7 @@ internal class TemplateService: RestoreAble
         var tasks = new List<Task>
         {
             RestoreAbleService
-                .LoadObjectsAndSortToCollection<Ai>(loadDirectory + Consts.FolderName_Ais, 
+                .LoadObjectsAndSortToCollection<Uai>(loadDirectory + Consts.FolderName_Ais, 
                     state.aIs,AIs,restoreDebug),
             RestoreAbleService
                 .LoadObjectsAndSortToCollection<Bucket>(loadDirectory + Consts.FolderName_Buckets, 

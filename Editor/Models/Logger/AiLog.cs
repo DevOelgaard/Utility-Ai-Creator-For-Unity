@@ -10,18 +10,18 @@ internal class AiLog: AiObjectLog
     internal UCSLog BucketSelector;
     internal UCSLog DecisionSelector;
 
-    internal static AiLog GetDebug(Ai ai, int tick)
+    internal static AiLog GetDebug(Uai uai, int tick)
     {
         var result = new AiLog();
-        result = SetBasics(result, ai, tick) as AiLog;
+        result = SetBasics(result, uai, tick) as AiLog;
         result.Buckets = new List<BucketLog>();
-        foreach (var bucket in ai.Buckets.Values)
+        foreach (var bucket in uai.Buckets.Values)
         {
             result.Buckets.Add(BucketLog.GetDebug(bucket, tick));
         }
 
-        result.BucketSelector = UCSLog.GetDebug(ai.CurrentBucketSelector, tick);
-        result.DecisionSelector = UCSLog.GetDebug(ai.CurrentDecisionSelector, tick);
+        result.BucketSelector = UCSLog.GetDebug(uai.CurrentBucketSelector, tick);
+        result.DecisionSelector = UCSLog.GetDebug(uai.CurrentDecisionSelector, tick);
         return result;
     }
 }

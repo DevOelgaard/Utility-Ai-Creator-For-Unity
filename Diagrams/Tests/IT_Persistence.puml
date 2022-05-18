@@ -1,0 +1,31 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml
+hide stereotype
+
+title Integration Test Persisence
+
+    Component(jsonPersister, JsonPersister, "", )
+    Component(persistenceApi, PersistenceApi, "", )
+    Component(uai, Uai, "", )
+    Component(bucket, Bucket, "", )
+    Component(decision, Decision, "", )
+    Component(consideration, Consideration, "", )
+    Component(agentAction, AgentAction, "", )
+    Component(rc, ResponseCurve, "", )
+    
+
+    RelIndex(_,jsonPersister,persistenceApi,"")
+    Rel_Up(persistenceApi, agentAction,"")
+    Rel_Up(persistenceApi, rc,"")
+    Rel_Up(persistenceApi, consideration,"")
+    Rel_Up(persistenceApi, decision,"")
+    Rel_Up(persistenceApi, bucket,"")
+    Rel_Up(persistenceApi, uai,"")
+    
+    Lay_Up(jsonPersister,persistenceApi)
+    Lay_Left(rc, agentAction)
+    Lay_Left(consideration, rc)
+    Lay_Left(decision, consideration)
+    Lay_Left(bucket, decision)
+
+@enduml

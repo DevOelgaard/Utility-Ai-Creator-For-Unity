@@ -32,7 +32,7 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
             new Parameter("Max deviation from highest", 1f)
         };
     }
-    public override Bucket GetBestUtilityContainer(List<Bucket> buckets, AiContext context)
+    public override Bucket GetBestUtilityContainer(List<Bucket> buckets, IAiContext context)
     {
         buckets = buckets
             .OrderByDescending(b => b.Weight)
@@ -57,7 +57,7 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
 
     }
 
-    public override Decision GetBestUtilityContainer(List<Decision> decisions, AiContext context)
+    public override Decision GetBestUtilityContainer(List<Decision> decisions, IAiContext context)
     {
         var result = new List<UtilityContainer>();
         foreach (Decision decision in decisions)

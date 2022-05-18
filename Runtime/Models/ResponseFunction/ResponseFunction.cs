@@ -11,10 +11,10 @@ public abstract class ResponseFunction: AiObjectModel
     private readonly CompositeDisposable parametersChangedDisposable = new CompositeDisposable();
     public int rcIndex = -1;
     private Parameter max;
-    protected Parameter Max => max ??= GetParameter("Max");
+    public Parameter Max => max ??= GetParameter("Max");
 
     public IObservable<bool> OnParametersChanged => onParametersChanged;
-    private readonly Subject<bool> onParametersChanged = new Subject<bool>();
+    protected readonly Subject<bool> onParametersChanged = new Subject<bool>();
 
     private bool Inverse => (bool)GetParameter("Inverse").Value;
     protected ResponseFunction()
@@ -61,7 +61,7 @@ public abstract class ResponseFunction: AiObjectModel
     protected override AiObjectModel InternalClone()
     {
 
-        var clone = AssetDatabaseService.GetInstanceOfType<ResponseFunction>(GetType().ToString());
+        var clone = AssetService.GetInstanceOfType<ResponseFunction>(GetType().ToString());
         DebugService.Log("TT! cloning Original Guid: " + Guid + " Clone Guid: " + clone.Guid, this,Thread.CurrentThread);
 
         // var clone = (ResponseFunction)AiObjectFactory.CreateInstance(GetType());
@@ -72,12 +72,6 @@ public abstract class ResponseFunction: AiObjectModel
 
         DebugService.Log("RF cloning complete Name: " + Name, this);
         return clone;
-    }
-
-    protected override string GetFileName()
-    {
-        return base.GetFileName();
-        // return rcIndex + " - " + base.GetFileName();
     }
 
     public virtual float CalculateResponse(float x, float prevResult, float maxY)
@@ -95,13 +89,6 @@ public abstract class ResponseFunction: AiObjectModel
         return result + prevResult;
     }
 
-    private float Normalize(float value, float min, float tempMax)
-    {
-        var factor = (tempMax - min) / tempMax;
-        var x = value * factor;// * ResultFactor;
-        return x;
-    }
-
     protected abstract float CalculateResponseInternal(float x);
 
     protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
@@ -109,13 +96,6 @@ public abstract class ResponseFunction: AiObjectModel
         await base.RestoreInternalAsync(s, restoreDebug);
         var state = (ResponseFunctionState) s;
         Name = state.Name;
-
-        // var parameters = await RestoreAbleService
-        //         .GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        // foreach (var parameter in parameters)
-        // {
-        //     AddParameter(parameter);
-        // }
     }
 
     private void SubscribeToParameters()

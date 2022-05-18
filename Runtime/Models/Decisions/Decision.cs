@@ -116,14 +116,14 @@ public class Decision: UtilityContainer
             .GetAiObjectsSortedByIndex<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions,
                 restoreDebug);
         
-        AgentActions.Add(RestoreAbleService.SortByName(state.AgentActions, restoredAgentActions));
+        AgentActions.Add(RestoreAbleService.OrderByNames(state.AgentActions, restoredAgentActions));
 
         Considerations = new ReactiveListNameSafe<Consideration>();
         var considerations = await RestoreAbleService
             .GetAiObjectsSortedByIndex<Consideration>(CurrentDirectory + Consts.FolderName_Considerations,
                 restoreDebug);
         
-        Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
+        Considerations.Add(RestoreAbleService.OrderByNames(state.Considerations, considerations));
 
         if (restoreDebug)
         {
@@ -131,7 +131,7 @@ public class Decision: UtilityContainer
         }
     }
 
-    protected override float CalculateUtility(AiContext context)
+    protected override float CalculateUtility(IAiContext context)
     {
         var modifier = float.NaN;
         foreach(var cons in Considerations.Values.Where(c => c.IsModifier))
@@ -140,7 +140,7 @@ public class Decision: UtilityContainer
         }
         if(float.IsNaN(modifier))
         {
-            var parent = context.CurrentEvaluatedBucket;
+            var parent = ContextAddress.Parent as Bucket;
             return base.CalculateUtility(context) * Convert.ToSingle(parent.Weight.Value);
         } 
         else

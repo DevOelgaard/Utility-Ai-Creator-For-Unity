@@ -16,35 +16,15 @@ internal static class RestoreAbleService
         return aiObjects.Where(a => a != null).Select(a => a.Name).ToList();
     }
 
-    internal static List<T> SortByName<T>(List<string> names, List<T> aiObjects) where T : AiObjectModel
+    internal static List<T> OrderByNames<T>(List<string> desiredOrder, List<T> aiObjects) where T : AiObjectModel
     {
         return aiObjects;
-    }
-
-    internal static List<Parameter> SortByName(List<string> names, List<Parameter> aiObjects)
-    {
-        var result = new List<Parameter>();
-        foreach (var name in names)
-        {
-            var aiObject = aiObjects.FirstOrDefault(a => a.Name == name);
-            if (aiObject != null)
-            {
-                result.Add(aiObject);
-                aiObjects.Remove(aiObject);
-            }
-        }
-
-        foreach (var ao in aiObjects.Where(ao => !result.Contains(ao)))
-        {
-            result.Add(ao);
-        }
-        return result;
     }
 
     internal static async Task<List<T>> GetAiObjectsSortedByIndex<T>(string path, bool restoreDebug) where T : AiObjectModel
     {
         var result = new List<T>();
-        var states = await PersistenceAPI.Instance.LoadObjectsPathWithFilters<RestoreState>(path, typeof(T));
+        var states = await PersistenceAPI.Instance.LoadObjectsOfTypeAsync<RestoreState>(path, typeof(T));
         states = states.OrderBy(s => s.LoadedObject?.Index).ToList();
         
         foreach (var s in states)
@@ -70,7 +50,7 @@ internal static class RestoreAbleService
     internal static async Task<List<Parameter>> GetParameters(string path, bool restoreDebug)
     {
         var result = new List<Parameter>();
-        var parameterStates = await PersistenceAPI.Instance.LoadObjectsPathWithFilters<RestoreState>(path, typeof(Parameter));
+        var parameterStates = await PersistenceAPI.Instance.LoadObjectsOfTypeAsync<RestoreState>(path, typeof(Parameter));
         parameterStates = parameterStates.OrderBy(p => p.LoadedObject?.Index).ToList();
         
         foreach (var p in parameterStates)
@@ -95,7 +75,7 @@ internal static class RestoreAbleService
         var filter = FileExtensionService.GetFileExtensionFromType(typeof(UtilityContainerSelector));
         DebugService.Log("GetUcs path: " + path + " filter: " + filter, nameof(RestoreAbleService));
 
-        var states = await PersistenceAPI.Instance.LoadObjectsPathAsync<RestoreState>(path, filter);
+        var states = await PersistenceAPI.Instance.LoadObjectsAsync<RestoreState>(path, filter);
         DebugService.Log("GetUcs number of states: " + states.Count, nameof(RestoreAbleService));
 
         states = states.OrderBy(s => s.LoadedObject?.Index).ToList();
@@ -129,7 +109,7 @@ internal static class RestoreAbleService
         DebugService.Log("Loading objects at: " + path + " completed " + aiObjects.Count + " objects loaded", nameof(RestoreAbleService));
         if (aiObjects.Count > 0)
         {
-            var sorted = SortByName(namesOrdered, aiObjects);
+            var sorted = OrderByNames(namesOrdered, aiObjects);
             collection.Add(sorted);
         }
     }

@@ -57,7 +57,7 @@ public class Bucket : UtilityContainer
         return clone;
     }
 
-    protected override float CalculateUtility(AiContext context)
+    protected override float CalculateUtility(IAiContext context)
     {
         var modifier = float.NaN;
         foreach (var cons in Considerations.Values.Where(c => c.IsModifier))
@@ -123,16 +123,16 @@ public class Bucket : UtilityContainer
         var decisionsLocal = await RestoreAbleService
             .GetAiObjectsSortedByIndex<Decision>(CurrentDirectory + Consts.FolderName_Decisions, restoreDebug);
         
-        Decisions.Add(RestoreAbleService.SortByName(state.Decisions, decisionsLocal));
+        Decisions.Add(RestoreAbleService.OrderByNames(state.Decisions, decisionsLocal));
         
         Considerations = new ReactiveListNameSafe<Consideration>();
         var considerations = await RestoreAbleService
             .GetAiObjectsSortedByIndex<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
         
-        Considerations.Add(RestoreAbleService.SortByName(state.Considerations, considerations));
+        Considerations.Add(RestoreAbleService.OrderByNames(state.Considerations, considerations));
 
         var wStates = await PersistenceAPI.Instance
-            .LoadObjectsPathAsync<ParameterState>(CurrentDirectory + Consts.FolderName_Weight);
+            .LoadObjectsAsync<ParameterState>(CurrentDirectory + Consts.FolderName_Weight);
         var weightState = wStates.FirstOrDefault();
         if (weightState == null)
         {

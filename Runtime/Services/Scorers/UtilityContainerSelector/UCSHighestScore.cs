@@ -25,25 +25,21 @@ public class UCSHighestScore : UtilityContainerSelector
         return new List<Parameter>();
     }
 
-    public override Bucket GetBestUtilityContainer(List<Bucket> buckets, AiContext context)
+    public override Bucket GetBestUtilityContainer(List<Bucket> buckets, IAiContext context)
     {
         UtilityContainer bestContainer = null;
         foreach(Bucket bucket in buckets)
         {
+            //
             var weight = Convert.ToSingle(bucket.Weight.Value);
 
-            // Only evaluate if the bucket has a chance of winning
-            if (bestContainer != null && weight < bestContainer.LastCalculatedUtility)
-            {
-                continue;
-            }
             context.CurrentEvaluatedBucket = bucket;
             bestContainer = CheckBestContainer(bucket, context, bestContainer);
         }
         return bestContainer as Bucket;
     }
 
-    public override Decision GetBestUtilityContainer(List<Decision> decisions, AiContext context)
+    public override Decision GetBestUtilityContainer(List<Decision> decisions, IAiContext context)
     {
         UtilityContainer bestContainer = null;
         foreach (var decision in decisions)
@@ -54,7 +50,7 @@ public class UCSHighestScore : UtilityContainerSelector
         return bestContainer as Decision;
     }
 
-    private UtilityContainer CheckBestContainer(UtilityContainer container, AiContext context, UtilityContainer bestContainer = null)
+    private UtilityContainer CheckBestContainer(UtilityContainer container, IAiContext context, UtilityContainer bestContainer = null)
     {
         var utility = container.GetUtility(context);
         

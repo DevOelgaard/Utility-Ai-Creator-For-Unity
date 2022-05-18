@@ -15,17 +15,17 @@ internal class Demo_PrintContext : AgentAction
         };
     }
 
-    public override void OnStart(AiContext context)
+    public override void OnStart(IAiContext context)
     {
         Print(context);
     }
 
-    public override void OnGoing(AiContext context)
+    public override void OnGoing(IAiContext context)
     {
         Print(context);
     }
 
-    private void Print(AiContext context)
+    private void Print(IAiContext context)
     {
         var value = context.GetContext<GameObject>(AiContextKey.CurrentTargetGameObject,this);
         if (value == null)

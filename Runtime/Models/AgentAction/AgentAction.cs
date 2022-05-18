@@ -24,9 +24,9 @@ public abstract class AgentAction: AiObjectModel
         return clone;
     }
 
-    public virtual void OnStart(AiContext context) { }
-    public virtual void OnGoing(AiContext context) { }
-    public virtual void OnEnd(AiContext context) { }
+    public virtual void OnStart(IAiContext context) { }
+    public virtual void OnGoing(IAiContext context) { }
+    public virtual void OnEnd(IAiContext context) { }
 
     protected override string GetNameFormat(string currentName)
     {
@@ -44,18 +44,11 @@ public abstract class AgentAction: AiObjectModel
         var state = (AgentActionState)s;
         Name = state.Name;
         Description = state.Description;
-        //
-        // var parameters = await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        // foreach (var parameter in parameters)
-        // {
-        //     AddParameter(parameter);
-        // }
     }
 
     protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     {
         await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_AgentAction);
-        //await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
     }
 }
 

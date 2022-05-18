@@ -3,7 +3,7 @@
     CurrentTargetGameObject,
 }
 
-public enum AiTickerMode
+public enum UaiTickerMode
 {
     DesiredFrameRate,
     TimeBudget,

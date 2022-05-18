@@ -1,0 +1,44 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Simplified Class Diagram for UAI Creator - Editor - Template Manager
+
+hide stereotype
+
+Boundary(mvvm, "AI-MVVM", Expanded){
+    Component(view, "View", "UXML, USS")
+    Component(viewModel, "ViewModel", "C#")
+    Component_Ext(model, "Model", "AiObject in Runtime")
+    Rel(view, viewModel, Bind)
+    Rel(viewModel,model, CRUD)
+}
+
+Component_Ext(aiFactory, "Ai Factory", Singleton in Runtime)
+
+Component(templateManager, "Template Manager", MVVM)
+Component(templateService, "Template Service", Singleton)
+Component(ai, "AI", AI-MVVM)
+Component(bucket, "Bucket", AI-MVVM)
+Component(decision, "Decision", AI-MVVM)
+Component(consideration, "Consideration", AI-MVVM)
+Component(agentAction, "Agent Action", AI-MVVM)
+Component(responseCurve, "Response Curve", AI-MVVM)
+Component(responseFunction, "Response Function", AI-MVVM)
+
+Rel(templateManager, templateService,"Uses")
+
+Rel(templateService,aiFactory, "Creates AIs")
+Rel(templateService,ai, "Has Collection")
+Rel(templateService,bucket, "Has Collection")
+Rel(templateService,decision, "Has Collection")
+Rel(templateService,agentAction, "Has Collection")
+Rel(templateService,responseCurve, "Has Collection")
+
+Rel(ai,bucket,"Has Collection")
+Rel(bucket,decision,"Has Collection")
+Rel(bucket,consideration,"Has Collection")
+Rel(decision,consideration,"Has Collection")
+Rel(decision,agentAction,"Has Collection")
+Rel(consideration,responseCurve,"Has One")
+Rel(responseCurve,responseFunction,"Has Collection")
+
+@enduml

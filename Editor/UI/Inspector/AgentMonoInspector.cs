@@ -42,7 +42,7 @@ internal class AgentMonoInspector: Editor
         TemplateService.Instance.AIs.Values
             .ForEach(ai =>
             {
-                var aiCast = ai as Ai;
+                var aiCast = ai as Uai;
                 aiCast?.OnIsPlayableChanged
                     .Subscribe(isPlayable =>
                     {
@@ -79,11 +79,11 @@ internal class AgentMonoInspector: Editor
     {
         aiField.choices.Clear();
         var playableAis = ais
-            .Cast<Ai>()
+            .Cast<Uai>()
             .Where(ai => ai.IsPLayAble);
 
         var playAbleAis = playableAis.ToList();
-        foreach (Ai ai in playAbleAis)
+        foreach (Uai ai in playAbleAis)
         {
             aiField.choices.Add(ai.Name);
         }

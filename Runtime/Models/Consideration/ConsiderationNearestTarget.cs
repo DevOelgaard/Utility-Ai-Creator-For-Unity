@@ -14,17 +14,17 @@ internal class ConsiderationNearestTarget : Consideration
         HelpText = "The parent must set a " + AiContextKey.CurrentTargetGameObject + " for it to evaluate";
     }
 
-    protected override float CalculateBaseScore(AiContext context)
+    protected override float CalculateBaseScore(IAiContext context)
     {
         var agent = (AgentMono)context.Agent;
         var address = "";
         if (context.CurrentEvaluatedDecision != null)
         {
-            address = context.CurrentEvaluatedDecision.ca.Address;
+            address = context.CurrentEvaluatedDecision.ContextAddress.Address;
         }
         else
         {
-            address = context.CurrentEvaluatedBucket.ca.Address;
+            address = context.CurrentEvaluatedBucket.ContextAddress.Address;
         }
         var target = context.GetContext<GameObject>(address + AiContextKey.CurrentTargetGameObject);
         if (target == null)

@@ -19,7 +19,7 @@ internal class Demo_WriteTickCount : AgentAction
         return result;
     }
 
-    public override void OnStart(AiContext context)
+    public override void OnStart(IAiContext context)
     {
         base.OnStart(context);
         var value = context.TickMetaData.TickCount;

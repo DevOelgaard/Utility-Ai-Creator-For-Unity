@@ -17,44 +17,11 @@ public class ScorerService
         //LoadContainerSelectors();
         LoadUtilityScorers();
     }
-
-    //private void LoadContainerSelectors()
-    //{
-    //    ContainerSelectors = new ReactiveList<UtilityContainerSelector>();
-    //    var elements = AssetDatabaseService.GetInstancesOfType<UtilityContainerSelector>();
-    //    elements = elements
-    //        .Where(e => 
-    //        ContainerSelectors
-    //            .Values
-    //            .FirstOrDefault(element => 
-    //                element.GetType() == e.GetType()) == null) // Avoids Duplicates
-    //        .ToList();
-
-    //    foreach (var e in elements)
-    //    {
-    //        ContainerSelectors.Add(e);
-    //    }
-    //}
-
-    //internal List<UtilityContainerSelector> GetUCSInstances()
-    //{
-    //    var result = new List<UtilityContainerSelector>();
-    //    var elements = AssetDatabaseService.GetInstancesOfType<UtilityContainerSelector>();
-    //    result = elements
-    //        .Where(e =>
-    //        ContainerSelectors
-    //            .Values
-    //            .FirstOrDefault(element =>
-    //                element.GetType() == e.GetType()) == null) // Avoids Duplicates
-    //        .ToList();
-
-    //    return result;
-    //}
-
+    
     private void LoadUtilityScorers()
     {
         UtilityScorers = new ReactiveList<IUtilityScorer>();
-        var elements = AssetDatabaseService.GetInstancesOfType<IUtilityScorer>();
+        var elements = AssetService.GetInstancesOfType<IUtilityScorer>();
         elements = elements
             .Where(e => 
                 UtilityScorers

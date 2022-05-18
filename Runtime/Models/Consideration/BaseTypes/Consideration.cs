@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 public abstract class Consideration : AiObjectModel
 {
     private readonly CompositeDisposable parameterDisposables = new CompositeDisposable();
-    public bool IsScorer { get; protected set; } = true;
+    public virtual bool IsScorer { get; protected set; } = true;
     public bool IsModifier { get; protected set; } = false;
-    public bool IsSetter { get; protected set; } = false;
+    public virtual bool IsSetter { get; protected set; } = false;
     // public List<Parameter> Parameters;
     private ResponseCurve currentResponseCurve;
     public ResponseCurve CurrentResponseCurve
@@ -122,9 +122,9 @@ public abstract class Consideration : AiObjectModel
         return PerformanceTag.Normal;
     }
 
-    protected abstract float CalculateBaseScore(AiContext context);
+    protected abstract float CalculateBaseScore(IAiContext context);
 
-    public virtual float CalculateScore(AiContext context)
+    public virtual float CalculateScore(IAiContext context)
     {
         BaseScore = CalculateBaseScore(context);
         if (BaseScore < Convert.ToSingle(MinFloat.Value))
@@ -163,7 +163,7 @@ public abstract class Consideration : AiObjectModel
             Description = state.Description;
 
             var minSates = await PersistenceAPI.Instance
-                .LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory + Consts.FolderName_MinParameter,
+                .LoadObjectsOfTypeAsync<ParameterState>(CurrentDirectory + Consts.FolderName_MinParameter,
                     typeof(Parameter));
             var minState = minSates.FirstOrDefault();
             
@@ -177,7 +177,7 @@ public abstract class Consideration : AiObjectModel
             }
 
             var maxStates = await PersistenceAPI.Instance
-                .LoadObjectsPathWithFilters<ParameterState>(CurrentDirectory + Consts.FolderName_MaxParameter,
+                .LoadObjectsOfTypeAsync<ParameterState>(CurrentDirectory + Consts.FolderName_MaxParameter,
                     typeof(Parameter));
             var maxState = maxStates.FirstOrDefault();
             

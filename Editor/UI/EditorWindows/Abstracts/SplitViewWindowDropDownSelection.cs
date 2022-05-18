@@ -32,7 +32,7 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
     public void CreateGUI()
     {
         root = rootVisualElement;
-        var treeAsset = AssetDatabaseService.GetVisualTreeAsset("SplitViewWindowDropDownSelection");
+        var treeAsset = AssetService.GetVisualTreeAsset("SplitViewWindowDropDownSelection");
         treeAsset.CloneTree(root);
 
         leftContainer = root.Q<VisualElement>("LeftContainer");
@@ -47,7 +47,7 @@ internal abstract class SplitViewWindowDropDownSelection<T> : EditorWindow
         rightContainer.Add(rightPanelComponent);
 
         agentTypesChangedSub = agentManager
-            .AgentTypesUpdated
+            .AgentIdentifiersUpdated
             .Subscribe(_ => InitDropDown());
 
         InitDropDown();

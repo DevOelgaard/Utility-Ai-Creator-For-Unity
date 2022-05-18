@@ -1,0 +1,45 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml
+title Dynamic Diagram - Select Next Action
+hide stereotype
+
+Component(aiTicker, "UAI Ticker", Singleton, Handles tick frequency)
+Component(iAgent, "IAgent", Interface, Added to agents in scene)
+Component(dse, "Decision Score Selector", Class, Selects the next actions. Can be customized through inheritance)
+'Component(ucsD, "Decision Selector", Utility Container Selector, Responsible for Utility Container selection rules. I.e. Select highest score or random between highest scores)
+
+Component(bucketSelector, "Bucket Selector", Utility Container Selector, Responsible for Utility Container selection rules. I.e. Select highest score or random between highest scores)
+Component(bucket, "Bucket", Utility Container, Can be customized through inheritance)
+
+Component(decisionSelector, "Decision Selector", Utility Container Selector, Responsible for Utility Container selection rules. I.e. Select highest score or random between highest scores)
+Component(decision, "Decision", Utility Container, Can be customized through inheritance)
+Component(agentAction, "Agent Action", Abstract, "Calls methods elsewhere ind the code. (Output to the game world)")
+
+Container_Ext(us, "Calculate Utility", Component, Flow is seen on Dynamic Diagram - Calculate Utility) 
+
+Rel_Right(aiTicker, iAgent, Tick())
+Rel_Down(iAgent,dse, "NextActions(List<Bucket>, AiContext)")
+
+'Select best bucket
+Rel_Left(dse,bucketSelector, "GetBestUtilityContainer(List<Bucket>, AiContext)")
+Rel_Down(bucketSelector,bucket, "For each bucket: GetUtility(AiContext)")
+Rel(bucket,us, "CalculateUtility(List<Consideration>, AiContext)")
+Rel_Left(us, bucket, "Return Utility")
+Rel_Up(bucket, bucketSelector, "Return Utility")
+
+Rel_Left(bucketSelector,dse, "Return SelectedBucket")
+
+'Select best decision
+Rel_Right(dse,decisionSelector,"GetBestUtilityContainer(List<Decision>, AiContext)")
+Rel_Down(decisionSelector,decision, "For each decision: GetUtility(AiContext)")
+Rel(decision,us, "CalculateUtility(List<Consideration>, AiContext)")
+Rel_Right(us, decision, "Return Utility")
+Rel_Up(decision,decisionSelector, "Return Utility")
+Rel_Left(decisionSelector,dse,"Return Seleceted Action")
+
+Rel_Left(dse,iAgent,"Return SelectedDecision.Actions")
+Rel_Right(iAgent,agentAction, "All old action: OnEnd(AiContext)")
+Rel_Right(iAgent,agentAction, "All re-selected action: OnGoing(AiContext)")
+Rel_Right(iAgent,agentAction, "All new action: OnStart(AiContext)")
+
+@enduml

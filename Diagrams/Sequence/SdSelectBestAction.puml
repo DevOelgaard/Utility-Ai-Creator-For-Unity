@@ -1,0 +1,44 @@
+﻿@startuml
+
+autonumber
+
+participant "Ai Ticker" as aiTicker
+participant "IAgent" as iAgent
+participant "Decision Score Evaluator" as DSE
+participant "IUtility Container Selector" as UCS
+participant "Utility Container" as UC
+participant "Utility Scorer" as US
+participant "Consideration" as consideration
+participant "Response Curve" as rC
+
+
+
+aiTicker --> iAgent: Tick()
+iAgent --> DSE: NextActions(List<Bucket>, AiContext, AiModel)
+DSE --> UCS: GetBestUtilityContainer(List<Bucket>, AiContext)
+loop ForEach(Buckets)
+    UCS --> UC: GetUtility(context)
+    UC --> US: CalculateUtility(List<Consideration>, AiContext)
+    loop ForEach(Considerations)
+        US --> consideration: CalculateScore(AiContext)
+        consideration --> consideration: CalculateBaseScore(AiContext)
+        consideration --> rC: CalculateResponse(
+'        NOT COmPLETE
+
+        end
+    end
+
+'UCS --> DSE: Best Bucket
+'
+'alt no bucket found
+'
+'UCS --> DSE: Best Bucket
+'
+'
+'else Bucket found 
+'UCS --> DSE: Best Bucket
+'UCS --> DSE: Best Bucket
+'end
+
+
+@enduml

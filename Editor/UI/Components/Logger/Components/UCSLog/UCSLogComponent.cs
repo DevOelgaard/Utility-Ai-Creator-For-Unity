@@ -9,7 +9,7 @@ internal class UCSLogComponent : LogComponent
 {
     private readonly Label titleLabel;
     private readonly Label nameLabel;
-    private readonly LogComponentPool<ParameterLogComponent> parameterPool;
+    private readonly LogComponentPool<ParameterLogViewModel> parameterPool;
     private UCSLog ucsLog;
     public UCSLogComponent(string title): base()
     {
@@ -20,7 +20,7 @@ internal class UCSLogComponent : LogComponent
         nameLabel = new Label();
         nameLabel.name = "Name-Label";
         Add(nameLabel);
-        parameterPool = new LogComponentPool<ParameterLogComponent>(this, false,"Parameters", 1);
+        parameterPool = new LogComponentPool<ParameterLogViewModel>(this, false,"Parameters", 1);
     }
 
     internal override string GetUiName()

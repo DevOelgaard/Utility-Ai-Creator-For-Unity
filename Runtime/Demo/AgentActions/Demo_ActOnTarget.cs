@@ -16,24 +16,24 @@ internal class Demo_ActOnTarget : AgentAction
         return new List<Parameter>();
     }
 
-    public override void OnStart(AiContext context)
+    public override void OnStart(IAiContext context)
     {
         Do(context);
     }
 
-    public override void OnGoing(AiContext context)
+    public override void OnGoing(IAiContext context)
     {
         Do(context);
     }
 
-    private void Do(AiContext context)
+    private void Do(IAiContext context)
     {
         var target = GetTarget(context);
         DebugService.Log("Target: " + target.name, this);
     }
 
 
-    private GameObject GetTarget(AiContext context)
+    private GameObject GetTarget(IAiContext context)
     {
         return context.GetContext<GameObject>(AiContextKey.CurrentTargetGameObject.ToString(), context.LastSelectedDecision);
     }

@@ -22,7 +22,7 @@ internal class LoggerComponent : RightPanelComponent<IAgent>
 
     public LoggerComponent()
     {
-        root = AssetDatabaseService.GetTemplateContainer(GetType().FullName);
+        root = AssetService.GetTemplateContainer(GetType().FullName);
         Add(root);
         root.styleSheets.Add(StylesService.GetStyleSheet("Logger"));
         var backLeapButton = root.Q<Button>("BackLeapButton");
@@ -43,7 +43,7 @@ internal class LoggerComponent : RightPanelComponent<IAgent>
         };
         body.Add(helpBox);
 
-        var agentLogComponent = new AgentLogComponent();
+        var agentLogComponent = new AgentLogViewModel();
         body.Add(agentLogComponent);
         agentLogComponent.style.display = DisplayStyle.None;
 
@@ -55,7 +55,7 @@ internal class LoggerComponent : RightPanelComponent<IAgent>
         tickAgent.RegisterCallback<MouseUpEvent>(_ =>
         {
             if (agent == null) return;
-            AiTicker.Instance.TickAgent(agent);
+            UaiTicker.Instance.TickAgent(agent);
         });
         footer.Add(tickAgent);
 

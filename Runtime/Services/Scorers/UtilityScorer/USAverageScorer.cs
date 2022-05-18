@@ -8,7 +8,7 @@ public class UsAverageScorer : IUtilityScorer
 {
     private readonly string name = Consts.Name_USAverageScore;
     private readonly string description = Consts.Description_USAverageScore;
-    public float CalculateUtility(List<Consideration> considerations, AiContext context)
+    public float CalculateUtility(List<Consideration> considerations, IAiContext context)
     {
         if (considerations.Count == 0)
             return 0;
@@ -30,13 +30,14 @@ public class UsAverageScorer : IUtilityScorer
                 sum += score;
             }
         }
-        if(amountOfScorers <= 0) // Only ConsiderationsBools have been calculated. If they failed they would have returned false
+        if(amountOfScorers <= 0) // Only Considerations are Bools or Modifiers have been calculated. If they failed they would have returned false
         {
             return 1;
         } else
         {
             return (sum / amountOfScorers);
         }
+
     }
 
     public string GetDescription() => description;

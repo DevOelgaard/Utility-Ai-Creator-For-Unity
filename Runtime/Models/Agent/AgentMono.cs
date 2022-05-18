@@ -11,22 +11,22 @@ public class AgentMono : MonoBehaviour, IAgent
 {
     [SerializeField]
     [InspectorName("Settings")]
-    private AgentModel settings = new AgentModel();
-    public AgentModel Model => settings;
+    private AgentModel model = new AgentModel();
+    public AgentModel Model => model;
     public string TypeIdentifier => GetType().FullName;
 
     [HideInInspector]
     public string defaultAiName = "";
 
     private DecisionScoreEvaluator decisionScoreEvaluator;
-    private Ai ai;
-    public Ai Ai
+    private Uai uai;
+    public Uai Uai
     {
-        get => ai;
+        get => uai;
         set
         {
-            ai = value;
-            ai.Context.Agent = this;
+            uai = value;
+            uai.UaiContext.Agent = this;
         }
     }
     
@@ -40,7 +40,7 @@ public class AgentMono : MonoBehaviour, IAgent
         decisionScoreEvaluator = new DecisionScoreEvaluator();
     }
 
-    public void SetAi(Ai model)
+    public void SetAi(Uai model)
     {
         if (model == null)
         {
@@ -48,7 +48,7 @@ public class AgentMono : MonoBehaviour, IAgent
             throw new NullReferenceException();
         }
         DebugService.Log("Setting Ai of agent: " + model.Name, this);
-        Ai = model;
+        Uai = model;
     }
 
     void OnDestroy()
@@ -68,31 +68,31 @@ public class AgentMono : MonoBehaviour, IAgent
 
     public void Tick(TickMetaData metaData)
     {
-        Ai.Context.TickMetaData = metaData;
+        Uai.UaiContext.TickMetaData = metaData;
         Model.LastTickMetaData = metaData;
         Model.LastTickTime = Time.time;
         Model.LastTickFrame = Time.frameCount;
 
-        var actions = decisionScoreEvaluator.NextActions(Ai.Buckets.Values, Ai.Context, Ai);
-        var oldActions = Ai.Context.LastActions;
+        var actions = decisionScoreEvaluator.NextActions(Uai.Buckets.Values, Uai);
+        var oldActions = Uai.UaiContext.LastActions;
         foreach(var action in actions)
         {
             if (oldActions.Contains(action))
             {
-                action.OnGoing(Ai.Context);
+                action.OnGoing(Uai.UaiContext);
                 oldActions.Remove(action);
             } else
             {
-                action.OnStart(Ai.Context);
+                action.OnStart(Uai.UaiContext);
             }
         }
 
         foreach(var action in oldActions)
         {
-            action.OnEnd(Ai.Context);
+            action.OnEnd(Uai.UaiContext);
         }
 
-        Ai.Context.LastActions = actions;
+        Uai.UaiContext.LastActions = actions;
     }
 
     public bool CanAutoTick()

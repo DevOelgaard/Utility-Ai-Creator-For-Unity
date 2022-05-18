@@ -1,0 +1,19 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+'LAYOUT_LANDSCAPE()
+
+title System Context Diagram for UAI Creator
+
+Person(gameDesigner, "Game Designer", "Designs and balances AI for the Unity Game Project")
+Person(developer, "Developer", "Implements and customizes code for the Unity Game Object")
+System(uaiCreator, "UAI Creator", "Allows users to quickly implement Utility Ais", Unity Package)
+System_Ext(unityGame, "Unity Game", "Game developed using Unity")
+System_Ext(unityEditor, "Unity Editor", "Editor available in any Unity Project")
+System_Ext(packageManager, "Unity Package Manager", "Allows for easy distribution via Git Hub")
+
+Rel_Down(gameDesigner, uaiCreator, "Uses")
+Rel_Down(developer, uaiCreator, "Customizes")
+Rel_Down(uaiCreator, packageManager, "Distributed on")
+Rel_Down(uaiCreator, unityGame, "Runs on")
+Rel_Up(unityEditor, uaiCreator, "Utilizes")
+@enduml

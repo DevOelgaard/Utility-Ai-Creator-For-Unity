@@ -1,0 +1,29 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml
+title Dynamic Diagram - Calculate Utility
+hide stereotype
+
+Component(consideration, "Consideration", Abstract, "Returns a normalized score based on the game world (Input from game world)")
+Component(us, "Utility Scorer", Abstract, Responsible for scoring rules. I.e. Average of considerations or highest consideration.)
+Component(rC, "Response Curve", Class, "Normalizes a score, based on its response functions")
+Component(rF, "Response Function", Abstract, "Returns the f(x). Functions can be added by user")
+Component_Ext(uc, "Utility Contianer", Abstract, A Bucket or Decision. Can be customized through inheritance)
+
+Rel_Down(uc, us, "CalculateUtility(List<Consideration>, AiContext)")
+
+'Calculate
+Rel_Right(us,consideration, "For each consideration: CalculateScore(AiContext)")
+Rel(consideration, consideration, "CalculateBaseScore(AiContext)")
+Rel(consideration,rC, "CalculateResponse(BaseScore)")
+Rel(rC,rC,"NormalizeScore(BaseScore)")
+Rel(rC,rF, "For each valid Response Function: CalculateResponse(NormalizedScore)")
+
+'Return
+Rel(rF,rC, "Return Response")
+Rel(rC,consideration, "Return Response")
+Rel(consideration, us, "Return Score")
+Rel(us,us, "CalculateUtility(Score)")
+
+Rel_Up(us,uc,"Return Utility")
+
+@enduml

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -11,9 +12,12 @@ internal class RandomValue : Consideration
     {
     }
 
-    protected override float CalculateBaseScore(AiContext context)
+    protected override float CalculateBaseScore(IAiContext context)
     {
-        return UnityEngine.Random.Range(Convert.ToSingle(MinFloat.Value), Convert.ToSingle(MaxFloat.Value));
+        TimerService.Instance.LogSequenceStart(Consts.Sequence_CalculateUtility_User,"Random Value");
+        var value = UnityEngine.Random.Range(Convert.ToSingle(MinFloat.Value), Convert.ToSingle(MaxFloat.Value));
+        TimerService.Instance.LogSequenceStop(Consts.Sequence_CalculateUtility_User,"Random Value");
+        return value;
     }
 
     protected override List<Parameter> GetParameters()

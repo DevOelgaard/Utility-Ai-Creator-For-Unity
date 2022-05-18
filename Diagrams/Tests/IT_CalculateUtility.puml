@@ -1,0 +1,30 @@
+﻿'@startuml
+'!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml
+'hide stereotype
+'
+'title Integration Test Calculate Utility
+'
+'    Component(consideration, Consideration, "", )
+'    Component(usAverage, UsAverage, "", )
+'    Component(uai, Uai, "", )
+'    Component(bucket, Bucket, "", )
+'    Component(decision, Decision, "", )
+'    Component(agentAction, AgentAction, "", )
+'    Component(rc, ResponseCurve, "", )
+'    
+'
+'    Rel(jsonPersister,persistenceApi,"")
+'    Rel(persistenceApi, agentAction,"")
+'    Rel(persistenceApi, rc,"")
+'    Rel(persistenceApi, consideration,"")
+'    Rel(persistenceApi, decision,"")
+'    Rel(persistenceApi, bucket,"")
+'    Rel(persistenceApi, uai,"")
+'    
+'    Lay_Left(rc, agentAction)
+'    Lay_Left(consideration, rc)
+'    Lay_Left(decision, consideration)
+'    Lay_Left(bucket, decision)
+''    Lay_Down(consideration,persistenceApi)
+'
+'@enduml

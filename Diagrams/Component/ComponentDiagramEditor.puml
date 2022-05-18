@@ -1,0 +1,43 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Component Diagram for UAI Creator - Editor
+
+
+
+Person(gameDesigner, "Game Designer", "Designs and balances AI for the Unity Game Project")
+Person(developer, "Developer", "Implements and customizes code for the Unity Game Object")
+System_Ext(unityEditor, "Unity Editor", "Editor available in any Unity Project")
+Container(runTime, "Runtime", "Assembly: C#, .NET", Provides decision making based on the provided UAIs)
+
+Boundary(editor, "Editor", "Assembly: C#, UXML, USS"){
+    Component(templateManagerView, "Template Manager", "View: UXML, USS, .NET", "Allows users to build and edit UAIs")
+    Component(runtimeInspectorView, "Runtime Inspector", "View: UXML, USS, .NET", "Allows users to inspect and edit active UAIs at runtime")
+    Component(loggerView, "Logger", "View: UXML, USS, .NET", "Logs UAI data to memory and displays it for the user")
+    Component(aiSettingsView, "UAI Settings", "View: UXML, USS, .NET", "Allows the user to alter settings for UAI Creator")
+    
+    
+    Component(templateManagerVM, "Template Manager", "View Model: C#, .NET", "Allows users to build and edit UAIs")
+    Component(runtimeInspectorVM, "Runtime Inspector", "View Model: C#, .NET", "Allows users to inspect and edit active UAIs at runtime")
+    Component(loggerVM, "Logger", "View Model: C#, .NET", "Logs UAI data to memory and displays it for the user")
+    Component(aiSettingsVM, "UAI Settings", "View Model: C#, .NET", "Allows the user to alter settings for UAI Creator")
+}
+
+Rel(templateManagerView, templateManagerVM, "Data binding")
+Rel(runtimeInspectorView, runtimeInspectorVM, "Data binding")
+Rel(loggerView, loggerVM, "Data binding")
+Rel(aiSettingsView, aiSettingsVM, "Data binding")
+
+Rel(templateManagerVM, runTime, "Creates UAIs for")
+Rel(runtimeInspectorVM, runTime, "Inspects and edits")
+Rel(loggerVM, runTime, "Monitors and logs data")
+Rel(aiSettingsVM, runTime, "Configures settings")
+Rel_Up(unityEditor, editor, "Utilizes")
+
+Rel(developer, aiSettingsView, "Customizes")
+Rel(developer, loggerView, "Inspects for debugging")
+Rel(gameDesigner, loggerView, "Inspects for UAI Balancing")
+Rel(gameDesigner, templateManagerView, "Designs UAIs")
+Rel(gameDesigner, runtimeInspectorView, "Inspects and edits")
+
+
+@enduml

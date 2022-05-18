@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public class ParameterContainer
 {
@@ -85,6 +86,10 @@ public class ParameterContainer
                 var p = param as ParameterEnum;
                 p.EnumType = s.EnumType;
                 p.Value = Enum.Parse(p.EnumType, s.CurrentEnumSelection);
+            } else if (parameterState.ValueType == typeof(Color))
+            {
+                param.Value = new Color(parameterState.RGBA[0], parameterState.RGBA[1], parameterState.RGBA[2],
+                    parameterState.RGBA[3]);
             }
             else
             {

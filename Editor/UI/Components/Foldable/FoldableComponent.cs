@@ -5,8 +5,8 @@ using UnityEngine.UIElements;
 
 public class FoldableComponent : VisualElement
 {
-    internal AiObjectComponent Expanded { get; private set; }
-    internal  MainWindowFoldedComponent Folded { get; private set; }
+    internal AiObjectViewModel Expanded { get; private set; }
+    internal  MainWindowFoldedViewModel Folded { get; private set; }
 
     public bool IsFolded;
     
@@ -15,7 +15,7 @@ public class FoldableComponent : VisualElement
 
     }
 
-    internal void UpdateUi(AiObjectComponent expanded, MainWindowFoldedComponent folded, bool startFolded = true)
+    internal void UpdateUi(AiObjectViewModel expanded, MainWindowFoldedViewModel folded, bool startFolded = true)
     {
         this.Expanded = expanded;
         this.Folded = folded;

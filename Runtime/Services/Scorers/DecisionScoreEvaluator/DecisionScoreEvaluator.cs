@@ -9,8 +9,6 @@ public class DecisionScoreEvaluator: IDecisionScoreEvaluator
 {
     private readonly string name = Consts.Name_DefaultDSE;
     private readonly string description = Consts.Description_DefaultDSE; 
-    public UtilityContainerSelector DecisionSelector;
-    public UtilityContainerSelector BucketSelector;
 
     public DecisionScoreEvaluator()
     {
@@ -26,59 +24,49 @@ public class DecisionScoreEvaluator: IDecisionScoreEvaluator
         return name;
     }
 
-    public List<AgentAction> NextActions(List<Decision> decisions, AiContext context, Ai ai)
+    public List<AgentAction> NextActions(List<Decision> decisions, Uai uai)
     {
         if (decisions.Count == 0)
         {
-            DebugService.LogWarning("List of buckets must be >0", this);
-            return null;
+            return new List<AgentAction>();
         } else 
         {
-            var bestDecision = ai.CurrentDecisionSelector.GetBestUtilityContainer(decisions, context);
+            var bestDecision = uai.CurrentDecisionSelector.GetBestUtilityContainer(decisions, uai.UaiContext);
             if (bestDecision == null || bestDecision.LastCalculatedUtility <= 0)
             {
                 //Debug.LogWarning("No valid decision. Add a \"fall back\" decision (Ie. Idle), which always scores >0");
                 return new List<AgentAction>();
                 //throw new Exception("No valid decision. Add a \"fall back\" decision (Ie. Idle), which always scores >0");
             }
-            context.LastSelectedDecision = bestDecision;
-            context.LastSelectedDecision.LastSelectedTickMetaData = context.TickMetaData;
-            bestDecision.MetaData.LastTickSelected = context.TickMetaData.TickCount;
+            uai.UaiContext.LastSelectedDecision = bestDecision;
+            uai.UaiContext.LastSelectedDecision.LastSelectedTickMetaData = uai.UaiContext.TickMetaData;
+            bestDecision.MetaData.LastTickSelected = uai.UaiContext.TickMetaData.TickCount;
             return bestDecision.AgentActions.Values;
         }
     }
 
-    public List<AgentAction> NextActions(List<Bucket> buckets, AiContext context,  Ai ai)
+    public List<AgentAction> NextActions(List<Bucket> buckets, Uai uai)
     {
         if (buckets.Count == 0)
         {
-            //Debug.LogWarning("No valid decision in list of buckets. Add a \"fall back\" bucket, which always scores >0");
-            return null;
+            return new List<AgentAction>();
         }
-        //else if (buckets.Count == 1)
-        //{
-        //    return NextActions(buckets[0].Decisions.Values, context);
-        //}
         else
         {
-            var bestBucket = ai.CurrentBucketSelector.GetBestUtilityContainer(buckets, context);
+            var bestBucket = uai.CurrentBucketSelector.GetBestUtilityContainer(buckets, uai.UaiContext);
             if (bestBucket == null)
             {
-                //Debug.LogWarning("No valid bucket. Add a \"fall back\" decision (Ie. Idle), which always scores >0");
                 return new List<AgentAction>();
-                //throw new Exception("No valid decision. Add a \"fall back\" decision (Ie. Idle), which always scores >0");
             }
-            var nextActions = NextActions(bestBucket.Decisions.Values, context, ai);
+            var nextActions = NextActions(bestBucket.Decisions.Values, uai);
             if (nextActions == null || nextActions.Count == 0)
             {
-                // No valid decision in most valid bucket
-                // Recursive selection to find valid decision in next most valid bucket
-                return NextActions(buckets.Where(bucket => bucket != bestBucket).ToList(), context, ai);
+                return NextActions(buckets.Where(bucket => bucket != bestBucket).ToList(), uai);
             }
             else
             {
-                context.LastSelectedBucket = bestBucket;
-                bestBucket.MetaData.LastTickSelected = context.TickMetaData.TickCount;
+                uai.UaiContext.LastSelectedBucket = bestBucket;
+                bestBucket.MetaData.LastTickSelected = uai.UaiContext.TickMetaData.TickCount;
                 return nextActions;
             }
         }

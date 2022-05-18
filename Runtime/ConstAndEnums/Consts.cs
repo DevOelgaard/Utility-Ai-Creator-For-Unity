@@ -9,7 +9,7 @@ public static class Consts
     public const int MaxPathLengthWindows = 260;
 
     // Paths
-    internal const string MenuName = "Utility Ai System/";
+    internal const string MenuName = "UAI Creator/";
     internal const string PathMainFolder = "Assets/UAS/bin/";
 
     internal const string ProjectSettingsPath =
@@ -103,7 +103,7 @@ public static class Consts
 
     // Editor Windows
     public const string Window_TemplateManager_Name = "Template Manager";
-    public const string Window_AiInspector_Name = "Runtime Inspector";
+    public const string Window_RuntimeInspector_Name = "Runtime Inspector";
     public const string Window_AiTickerManager_Name = "Settings";
     public const string Window_Logger_Name = "Logger";
     public const string Window_SelectProject_Name = "Select Project";
@@ -190,4 +190,8 @@ public static class Consts
     public const string FileName_TickerModeUnrestrictedFrameRate = "Unre";
     public const string FileName_TickerModeTimeBudgetFrameRate = "TiBu";
 
+    internal const string Sequence_CalculateUtility_UAI = "CalculateUtility_UAI";
+    internal const string Sequence_CalculateUtility_User = "CalculateUtility_User";
+    internal const string Sequence_Persistence_Load = "Load Project";
+    internal const string Sequence_Persistence_Save = "Save Project";
 }

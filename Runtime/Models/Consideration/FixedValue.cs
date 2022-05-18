@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 internal class FixedValue : Consideration
 {
-
-    public FixedValue(): base()
+    protected override float CalculateBaseScore(IAiContext context)
     {
-    }
-
-    protected override float CalculateBaseScore(AiContext context)
-    {
-        return Convert.ToSingle(GetParameter("Return value").Value);
+        TimerService.Instance.LogSequenceStart(Consts.Sequence_CalculateUtility_User,"CalculateBaseScore");
+        var value = Convert.ToSingle(GetParameter("Return value").Value);
+        TimerService.Instance.LogSequenceStop(Consts.Sequence_CalculateUtility_User,"CalculateBaseScore");
+        return value;
     }
 
     protected override List<Parameter> GetParameters()

@@ -1,0 +1,25 @@
+﻿@startuml
+'https://plantuml.com/state-diagram
+title State Diagram of Logger Component 
+state pausedChoice <<choice>>
+state runningChoice <<choice>>
+
+'scale 350 width
+[*] --> GameStopped
+GameStopped: Logs from last game session available
+
+GameStopped --> GameRunning : Play Pressed
+GameRunning: Logging AI data and displays it live
+GameRunning --> runningChoice
+
+runningChoice --> GamePaused: Pause Pressed
+GamePaused: Currently recorded logs available for inspection
+
+runningChoice --> GameStopped: Stop Pressed
+
+GamePaused --> pausedChoice
+pausedChoice --> GameRunning: Resume Pressed
+pausedChoice --> GameStopped: Stop Pressed
+
+}
+@enduml

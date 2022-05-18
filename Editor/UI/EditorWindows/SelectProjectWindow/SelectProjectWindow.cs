@@ -21,7 +21,7 @@ internal class SelectProjectWindow: EditorWindow
     {
         root = rootVisualElement;
 
-        var treeAsset = AssetDatabaseService.GetVisualTreeAsset(GetType().FullName);
+        var treeAsset = AssetService.GetVisualTreeAsset(GetType().FullName);
         treeAsset.CloneTree(root);
 
         CreateProjectButton = root.Q<Button>("CreateButton");

@@ -8,14 +8,14 @@ using UnityEngine;
 
 public abstract class TickerMode: RestoreAble
 {
-    internal AiTickerMode Name;
+    internal UaiTickerMode Name;
     internal string Description;
     public ParameterContainer ParameterContainer;
     public Dictionary<string, Parameter>.ValueCollection Parameters => 
         ParameterContainer.Parameters;
     
 
-    protected TickerMode(AiTickerMode name, string description)
+    protected TickerMode(UaiTickerMode name, string description)
     {
         Description = description;
         Name = name;
@@ -49,14 +49,15 @@ public abstract class TickerMode: RestoreAble
         } 
         else
         {
-            Name = Enum.Parse<AiTickerMode>(state.Name);
+            Name = Enum.Parse<UaiTickerMode>(state.Name);
             Description = state.Description;
-            var parameters =
-                await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-            foreach (var parameter in parameters)
-            {
-                ParameterContainer.AddParameter(parameter);
-            }
+            ParameterContainer.RestoreFromState(state.ParameterContainerState);
+            // var parameters =
+            //     await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
+            // foreach (var parameter in parameters)
+            // {
+            //     ParameterContainer.AddParameter(parameter);
+            // }
         }
     }
 
@@ -73,17 +74,19 @@ public class TickerModeState: RestoreState
 {
     public string Name;
     public string Description;
-    public List<string> Parameters;
+    // public List<string> Parameters;
+    public ParameterContainerState ParameterContainerState;
 
 
     public TickerModeState()
     {
     }
 
-    public TickerModeState(AiTickerMode name, string description, List<Parameter> parameters, TickerMode o) : base(o)
+    public TickerModeState(UaiTickerMode name, string description, List<Parameter> parameters, TickerMode o) : base(o)
     {
         Name = name.ToString();
         Description = description;
-        Parameters = RestoreAbleService.NamesToList(parameters);
+        // Parameters = RestoreAbleService.NamesToList(parameters);
+        ParameterContainerState = o.ParameterContainer.GetState();
     }
 }

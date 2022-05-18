@@ -14,7 +14,7 @@ internal class AgentLog: AiObjectLog
         if (agent == null) return null;
         var result = new AgentLog();
         result = SetBasics(result, agent, tick) as AgentLog;
-        result.Ai = AiLog.GetDebug(agent.Ai, tick);
+        result.Ai = AiLog.GetDebug(agent.Uai, tick);
         if(agent.Model.LastTickMetaData != null)
         {
             result.TickTime = agent.Model.LastTickMetaData.TickTime;

@@ -1,0 +1,59 @@
+﻿@startmindmap
+'https://plantuml.com/mindmap-diagram
+
+title UAI Rich Picture
+
+*[#purple] AI
+**[#lightblue] Melee [0.57]
+***[#lightgreen] Enemy close? [1]
+***[#lightgreen] My Health [0.5]
+***[#lightgreen] Enemy Health [0.2]
+***[#Orange] Sword slash [0.9]
+****[#lightgreen] Do I have a sword? [1]
+****[#lightgreen] Potential damage [0.8]
+****[#FFBBCC] Swing sword at enemy
+
+***[#Orange] ...
+'***[#Orange] Punch
+'****[#lightgreen] Am I unarmed?
+'****[#lightgreen] Potential damage
+'****[#FFBBCC] Punch enemy
+
+**[#lightblue] Range [1]
+***[#lightgreen] Enemy at distance? [1]
+***[#Orange] Bow [0]
+****[#lightgreen] Do I have a bow? [1]
+****[#lightgreen] Bow skill [0.3]
+****[#lightgreen] Ammo [0]
+****[#lightgreen] ...
+****[#FFBBCC] Fire
+
+***[#Orange] ...
+
+**[#lightblue] ...
+
+
+
+legend
+ Purple: AI
+ Blue: Bucket
+ Orange: Decision
+ Green: Consideration 
+ [X]: Score 
+endlegend
+
+
+'* <&flag>Debian
+'** <&globe>Ubuntu
+'*** Linux Mint
+'*** Kubuntu
+'*** Lubuntu
+'*** KDE Neon
+'** <&graph>LMDE
+'** <&pulse>SolydXK
+'** <&people>SteamOS
+'** <&star>Raspbian with a very long name
+'*** <s>Raspmbc</s> => OSMC
+'*** <s>Raspyfi</s> => Volumio
+
+@endmindmap

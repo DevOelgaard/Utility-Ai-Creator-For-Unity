@@ -14,7 +14,7 @@ internal class TickerModeUnrestricted : TickerMode
     private readonly Stopwatch sampleTimeSW = new Stopwatch();
     private readonly Stopwatch executionTimeSW = new Stopwatch();
     
-    public TickerModeUnrestricted() : base(AiTickerMode.Unrestricted, 
+    public TickerModeUnrestricted() : base(UaiTickerMode.Unrestricted, 
         Consts.Description_TickerModeUnrestricted)
     {
         
@@ -35,10 +35,20 @@ internal class TickerModeUnrestricted : TickerMode
         };
     }
 
+    private int startCounter = 5;
     internal override void Tick(List<IAgent> agents, TickMetaData metaData)
     {
+        if (startCounter <= 0)
+        {
+            TimerService.Instance.IsRecordingSequence = true;
+        }
+        else
+        {
+            startCounter--;
+        }
         if ((bool) ParameterContainer.GetParameter("Run").Value != true) return;
-        
+        TimerService.Instance.LogSequenceStart(Consts.Sequence_CalculateUtility_UAI,"TickAgent");
+
         if (!isStarted)
         {
             sampleTimeSW.Start();
@@ -59,5 +69,6 @@ internal class TickerModeUnrestricted : TickerMode
                 isLogged = true;
             }
         }
+        TimerService.Instance.LogSequenceStop(Consts.Sequence_CalculateUtility_UAI,"TickAgent",true,agents.Count);
     }
 }

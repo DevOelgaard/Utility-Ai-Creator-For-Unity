@@ -10,9 +10,24 @@ using UnityEngine;
 public abstract class AiObjectModel: RestoreAble, IInitializeAble
 {
     public Type BaseAiObjectType { get; protected set; }
-    public ContextAddress ca;
+
+    public ContextAddress ContextAddress
+    {
+        get
+        {
+            if (contextAddress == null)
+            {
+                Initialize();
+            }
+
+            return contextAddress;
+        }
+        private set => contextAddress = value;
+    }
+
+    private ContextAddress contextAddress;
     internal AiObjectMetaData MetaData = new AiObjectMetaData();
-    public readonly CompositeDisposable disposables = new CompositeDisposable();
+    protected readonly CompositeDisposable disposables = new CompositeDisposable();
     public string HelpText { get; protected set; }
     public IObservable<string> OnNameChanged => onNameChanged;
     private readonly Subject<string> onNameChanged = new Subject<string>();
@@ -38,13 +53,13 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
     public virtual void Initialize()
     {
         DebugService.Log("Initializing: " + this.Name, this);
-        ca = new ContextAddress(this);
+        ContextAddress = new ContextAddress(this);
         UpdateInfo();
     }
 
     protected virtual void UpdateInfo()
     {
-        SetParent(ca.Parent,ca.Index);
+        SetParent(ContextAddress.Parent,ContextAddress.Index);
     }
     protected override string GetFileName()
     {
@@ -56,7 +71,7 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
         ParameterContainer.AddParameter(param);
     }
 
-    protected Parameter GetParameter(string parameterName)
+    public Parameter GetParameter(string parameterName)
     {
         return ParameterContainer.GetParameter(parameterName);
     }
@@ -165,7 +180,7 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
 
     public virtual void SetParent(AiObjectModel parent, int indexInParent)
     {
-        ca.SetParentAndIndex(parent,indexInParent);
+        ContextAddress.SetParentAndIndex(parent,indexInParent);
     }
 
     protected virtual void ClearSubscriptions()

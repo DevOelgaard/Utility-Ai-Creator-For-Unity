@@ -1,0 +1,24 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+title Container Diagram for UAI Creator
+
+Person(gameDesigner, "Game Designer", "Designs and balances AI for the Unity Game Project")
+Person(developer, "Developer", "Implements and customizes code for the Unity Game Object")
+System_Ext(unityGame, "Unity Game", "Game developed using Unity")
+System_Ext(unityEditor, "Unity Editor", "Editor available in any Unity Project")
+System_Ext(packageManager, "Unity Package Manager", "Allows for easy distribution via Git Hub")
+
+Boundary(uaiCreator, "UAI Creator", "Unity Package"){
+    Container(runTime, "Runtime", "Assembly: C#, .NET", Provides decision making based on the provided UAIs)
+    Container(editor, "Editor", "Assembly: C#, UXML, USS, .NET", Holds the UAI creators UIs and provides logic for creating and managing UAIs)
+}
+
+Rel(developer, editor, "Customizes")
+Rel(gameDesigner, editor, "Designs and monitors UAIs using")
+Rel(runTime, unityGame, "Runs on")
+Rel_Right(editor,runTime, "Uses")
+Rel_Up(unityEditor, editor, "Utilizes")
+
+Rel(uaiCreator,packageManager, "Distributed on")
+
+@enduml

@@ -24,7 +24,7 @@ internal class TickerModeDesiredFrameRate : TickerMode
     private int debugTickCount = 0;
 
 
-    public TickerModeDesiredFrameRate() : base(AiTickerMode.DesiredFrameRate, Consts.Description_TickerModeDesiredFrameRate)
+    public TickerModeDesiredFrameRate() : base(UaiTickerMode.DesiredFrameRate, Consts.Description_TickerModeDesiredFrameRate)
     {
     }
 

@@ -15,14 +15,14 @@ public abstract class AgentScript : IAgent
     [SerializeField]
     protected string DefaultAiName => GetDefaultAiName();
 
-    private Ai ai;
-    public Ai Ai
+    private Uai uai;
+    public Uai Uai
     {
-        get => ai;
+        get => uai;
         set
         {
-            ai = value;
-            ai.Context.Agent = this;
+            uai = value;
+            uai.UaiContext.Agent = this;
         }
     }
 
@@ -65,9 +65,9 @@ public abstract class AgentScript : IAgent
         //}
     }
 
-    public void SetAi(Ai model)
+    public void SetAi(Uai model)
     {
-        Ai = model;
+        Uai = model;
     }
 
     public bool CanAutoTick()

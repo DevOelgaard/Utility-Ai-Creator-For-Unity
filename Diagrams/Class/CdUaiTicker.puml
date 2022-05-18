@@ -1,0 +1,37 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Simplified Class Diagram for UAI Ticker Settings
+
+Component(uaiTickerWindow, "UAI Ticker Settings", Editor Window, UI for controlling ticker settings)
+
+Component(uaiTicker, "UAI Ticker", "Singleton", Responsible for ticking agents)
+Component(uaiTickerSettingsModel, "UAI Ticker Settings", "Model", Model for storing ticker settings)
+Component(uaiTickerSettingsModelState, "UAI Ticker Settings State", "Class", Serializable version of UAI Ticker Settings)
+Component(tickerMode, "Ticker Mode", "Abstract", Controls when and how to tick)
+Component(tickerModeState, "Ticker Mode State", "Class", Serializable version of Ticker Mode)
+
+Component(restoreAble, "RestoreAble", "Abstract")
+Component(restoreState, "RestoreState", "Abstract")
+    
+    
+Rel_Down(uaiTickerWindow, uaiTicker, Binds data and controls)
+Rel_Down(uaiTicker,uaiTickerSettingsModel, Retrieves Settings)
+
+Rel_Down(uaiTickerSettingsModel,restoreAble, implements)
+Rel_Down(uaiTickerSettingsModel,uaiTickerSettingsModelState, Uses to save/load)
+
+Rel_Right(uaiTickerSettingsModel, tickerMode, "Uses")
+Rel_Down(tickerMode, restoreAble, implements)
+
+Rel_Down(tickerMode,tickerModeState, Uses to save/load)
+
+Rel_Down(tickerModeState, restoreState, implements)
+Rel_Down(uaiTickerSettingsModelState, restoreState, implements)
+Rel(restoreAble,restoreState, "Restores From")
+
+
+
+
+hide stereotype
+
+@enduml

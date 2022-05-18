@@ -13,15 +13,7 @@ internal class WindowOpener: EditorWindow
     public static Vector2 windowMinSize = new Vector2(1400f, 624f);
     private static EditorWindow _templateManager;
 
-    [MenuItem(Consts.MenuName + Consts.Window_AiInspector_Name)]
-    public static void OpenRuntimeInspector()
-    {
-        RunTimeInspector wnd = GetWindow<RunTimeInspector>();
-        wnd.titleContent = new GUIContent(Consts.Window_AiInspector_Name);
-        wnd.Show();
-        wnd.position = windowPosition;
-        SetWindowSizeAboveMin(wnd);
-    }
+
 
 
     [MenuItem(Consts.MenuName + Consts.Window_TemplateManager_Name)]
@@ -51,6 +43,16 @@ internal class WindowOpener: EditorWindow
         SetWindowSizeAboveMin(wnd);
         _templateManager = wnd;
         wnd.Show();
+    }
+    
+    [MenuItem(Consts.MenuName + Consts.Window_RuntimeInspector_Name)]
+    public static void OpenRuntimeInspector()
+    {
+        RunTimeInspector wnd = GetWindow<RunTimeInspector>();
+        wnd.titleContent = new GUIContent(Consts.Window_RuntimeInspector_Name);
+        wnd.Show();
+        wnd.position = windowPosition;
+        SetWindowSizeAboveMin(wnd);
     }
 
     [MenuItem(Consts.MenuName + Consts.Window_Logger_Name)]

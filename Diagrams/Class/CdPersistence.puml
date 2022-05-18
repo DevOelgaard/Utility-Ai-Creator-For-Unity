@@ -1,0 +1,23 @@
+﻿@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+title Simplified Class Diagram for Persistence
+    Component(persistenceAPI, "Persistence API", "Singleton", API for saving and loading data)
+    Component(iPersister, "IPersister", "Interface")
+    Component(jsonPersister, "JSON Persister", "Class", "Persists to disc using Json.NET - Newtonsoft")
+    Component(restoreAble, "RestoreAble", "Abstract")
+    Component(restoreState, "RestoreState", "Abstract")
+    Component(aiObjectModel, "Ai Object Model", "Abstract", Base class for all Ai Objects)
+    Component(aiObjectModelState, "Ai Object Model State", "Abstract", State of Ai Object Model. Used for persisting state)
+    
+    Rel_Up(jsonPersister,iPersister, "Implements")
+    Rel_Left(persistenceAPI,iPersister, "Uses")
+    Rel_Right(persistenceAPI,restoreState, "Saves or loads")
+    
+    Rel_Left(restoreAble,restoreState, "Restores From")
+    Rel_Up(aiObjectModelState,restoreState, "Implements")
+    Rel_Up(aiObjectModel,restoreAble, "Implements")
+    
+
+hide stereotype
+
+@enduml

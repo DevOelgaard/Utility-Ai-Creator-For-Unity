@@ -29,7 +29,7 @@ internal class LoggerGameRunning : LoggerState
         //RecordToggle.value = true;
         ToggleStateButton.text = "Pause";
         InfoLabelLeft.text = "Game Running";
-        AiTicker.Instance
+        UaiTicker.Instance
             .OnTickComplete
             .Subscribe(latestTick =>
             {
@@ -44,7 +44,7 @@ internal class LoggerGameRunning : LoggerState
             })
             .AddTo(disposables);
 
-        SetCurrentTick(AiTicker.Instance.TickCount);
+        SetCurrentTick(UaiTicker.Instance.TickCount);
     }
 
     internal override void OnExit()

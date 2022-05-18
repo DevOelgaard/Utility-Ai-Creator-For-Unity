@@ -7,10 +7,7 @@
         {
             name = restoreState.FileName[..4];
         }
-        else
-        {
-            // return restoreState.FileName;
-        }
+
 
         if (restoreState.Index >= 0)
         {

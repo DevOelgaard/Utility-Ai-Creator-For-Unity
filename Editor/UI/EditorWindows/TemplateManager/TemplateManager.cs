@@ -29,11 +29,11 @@ internal class TemplateManager : EditorWindow
     private DropdownField dropDown;
     private TemplateService templateService => TemplateService.Instance;
 
-    private AiObjectComponent  currentMainWindowComponent;
+    private AiObjectViewModel  currentMainWindowViewModel;
     private AiObjectModel selectedModel;
     private PersistenceAPI persistenceAPI => PersistenceAPI.Instance;
 
-    private readonly Dictionary<AiObjectModel, AiObjectComponent> componentsByModels = new Dictionary<AiObjectModel, AiObjectComponent>();
+    private readonly Dictionary<AiObjectModel, AiObjectViewModel> componentsByModels = new Dictionary<AiObjectModel, AiObjectViewModel>();
     private Toolbar toolbar;
     private long lastClearClick;
     private long clickConfirmationTimeMs = 200;
@@ -54,7 +54,7 @@ internal class TemplateManager : EditorWindow
         root = rootVisualElement;
         DontDestroyOnLoad(this);
 
-        var treeAsset = AssetDatabaseService.GetVisualTreeAsset(GetType().FullName);
+        var treeAsset = AssetService.GetVisualTreeAsset(GetType().FullName);
         treeAsset.CloneTree(root);
         toolbar = root.Q<Toolbar>();
 
@@ -249,6 +249,16 @@ internal class TemplateManager : EditorWindow
             PlayAbleAiService.UpdateAisFromTemplateService(true);
         });
         toolbar.Add(reloadPlayAbleAis);
+
+        var printSequence = new ToolbarButton()
+        {
+            text = "Timer Print Sequence"
+        };
+        printSequence.RegisterCallback<MouseUpEvent>(_ =>
+        {
+            TimerService.Instance.DebugLogSequence();
+        });
+        toolbar.Add(printSequence);
     }
 
     private async void SaveUas(DropdownMenuAction _)
@@ -293,16 +303,16 @@ internal class TemplateManager : EditorWindow
             text = "Debug"
         };
 
-        menu.menu.AppendAction("Timer Print", _ =>
+        menu.menu.AppendAction("Timer Print Time Log", _ =>
         {
             TimerService.Instance.DebugLogTime();
-            AiObjectFactory.Instance.DebugStuff();
         });
+        
+
 
         menu.menu.AppendAction("Timer Reset", _ =>
         {
             TimerService.Instance.Reset();
-            AiObjectFactory.Instance.Reset();
         });
         toolbar.Add(menu);
     }
@@ -332,7 +342,7 @@ internal class TemplateManager : EditorWindow
 
     private void AddNewAiObject(string aiObjectName)
     {
-        var aiObject = AssetDatabaseService.GetInstanceOfType<AiObjectModel>(aiObjectName);
+        var aiObject = AssetService.GetInstanceOfType<AiObjectModel>(aiObjectName);
         templateService.Add(aiObject);
         ModelSelected(aiObject);
     }
@@ -393,9 +403,9 @@ internal class TemplateManager : EditorWindow
         dropDown.value = dropDownChoices[0];
         dropDown.RegisterCallback<ChangeEvent<string>>(evt =>
         {
-            if(currentMainWindowComponent != null)
+            if(currentMainWindowViewModel != null)
             {
-                currentMainWindowComponent.style.display = DisplayStyle.None;
+                currentMainWindowViewModel.style.display = DisplayStyle.None;
             }
 
             UpdateLeftPanel(evt.newValue);
@@ -556,16 +566,16 @@ internal class TemplateManager : EditorWindow
 
         if (selectionCounter > 1)
         {
-            if (currentMainWindowComponent != null)
+            if (currentMainWindowViewModel != null)
             {
-                currentMainWindowComponent.style.display = DisplayStyle.None;
+                currentMainWindowViewModel.style.display = DisplayStyle.None;
             }
             if (componentsByModels.ContainsKey(model))
             {
                 DebugService.Log("Updating Existing MVC", this);
-                currentMainWindowComponent = componentsByModels[model];
-                currentMainWindowComponent.UpdateUi(model);
-                currentMainWindowComponent.style.display = DisplayStyle.Flex;
+                currentMainWindowViewModel = componentsByModels[model];
+                currentMainWindowViewModel.UpdateUi(model);
+                currentMainWindowViewModel.style.display = DisplayStyle.Flex;
             } else
             {
                 DebugService.Log("Updating new MVC", this);
@@ -584,8 +594,8 @@ internal class TemplateManager : EditorWindow
                 TimerService.Instance.LogCall(sw.ElapsedMilliseconds, "TMP rightPanel.Add");
                 sw.Restart();
 
-                currentMainWindowComponent = mvc;
-                currentMainWindowComponent.style.display = DisplayStyle.Flex;
+                currentMainWindowViewModel = mvc;
+                currentMainWindowViewModel.style.display = DisplayStyle.Flex;
             }
             selectionCounter = 0;
         }

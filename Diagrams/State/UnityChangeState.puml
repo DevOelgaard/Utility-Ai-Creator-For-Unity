@@ -1,0 +1,15 @@
+﻿@startuml
+'https://plantuml.com/activity-diagram-beta
+
+title Unity Change State (Simplified)
+
+start
+:Change State Command;
+:Serialize;
+:Destroy Objects;
+:Change State;
+:Instantiate Objects;
+:Deserialize;
+stop
+
+@enduml

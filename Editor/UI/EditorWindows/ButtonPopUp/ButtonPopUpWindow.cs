@@ -12,7 +12,7 @@ public class ButtonPopUpWindow: EditorWindow
         {
                 var root = rootVisualElement;
         
-                var treeAsset = AssetDatabaseService.GetVisualTreeAsset(GetType().FullName);
+                var treeAsset = AssetService.GetVisualTreeAsset(GetType().FullName);
                 treeAsset.CloneTree(root);
                 root.styleSheets.Add(StylesService.GetStyleSheet(GetType().FullName));
                 textLabel = root.Q<Label>("Text");

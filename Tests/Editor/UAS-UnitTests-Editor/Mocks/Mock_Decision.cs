@@ -4,20 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Mock_Decision: Decision
+namespace Mocks
 {
-    public float ReturnValue { get; private set; }
-
-    public Mock_Decision(float returnValue = 0f)
+    public class Mock_Decision : Decision
     {
-        ReturnValue = returnValue;
-        LastCalculatedUtility = returnValue;
-        var a = new Mock_AgentAction();
-        a.Name = returnValue.ToString();
-        AgentActions.Add(a);
-    }
+        public float ReturnValue { get; set; }
 
-    protected override float CalculateUtility(AiContext context) {
-        return ReturnValue;
+
+        public Mock_Decision(float returnValue = 0f)
+        {
+            ReturnValue = returnValue;
+            LastCalculatedUtility = returnValue;
+            // var a = new Mock_AgentAction();
+            // a.Name = returnValue.ToString();
+            // AgentActions.Add(a);
+
+            MetaData = new AiObjectMetaData();
+        }
+
+        protected override float CalculateUtility(IAiContext context)
+        {
+            return ReturnValue;
+        }
+
+        public void ForceUpdateInfo()
+        {
+            UpdateInfo();
+        }
     }
 }

@@ -76,21 +76,21 @@ internal abstract class LoggerState
         }
     }
 
-    private AgentLogComponent agentLogComponent;
-    protected AgentLogComponent AgentLogComponent
+    private AgentLogViewModel agentLogViewModel;
+    protected AgentLogViewModel AgentLogViewModel
     {
         get
         {
-            if (agentLogComponent == null)
+            if (agentLogViewModel == null)
             {
-                agentLogComponent = Root.Query<AgentLogComponent>().First();
+                agentLogViewModel = Root.Query<AgentLogViewModel>().First();
             }
-            return agentLogComponent;
+            return agentLogViewModel;
         }
     }
 
     public IAgent Agent { get; protected set; }
-    protected Ai PlayAi;
+    protected Uai playUai;
 
     protected int CurrentTick
     {
@@ -173,7 +173,7 @@ internal abstract class LoggerState
         }
         else
         {
-            AgentLogComponent.style.display = DisplayStyle.Flex;
+            AgentLogViewModel.style.display = DisplayStyle.Flex;
             TickSlider.lowValue = ValidTicks.First();
             TickSlider.highValue = ValidTicks.Last();
             var lastValidTick = ValidTicks.Last();
@@ -232,7 +232,7 @@ internal abstract class LoggerState
 
         if (agentLog == null)
         {
-            AgentLogComponent.Hide();
+            AgentLogViewModel.Hide();
             HelpBox.style.display = DisplayStyle.Flex;
         }
         else
@@ -240,13 +240,13 @@ internal abstract class LoggerState
             TickTimeLabel.text = "Tick Time: " + agentLog.TickTime.ToString("0.000");
 
             HelpBox.style.display = DisplayStyle.None;
-            AgentLogComponent.UpdateUi(agentLog);
+            AgentLogViewModel.UpdateUi(agentLog);
             if (ColorToggle.value)
             {
-                AgentLogComponent.SetColor();
+                AgentLogViewModel.SetColor();
             } else
             {
-                AgentLogComponent.ResetColor();
+                AgentLogViewModel.ResetColor();
             }
         }
     }

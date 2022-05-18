@@ -4,19 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Mock_Bucket: Bucket
+namespace Mocks
 {
-    public float ReturnValue { get; private set; }
-
-    public Mock_Bucket(float returnValue = 0f) 
+    public class Mock_Bucket : Bucket
     {
-        ReturnValue = returnValue;
-        LastCalculatedUtility = returnValue;
-    }
+        public float ReturnValue { get; private set; }
+
+        public Mock_Bucket(float returnValue = 0f)
+        {
+            ReturnValue = returnValue;
+            LastCalculatedUtility = returnValue;
+        }
 
 
-    protected override float CalculateUtility(AiContext context)
-    {
-        return ReturnValue;
+        protected override float CalculateUtility(IAiContext context)
+        {
+            return ReturnValue;
+        }
+
+        public void ForceUpdateInfo()
+        {
+            UpdateInfo();
+        }
     }
 }

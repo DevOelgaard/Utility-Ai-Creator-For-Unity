@@ -19,7 +19,7 @@ internal class ConsiderAllObjectsWithTag : Decision
         };
     }
 
-    protected override float CalculateUtility(AiContext context)
+    protected override float CalculateUtility(IAiContext context)
     {
         var targets = GameObject.FindGameObjectsWithTag((string)GetParameter("Tag").Value);
         GameObject selectedTarget = null;

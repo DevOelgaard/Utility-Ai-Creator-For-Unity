@@ -12,8 +12,7 @@ using Debug = UnityEngine.Debug;
 
 internal class PersistenceAPI
 {
-    public IPersister Persister { get; private set; }
-    // private readonly IPersister destructivePersister;
+    public IPersister Persister { get; set; }
 
     internal static PersistenceAPI Instance => _instance ??= new PersistenceAPI(new JsonPersister());
     private static PersistenceAPI _instance;
@@ -28,14 +27,14 @@ internal class PersistenceAPI
 
     internal async Task SaveObjectPanelAsync(RestoreAble o)
     {
-        var extension = FileExtensionService.GetExtension(o);
+        var extension = FileExtensionService.GetFileExtensionFromType(o.GetType());
         var path = EditorUtility.SaveFilePanel("Save object", "", "name", extension);
         if (string.IsNullOrEmpty(path))
         {
             return;
         }
 
-        await SaveObjectPathAsync(o, Path.GetDirectoryName(path));
+        await SaveObjectAsync(o, Path.GetDirectoryName(path));
     }
 
     internal async Task SaveObjectsPanelAsync(List<RestoreAble> restoreables)
@@ -43,7 +42,7 @@ internal class PersistenceAPI
         var path = EditorUtility.SaveFolderPanel("Save object", "folder", "default name");
         foreach (var r in restoreables)
         {
-            await SaveObjectPathAsync(r, path);
+            await SaveObjectAsync(r, path);
         }
     }
 
@@ -52,12 +51,12 @@ internal class PersistenceAPI
     internal async Task SaveObjectDestructivelyAsync(RestoreAble o, string path)
     {
         var startTime = DateTime.Now;
-        await SaveObjectPathAsync(o,path);
+        await SaveObjectAsync(o,path);
         DebugService.Log("Done saving destructively path: " + path, this);
         await CleanUpAsync(path, startTime);
     }
     
-    internal async Task SaveObjectPathAsync(RestoreAble o, string path)
+    internal async Task SaveObjectAsync(RestoreAble o, string path)
     {
         if (path.Length > Consts.MaxPathLengthWindows)
         {
@@ -85,7 +84,7 @@ internal class PersistenceAPI
 
     internal async Task<ObjectMetaData<T>> LoadObjectPanel<T>()
     {
-        var extension = FileExtensionService.GetExtension(typeof(T));
+        var extension = FileExtensionService.GetFileExtensionFromType(typeof(T));
         var path = EditorUtility.OpenFilePanel("Load object", "", extension);
         var o = await LoadObjectPathAsync<T>(path);
         return o;
@@ -119,25 +118,25 @@ internal class PersistenceAPI
         }
     }
 
-    internal async Task<List<ObjectMetaData<T>>> LoadObjectsPanel<T>(string startPath, string filter = "") where T : RestoreState
-    {
-        var path = EditorUtility.OpenFolderPanel("Load object", startPath, "default name");
-        var res = await LoadObjectsPathAsync<T>(path, "*"+filter);
-        return res;
-    }
+    // internal async Task<List<ObjectMetaData<T>>> LoadObjectsPanel<T>(string startPath, string filter = "") where T : RestoreState
+    // {
+    //     var path = EditorUtility.OpenFolderPanel("Load object", startPath, "default name");
+    //     var res = await LoadObjectsPathAsync<T>(path, "*"+filter);
+    //     return res;
+    // }
 
 
 
-    internal async Task<List<ObjectMetaData<T>>> LoadObjectsPathWithFilters<T>(string folderPath, Type t) where T : RestoreState
+    internal async Task<List<ObjectMetaData<T>>> LoadObjectsOfTypeAsync<T>(string folderPath, Type t) where T : RestoreState
     {
         var filter = FileExtensionService.GetFileExtensionFromType(t);
-        var res = await LoadObjectsPathAsync<T>(folderPath, filter);
+        var res = await LoadObjectsAsync<T>(folderPath, filter);
         return res;
     }
     
-    internal async Task<List<ObjectMetaData<T>>> LoadObjectsPathAsync<T>(string folderPath, string filter = "") where T: RestoreState
+    internal async Task<List<ObjectMetaData<T>>> LoadObjectsAsync<T>(string folderPath, string filter = "") where T: RestoreState
     {
-        var task = Persister.LoadObjects<T>(folderPath, "*"+filter);
+        var task = Persister.LoadObjectsAsync<T>(folderPath, "*"+filter);
         if (await Task.WhenAny(task, Task.Delay(Settings.TimeOutMs)) == task)
         {
             DebugService.Log("Loaded objects count: " + task.Result.Count + " path: " + folderPath, this);
@@ -150,45 +149,12 @@ internal class PersistenceAPI
         }
     }
 
-    internal async Task<List<ObjectMetaData<T>>> LoadObjectsPathWithFiltersAndSubDirectories<T>(string folderPath, Type t) where T : RestoreState
-    {
-        var filter = FileExtensionService.GetFileExtensionFromType(t);
-        var result = await LoadObjectsPathAsync<T>(folderPath, filter);
-        try
-        {
-            var subDirectories = Directory.GetDirectories(folderPath);
-            foreach (var subDirectory in subDirectories)
-            {
-                result = await  LoadObjectsPathAsync<T>(subDirectory, filter);
-            }
-
-        } catch (Exception ex)
-        {
-            if (ex.GetType() == typeof(DirectoryNotFoundException))
-            {
-                return result;
-            }
-            else
-            {
-                throw;
-            }
-        }
-
-        return result;
-    }
-
     internal async Task<ObjectMetaData<T>> LoadFilePanel<T>(string[] filters)
     {
         var path = EditorUtility.OpenFilePanelWithFilters("Load object", "", filters);
         var res = await LoadObjectPathAsync<T>(path);
         return res;
     }
-
-    // private async Task<ObjectMetaData<T>> LoadFilePathAsync<T>(string path)
-    // {
-    //     var res = await Persister.LoadObjectAsync<T>(path);
-    //     return res;
-    // }
 
     #endregion
 

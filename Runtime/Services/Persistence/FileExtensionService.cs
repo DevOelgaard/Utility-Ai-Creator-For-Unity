@@ -6,17 +6,11 @@ using System.Threading.Tasks;
 
 internal class FileExtensionService
 {
-    internal static string GetExtension(object o)
-    {
-        var type = o.GetType();
-        return GetFileExtension(type, o);
-    }
-
     internal static Type GetTypeFromFileName(string path)
     {
         if (path.Contains(Consts.FileExtension_UAI))
         {
-            return typeof(Ai);
+            return typeof(Uai);
         }
         else if (path.Contains(Consts.FileExtension_Bucket))
         {
@@ -48,7 +42,7 @@ internal class FileExtensionService
         }
         else if (path.Contains(Consts.FileExtension_TickerSettings))
         {
-            return typeof(AiTickerSettingsModel);
+            return typeof(UaiTickerSettingsModel);
         }
         else if (path.Contains(Consts.FileExtension_TickerModes))
         {
@@ -69,7 +63,7 @@ internal class FileExtensionService
     {
         if (path.Contains(Consts.FileExtension_UAI))
         {
-            return typeof(AiState);
+            return typeof(UaiState);
         }
         else if (path.Contains(Consts.FileExtension_Bucket))
         {
@@ -101,7 +95,7 @@ internal class FileExtensionService
         }
         else if (path.Contains(Consts.FileExtension_TickerSettings))
         {
-            return typeof(AiTickerSettingsState);
+            return typeof(UaiTickerSettingsModelState);
         }
         else if (path.Contains(Consts.FileExtension_TickerModes))
         {
@@ -109,64 +103,9 @@ internal class FileExtensionService
         }
         else if (path.Contains(Consts.FileExtension_UtilityContainerSelector))
         {
-            return typeof(UCSState);
+            return typeof(UtilityContainerSelectorState);
         }
-        // else if (path.Contains(Consts.FileExtension_RestoreAbleCollection))
-        // {
-        //     return typeof(RestoreAbleCollectionState);
-        // }
         else return null;
-    }
-
-
-    internal static string GetFileExtension(Type type, object o)
-    {
-        var start = "";
-        //var end = "";
-
-        // if (type.IsAssignableFrom(typeof(RestoreAbleCollection)))
-        // {
-        //     var cast = o as RestoreAbleCollection;
-        //     type = cast.Type;
-        //     //end = Consts.FileExtension_RestoreAbleCollection;
-        // }
-
-        if (type.IsAssignableFrom(typeof(AgentAction)))
-        {
-            start = Consts.FileExtension_AgentAction;
-        }
-
-        if (type.IsAssignableFrom(typeof(Consideration)))
-        {
-            start = Consts.FileExtension_Consideration;
-        }
-
-        if (type.IsAssignableFrom(typeof(Decision)))
-        {
-            start = Consts.FileExtension_Decision;
-        }
-
-        if (type.IsAssignableFrom(typeof(Bucket)))
-        {
-            start = Consts.FileExtension_Bucket;
-        }
-
-        if (type.IsAssignableFrom(typeof(Ai)))
-        {
-            start = Consts.FileExtension_UAI;
-        }
-
-        if (type.IsAssignableFrom(typeof(TemplateService)))
-        {
-            start = Consts.FileExtension_TemplateService;
-        }
-
-        if (type.IsAssignableFrom(typeof(AiTickerSettingsModel)))
-        {
-            start = Consts.FileExtension_TickerSettings;
-        }
-
-        return start;// +end;
     }
 
     internal static string GetFileExtensionFromType(Type type)
@@ -176,7 +115,7 @@ internal class FileExtensionService
             return Consts.FileExtension_TemplateService;
         }
 
-        if (type.IsAssignableFrom(typeof(Ai)))
+        if (type.IsAssignableFrom(typeof(Uai)))
         {
             return Consts.FileExtension_UAI;
         }
@@ -208,10 +147,6 @@ internal class FileExtensionService
         {
             return Consts.FileExtension_Parameter;
         }
-        if (type.IsAssignableFrom(typeof(AiTickerSettingsModel)))
-        {
-            return Consts.FileExtension_TickerSettings;
-        }
         if (type.IsAssignableFrom(typeof(TickerMode)))
         {
             return Consts.FileExtension_TickerModes;
@@ -220,29 +155,19 @@ internal class FileExtensionService
         {
             return Consts.FileExtension_UtilityContainerSelector;
         }
-        // if (type.IsAssignableFrom(typeof(RestoreAbleCollection)))
-        // {
-        //     return Consts.FileExtension_RestoreAbleCollection;
-        // }
-        // if (type.IsAssignableFrom(typeof(AiTickerState)))
-        // {
-        //     return Consts.FileExtension_AiTicker;
-        // }
         if (type.IsAssignableFrom(typeof(ProjectSettingsModel)))
         {
-            return Consts.FileExtension_TemplateService;
+            return Consts.FileExtension_ProjectSettings;
         }
-        if (type.IsAssignableFrom(typeof(AiTickerSettingsModel)))
+        if (type.IsAssignableFrom(typeof(UaiTickerSettingsModel)))
         {
             return Consts.FileExtension_TickerSettings;
         }
-
         if (type.IsAssignableFrom(typeof(UasTemplateServiceState)))
         {
             return Consts.FileExtension_TemplateService;
         }
-
-        if (type.IsAssignableFrom(typeof(AiState)))
+        if (type.IsAssignableFrom(typeof(UaiState)))
         {
             return Consts.FileExtension_UAI;
         }
@@ -274,7 +199,7 @@ internal class FileExtensionService
         {
             return Consts.FileExtension_Parameter;
         }
-        if (type.IsAssignableFrom(typeof(AiTickerSettingsState)))
+        if (type.IsAssignableFrom(typeof(UaiTickerSettingsModelState)))
         {
             return Consts.FileExtension_TickerSettings;
         }
@@ -282,25 +207,9 @@ internal class FileExtensionService
         {
             return Consts.FileExtension_TickerModes;
         }
-        if (type.IsAssignableFrom(typeof(UCSState)))
+        if (type.IsAssignableFrom(typeof(UtilityContainerSelectorState)))
         {
             return Consts.FileExtension_UtilityContainerSelector;
-        }
-        // if (type.IsAssignableFrom(typeof(RestoreAbleCollectionState)))
-        // {
-        //     return Consts.FileExtension_RestoreAbleCollection;
-        // }
-        // if (type.IsAssignableFrom(typeof(AiTickerState)))
-        // {
-        //     return Consts.FileExtension_AiTicker;
-        // }
-        if (type.IsAssignableFrom(typeof(ProjectSettingsModel)))
-        {
-            return Consts.FileExtension_TemplateService;
-        }
-        if (type.IsAssignableFrom(typeof(AiTickerSettingsState)))
-        {
-            return Consts.FileExtension_TickerSettings;
         }
 
         return "";

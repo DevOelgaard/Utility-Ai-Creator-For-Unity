@@ -1,0 +1,41 @@
+﻿@startuml
+'https://plantuml.com/state-diagram
+title Flowchart for Calculating Utility
+state "Select Highest Weighted Utility Container" as selectHighestWeight
+state "Evaluate Setter-Considerations" as setterConsiderations : Sorted by performance tag
+state "Evaluate Boolean-Considerations" as booleanConsiderations : Sorted by performance tag
+state "Evaluate Modifier-Considerations" as modifierConsiderations : Sorted by performance tag
+state "Evaluate Scorer-Considerations" as scorerConsiderations : Sorted by performance tag
+state "Calculate Utility" as calculateUtility : Utility = Sum(Scorers)*LastModifier.Score
+
+state choice1 <<choice>>
+state choiceSetter <<choice>>
+state choiceBoolean <<choice>>
+state choiceModifier <<choice>>
+state choiceScorer <<choice>>
+
+state join <<join>>
+
+choiceSetter --> join : Score == 0
+choiceBoolean --> join : Score == 0
+choiceModifier --> join : Score == 0
+choiceScorer --> join : Score == 0 or MPU < threshold
+
+join --> selectHighestWeight: Next UC
+
+[*] -down> selectHighestWeight
+selectHighestWeight -down> choice1
+choice1 --> [*] : UtilityContainers.Count == 0? return highest scoring decision
+choice1 --> setterConsiderations : else
+setterConsiderations --> choiceSetter
+choiceSetter --> booleanConsiderations
+booleanConsiderations --> choiceBoolean
+choiceBoolean --> modifierConsiderations
+modifierConsiderations --> choiceModifier
+choiceModifier --> scorerConsiderations
+scorerConsiderations --> choiceScorer
+choiceScorer --> calculateUtility
+calculateUtility --> join
+
+}
+@enduml

@@ -18,20 +18,20 @@ internal class Demo_DebugLogContextAddress : AgentAction
         };
     }
     
-    public override void OnStart(AiContext context)
+    public override void OnStart(IAiContext context)
     {
         Print(context);
     }
 
-    public override void OnGoing(AiContext context)
+    public override void OnGoing(IAiContext context)
     {
         Print(context);
     }
 
-    private void Print(AiContext context)
+    private void Print(IAiContext context)
     {
         
         //TODO make sure entire address is printed
-        DebugService.Log(ca.Address,this);
+        DebugService.Log(ContextAddress.Address,this);
     }
 }

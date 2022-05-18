@@ -12,7 +12,7 @@ public class PlayAbleAiService: RestoreAble
 {
     private static readonly CompositeDisposable Disposables = new CompositeDisposable();
     private static readonly CompositeDisposable AiDisposables = new CompositeDisposable();
-    private static List<Ai> _ais = new List<Ai>();
+    private static List<Uai> _ais = new List<Uai>();
 
     public static PlayAbleAiService Instance => _instance ??= new PlayAbleAiService();
     private static PlayAbleAiService _instance;
@@ -73,11 +73,11 @@ public class PlayAbleAiService: RestoreAble
         }
     }
 
-    public static IObservable<List<Ai>> OnAisChanged => onAisChanged;
+    public static IObservable<List<Uai>> OnAisChanged => onAisChanged;
     // ReSharper disable once InconsistentNaming
-    private static readonly Subject<List<Ai>> onAisChanged = new Subject<List<Ai>>();
+    private static readonly Subject<List<Uai>> onAisChanged = new Subject<List<Uai>>();
 
-    public Ai GetAiByName(string name)
+    public Uai GetAiByName(string name)
     {
         if (_ais.Count == 0)
         {
@@ -86,10 +86,10 @@ public class PlayAbleAiService: RestoreAble
         }
         var ai = _ais.FirstOrDefault(ai => ai.Name == name) ?? _ais.First();
         DebugService.Log("GetAiByName requested name: " + name +" returning: " + ai.Name,this);
-        return ai.Clone() as Ai;
+        return ai.Clone() as Uai;
     }
 
-    public static IEnumerable<Ai> GetAis()
+    public static IEnumerable<Uai> GetAis()
     {
         return _ais;
     }
@@ -114,10 +114,10 @@ public class PlayAbleAiService: RestoreAble
 
     internal static void UpdateAisFromTemplateService(bool saveAfterUpdate)
     {
-        _ais = new List<Ai>();
+        _ais = new List<Uai>();
         AiDisposables.Clear();
         foreach (var ai in TemplateService.Instance.AIs.Values
-                     .Cast<Ai>())
+                     .Cast<Uai>())
         {
             if (ai.IsPLayAble)
             {
@@ -146,7 +146,7 @@ public class PlayAbleAiService: RestoreAble
         DebugService.Log("RestoringInternal", this);
         // var state = (PlayAbleAiServiceState)s;
         // var directoryPath = Consts.FileUasPlayAblePath + Consts.FolderName_Ais;
-        _ais = await RestoreAbleService.GetAiObjectsSortedByIndex<Ai>(Consts.Folder_PlayAbleAi_Complete, restoreDebug);
+        _ais = await RestoreAbleService.GetAiObjectsSortedByIndex<Uai>(Consts.Folder_PlayAbleAi_Complete, restoreDebug);
 
         DebugService.Log("RestoringInternal Complete Ai count: " + _ais.Count, this);
     }
@@ -207,7 +207,7 @@ public class PlayAbleAiServiceState: RestoreState
     {
     }
 
-    public PlayAbleAiServiceState(IEnumerable<Ai> ais, PlayAbleAiService o): base(o)
+    public PlayAbleAiServiceState(IEnumerable<Uai> ais, PlayAbleAiService o): base(o)
     {
         // AiStates = new List<AiState>();
         // foreach (var state in ais.Select(ai => 

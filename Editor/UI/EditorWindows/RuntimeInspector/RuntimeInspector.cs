@@ -17,13 +17,11 @@ internal class RunTimeInspector : SplitViewWindowDropDownSelection<IAgent>
         debugMenu.menu.AppendAction("Timer", _ =>
         {
             TimerService.Instance.DebugLogTime();
-            AiObjectFactory.Instance.DebugStuff();
         });
 
         debugMenu.menu.AppendAction("Reset Timer", _ =>
         {
             TimerService.Instance.Reset();
-            AiObjectFactory.Instance.Reset();
         });
 
         ToolbarTop.Add(debugMenu);
@@ -42,6 +40,6 @@ internal class RunTimeInspector : SplitViewWindowDropDownSelection<IAgent>
 
     protected override RightPanelComponent<IAgent> GetRightPanelComponent()
     {
-        return new AgentComponent();
+        return new AgentViewModel();
     }
 }

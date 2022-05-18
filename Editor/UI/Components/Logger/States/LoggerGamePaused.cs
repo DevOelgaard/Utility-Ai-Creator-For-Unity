@@ -38,7 +38,7 @@ internal class LoggerGamePaused : LoggerState
     {
         if(key.keyCode == KeyCode.RightArrow && key.ctrlKey)
         {
-            SetCurrentTick(AiTicker.Instance.TickCount);
+            SetCurrentTick(UaiTicker.Instance.TickCount);
         }
         else if(key.keyCode == KeyCode.RightArrow)
         {
@@ -93,9 +93,9 @@ internal class LoggerGamePaused : LoggerState
 
     protected override void SetCurrentTick(int tick)
     {
-        if (tick > AiTicker.Instance.TickCount)
+        if (tick > UaiTicker.Instance.TickCount)
         {
-            AiTicker.Instance.TickUntilCount(tick,true);
+            UaiTicker.Instance.TickUntilCount(tick,true);
         }
         base.SetCurrentTick(tick);
     }

@@ -13,13 +13,13 @@ public class InverseLogisticFunction : ResponseFunction
     {
         return new List<Parameter>()
         {
-            new Parameter("Base", 2.8f),
+            new Parameter("Base", 4f),
         };
     }
 
     protected override float CalculateResponseInternal(float x)
     {
         var baseLn = Convert.ToSingle(GetParameter("Base").Value);
-        return (((float)Math.Log(x,baseLn) - (float)Math.Log(1-x,baseLn))/10) + 0.5f;
+        return ((float)Math.Log(x,baseLn) - (float)Math.Log(1-x,baseLn))/10 + 0.5f;
     }
 }

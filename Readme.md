@@ -3,24 +3,24 @@ Ui tool for Createing Utility Ai Systems for Unity -- Not production Ready
 UAI Creator – Guide
 
 Welcome
+
 This is the official guide for the Unity tool UAI Creator.
-Make sure to use the newest version of the guide, which can be found at: https://github.com/DevOelgaard/UnityUtilityAiSystem/tree/master
 
+-- Yes I know this page looks ugly and doesn't have any pictures. It will get there in time, so just be patient :)
 -- If you are one of those types, who likes a visual description you can use: [UAI Creator - Guide.pdf](https://github.com/DevOelgaard/UnityUtilityAiSystem/files/8715986/UAI.Creator.-.Guide.pdf)
-
---- Yes I know it should all be avaiable here, and it will be in time :)
-
 
 This tool is currently a prototype and by no means ready for production. You are free to use it as you see fit but be aware that it isn’t a priority to make the updates backwards compatible at this point.
 Feedback is much welcomed, you can reach me at: DevOelgaard@gmail.com.
 Thank you for trying the UAI Creator.
- 
+
+
 1	Quick Start
 This chapter helps you get started with a simple ‘hello world’ example.
 This guide was made for Unity version 2021.2.10f1 on Windows, if you are running a different version or system, the guide might not be 100% accurate.
 Unity version:
 Make sure your Unity version is >2021.2.10f1.
 Follow this Link to get the newest Unity version: https://unity3d.com/get-unity/update.
+
 1.1	Installation
 1.	Open Package Manager: Window -> Package Manager
  
@@ -33,8 +33,10 @@ c.	For help See: https://docs.unity3d.com/Manual/upm-git.html#Git-HTTPS
  
 4.	The package is now installed and ready for use.
  
- 
+
+
 1.2	Hello World
+
 1.2.1	Code
 1.	Create a new C# script anywhere in your assets folder and name it “PrintTxt.cs” and open it in your favorite IDE.
 2.	Place the following code inside the PrintTxt.cs file

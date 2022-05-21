@@ -49,18 +49,34 @@ internal class TemplateService: RestoreAble
     internal static TemplateService Instance => _instance ??= new TemplateService();
     private System.Guid id;
 
+    [InitializeOnLoadMethod]
+    private static void InitializeOnLoad()
+    {
+        DebugService.Log("Initializing on load",nameof(TemplateService));
+        
+        if (!EditorApplication.isPlayingOrWillChangePlaymode)
+        {
+            AsyncHelpers.RunSync(() => Instance.LoadCurrentProject());
+        }
+    }
+    
     private TemplateService()
     {
         Init(true);
         id = Guid.NewGuid();
         DebugService.Log("ID set: " + id, this);
-        // EditorApplication.playModeStateChanged += _instance.SaveFromStateChange;
+        EditorApplication.playModeStateChanged += HandlePlaymodeStateChange;
+
+    }
+
+    private void HandlePlaymodeStateChange(PlayModeStateChange obj)
+    {
+        AsyncHelpers.RunSync(() => Instance.LoadCurrentProject());
     }
 
     private void Init(bool restore)
     {
         DebugService.Log("Instantiating",this);
-
         
         AIs = new ReactiveListNameSafe<AiObjectModel>();
         Buckets = new ReactiveListNameSafe<AiObjectModel>();
@@ -409,6 +425,7 @@ internal class TemplateService: RestoreAble
     {
         DebugService.Log("Destroying",this);
         subscriptions.Clear();
+        EditorApplication.playModeStateChanged -= HandlePlaymodeStateChange;
         DebugService.Log("Destroying Complete",this);
     }
 }

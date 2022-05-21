@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class DebugService
 {
-        public static bool PrintDebug = true;
+        public static bool PrintDebug = false;
         public static void Log(string message, object sender, Thread thread = null)
         {
                 if(!PrintDebug) return;

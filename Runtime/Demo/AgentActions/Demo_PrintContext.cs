@@ -10,9 +10,7 @@ internal class Demo_PrintContext : AgentAction
 
     protected override List<Parameter> GetParameters()
     {
-        return new List<Parameter>()
-        {
-        };
+        return new List<Parameter>();
     }
 
     public override void OnStart(IAiContext context)

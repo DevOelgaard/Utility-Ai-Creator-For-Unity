@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class DecisionScoreEvaluator: IDecisionScoreEvaluator
 {
-    private readonly string name = Consts.Name_DefaultDSE;
-    private readonly string description = Consts.Description_DefaultDSE; 
+    private const string Name = Consts.Name_DefaultDSE;
+    private const string Description = Consts.Description_DefaultDSE;
 
     public DecisionScoreEvaluator()
     {
@@ -16,12 +16,12 @@ public class DecisionScoreEvaluator: IDecisionScoreEvaluator
 
     public string GetDescription()
     {
-        return description;
+        return Description;
     }
 
     public string GetName()
     {
-        return name;
+        return Name;
     }
 
     public List<AgentAction> NextActions(List<Decision> decisions, Uai uai)

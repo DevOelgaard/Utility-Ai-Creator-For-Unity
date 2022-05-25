@@ -138,12 +138,8 @@ public class Uai: AiObjectModel
     {
         get
         {
-            if (utilityScorer == null)
-            {
-                utilityScorer = AssetService.GetInstancesOfType<IUtilityScorer>()
-                    .FirstOrDefault(e => e.GetName() == Consts.Default_UtilityScorer);
-            }
-            return utilityScorer;
+            return utilityScorer ??= AssetService.GetInstancesOfType<IUtilityScorer>()
+                .FirstOrDefault(e => e.GetName() == Consts.Default_UtilityScorer);
         }
         set
         {

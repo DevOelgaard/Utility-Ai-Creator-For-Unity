@@ -1,17 +1,18 @@
 {
   "name": "net.devoe.ai.uas",
   "version": "1.9.1",
-  "displayName": "Utility Ai System",
-  "description": "An editor tool for creating complex Utility Ais with a minimum of coding.",
+  "displayName": "Utility Ai Creator",
+  "description": "An editor tool for quickly creating complex Utility Ais with a minimum of coding.",
   "unity": "2021.2",
   "author": {
     "name": "Henrik Thue \u00d8lgaard",
     "email": "developeroelgaard@gmail.com"
   },
   "keywords": [
-    "ai",
-    "utility ai",
-    "editor tool"
+    "Ai",
+    "Utility Ai",
+    "Editor Tool",
+	"UI Tool"
   ],
   "type": "tool",
   "dependencies": {

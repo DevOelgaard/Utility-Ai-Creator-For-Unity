@@ -1,5 +1,0 @@
-var class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision_bucket_ucs_highest =
-[
-    [ "GetBestUtilityContainer_BucketOneScoreHigher_ReturnsHighestScore", "class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision_bucket_ucs_highest.html#a10268ab451971b621f9859a3fbecfc73", null ],
-    [ "SetUp", "class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision_bucket_ucs_highest.html#a2cac95fea412bead8948c5c603e33c5d", null ]
-];

@@ -1,8 +1,0 @@
-digraph "Graphical Class Hierarchy"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node0 [label="IntegrationTests.Persistence.\lIT_03JsonPersisterPersistenceApi\lConsideration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_integration_tests_1_1_persistence_1_1_i_t__03_json_persister_persistence_api_consideration.html",tooltip=" "];
-}

@@ -34,11 +34,4 @@ internal class ConsiderationNearestTarget : Consideration
         var distance = Vector3.Distance(agent.transform.position, target.transform.position);
         return Convert.ToSingle(MaxFloat.Value) - distance;
     }
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
-    }
-
-
 }

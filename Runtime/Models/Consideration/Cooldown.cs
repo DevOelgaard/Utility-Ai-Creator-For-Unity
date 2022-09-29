@@ -12,11 +12,13 @@ internal class Cooldown : Consideration
     private readonly IDisposable paramaterDisposable;
     public Cooldown(): base()
     {
-        cooldownTime = Convert.ToSingle(GetParameter("Cooldown Time MS").Value) / 1000f;
-        paramaterDisposable = GetParameter("Cooldown Time MS")
+        ParameterContainer.AddParameter("Cooldown Time MS", 1000f);
+        var cooldownTimeParam = ParameterContainer.GetParamFloat("Cooldown Time MS");
+        cooldownTime = cooldownTimeParam.Value / 1000f;
+        paramaterDisposable = cooldownTimeParam
             .OnValueChange
             .Subscribe(_ => 
-                cooldownTime = Convert.ToSingle(GetParameter("Cooldown Time MS").Value) / 1000f);
+                cooldownTime = cooldownTimeParam.Value / 1000f);
     }
 
     protected override float CalculateBaseScore(IAiContext context)
@@ -28,14 +30,6 @@ internal class Cooldown : Consideration
         {
             return 1;
         }
-    }
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-            new Parameter("Cooldown Time MS", 1000f),
-        };
     }
 
     ~Cooldown()

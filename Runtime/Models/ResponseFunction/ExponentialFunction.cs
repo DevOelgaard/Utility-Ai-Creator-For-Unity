@@ -5,18 +5,13 @@ using UnityEngine;
 
 public class ExponentialFunction : ResponseFunction
 {
-    public ExponentialFunction() : base(TypeToName.RF_Exponential) {
-    }
-
-    protected override List<Parameter> GetParameters()
+    public ExponentialFunction() : base(TypeToName.RF_Exponential) 
     {
-        return new List<Parameter> {
-            new Parameter("Power",2f),
-            };
+        ParameterContainer.AddParameter("Power",2f);
     }
 
     protected override float CalculateResponseInternal(float x)
     {
-        return Mathf.Pow(x, Convert.ToSingle(GetParameter("Power").Value));
+        return Mathf.Pow(x,   ParameterContainer.GetParamFloat("Power").Value);
     }
 }

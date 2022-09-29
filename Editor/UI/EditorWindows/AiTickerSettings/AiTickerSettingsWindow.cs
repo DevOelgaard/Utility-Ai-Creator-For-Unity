@@ -100,7 +100,7 @@ internal class AiTickerSettingsWindow: EditorWindow
         description.text = "";
         if (tickerMode == null) return;
 
-        tickerMode.Parameters
+        tickerMode.ParameterContainer.Parameters
             .ToList()
             .ForEach(p =>
             {

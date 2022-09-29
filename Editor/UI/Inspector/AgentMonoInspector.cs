@@ -8,69 +8,66 @@ using UnityEngine.UIElements;
 using UniRx;
 using MoreLinq;
 using UnityEditor.UIElements;
+using UnityEngine;
 
-[CustomEditor(typeof(AgentMono)), CanEditMultipleObjects]
+[CustomEditor(typeof(AgentMono), true), CanEditMultipleObjects]
 internal class AgentMonoInspector: Editor
 {
     private readonly CompositeDisposable disposables = new CompositeDisposable();
-    private DropdownField aiField;
+    private DropdownField defaultAiField;
+    private DropdownField currentAiField;
     private VisualElement root;
     //private AgentMono agent;
     private List<AgentMono> agents;
 
     public override VisualElement CreateInspectorGUI()
     {
+        Debug.Log("Creating inspector");
         root = new VisualElement();
-
         var defaultInspector = new IMGUIContainer();
         defaultInspector.onGUIHandler = () => DrawDefaultInspector();
         root.Add(defaultInspector);
 
-        aiField = new DropdownField("Default Ai");
-        root.Add(aiField);
-
-        //agent = (AgentMono)target;
         agents = targets.Cast<AgentMono>().ToList();
-        //serializedObject.Update();
-
-        // SetAiFieldChoices(TemplateService.Instance.AIs.Values);
-        // TemplateService.Instance.AIs
-        //     .OnValueChanged
-        //     .Subscribe(values => SetAiFieldChoices(values))
-        //     .AddTo(disposables);
+        var agent = agents.FirstOrDefault();
         
-        SetAiFieldChoices(PlayAbleAiService.Instance.PlayAbleAIs);
-        PlayAbleAiService.Instance.OnAisChanged
-            .Subscribe(values => SetAiFieldChoices(values))
-            .AddTo(disposables);
-
-        // TemplateService.Instance.AIs.Values
-        //     .ForEach(ai =>
-        //     {
-        //         var aiCast = ai as Uai;
-        //         aiCast?.OnIsPlayableChanged
-        //             .Subscribe(isPlayable =>
-        //             {
-        //                 if (isPlayable)
-        //                 {
-        //                     aiField.choices.Add(ai.Name);
-        //                 }
-        //                 else
-        //                 {
-        //                     aiField.choices.Remove(ai.Name);
-        //                 }
-        //             })
-        //             .AddTo(disposables);
-        //     });
-
-        aiField.RegisterCallback<ChangeEvent<string>>(evt =>
+        if (EditorApplication.isPlaying)
         {
-            foreach(var agent in agents)
+            currentAiField = new DropdownField("Current Ai");
+            root.Add(currentAiField);
+            SetAiFieldChoices(PlayAbleAiService.Instance.PlayAbleAIs, currentAiField, agent.defaultAiName);
+            PlayAbleAiService.Instance.OnAisChanged
+                .Subscribe(values => SetAiFieldChoices(values, currentAiField, agent.Uai.Name))
+                .AddTo(disposables);
+            
+            currentAiField.RegisterCallback<ChangeEvent<string>>(evt =>
             {
-                agent.defaultAiName = evt.newValue;
-                EditorUtility.SetDirty(agent);
-            }
-        });
+                foreach(var agent in agents)
+                {
+                    var ai = PlayAbleAiService.Instance.GetAiByName(evt.newValue);
+                    agent.SetAi(ai);
+                    EditorUtility.SetDirty(agent);
+                }
+            });
+        }
+        else
+        {
+            defaultAiField = new DropdownField("Default Ai");
+            root.Add(defaultAiField);
+            SetAiFieldChoices(PlayAbleAiService.Instance.PlayAbleAIs, defaultAiField, agent?.defaultAiName);
+            PlayAbleAiService.Instance.OnAisChanged
+                .Subscribe(values => SetAiFieldChoices(values, defaultAiField, agent?.defaultAiName))
+                .AddTo(disposables);
+
+            defaultAiField.RegisterCallback<ChangeEvent<string>>(evt =>
+            {
+                foreach(var agent in agents)
+                {
+                    agent.defaultAiName = evt.newValue;
+                    EditorUtility.SetDirty(agent);
+                }
+            });
+        }
 
         return root;
     }
@@ -80,27 +77,22 @@ internal class AgentMonoInspector: Editor
         disposables.Clear();
     }
 
-    private void SetAiFieldChoices(List<Uai> ais)
+    private void SetAiFieldChoices(List<Uai> ais, DropdownField field, string currentValue)
     {
-        aiField.choices.Clear();
-        // var playableAis = ais
-        //     .Cast<Uai>()
-        //     .Where(ai => ai.IsPLayAble);
-
-        // var playAbleAis = ais.ToList();
+        field.choices.Clear();
         foreach (Uai ai in ais)
         {
-            aiField.choices.Add(ai.Name);
+            field.choices.Add(ai.Name);
         }
 
         var agent = agents.FirstOrDefault();
 
-        var currentAiName = ais.FirstOrDefault(c => agent != null && c.Name == agent.defaultAiName)?.Name;
+        var currentAiName = ais.FirstOrDefault(c => agent != null && c.Name == currentValue)?.Name;
         if (string.IsNullOrEmpty(currentAiName))
         {
             currentAiName = ais.FirstOrDefault()?.Name;
         }
-        aiField.SetValueWithoutNotify(currentAiName);
+        field.SetValueWithoutNotify(currentAiName);
     }
 
     private void OnDestroy()

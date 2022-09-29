@@ -65,9 +65,9 @@ public abstract class AgentScript : IAgent
         //}
     }
 
-    public void SetAi(Uai model)
+    public void SetAi(Uai newUai)
     {
-        Uai = model;
+        Uai = newUai;
     }
 
     public bool CanAutoTick()

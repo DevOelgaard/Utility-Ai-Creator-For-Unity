@@ -6,18 +6,12 @@ using System.Threading.Tasks;
 
 public abstract class AgentAction: AiObjectModel
 {
-    // public List<Parameter> Parameters;
-    //private string namePostfix;
-
     protected AgentAction()
     {
         BaseAiObjectType = typeof(AgentAction);
     }
 
-    public override string GetTypeDescription()
-    {
-        return "Agent Action";
-    }
+
     protected override AiObjectModel InternalClone()
     {
         var clone = (AgentAction)AiObjectFactory.CreateInstance(GetType());
@@ -32,42 +26,68 @@ public abstract class AgentAction: AiObjectModel
     {
         return currentName;
     }
-
-    internal override RestoreState GetState()
+    
+    public override SingleFileState GetSingleFileState()
     {
-        return new AgentActionState(Parameters.ToList(), Name, Description, this);
+        return new AgentActionSingleFileState(this);
     }
 
-    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreInternalFromFile(SingleFileState sate)
     {
-        await base.RestoreInternalAsync(s, restoreDebug);
-        var state = (AgentActionState)s;
-        Name = state.Name;
-        Description = state.Description;
+        
     }
 
-    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
-    {
-        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_AgentAction);
-    }
+    // public override string GetTypeDescription()
+    // {
+    //     return "Agent Action";
+    // }
+    // internal override RestoreState GetState()
+    // {
+    //     return new AgentActionState(Parameters.ToList(), Name, Description, this);
+    // }
+    //
+    // protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
+    // {
+    //     await base.RestoreInternalAsync(s, restoreDebug);
+    //     var state = (AgentActionState)s;
+    //     Name = state.Name;
+    //     Description = state.Description;
+    // }
+    //
+    // protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    // {
+    //     await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_AgentAction);
+    // }
 }
 
 [Serializable]
-public class AgentActionState: AiObjectState
+public class AgentActionSingleFileState : AiObjectModelSingleFileState
 {
-    public string Name;
-    public string Description;
-    public List<string> Parameters;
-
-    public AgentActionState(): base()
+    public AgentActionSingleFileState()
     {
     }
 
-    public AgentActionState(List<Parameter> parameters, string name, string description, AgentAction action): base(action)
+    public AgentActionSingleFileState(AiObjectModel o) : base(o)
     {
-        Name = name;
-        Description = description;
-        Parameters = RestoreAbleService.NamesToList(parameters);
-
     }
 }
+
+// [Serializable]
+// public class AgentActionState: AiObjectState
+// {
+//     public string Name;
+//     public string Description;
+//     public List<string> Parameters;
+//
+//     public AgentActionState(): base()
+//     {
+//     }
+//
+//     public AgentActionState(List<Parameter> parameters, string name, string description, AgentAction action): base(action)
+//     {
+//         Name = name;
+//         Description = description;
+//         Parameters = RestoreAbleService.NamesToList(parameters);
+//
+//     }
+// }

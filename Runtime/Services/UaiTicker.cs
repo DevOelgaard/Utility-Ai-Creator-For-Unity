@@ -6,7 +6,7 @@ using UniRx;
 using UnityEditor;
 using Debug = UnityEngine.Debug;
 
-internal class UaiTicker//: RestoreAble
+internal class UaiTicker
 {
     private readonly CompositeDisposable disposables = new CompositeDisposable();
     private IDisposable tickUntilTargetTickSub;
@@ -62,11 +62,11 @@ internal class UaiTicker//: RestoreAble
     private async Task Init()
     {
         var loadedSettings = await persistenceAPI
-            .LoadObjectPathAsync<UaiTickerSettingsModelState>(Consts.FilePath_TickerSettingsWithExtention);
+            .LoadObjectPathAsync<UaiTickerSettingsModelSingleFileState>(Consts.FilePath_TickerSettingsWithExtention);
         
         if (loadedSettings.LoadedObject != null)
         {
-            Settings = await RestoreAble.Restore<UaiTickerSettingsModel>(loadedSettings.LoadedObject);
+            Settings = await PersistSingleFile.Restore<UaiTickerSettingsModel>(loadedSettings.LoadedObject);
         } else
         {
             DebugService.LogWarning("Failed to load AiTicker settings Error: " + loadedSettings.ErrorMessage + " Exception: " + loadedSettings.Exception, this);
@@ -74,19 +74,19 @@ internal class UaiTicker//: RestoreAble
         }
     }
     
-    internal void Start()
+    public void Start()
     {
         Observable.IntervalFrame(1)
             .Subscribe(_ => TickAis())
             .AddTo(disposables);
     }
 
-    internal void Stop()
+    public void Stop()
     {
         disposables.Clear();
     }
 
-    internal void TickAgent(IAgent agent)
+    public void TickAgent(IAgent agent)
     {
         if (!EditorApplication.isPlaying) return;
         if (EditorApplication.isPaused) return;
@@ -99,7 +99,7 @@ internal class UaiTicker//: RestoreAble
         onTickComplete.OnNext(TickCount);
     }
 
-    internal void TickUntilCount(int targetTickCount, bool pauseOnComplete)
+    public void TickUntilCount(int targetTickCount, bool pauseOnComplete)
     {
         tickUntilTargetTickSub = OnTickComplete
             .Subscribe(completedTickCount =>
@@ -118,7 +118,7 @@ internal class UaiTicker//: RestoreAble
     }
 
     
-    internal void TickAis()
+    public void TickAis()
     {
         if (!EditorApplication.isPlaying) return;
         if (EditorApplication.isPaused) return;
@@ -160,32 +160,17 @@ internal class UaiTicker//: RestoreAble
     private async Task SaveSettings()
     {
         DebugService.Log("Saving",this);
-        await Settings.SaveToFile(Consts.FilePath_TickerSettingsWithExtention, persistenceAPI.Persister);
+        await Settings.SaveToFile(Consts.FilePath_TickerSettingsWithExtention);
         DebugService.Log("Saving Complete",this);
     }
     
     ~UaiTicker()
     {
         DebugService.Log("Destroying",this);
-        // AsyncHelpers.RunSync(Save);
         disposables.Clear();
         EditorApplication.playModeStateChanged -= HandlePLayModeStateChange;
         DebugService.Log("Destroying Complete",this);
 
     }
 }
-//
-// [Serializable]
-// public class AiTickerState: RestoreState
-// {
-//     public AiTickerSettingsState settings;
-//
-//     public AiTickerState()
-//     {
-//     }
-//
-//     internal AiTickerState(AiTickerSettingsModel settings, AiTicker o) : base(o)
-//     {
-//         this.settings = settings.GetState() as AiTickerSettingsState;
-//     }
-// }
+

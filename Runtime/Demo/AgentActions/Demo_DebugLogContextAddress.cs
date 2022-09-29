@@ -10,13 +10,6 @@ internal class Demo_DebugLogContextAddress : AgentAction
     public Demo_DebugLogContextAddress() : base()
     {
     }
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-        };
-    }
     
     public override void OnStart(IAiContext context)
     {

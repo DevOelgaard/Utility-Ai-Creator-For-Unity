@@ -59,35 +59,35 @@ internal class FileExtensionService
         else return null;
     }
 
-    internal static Type GetStateFromFileName(string path)
+    internal static Type GetStateTypeFromFileName(string path)
     {
         if (path.Contains(Consts.FileExtension_UAI))
         {
-            return typeof(UaiState);
+            return typeof(UaiSingleFileState);
         }
         else if (path.Contains(Consts.FileExtension_Bucket))
         {
-            return typeof(BucketState);
+            return typeof(BucketSingleFileState);
         }
         else if (path.Contains(Consts.FileExtension_Decision))
         {
-            return typeof(DecisionState);
+            return typeof(DecisionSingleFileState);
         }
         else if (path.Contains(Consts.FileExtension_Consideration))
         {
-            return typeof(ConsiderationState);
+            return typeof(ConsiderationSingleFileState);
         }
         else if (path.Contains(Consts.FileExtension_AgentAction))
         {
-            return typeof(AgentActionState);
+            return typeof(AgentActionSingleFileState);
         }
         else if (path.Contains(Consts.FileExtension_ResponseCurve))
         {
-            return typeof(ResponseCurveState);
+            return typeof(ResponseCurveSingleFileState);
         }
         else if (path.Contains(Consts.FileExtension_ResponseFunction))
         {
-            return typeof(ResponseFunctionState);
+            return typeof(ResponseFunctionSingleFileState);
         }
         else if (path.Contains(Consts.FileExtension_Parameter))
         {
@@ -95,15 +95,15 @@ internal class FileExtensionService
         }
         else if (path.Contains(Consts.FileExtension_TickerSettings))
         {
-            return typeof(UaiTickerSettingsModelState);
+            return typeof(UaiTickerSettingsModelSingleFileState);
         }
         else if (path.Contains(Consts.FileExtension_TickerModes))
         {
-            return typeof(TickerModeState);
+            return typeof(TickerModeSingleFileState);
         }
         else if (path.Contains(Consts.FileExtension_UtilityContainerSelector))
         {
-            return typeof(UtilityContainerSelectorState);
+            return typeof(UtilityContainerSelectorSingleFileState);
         }
         else return null;
     }
@@ -163,35 +163,35 @@ internal class FileExtensionService
         {
             return Consts.FileExtension_TickerSettings;
         }
-        if (type.IsAssignableFrom(typeof(UasTemplateServiceState)))
+        if (type.IsAssignableFrom(typeof(UasTemplateServiceSingleFileState)))
         {
             return Consts.FileExtension_TemplateService;
         }
-        if (type.IsAssignableFrom(typeof(UaiState)))
+        if (type.IsAssignableFrom(typeof(UaiSingleFileState)))
         {
             return Consts.FileExtension_UAI;
         }
-        if (type.IsAssignableFrom(typeof(BucketState)))
+        if (type.IsAssignableFrom(typeof(BucketSingleFileState)))
         {
             return Consts.FileExtension_Bucket;
         }
-        if (type.IsAssignableFrom(typeof(DecisionState)))
+        if (type.IsAssignableFrom(typeof(DecisionSingleFileState)))
         {
             return Consts.FileExtension_Decision;
         }
-        if (type.IsAssignableFrom(typeof(ConsiderationState)))
+        if (type.IsAssignableFrom(typeof(ConsiderationSingleFileState)))
         {
             return Consts.FileExtension_Consideration;
         }
-        if (type.IsAssignableFrom(typeof(AgentActionState)))
+        if (type.IsAssignableFrom(typeof(AgentActionSingleFileState)))
         {
             return Consts.FileExtension_AgentAction;
         }
-        if (type.IsAssignableFrom(typeof(ResponseCurveState)))
+        if (type.IsAssignableFrom(typeof(ResponseCurveSingleFileState)))
         {
             return Consts.FileExtension_ResponseCurve;
         }
-        if (type.IsAssignableFrom(typeof(ResponseFunctionState)))
+        if (type.IsAssignableFrom(typeof(ResponseFunctionSingleFileState)))
         {
             return Consts.FileExtension_ResponseFunction;
         }
@@ -199,15 +199,15 @@ internal class FileExtensionService
         {
             return Consts.FileExtension_Parameter;
         }
-        if (type.IsAssignableFrom(typeof(UaiTickerSettingsModelState)))
+        if (type.IsAssignableFrom(typeof(UaiTickerSettingsModelSingleFileState)))
         {
             return Consts.FileExtension_TickerSettings;
         }
-        if (type.IsAssignableFrom(typeof(TickerModeState)))
+        if (type.IsAssignableFrom(typeof(TickerModeSingleFileState)))
         {
             return Consts.FileExtension_TickerModes;
         }
-        if (type.IsAssignableFrom(typeof(UtilityContainerSelectorState)))
+        if (type.IsAssignableFrom(typeof(UtilityContainerSelectorSingleFileState)))
         {
             return Consts.FileExtension_UtilityContainerSelector;
         }

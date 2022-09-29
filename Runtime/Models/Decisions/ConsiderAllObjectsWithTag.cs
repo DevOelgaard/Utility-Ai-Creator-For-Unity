@@ -9,19 +9,21 @@ internal class ConsiderAllObjectsWithTag : Decision
 {
     public ConsiderAllObjectsWithTag() : base()
     {
+        
+        ParameterContainer.AddParameter("Tag", UnityTags.Target);
     }
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-            new Parameter("Tag", "Target", ParameterTypes.Tag)
-        };
-    }
+    //
+    // protected override List<Parameter> GetParameters()
+    // {
+    //     return new List<Parameter>()
+    //     {
+    //         new Parameter("Tag", "Target", ParameterTypes.Tag)
+    //     };
+    // }
 
     protected override float CalculateUtility(IAiContext context)
     {
-        var targets = GameObject.FindGameObjectsWithTag((string)GetParameter("Tag").Value);
+        var targets = GameObject.FindGameObjectsWithTag(ParameterContainer.GetParamString("Tag").Value);
         GameObject selectedTarget = null;
         var highestUtility = 0f;
         if (targets == null)

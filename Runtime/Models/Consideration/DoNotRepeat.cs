@@ -24,12 +24,4 @@ internal class DoNotRepeat : ConsiderationBoolean
         }
         return 1;
     }
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-            // new ParameterEnum("Container", UtilityContainerTypes.Decision)
-        };
-    }
 }

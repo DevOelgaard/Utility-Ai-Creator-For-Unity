@@ -115,7 +115,6 @@ internal class AiViewModel : AiObjectViewModel
 
         var currentDecisionIndex = uaiModel.DecisionSelectors.IndexOf(uaiModel.CurrentDecisionSelector);
         decisionDropdown.UpdateUi(uaiModel.DecisionSelectors, currentDecisionIndex);
-
         decisionDropdown
             .OnSelectedObjectChanged
             .Subscribe(selector => {
@@ -127,7 +126,7 @@ internal class AiViewModel : AiObjectViewModel
             .AddTo(subscriptions);
 
         var currentBucketindex = uaiModel.BucketSelectors.IndexOf(uaiModel.CurrentBucketSelector);
-        bucketDropdown.UpdateUi(uaiModel.BucketSelectors,currentDecisionIndex);
+        bucketDropdown.UpdateUi(uaiModel.BucketSelectors,currentBucketindex);
         bucketDropdown
             .OnSelectedObjectChanged
             .Subscribe(selector =>

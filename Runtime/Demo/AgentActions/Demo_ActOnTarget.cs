@@ -11,11 +11,6 @@ internal class Demo_ActOnTarget : AgentAction
     {
     }
 
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
-    }
-
     public override void OnStart(IAiContext context)
     {
         Do(context);
@@ -37,4 +32,6 @@ internal class Demo_ActOnTarget : AgentAction
     {
         return context.GetContext<GameObject>(AiContextKey.CurrentTargetGameObject.ToString(), context.LastSelectedDecision);
     }
+
+
 }

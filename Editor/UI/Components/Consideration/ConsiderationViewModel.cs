@@ -136,7 +136,7 @@ internal class ConsiderationViewModel : AiObjectViewModel
             .OnValueChange
             .Subscribe(value =>
             {
-                maxField.Min = (float)value;
+                maxField.Min = considerationModel.MinFloat.Value;
             })
             .AddTo(minMaxSubs);
 
@@ -144,7 +144,7 @@ internal class ConsiderationViewModel : AiObjectViewModel
             .OnValueChange
             .Subscribe(value =>
             {
-                minField.Max = (float)value;
+                minField.Max = considerationModel.MaxFloat.Value;
             })
             .AddTo(minMaxSubs);
 

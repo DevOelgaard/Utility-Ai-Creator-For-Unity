@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UniRx;
 
-public class UaiTickerSettingsModel: RestoreAble
+public class UaiTickerSettingsModel: PersistSingleFile
 {
     private TickerMode currentTickerMode;
     internal TickerMode CurrentTickerMode
@@ -23,62 +23,87 @@ public class UaiTickerSettingsModel: RestoreAble
 
     internal List<TickerMode> TickerModes;
 
-    protected override string GetFileName()
-    {
-        return Consts.FileName_TickerSettings;
-    }
+    // protected override string GetFileName()
+    // {
+    //     return Consts.FileName_TickerSettings;
+    // }
 
-    protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
+    // protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
+    // {
+    //     var s = state as UaiTickerSettingsModelState;
+    //     TickerModes = new List<TickerMode>();
+    //     var modeStates = await PersistenceAPI.Instance
+    //         .LoadRestoreAblesOfTypeAsync<TickerModeState>(Consts.FolderPath_TickerModes_Complete, typeof(TickerMode));
+    //     foreach(var mode in modeStates)
+    //     {
+    //         if(mode.LoadedObject == null)
+    //         {
+    //             var tm = new TickerModeUnrestricted
+    //             {
+    //                 Description = mode.ErrorMessage + "Exception: " + mode.Exception.ToString()
+    //             };
+    //         }
+    //         else
+    //         {
+    //             var tickerModeLocal =  await Restore<TickerMode>(mode.LoadedObject, restoreDebug);
+    //             TickerModes.Add(tickerModeLocal);
+    //         }
+    //     }
+    //
+    //     CurrentTickerMode = TickerModes.FirstOrDefault(tm => tm.Name == s.CurrentTickerMode);
+    //     // CurrentTickerMode = await Restore<TickerMode>(s.Cu);
+    // }
+    // internal override RestoreState GetState()
+    // {
+    //     return new UaiTickerSettingsModelState(CurrentTickerMode, TickerModes, this);
+    // }
+    //
+    // protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    // {
+    //     await persister.SaveObjectAsync(state, Consts.FilePath_TickerSettingsWithExtention);
+    //     await RestoreAbleService.SaveRestoreAblesToFile(TickerModes,Consts.FolderPath_TickerModes_Complete, persister);
+    // }
+
+    protected override async Task RestoreFromFile(SingleFileState state)
     {
-        var s = state as UaiTickerSettingsModelState;
+        var s = state as UaiTickerSettingsModelSingleFileState;
         TickerModes = new List<TickerMode>();
-        var modeStates = await PersistenceAPI.Instance
-            .LoadObjectsOfTypeAsync<TickerModeState>(Consts.FolderPath_TickerModes_Complete, typeof(TickerMode));
-        foreach(var mode in modeStates)
+
+        foreach (var tickerModeSingleFileState in s.tickerModeStates)
         {
-            if(mode.LoadedObject == null)
-            {
-                var tm = new TickerModeUnrestricted
-                {
-                    Description = mode.ErrorMessage + "Exception: " + mode.Exception.ToString()
-                };
-            }
-            else
-            {
-                var tickerModeLocal =  await Restore<TickerMode>(mode.LoadedObject, restoreDebug);
-                TickerModes.Add(tickerModeLocal);
-            }
+            var tM = await Restore<TickerMode>(tickerModeSingleFileState);
+            TickerModes.Add(tM);
         }
 
-        CurrentTickerMode = TickerModes.FirstOrDefault(tm => tm.Name == s.CurrentTickerMode);
-        // CurrentTickerMode = await Restore<TickerMode>(s.Cu);
-    }
-    internal override RestoreState GetState()
-    {
-        return new UaiTickerSettingsModelState(CurrentTickerMode, TickerModes, this);
+        CurrentTickerMode = TickerModes.FirstOrDefault(t => t.Name.ToString() == s.currentTickerModeName);
     }
 
-    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    public override SingleFileState GetSingleFileState()
     {
-        await persister.SaveObjectAsync(state, Consts.FilePath_TickerSettingsWithExtention);
-        await RestoreAbleService.SaveRestoreAblesToFile(TickerModes,Consts.FolderPath_TickerModes_Complete, persister);
+        return new UaiTickerSettingsModelSingleFileState(this);
     }
 }
 
 [Serializable]
-public class UaiTickerSettingsModelState: RestoreState
+public class UaiTickerSettingsModelSingleFileState: SingleFileState
 {
-    // public TickerModeState TickerMode;
-    public UaiTickerMode CurrentTickerMode;
+    public string currentTickerModeName;
+    public List<TickerModeSingleFileState> tickerModeStates;
 
-    public UaiTickerSettingsModelState()
+    public UaiTickerSettingsModelSingleFileState()
     {
     }
 
-    public UaiTickerSettingsModelState(TickerMode tickerMode, List<TickerMode> tickerModes, UaiTickerSettingsModel o) : base(o)
+    public UaiTickerSettingsModelSingleFileState(UaiTickerSettingsModel o) : base(o)
     {
-        CurrentTickerMode = tickerMode.Name;
-        // TickerMode = tickerMode.GetState() as TickerModeState;
+        tickerModeStates = new List<TickerModeSingleFileState>();
+        foreach (var oTickerMode in o.TickerModes)
+        {
+            var state = oTickerMode.GetSingleFileState() as TickerModeSingleFileState;
+            tickerModeStates.Add(state);
+        }
+
+        currentTickerModeName = o.CurrentTickerMode.Name.ToString();
     }
 }
 

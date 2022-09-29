@@ -34,7 +34,7 @@ internal class PersistenceAPI
             return;
         }
 
-        await SaveObjectAsync(o, Path.GetDirectoryName(path));
+        await SaveRestoreAbleAsync(o, Path.GetDirectoryName(path));
     }
 
     internal async Task SaveObjectsPanelAsync(List<RestoreAble> restoreables)
@@ -42,21 +42,43 @@ internal class PersistenceAPI
         var path = EditorUtility.SaveFolderPanel("Save object", "folder", "default name");
         foreach (var r in restoreables)
         {
-            await SaveObjectAsync(r, path);
+            await SaveRestoreAbleAsync(r, path);
+        }
+    }
+    
+    internal async Task SaveObjectsSingleFilePanelAsync(List<object> restoreables)
+    {
+        var path = EditorUtility.SaveFolderPanel("Save object", "folder", "default name");
+        foreach (var r in restoreables)
+        {
+            await Persister.SaveObjectAsync(r, path);
         }
     }
 
-
-
-    internal async Task SaveObjectDestructivelyAsync(RestoreAble o, string path)
+    internal async Task SaveObjectDestructivelyAsync(object o, string path)
     {
         var startTime = DateTime.Now;
         await SaveObjectAsync(o,path);
         DebugService.Log("Done saving destructively path: " + path, this);
         await CleanUpAsync(path, startTime);
     }
-    
-    internal async Task SaveObjectAsync(RestoreAble o, string path)
+
+
+    internal async Task SaveRestoreAbleDestructivelyAsync(RestoreAble o, string path)
+    {
+        var startTime = DateTime.Now;
+        await SaveRestoreAbleAsync(o,path);
+        DebugService.Log("Done saving destructively path: " + path, this);
+        await CleanUpAsync(path, startTime);
+    }
+
+
+    internal async Task SaveObjectAsync(object o, string path)
+    {
+        await Persister.SaveObjectAsync(o, path);
+    }
+
+    internal async Task SaveRestoreAbleAsync(RestoreAble o, string path)
     {
         if (path.Length > Consts.MaxPathLengthWindows)
         {
@@ -109,6 +131,8 @@ internal class PersistenceAPI
         var task = Persister.LoadObjectAsync<T>(path);
         if (await Task.WhenAny(task, Task.Delay(Settings.TimeOutMs)) == task)
         {
+            DebugService.Log("Loading object Complete of type: " + typeof(T) + " at path: " + path, this );
+
             return task.Result;
         }
         else
@@ -125,16 +149,36 @@ internal class PersistenceAPI
     //     return res;
     // }
 
-
-
-    internal async Task<List<ObjectMetaData<T>>> LoadObjectsOfTypeAsync<T>(string folderPath, Type t) where T : RestoreState
+    internal async Task<List<ObjectMetaData<T>>> LoadObjectsOfTypeAsync<T>(string folderPath, Type t)
     {
         var filter = FileExtensionService.GetFileExtensionFromType(t);
         var res = await LoadObjectsAsync<T>(folderPath, filter);
         return res;
     }
     
-    internal async Task<List<ObjectMetaData<T>>> LoadObjectsAsync<T>(string folderPath, string filter = "") where T: RestoreState
+    internal async Task<List<ObjectMetaData<T>>> LoadObjectsAsync<T>(string folderPath, string filter = "")
+    {
+        var task = Persister.LoadObjectsAsync<T>(folderPath, "*"+filter);
+        if (await Task.WhenAny(task, Task.Delay(Settings.TimeOutMs)) == task)
+        {
+            DebugService.Log("Loaded objects count: " + task.Result.Count + " path: " + folderPath, this);
+            return task.Result;
+        }
+        else
+        {
+            throw new TimeoutException("LoadObjectsPathAsync timed out after: " +
+                                       Settings.TimeOutMs + "ms. " + " Filter: " + filter + " FolderPath: " + folderPath);
+        }
+    }
+
+    internal async Task<List<ObjectMetaData<T>>> LoadRestoreAblesOfTypeAsync<T>(string folderPath, Type t) where T : RestoreState
+    {
+        var filter = FileExtensionService.GetFileExtensionFromType(t);
+        var res = await LoadRestoreAblesAsync<T>(folderPath, filter);
+        return res;
+    }
+    
+    internal async Task<List<ObjectMetaData<T>>> LoadRestoreAblesAsync<T>(string folderPath, string filter = "") where T: RestoreState
     {
         var task = Persister.LoadObjectsAsync<T>(folderPath, "*"+filter);
         if (await Task.WhenAny(task, Task.Delay(Settings.TimeOutMs)) == task)
@@ -394,7 +438,7 @@ public class ObjectMetaData<T>
 
     public ObjectMetaData(T o, string path)
     {
-        StateType = FileExtensionService.GetStateFromFileName(path);
+        StateType = FileExtensionService.GetStateTypeFromFileName(path);
         ModelType = FileExtensionService.GetTypeFromFileName(path);
         type = typeof(T);
         LoadedObject = o;

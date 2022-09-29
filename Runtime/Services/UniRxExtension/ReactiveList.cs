@@ -96,5 +96,7 @@ namespace UniRxExtension
             onValueChanged.OnNext(List);
         }
         public int Count => List.Count;
+
+
     }
 }

@@ -23,7 +23,7 @@ internal class TemplateManager : EditorWindow
     private VisualElement rightPanel;
     private Button copyButton;
     private Button deleteButton;
-    private Button clearButton;
+    private Button sortButton;
     private PopupField<string> addElementPopup;
     private List<string> dropDownChoices;
     private DropdownField dropDown;
@@ -68,7 +68,7 @@ internal class TemplateManager : EditorWindow
         var addElementPopupContainer = root.Q<VisualElement>("AddElementPopupContainer");
         copyButton = root.Q<Button>("CopyButton");
         deleteButton = root.Q<Button>("DeleteButton");
-        clearButton = root.Q<Button>("ClearButton");
+        sortButton = root.Q<Button>("ClearButton");
         rightPanel = root.Q<VisualElement>("right-panel");
 
         
@@ -94,18 +94,12 @@ internal class TemplateManager : EditorWindow
             DeleteSelectedElements();
         });
 
-        clearButton.RegisterCallback<MouseUpEvent>(_ =>
+        sortButton.text = "Sort";
+        sortButton.RegisterCallback<MouseUpEvent>(_ =>
         {
-            var clickTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-            if (clickTime > lastClearClick + clickConfirmationTimeMs)
-            {
-                lastClearClick = clickTime;
-            }
-            else
-            {
-                templateService.Reset();
-                UpdateLeftPanel();
-            }
+            var type = MainWindowService.Instance.GetTypeFromString(dropDown.value);
+            var collection = templateService.GetCollection(type) as ReactiveListNameSafe<AiObjectModel>;
+            collection?.Sort();
         });
         
         addElementPopup.RegisterCallback<ChangeEvent<string>>(AddAiObject);
@@ -246,7 +240,9 @@ internal class TemplateManager : EditorWindow
         };
         reloadPlayAbleAis.RegisterCallback<MouseUpEvent>(_ =>
         {
+            templateService.SetState("Saving");
             PlayAbleAiService.Instance.UpdateAisFromTemplateService(true);
+            templateService.SetState("Ready");
         });
         toolbar.Add(reloadPlayAbleAis);
 
@@ -264,24 +260,40 @@ internal class TemplateManager : EditorWindow
     private async void SaveUas(DropdownMenuAction _)
     {
         await templateService.Save();
+        await templateService.Save(true);
         // MainThreadDispatcher.StartCoroutine(uASTemplateService.SaveCoroutine());
     }
 
     private async void ImportFiles(DropdownMenuAction _)
     {
-        var s = await persistenceAPI.LoadFilePanel<RestoreState>(Consts.FileExtensionsFilters);
-        s.LoadedObject.FolderLocation = Path.GetDirectoryName(s.Path) + @"\";
+        var path = EditorUtility.OpenFilePanelWithFilters("Import",
+            ProjectSettingsService.Instance.model.LastProjectDirectory, Consts.FileExtensionsFilters);
 
-        var toCollection = templateService.GetCollection(s.ModelType);
-        var restored = await RestoreAble.Restore(s.LoadedObject, s.ModelType);
-        toCollection.Add(restored as AiObjectModel);
+        var stateType = FileExtensionService.GetStateTypeFromFileName(path);
+        var objectType = FileExtensionService.GetTypeFromFileName(path);
+        var loadedMetaData = PersistenceAPI.Instance.Persister.LoadObject(path, stateType);
+        var importedObjectState = loadedMetaData.LoadedObject as AiObjectModelSingleFileState;
+        var toCollection = templateService.GetCollection(objectType);
+        var importedObject =
+            await PersistSingleFile.Restore(importedObjectState, objectType) as
+                AiObjectModel;
+        
+        toCollection.Add(importedObject);
     }
     
     private async void ExportFiles(DropdownMenuAction _)
     {
-        var saveObjects = new List<RestoreAble>();
+        var saveObjects = new List<AiObjectModel>();
         selectedObjects.ForEach(pair => saveObjects.Add(pair.Key));
-        await persistenceAPI.SaveObjectsPanelAsync(saveObjects);
+        var path = EditorUtility.SaveFolderPanel("Export", ProjectSettingsService.Instance.model.LastProjectDirectory,"Export Folder");
+        foreach (var saveObject in saveObjects)
+        {
+            var savePath = path + "/" + saveObject.Name + "." + FileExtensionService.GetFileExtensionFromType(saveObject.GetType());
+            DebugService.Log("Saving to: " + savePath, this);
+            await saveObject.SaveToFile(savePath);
+        }
+        
+        // await persistenceAPI.SaveObjectsSingleFilePanelAsync(saveObjects);
     }
 
     private async void OpenProject(DropdownMenuAction _)
@@ -349,23 +361,32 @@ internal class TemplateManager : EditorWindow
 
     private async void CopySelectedElements()
     {
-        var tasks = selectedObjects
-            .Select(selected => Task.Run(selected.Key.Clone))
-            .ToList();
-
-        await Task.WhenAll(tasks);
-        foreach (var task in tasks)
+        // var tasks = selectedObjects
+        //     .Select(selected => Task.Run(selected.Key.Clone))
+        //     .ToList();
+        //
+        // await Task.WhenAll(tasks);
+        // foreach (var task in tasks)
+        // {
+        //     templateService.Add(task.Result);
+        // }
+        // if (tasks.Count == 0)
+        // {
+        //     DebugService.Log("No element selected to copy", this);
+        //     return;
+        // }
+        if(selectedObjects.Count == 0) return;
+        AiObjectModel modelToSelect = null;
+        var results = new List<AiObjectModel>();
+        foreach (var o in selectedObjects)
         {
-            templateService.Add(task.Result);
+            var result = o.Key.Clone();
+            results.Add(result);
+            modelToSelect = result;
         }
+        templateService.Add(results);
 
-        if (tasks.Count == 0)
-        {
-            DebugService.Log("No element selected to copy", this);
-            return;
-        }
-
-        SelectedModel = tasks[0].Result;
+        SelectedModel = modelToSelect;
     }
 
     private void DeleteSelectedElements()

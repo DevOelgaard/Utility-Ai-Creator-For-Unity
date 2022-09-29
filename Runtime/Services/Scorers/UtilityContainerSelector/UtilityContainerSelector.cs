@@ -5,22 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
+public abstract class UtilityContainerSelector: PersistSingleFile, IIdentifier
 {
-    public readonly ParameterContainer ParameterContainer;
+    public ParameterContainer ParameterContainer { get; protected set; }
 
     protected UtilityContainerSelector()
     {
-        ParameterContainer = new ParameterContainer(GetParameters);
-    }
-    public void AddParameter(Parameter param)
-    {
-        ParameterContainer.AddParameter(param);
-    }
-
-    protected Parameter GetParameter(string parameterName)
-    {
-        return ParameterContainer.GetParameter(parameterName);
+        ParameterContainer = new ParameterContainer();
     }
 
     public abstract Bucket GetBestUtilityContainer(List<Bucket> containers, IAiContext context);
@@ -30,45 +21,57 @@ public abstract class UtilityContainerSelector: RestoreAble, IIdentifier
 
     public abstract string GetName();
 
-    protected abstract List<Parameter> GetParameters();
-
-    internal override RestoreState GetState()
+    public UtilityContainerSelector Clone()
     {
-        return new UtilityContainerSelectorState(ParameterContainer.Parameters.ToList(), this);
+        var clone = AssetService.GetInstanceOfType<UtilityContainerSelector>(GetType().ToString());
+        clone.ParameterContainer = ParameterContainer.Clone();
+        return clone;
     }
 
-    protected override string GetFileName()
+    public override SingleFileState GetSingleFileState()
     {
-        return GetName();
+        return new UtilityContainerSelectorSingleFileState(this);
     }
 
-    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
+    protected override async Task RestoreFromFile(SingleFileState state)
     {
-        var state = s as UtilityContainerSelectorState;
-        var parameters = await RestoreAbleService.GetParameters(CurrentDirectory + Consts.FolderName_Parameters, restoreDebug);
-        foreach (var parameter in parameters)
+        var s = state as UtilityContainerSelectorSingleFileState;
+        if (s.ParameterContainerState == null)
         {
-            AddParameter(parameter);
+            ParameterContainer = new ParameterContainer();
         }
-    }
-
-    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
-    {
-        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_UtilityContainerSelector);
-        await RestoreAbleService.SaveRestoreAblesToFile(ParameterContainer.Parameters.Where(p => p != null),path + "/" + Consts.FolderName_Parameters, persister);
+        else
+        {
+            ParameterContainer.RestoreFromState(s.ParameterContainerState);
+        }
     }
 }
 
 [Serializable]
-public class UtilityContainerSelectorState: RestoreState
+public class UtilityContainerSelectorSingleFileState: SingleFileState
 {
-    public List<string> Parameters;
-    public UtilityContainerSelectorState()
+    public ParameterContainerState ParameterContainerState;
+
+    public UtilityContainerSelectorSingleFileState()
     {
     }
 
-    public UtilityContainerSelectorState(List<Parameter> parameters, UtilityContainerSelector ucs): base(ucs)
+    public UtilityContainerSelectorSingleFileState(UtilityContainerSelector o): base(o)
     {
-        Parameters = ucs.ParameterContainer.Parameters.Select(p => p.Name).ToList();
+        ParameterContainerState = o.ParameterContainer.GetState();
     }
 }
+
+// [Serializable]
+// public class UtilityContainerSelectorState: RestoreState
+// {
+//     public List<string> Parameters;
+//     public UtilityContainerSelectorState()
+//     {
+//     }
+//
+//     public UtilityContainerSelectorState(List<Parameter> parameters, UtilityContainerSelector ucs): base(ucs)
+//     {
+//         Parameters = ucs.ParameterContainer.Parameters.Select(p => p.Name).ToList();
+//     }
+// }

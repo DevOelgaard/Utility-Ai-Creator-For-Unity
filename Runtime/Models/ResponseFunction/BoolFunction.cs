@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 internal class BoolFunction : ResponseFunction
 {
-    private Parameter min;
-    public Parameter Min
+    private ParamFloat min;
+    public ParamFloat Min
     {
         get
         {
             if(min == null)
             {
-                min = GetParameter("Min");
+                min = ParameterContainer.GetParamFloat("Min");
             }
             return min;
         }
@@ -21,39 +21,32 @@ internal class BoolFunction : ResponseFunction
 
     public BoolFunction() : base(TypeToName.RF_Bool)
     {
-    }
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-            new Parameter("First Value", true),
-            new Parameter("CutOff", 0.5f),
-            new Parameter("Min", 0f)
-        };
+        ParameterContainer.AddParameter("First Value", true);
+        ParameterContainer.AddParameter("CutOff", 0.5f);
+        ParameterContainer.AddParameter("Min", 0f);
     }
 
     protected override float CalculateResponseInternal(float x)
     {
-        if (x < Convert.ToSingle(GetParameter("CutOff").Value))
+        if (x < ParameterContainer.GetParamFloat("CutOff").Value)
         {
-            return (bool)GetParameter("First Value").Value == true ? Convert.ToSingle(Max.Value) : Convert.ToSingle(Min.Value);
+            return ParameterContainer.GetParamBool("First Value").Value == true ? Max.Value : Min.Value;
         }
         else
         {
-            return (bool)GetParameter("First Value").Value == true ? Convert.ToSingle(Min.Value) : Convert.ToSingle(Max.Value);
+            return ParameterContainer.GetParamBool("First Value").Value == true ? Min.Value : Max.Value;
         }
     }
 
     public override float CalculateResponse(float x, float prevResult, float maxY)
     {
-        if (x < Convert.ToSingle(GetParameter("CutOff").Value))
+        if (x < ParameterContainer.GetParamFloat("CutOff").Value)
         {
-            return (bool)GetParameter("First Value").Value == true ? Convert.ToSingle(Max.Value) : Convert.ToSingle(Min.Value);
+            return ParameterContainer.GetParamBool("First Value").Value == true ? Max.Value : Min.Value;
         }
         else
         {
-            return (bool)GetParameter("First Value").Value == true ? Convert.ToSingle(Min.Value) : Convert.ToSingle(Max.Value);
+            return ParameterContainer.GetParamBool("First Value").Value == true ? Min.Value : Max.Value;
         }
     }
 }

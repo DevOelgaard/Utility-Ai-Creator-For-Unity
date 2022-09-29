@@ -15,10 +15,4 @@ public abstract class ConsiderationBoolean : Consideration
     {
         IsScorer = false;
     }
-
-    public override string GetTypeDescription()
-    {
-        return "Consideration Boolean";
-    }
-
 }

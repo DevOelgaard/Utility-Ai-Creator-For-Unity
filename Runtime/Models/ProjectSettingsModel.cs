@@ -30,6 +30,8 @@ internal class ProjectSettingsModel
         }
     }
     private string currentProjectName;
+
+    public string LastProjectDirectory = "";
     
     public ProjectSettingsModel()
     {

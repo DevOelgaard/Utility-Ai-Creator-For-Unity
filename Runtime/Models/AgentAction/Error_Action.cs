@@ -12,9 +12,4 @@ internal class Error_Action : AgentAction
         //Description = "";
         //HelpText = "";
     }
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
-    }
 }

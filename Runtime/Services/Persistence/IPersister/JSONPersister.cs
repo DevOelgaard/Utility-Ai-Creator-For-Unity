@@ -10,6 +10,7 @@ internal class JsonPersister : IPersister
 {
     private string json;
 
+    private TypeNameHandling typeNameHandlingSettings = TypeNameHandling.Auto;
     public async Task<ObjectMetaData<T>> LoadObjectAsync<T>(string path)
     {
         var t = Task.Factory.StartNew(() =>
@@ -29,7 +30,7 @@ internal class JsonPersister : IPersister
                 json = File.ReadAllText(path);
                 var deserialized = JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
                 {
-                    TypeNameHandling = TypeNameHandling.All
+                    TypeNameHandling = typeNameHandlingSettings
                 });
 
                 return new ObjectMetaData<T>(deserialized, path);
@@ -79,6 +80,41 @@ internal class JsonPersister : IPersister
             return result.ToList();
     }
 
+
+    public ObjectMetaData<object> LoadObject(string path, Type t)
+    {
+        try
+        {
+            if (!File.Exists(path))
+            {
+                var res = new ObjectMetaData<object>(default(object), path)
+                {
+                    ErrorMessage = "File Doesn't exist",
+                    IsSuccessFullyLoaded = false
+                };
+                return res;
+            }
+
+            json = File.ReadAllText(path);
+            var deserialized = JsonConvert.DeserializeObject(json, t, new JsonSerializerSettings
+            {
+                TypeNameHandling = typeNameHandlingSettings
+            });
+            return new ObjectMetaData<object>(deserialized, path);
+        }
+        catch (Exception ex)
+        {
+            DebugService.LogWarning("Loading failed: " + ex, this);
+            var result = new ObjectMetaData<object>(default, path)
+            {
+                ErrorMessage = "Loading failed at: " + path,
+                Exception = ex,
+                IsSuccessFullyLoaded = false
+            };
+            return result;
+        }
+    }
+        
     public ObjectMetaData<T> LoadObject<T>(string path)
     {
         try
@@ -96,8 +132,21 @@ internal class JsonPersister : IPersister
             json = File.ReadAllText(path);
             var deserialized = JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
             {
-                TypeNameHandling = TypeNameHandling.All
+                TypeNameHandling = typeNameHandlingSettings
             });
+            
+            //
+            // var deserializedNone = JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
+            // {
+            //     TypeNameHandling = TypeNameHandling.None
+            // });
+            //
+            // var deserializedAuto = JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
+            // {
+            //     TypeNameHandling = TypeNameHandling.Auto
+            // });
+            //
+            // var deserializedNoHandling = JsonConvert.DeserializeObject<T>(json);
 
             return new ObjectMetaData<T>(deserialized, path);
         }
@@ -119,7 +168,7 @@ internal class JsonPersister : IPersister
         {
             var toJson = JsonConvert.SerializeObject(o, Formatting.Indented, new JsonSerializerSettings
             {
-                TypeNameHandling = TypeNameHandling.All
+                TypeNameHandling = typeNameHandlingSettings
             });
             CreateFile(path);
             File.WriteAllText(path, toJson);
@@ -139,7 +188,7 @@ internal class JsonPersister : IPersister
             {
                 var toJson = JsonConvert.SerializeObject(o, Formatting.Indented, new JsonSerializerSettings
                 {
-                    TypeNameHandling = TypeNameHandling.All
+                    TypeNameHandling = typeNameHandlingSettings
                 });
                 CreateFile(path);
                 File.WriteAllText(path, toJson);
@@ -162,6 +211,7 @@ internal class JsonPersister : IPersister
         }
 
         if (File.Exists(path)) return;
+        DebugService.Log("Creating path: " + path, this);
         var file = File.Create(path);
         file.Close();
     }

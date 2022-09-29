@@ -19,30 +19,17 @@ internal class TickerModeDesiredFrameRate : TickerMode
 
     internal IObservable<float> OnLastFrameRateChanged => onLastFrameRateChanged;
     private readonly Subject<float> onLastFrameRateChanged = new Subject<float>();
-    internal float SampelTimeInSeconds => Convert.ToSingle(ParameterContainer.GetParameter("Sample Time Seconds").Value);
-    internal float TargetFrameRate => Convert.ToSingle(ParameterContainer.GetParameter("Target Framerate").Value);
+    internal float SampelTimeInSeconds => ParameterContainer.GetParamFloat("Sample Time Seconds").Value;
+    internal float TargetFrameRate => ParameterContainer.GetParamFloat("Target Framerate").Value;
     private int debugTickCount = 0;
 
 
     public TickerModeDesiredFrameRate() : base(UaiTickerMode.DesiredFrameRate, Consts.Description_TickerModeDesiredFrameRate)
     {
-    }
-
-
-    internal override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-            new Parameter("Target Framerate", (int)60),
-            new Parameter("Sample Time Seconds", 1f),
-            new Parameter("Debug", false),
-            new Parameter("DebugTickCount", (int)0)
-        };
-    }
-
-    protected override string GetFileName()
-    {
-        return Consts.FileName_TickerModeDesiredFrameRate;
+        ParameterContainer.AddParameter("Target Framerate", 60);
+        ParameterContainer.AddParameter("Sample Time Seconds", 1f);
+        ParameterContainer.AddParameter("Debug", false);
+        ParameterContainer.AddParameter("DebugTickCount", 0);
     }
 
     internal override void Tick(List<IAgent> agents, TickMetaData metaData)
@@ -63,14 +50,14 @@ internal class TickerModeDesiredFrameRate : TickerMode
                 var optimizeFactor = LastFrameRate / TargetFrameRate;
                 var ticksThisSample = tickedItemsLastSample * optimizeFactor;
                 allowedTicksPrFrame = Mathf.FloorToInt(ticksThisSample / framesThisSample);
-                if ((bool)ParameterContainer.GetParameter("Debug").Value)
+                if (ParameterContainer.GetParamBool("Debug").Value)
                 {
                     DebugService.Log("LastFrameRate: " + LastFrameRate + " TargetFrameRate: " + TargetFrameRate + " optimizeFactor: " + optimizeFactor + " tickedItemsLastSample: " + tickedItemsLastSample + " allowedTicsPrFrame: " + allowedTicksPrFrame + " oldAllowedTicks: " + oldAllowedTicks, this);
                 }
             }
 
 
-            if ((bool)ParameterContainer.GetParameter("Debug").Value)
+            if (ParameterContainer.GetParamBool("Debug").Value)
             {
                 DebugService.Log("LastFrameRate: " + LastFrameRate + " framesThisSample: " + framesThisSample + " elapsedTime: " + elapsedTime + " SampleTime: " + SampelTimeInSeconds, this);
             }
@@ -87,7 +74,7 @@ internal class TickerModeDesiredFrameRate : TickerMode
             tickCountThisFrame++;
             if (lastTickIndex >= agents.Count-1)
             {
-                if ((bool)ParameterContainer.GetParameter("Debug").Value)
+                if (ParameterContainer.GetParamBool("Debug").Value)
                 {
                     DebugService.Log("All Agents ticked Agent count: " + agents.Count + " TickCount: " + metaData.TickCount, this);
                 }
@@ -107,7 +94,7 @@ internal class TickerModeDesiredFrameRate : TickerMode
         }
 
         debugTickCount++;
-        if ((bool)ParameterContainer.GetParameter("Debug").Value && debugTickCount >= Convert.ToInt32(ParameterContainer.GetParameter("DebugTickCount").Value))
+        if (ParameterContainer.GetParamBool("Debug").Value && debugTickCount >= ParameterContainer.GetParamInt("DebugTickCount").Value)
         {
             debugTickCount = 0;
             DebugService.Log("Framerate: " + LastFrameRate + " Allowed TicksPrFrame: " + allowedTicksPrFrame + " FrameCount: " + framesThisSample, this);

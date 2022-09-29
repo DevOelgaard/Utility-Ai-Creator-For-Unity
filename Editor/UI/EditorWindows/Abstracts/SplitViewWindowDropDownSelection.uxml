@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <uie:Toolbar name="ToolbarTop" />
-    <SplitView fixed-pane-initial-dimension="400">
+    <SplitView fixed-pane-initial-dimension="300">
         <ui:VisualElement name="LeftContainer">
             <ui:DropdownField label="Dropdown" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="AgentType-Dropdown" />
             <ui:VisualElement name="ButtonContainer" style="flex-grow: 1;" />

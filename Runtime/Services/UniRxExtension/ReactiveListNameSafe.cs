@@ -41,5 +41,11 @@ namespace UniRxExtension
             }
             base.Add(aiObjectModels);
         }
+        
+        public void Sort()
+        {
+            List = List.OrderBy(o => o.Name).ToList();
+            onValueChanged.OnNext(Values);
+        }
     }
 }

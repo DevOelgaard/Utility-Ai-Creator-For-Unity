@@ -11,4 +11,5 @@ public interface IPersister
     Task<ObjectMetaData<T>> LoadObjectAsync<T>(string path);
     Task<List<ObjectMetaData<T>>> LoadObjectsAsync<T>(string folderPath, string searchPattern);
     ObjectMetaData<T> LoadObject<T>(string path);
+    public ObjectMetaData<object> LoadObject(string path, Type t);
 }

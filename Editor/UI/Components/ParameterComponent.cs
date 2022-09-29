@@ -17,44 +17,47 @@ public class ParameterComponent: VisualElement
 
     }
 
-    internal void UpdateUi(Parameter parameter)
+    internal void UpdateUi(ParamBase parameter)
     {
         disposables.Clear();
         Clear();
-        if (parameter.GetType() == typeof(ParameterEnum))
+        if (parameter.GetType() == typeof(ParamEnum))
         {
-            var p = parameter as ParameterEnum;
+            var p = parameter as ParamEnum;
             var localField = new EnumField(parameter.Name);
-            localField.Init(p.CurrentSelection);
-            localField.value = p.CurrentSelection;
-            localField.RegisterCallback<ChangeEvent<Enum>>(evt => parameter.Value = evt.newValue);
+            localField.Init(p.Value);
+            localField.value = p.Value;
+            localField.RegisterCallback<ChangeEvent<Enum>>(evt => p.Value = evt.newValue);
             parameter.OnValueChange
                 .Subscribe(v =>
                 {
-                    localField.value = (Enum)v;
+                    localField.value = p.Value;
                 })
                 .AddTo(disposables);
             Add(localField);
             this.field = localField;
         } else
         {
-            var t = parameter.Value.GetType();
+            var t = parameter.GetValueType();
             if (t == typeof(double))
             {
-                parameter.Value = Convert.ToDouble(parameter.Value);
-                t = typeof(float);
+                throw new NotImplementedException("ParamDouble not implemented. Use float instead");
+
+                // parameter.Value = Convert.ToDouble(parameter.Value);
+                // t = typeof(float);
             }
             if (t == typeof(int) || t == typeof(Int16) || t == typeof(Int32) || t == typeof(Int64))
             {
+                var p = parameter as ParamInt;
                 var localField = new IntegerFieldMinMax(parameter.Name)
                 {
-                    value = Convert.ToInt32(parameter.Value)
+                    value = p.Value
                 };
-                localField.RegisterCallback<ChangeEvent<int>>(evt => parameter.Value = evt.newValue);
+                localField.RegisterCallback<ChangeEvent<int>>(evt => p.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        localField.value = Convert.ToInt32(v);
+                        localField.value = p.Value;
                     })
                     .AddTo(disposables);
                 Add(localField);
@@ -62,50 +65,53 @@ public class ParameterComponent: VisualElement
             }
             else if (t == typeof(float) || t == typeof(Single))
             {
+                var p = parameter as ParamFloat;
                 var localField = new FloatFieldMinMax(parameter.Name)
                 {
-                    value = Convert.ToSingle(parameter.Value)
+                    value = p.Value
                 };
                 localField.RegisterCallback<ChangeEvent<float>>(evt =>
-                        parameter.Value = evt.newValue
+                        p.Value = evt.newValue
                     );
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        localField.value = Convert.ToSingle(v);
+                        localField.value = p.Value;
                     })
                     .AddTo(disposables);
                 Add(localField);
                 this.field = localField;
             }
-            else if (t == typeof(string) && parameter.ParameterEnum == ParameterTypes.None)
+            else if (t == typeof(string))
             {
+                var p = parameter as ParamString;
                 var localField = new TextField(parameter.Name)
                 {
-                    value = parameter.Value.ToString()
+                    value = p.Value
                 };
-                localField.RegisterCallback<ChangeEvent<string>>(evt => parameter.Value = evt.newValue);
+                localField.RegisterCallback<ChangeEvent<string>>(evt => p.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        localField.value = v.ToString();
+                        localField.value = p.Value;
                     })
                     .AddTo(disposables);
                 Add(localField);
                 this.field = localField;
 
             }
-            else if (parameter.ParameterEnum == ParameterTypes.Tag)
+            else if (t == typeof(Enum))
             {
+                var p = parameter as ParamEnum;
                 var localField = new TagField(parameter.Name)
                 {
-                    value = parameter.Value.ToString()
+                    value = p.Value.ToString()
                 };
-                localField.RegisterCallback<ChangeEvent<ParameterTypes>>(evt => parameter.Value = evt.newValue);
+                localField.RegisterCallback<ChangeEvent<ParameterTypes>>(evt => p.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        localField.value = v.ToString();
+                        localField.value = p.GetValueAsString();
                     })
                     .AddTo(disposables);
                 Add(localField);
@@ -113,31 +119,33 @@ public class ParameterComponent: VisualElement
             }
             else if (t == typeof(long))
             {
-                var localField = new LongField(parameter.Name)
-                {
-                    value = (long)parameter.Value
-                };
-                localField.RegisterCallback<ChangeEvent<long>>(evt => parameter.Value = evt.newValue);
-                parameter.OnValueChange
-                    .Subscribe(v =>
-                    {
-                        localField.value = (long)v;
-                    })
-                    .AddTo(disposables);
-                Add(localField);
-                this.field = localField;
+                throw new NotImplementedException("ParamLong not implemented. Use float instead");
+                // var localField = new LongField(parameter.Name)
+                // {
+                //     value = (long)parameter.Value
+                // };
+                // localField.RegisterCallback<ChangeEvent<long>>(evt => parameter.Value = evt.newValue);
+                // parameter.OnValueChange
+                //     .Subscribe(v =>
+                //     {
+                //         localField.value = (long)v;
+                //     })
+                //     .AddTo(disposables);
+                // Add(localField);
+                // this.field = localField;
             }
             else if (t == typeof(bool))
             {
+                var p = parameter as ParamBool;
                 var localField = new Toggle(parameter.Name)
                 {
-                    value = (bool)parameter.Value
+                    value = p.Value
                 };
-                localField.RegisterCallback<ChangeEvent<bool>>(evt => parameter.Value = evt.newValue);
+                localField.RegisterCallback<ChangeEvent<bool>>(evt => p.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        localField.value = (bool)v;
+                        localField.value = p.Value;
                     })
                     .AddTo(disposables);
                 Add(localField);
@@ -145,15 +153,16 @@ public class ParameterComponent: VisualElement
             }
             else if (t == typeof(Color))
             {
+                var p = parameter as ParamColor;
                 var localField = new ColorField(parameter.Name)
                 {
-                    value = (Color)parameter.Value
+                    value = p.Value
                 };
-                localField.RegisterCallback<ChangeEvent<Color>>(evt => parameter.Value = evt.newValue);
+                localField.RegisterCallback<ChangeEvent<Color>>(evt => p.Value = evt.newValue);
                 parameter.OnValueChange
                     .Subscribe(v =>
                     {
-                        localField.value = (Color)v;
+                        localField.value = p.Value;
                     })
                     .AddTo(disposables);
                 Add(localField);

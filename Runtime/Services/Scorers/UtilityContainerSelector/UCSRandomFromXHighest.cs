@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 internal class UCSRandomFromXHighest : UtilityContainerSelector
 {
@@ -10,7 +11,7 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
     {
         get
         {
-            var val = Convert.ToInt32(GetParameter("Number Of Items").Value);
+            var val =ParameterContainer.GetParamInt("Number Of Items").Value;
             if (val > 0)
             {
                 return val;
@@ -20,18 +21,26 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
             }       
         }
     }
-    private bool PercentageChance => (bool)GetParameter("Percentage chance").Value;
+    private bool PercentageChance => ParameterContainer.GetParamBool("Percentage chance").Value;
 
-    private float MaxDeviationFromHighest => Convert.ToSingle(GetParameter("Max deviation from highest").Value);
-    protected override List<Parameter> GetParameters()
+    private float MaxDeviationFromHighest => ParameterContainer.GetParamFloat("Max deviation from highest").Value;
+
+    public UCSRandomFromXHighest()
     {
-        return new List<Parameter>()
-        {
-            new Parameter("Number Of Items", 1),
-            new Parameter("Percentage chance", true),
-            new Parameter("Max deviation from highest", 1f)
-        };
+        ParameterContainer.AddParameter("Number Of Items", 1);
+        ParameterContainer.AddParameter("Percentage chance", true);
+        ParameterContainer.AddParameter("Max deviation from highest", 1f);
     }
+
+    // protected override List<Parameter> GetParameters()
+    // {
+    //     return new List<Parameter>()
+    //     {
+    //         new Parameter("Number Of Items", 1),
+    //         new Parameter("Percentage chance", true),
+    //         new Parameter("Max deviation from highest", 1f)
+    //     };
+    // }
     public override Bucket GetBestUtilityContainer(List<Bucket> buckets, IAiContext context)
     {
         buckets = buckets
@@ -134,7 +143,8 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
     {
         if (list.Count == 0)
         {
-            throw new Exception("No items to chose from, list.Count must be > 0");
+            Debug.LogWarning("No items to chose from, list.Count must be > 0");
+            // throw new Exception("No items to chose from, list.Count must be > 0");
         }
         var numberOfItems = NumberOfItemsToEvaluate < list.Count ? NumberOfItemsToEvaluate : list.Count;
 

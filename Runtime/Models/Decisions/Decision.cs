@@ -10,6 +10,8 @@ public class Decision: UtilityContainer
     private IDisposable agentActionSub;
     private ReactiveListNameSafe<AgentAction> agentActions = new ReactiveListNameSafe<AgentAction>();
     public TickMetaData LastSelectedTickMetaData;
+    private float weight = 1f;
+    private float baseWeight = 1f;
 
     public ReactiveListNameSafe<AgentAction> AgentActions
     {
@@ -98,38 +100,32 @@ public class Decision: UtilityContainer
         }
     }
 
-    internal override RestoreState GetState()
-    {
-        return new DecisionState(Name, Description, AgentActions.Values, Considerations.Values, Parameters.ToList(), this);
-    }
-
-
-    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
-    {
-        await base.RestoreInternalAsync(s, restoreDebug);
-        var state = (DecisionState) s;
-        Name = state.Name;
-        Description = state.Description;
-
-        AgentActions = new ReactiveListNameSafe<AgentAction>();
-        var restoredAgentActions = await RestoreAbleService
-            .GetAiObjectsSortedByIndex<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions,
-                restoreDebug);
-        
-        AgentActions.Add(RestoreAbleService.OrderByNames(state.AgentActions, restoredAgentActions));
-
-        Considerations = new ReactiveListNameSafe<Consideration>();
-        var considerations = await RestoreAbleService
-            .GetAiObjectsSortedByIndex<Consideration>(CurrentDirectory + Consts.FolderName_Considerations,
-                restoreDebug);
-        
-        Considerations.Add(RestoreAbleService.OrderByNames(state.Considerations, considerations));
-
-        if (restoreDebug)
-        {
-            LastCalculatedUtility = state.LastCalculatedUtility;
-        }
-    }
+    // protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
+    // {
+    //     await base.RestoreInternalAsync(s, restoreDebug);
+    //     var state = (DecisionState) s;
+    //     Name = state.Name;
+    //     Description = state.Description;
+    //
+    //     AgentActions = new ReactiveListNameSafe<AgentAction>();
+    //     var restoredAgentActions = await RestoreAbleService
+    //         .GetAiObjectsSortedByIndex<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions,
+    //             restoreDebug);
+    //     
+    //     AgentActions.Add(RestoreAbleService.OrderByNames(state.AgentActions, restoredAgentActions));
+    //
+    //     Considerations = new ReactiveListNameSafe<Consideration>();
+    //     var considerations = await RestoreAbleService
+    //         .GetAiObjectsSortedByIndex<Consideration>(CurrentDirectory + Consts.FolderName_Considerations,
+    //             restoreDebug);
+    //     
+    //     Considerations.Add(RestoreAbleService.OrderByNames(state.Considerations, considerations));
+    //
+    //     if (restoreDebug)
+    //     {
+    //         LastCalculatedUtility = state.LastCalculatedUtility;
+    //     }
+    // }
 
     protected override float CalculateUtility(IAiContext context)
     {
@@ -138,15 +134,17 @@ public class Decision: UtilityContainer
         {
             modifier = cons.CalculateScore(context);
         }
-        if(float.IsNaN(modifier))
+        var parent = ContextAddress.Parent as Bucket;
+
+        if (!float.IsNaN(modifier))
         {
-            var parent = ContextAddress.Parent as Bucket;
-            return base.CalculateUtility(context) * Convert.ToSingle(parent.Weight.Value);
-        } 
+            weight = modifier;
+        }
         else
         {
-            return base.CalculateUtility(context) * modifier;
+            weight = Convert.ToSingle(parent.Weight.Value);
         }
+        return base.CalculateUtility(context) * weight;
     }
 
     protected override void ClearSubscriptions()
@@ -155,39 +153,86 @@ public class Decision: UtilityContainer
         agentActionSub?.Dispose();
     }
 
-    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override async Task RestoreInternalFromFile(SingleFileState state)
     {
-        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_Decision);
-        await RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values,path + "/" + Consts.FolderName_AgentActions, persister);
-        await RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values,path + "/" + Consts.FolderName_Considerations, persister);
-        // await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
+        var s = (DecisionSingleFileState) state;
+
+        AgentActions = new ReactiveListNameSafe<AgentAction>();
+        foreach (var agentActionState in s.agentActionStates)
+        {
+            AgentActions.Add(await Restore<AgentAction>(agentActionState));
+        }
+        
+        Considerations = new ReactiveListNameSafe<Consideration>();
+        foreach (var considerationState in s.considerationsStates)
+        {
+            Considerations.Add(await Restore<Consideration>(considerationState));
+        }
+        LastCalculatedUtility = s.lastCalculatedUtility;
+    }
+    // protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    // {
+    //     await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_Decision);
+    //     await RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values,path + "/" + Consts.FolderName_AgentActions, persister);
+    //     await RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values,path + "/" + Consts.FolderName_Considerations, persister);
+    //     // await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
+    // }
+    public override SingleFileState GetSingleFileState()
+    {
+        return new DecisionSingleFileState(this);
     }
 }
 
+// [Serializable]
+// public class DecisionState: AiObjectState
+// {
+//     public string Name;
+//     public string Description;
+//     public float LastCalculatedUtility;
+//
+//     public List<string> Considerations;
+//     public List<string> AgentActions;
+//     public List<string> Parameters;
+//
+//     public DecisionState() : base()
+//     {
+//     }
+//
+//     public DecisionState(string name, string description, List<AgentAction> agentActions, List<Consideration> considerations, List<Parameter> parameters, Decision o) : base(o)
+//     {
+//         Name = name;
+//         Description = description;
+//         LastCalculatedUtility = o.LastCalculatedUtility;
+//         Considerations = RestoreAbleService.NamesToList(considerations);
+//         AgentActions = RestoreAbleService.NamesToList(agentActions);
+//         Parameters = RestoreAbleService.NamesToList(parameters);
+//
+//     }
+// }
+
 [Serializable]
-public class DecisionState: AiObjectState
+public class DecisionSingleFileState : AiObjectModelSingleFileState
 {
-    public string Name;
-    public string Description;
-    public float LastCalculatedUtility;
+    public float lastCalculatedUtility;
+    public List<ConsiderationSingleFileState> considerationsStates;
+    public List<AgentActionSingleFileState> agentActionStates;
 
-    public List<string> Considerations;
-    public List<string> AgentActions;
-    public List<string> Parameters;
-
-    public DecisionState() : base()
+    public DecisionSingleFileState()
     {
     }
 
-    public DecisionState(string name, string description, List<AgentAction> agentActions, List<Consideration> considerations, List<Parameter> parameters, Decision o) : base(o)
+    public DecisionSingleFileState(Decision o) : base(o)
     {
-        Name = name;
-        Description = description;
-        LastCalculatedUtility = o.LastCalculatedUtility;
-        Considerations = RestoreAbleService.NamesToList(considerations);
-        AgentActions = RestoreAbleService.NamesToList(agentActions);
-        Parameters = RestoreAbleService.NamesToList(parameters);
-
+        considerationsStates = new List<ConsiderationSingleFileState>();
+        foreach (var consideration in o.Considerations.Values)
+        {
+            considerationsStates.Add(consideration.GetSingleFileState() as ConsiderationSingleFileState);
+        }
+        
+        agentActionStates = new List<AgentActionSingleFileState>();
+        foreach (var agentAction in o.AgentActions.Values)
+        {
+            agentActionStates.Add(agentAction.GetSingleFileState() as AgentActionSingleFileState);
+        }
     }
-
 }

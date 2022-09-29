@@ -12,12 +12,6 @@ internal sealed class Error_Consideration : Consideration
 
     }
 
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
-    }
-
     protected override float CalculateBaseScore(IAiContext context)
     {
         return -1;

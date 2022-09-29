@@ -28,13 +28,13 @@ public class Bucket : UtilityContainer
             }
         }
     }
-    public Parameter Weight;
+    public ParamFloat Weight;
 
     public Bucket(): base()
     {
         decisionSub = decisions.OnValueChanged
             .Subscribe(_ => UpdateInfo());
-        Weight = new Parameter("Weight", 1f);
+        Weight = new ParamFloat("Weight", 1f);
         BaseAiObjectType = typeof(Bucket);
     }
 
@@ -53,12 +53,20 @@ public class Bucket : UtilityContainer
         clone.decisionSub = clone.decisions.OnValueChanged
             .Subscribe(_ => clone.UpdateInfo());
 
-        clone.Weight = Weight.Clone();
+        clone.Weight = Weight.Clone() as ParamFloat;
         return clone;
     }
 
+    private bool firstCalculation = true;
+    internal float baseWeight { get; private set; }
+
     protected override float CalculateUtility(IAiContext context)
     {
+        if (firstCalculation)
+        {
+            baseWeight = Convert.ToSingle(Weight.Value);
+            firstCalculation = false;
+        }
         var modifier = float.NaN;
         foreach (var cons in Considerations.Values.Where(c => c.IsModifier))
         {
@@ -66,12 +74,14 @@ public class Bucket : UtilityContainer
         }
         if (float.IsNaN(modifier))
         {
-            return base.CalculateUtility(context) * Convert.ToSingle(Weight.Value);
+            Weight.Value = baseWeight;
         }
         else
         {
-            return base.CalculateUtility(context) * modifier;
+            Weight.Value = modifier;
         }
+        return base.CalculateUtility(context) * Convert.ToSingle(Weight.Value);
+
     }
 
     public override void SetParent(AiObjectModel parent, int indexInParent)
@@ -108,51 +118,51 @@ public class Bucket : UtilityContainer
         }
     }
 
-
-    internal override RestoreState GetState()
-    {
-        return new BucketState(Name, Description, Decisions.Values, Considerations.Values, Weight, this);
-    }
-    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
-    {
-        var state = (BucketState)s;
-        Name = state.Name;
-        Description = state.Description;
-
-        Decisions = new ReactiveListNameSafe<Decision>();
-        var decisionsLocal = await RestoreAbleService
-            .GetAiObjectsSortedByIndex<Decision>(CurrentDirectory + Consts.FolderName_Decisions, restoreDebug);
-        
-        Decisions.Add(RestoreAbleService.OrderByNames(state.Decisions, decisionsLocal));
-        
-        Considerations = new ReactiveListNameSafe<Consideration>();
-        var considerations = await RestoreAbleService
-            .GetAiObjectsSortedByIndex<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
-        
-        Considerations.Add(RestoreAbleService.OrderByNames(state.Considerations, considerations));
-
-        var wStates = await PersistenceAPI.Instance
-            .LoadObjectsAsync<ParameterState>(CurrentDirectory + Consts.FolderName_Weight);
-        var weightState = wStates.FirstOrDefault();
-        if (weightState == null)
-        {
-            throw new NullReferenceException("WeightState is null. State: " + state.Name);
-        }
-        if(weightState.LoadedObject == null)
-        {
-            Weight = new Parameter(weightState.ErrorMessage, weightState.Exception.ToString());
-        }
-        else
-        {
-            Weight = await Restore<Parameter>(weightState.LoadedObject);
-        }
-
-
-        if (restoreDebug)
-        {
-            LastCalculatedUtility = state.LastCalculatedUtility;
-        }
-    }
+    //
+    // internal override RestoreState GetState()
+    // {
+    //     return new BucketState(Name, Description, Decisions.Values, Considerations.Values, Weight, this);
+    // }
+    // protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
+    // {
+    //     var state = (BucketState)s;
+    //     Name = state.Name;
+    //     Description = state.Description;
+    //
+    //     Decisions = new ReactiveListNameSafe<Decision>();
+    //     var decisionsLocal = await RestoreAbleService
+    //         .GetAiObjectsSortedByIndex<Decision>(CurrentDirectory + Consts.FolderName_Decisions, restoreDebug);
+    //     
+    //     Decisions.Add(RestoreAbleService.OrderByNames(state.Decisions, decisionsLocal));
+    //     
+    //     Considerations = new ReactiveListNameSafe<Consideration>();
+    //     var considerations = await RestoreAbleService
+    //         .GetAiObjectsSortedByIndex<Consideration>(CurrentDirectory + Consts.FolderName_Considerations, restoreDebug);
+    //     
+    //     Considerations.Add(RestoreAbleService.OrderByNames(state.Considerations, considerations));
+    //
+    //     var wStates = await PersistenceAPI.Instance
+    //         .LoadObjectsAsync<ParameterState>(CurrentDirectory + Consts.FolderName_Weight);
+    //     var weightState = wStates.FirstOrDefault();
+    //     if (weightState == null)
+    //     {
+    //         throw new NullReferenceException("WeightState is null. State: " + state.Name);
+    //     }
+    //     if(weightState.LoadedObject == null)
+    //     {
+    //         Weight = new Parameter(weightState.ErrorMessage, weightState.Exception.ToString());
+    //     }
+    //     else
+    //     {
+    //         Weight = await Restore<Parameter>(weightState.LoadedObject);
+    //     }
+    //
+    //
+    //     if (restoreDebug)
+    //     {
+    //         LastCalculatedUtility = state.LastCalculatedUtility;
+    //     }
+    // }
 
     protected override void ClearSubscriptions()
     {
@@ -160,37 +170,57 @@ public class Bucket : UtilityContainer
         decisionSub?.Dispose();
     }
 
-    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    protected override async Task RestoreInternalFromFile(SingleFileState state)
     {
-        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_Bucket);
-        await RestoreAbleService.SaveRestoreAblesToFile(Decisions.Values,path + "/" + Consts.FolderName_Decisions, persister);
-        await RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values,path + "/" + Consts.FolderName_Considerations, persister);
-        var wSubPath = path + "/" + Consts.FolderName_Weight;
-        await Weight.SaveToFile(wSubPath, persister);
+        var s = (BucketSingleFileState)state;
+
+        Decisions = new ReactiveListNameSafe<Decision>();
+        foreach (var decisionState in s.decisions)
+        {
+            Decisions.Add(await Restore<Decision>(decisionState));
+        }
+        
+        Considerations = new ReactiveListNameSafe<Consideration>();
+        foreach (var considerationState in s.considerations)
+        {
+            Considerations.Add(await Restore<Consideration>(considerationState));
+        }
+        Weight = await RestoreAble.Restore<ParamFloat>(s.weight);
+        LastCalculatedUtility = s.lastCalculatedUtility;
+    }
+
+    public override SingleFileState GetSingleFileState()
+    {
+        return new BucketSingleFileState(this);
     }
 }
 
 [Serializable]
-public class BucketState: AiObjectState  
+public class BucketSingleFileState: AiObjectModelSingleFileState  
 {
-    public string Name;
-    public string Description;
-    public float LastCalculatedUtility;
+    public float lastCalculatedUtility;
+    public List<DecisionSingleFileState> decisions;
+    public List<ConsiderationSingleFileState> considerations;
+    public ParamBaseState<float> weight;
 
-    public List<string> Decisions;
-    public List<string> Considerations;
-
-    public BucketState(): base()
+    public BucketSingleFileState(): base()
     {
     }
 
-    public BucketState(string name, string description, List<Decision> decisions, List<Consideration> considerations, Parameter weight,  Bucket o) : base(o)
+    public BucketSingleFileState(Bucket o) : base(o)
     {
-        this.Name = name;
-        this.Description = description;
+        decisions = new List<DecisionSingleFileState>();
+        foreach (var oDecision in o.Decisions.Values)
+        {
+            decisions.Add(oDecision.GetSingleFileState() as DecisionSingleFileState);
+        }
         
-        Decisions = RestoreAbleService.NamesToList(decisions);
-        Considerations = RestoreAbleService.NamesToList(considerations);
-        LastCalculatedUtility = o.LastCalculatedUtility;
+        considerations = new List<ConsiderationSingleFileState>();
+        foreach (var oDecision in o.Considerations.Values)
+        {
+            considerations.Add(oDecision.GetSingleFileState() as ConsiderationSingleFileState);
+        }
+        lastCalculatedUtility = o.LastCalculatedUtility;
+        weight = o.Weight.GetState() as ParamBaseState<float>;
     }
 }

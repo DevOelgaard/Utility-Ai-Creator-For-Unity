@@ -19,9 +19,4 @@ internal class RandomValue : Consideration
         TimerService.Instance.LogSequenceStop(Consts.Sequence_CalculateUtility_User,"Random Value");
         return value;
     }
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
-    }
 }

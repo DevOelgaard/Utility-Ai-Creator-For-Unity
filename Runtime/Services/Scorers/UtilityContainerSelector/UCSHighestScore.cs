@@ -20,11 +20,6 @@ public class UCSHighestScore : UtilityContainerSelector
         return name;
     }
 
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
-    }
-
     public override Bucket GetBestUtilityContainer(List<Bucket> buckets, IAiContext context)
     {
         UtilityContainer bestContainer = null;

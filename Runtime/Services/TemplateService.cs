@@ -8,10 +8,10 @@ using System.IO;
 using System.Threading.Tasks;
 using UnityEditor;
 
-internal class TemplateService: RestoreAble
+internal class TemplateService: PersistSingleFile
 {
     private readonly CompositeDisposable subscriptions = new CompositeDisposable();
-    private Dictionary<string, ReactiveList<AiObjectModel>> collectionsByLabel = new Dictionary<string, ReactiveList<AiObjectModel>>();
+    private Dictionary<string, ReactiveListNameSafe<AiObjectModel>> collectionsByLabel = new Dictionary<string, ReactiveListNameSafe<AiObjectModel>>();
     public ReactiveListNameSafe<AiObjectModel> AIs;
     public ReactiveListNameSafe<AiObjectModel> Buckets;
     public ReactiveListNameSafe<AiObjectModel> Decisions;
@@ -56,7 +56,7 @@ internal class TemplateService: RestoreAble
         
         if (!EditorApplication.isPlayingOrWillChangePlaymode)
         {
-            AsyncHelpers.RunSync(() => Instance.LoadCurrentProject());
+            // AsyncHelpers.RunSync(() => Instance.LoadCurrentProject());
         }
     }
     
@@ -71,7 +71,20 @@ internal class TemplateService: RestoreAble
 
     private void HandlePlaymodeStateChange(PlayModeStateChange obj)
     {
-        AsyncHelpers.RunSync(() => Instance.LoadCurrentProject());
+        if (obj == PlayModeStateChange.EnteredEditMode)
+        {
+            AsyncHelpers.RunSync(() => Instance.LoadCurrentProject(true));
+        }
+
+        if (obj == PlayModeStateChange.ExitingEditMode || obj == PlayModeStateChange.ExitingPlayMode)
+        {
+            DebugService.Log("OnExit Saving Started",nameof(TemplateService));
+            AsyncHelpers.RunSync(() => Instance.Save(true));
+            DebugService.Log("OnExit Saving Completed",nameof(TemplateService));
+            DebugService.Log("OnExit PlayAble Started",nameof(TemplateService));
+            PlayAbleAiService.Instance.UpdateAisFromTemplateService(true);
+            DebugService.Log("OnExit PlayAble Completed",nameof(TemplateService));
+        }
     }
 
     private void Init(bool restore)
@@ -85,7 +98,7 @@ internal class TemplateService: RestoreAble
         AgentActions = new ReactiveListNameSafe<AiObjectModel>();
         ResponseCurves = new ReactiveListNameSafe<AiObjectModel>();
 
-        collectionsByLabel = new Dictionary<string, ReactiveList<AiObjectModel>>
+        collectionsByLabel = new Dictionary<string, ReactiveListNameSafe<AiObjectModel>>
         {
             {Consts.Label_UAIModel, AIs},
             {Consts.Label_BucketModel, Buckets},
@@ -109,7 +122,7 @@ internal class TemplateService: RestoreAble
         }
     }
 
-    private void SetState(string s)
+    internal void SetState(string s)
     {
         stateString = s;
         onStateChanged.OnNext(stateString);
@@ -131,11 +144,20 @@ internal class TemplateService: RestoreAble
         await LoadCurrentProject(true);
     }
 
+    private DateTime lastLoaded;
     internal async Task LoadCurrentProject(bool temporaryProject = false)
     {
+        if (lastLoaded == DateTime.Now)
+        {
+            return;
+        }
+        
+        Debug.Log("Loading current project. Last Loaded: " + lastLoaded + " Now: " + DateTime.Now);
+        lastLoaded = DateTime.Now;
+
         SetState("Loading");
         var loadPath = temporaryProject
-            ? ProjectSettingsService.Instance.GetProjectTemporaryPath()
+            ? ProjectSettingsService.Instance.GetTemporaryDirectory()
             : ProjectSettingsService.Instance.GetCurrentProjectPath();
 
         if (loadPath == null)
@@ -150,11 +172,14 @@ internal class TemplateService: RestoreAble
 
         loadPath += "/" + Consts.FileName_Templates + "." + Consts.FileExtension_TemplateService;
 
-        DebugService.Log("Loading path: " + loadPath,this);
 
         if (loadedPath == loadPath)
         {
             DebugService.Log("Reloading path: " + loadPath, this);
+        }
+        else
+        {
+            DebugService.Log("Loading path: " + loadPath,this);
         }
 
         DebugService.Log("ProjectDirectory: " + projectDirectory, this);
@@ -170,7 +195,7 @@ internal class TemplateService: RestoreAble
         
         var perstistAPI = PersistenceAPI.Instance;
         
-        var state = await perstistAPI.LoadObjectPathAsync<UasTemplateServiceState>(loadPath);
+        var state = await perstistAPI.LoadObjectPathAsync<UasTemplateServiceSingleFileState>(loadPath);
         if (state.LoadedObject == null)
         {
             ClearCollectionNotify();
@@ -183,7 +208,7 @@ internal class TemplateService: RestoreAble
         {
             try
             {
-                await RestoreAsync(state.LoadedObject);
+                await RestoreFromFile(state.LoadedObject);
                 DebugService.Log("Restore Complete AIs: " + AIs.Values.Count,this);
 
                 // isLoaded = true;
@@ -197,8 +222,9 @@ internal class TemplateService: RestoreAble
             {
                 DebugService.LogError("Loading failed: " + ex, this);
                 SetState("Error");
+                Init(false);
                 TimerService.Instance.LogSequenceStop(Consts.Sequence_Persistence_Load,"LoadCurrentProject",true);
-                throw new Exception("Template Service Restore Failed : ", ex);
+                throw ex;
             }
         }
     }
@@ -210,22 +236,17 @@ internal class TemplateService: RestoreAble
         var currentState = stateString;
         SetState("Saving");
         DebugService.Log("Saving Backup: " + backup, this);
-        var path = !backup
+        var directoryPath = !backup
             ? ProjectSettingsService.Instance.GetCurrentProjectDirectory()
             : ProjectSettingsService.Instance.GetTemporaryDirectory();
 
-        DebugService.Log("Saving path: " + path, this);
+        DebugService.Log("Saving path: " + directoryPath, this);
 
-        var perstistAPI = PersistenceAPI.Instance;
-        await perstistAPI.SaveObjectDestructivelyAsync(this, path);
+        await PersistenceAPI.Instance.Persister.SaveObjectAsync(GetSingleFileState(), directoryPath + Consts.FileName_Templates + "." + Consts.FileExtension_TemplateService);
+        DebugService.Log("Saving Complete at path: " + directoryPath, this);
+        // await perstistAPI.SaveObjectDestructivelyAsync(this, path);
         SetState("Ready");
         TimerService.Instance.LogSequenceStop(Consts.Sequence_Persistence_Save,"Save",true);
-    }
-
-    protected override string GetFileName()
-    {
-        var name = Consts.FileName_Templates;
-        return string.IsNullOrEmpty(name) ? Consts.FileName_Templates : name;
     }
 
     internal void Reset()
@@ -235,7 +256,7 @@ internal class TemplateService: RestoreAble
         Init(false);
     }
 
-    internal ReactiveList<AiObjectModel> GetCollection(string label)
+    internal ReactiveListNameSafe<AiObjectModel> GetCollection(string label)
     {
         if (collectionsByLabel.ContainsKey(label))
         {
@@ -277,54 +298,75 @@ internal class TemplateService: RestoreAble
         return null;
     }
 
-
-
-    internal override RestoreState GetState()
-    {
-        return new UasTemplateServiceState(AIs, Buckets, Decisions, Considerations, AgentActions, this);
-    }
-    
-
-    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
-    {
-        DebugService.Log("Saving Ais: " + AIs.Values.Count, this);
-        var directoryPath = Path.GetDirectoryName(path) + "/" + Consts.FolderName_Templates;
-        if (!path.Contains(Consts.FileExtension_TemplateService))
-        {
-            path += "." + Consts.FileExtension_TemplateService;
-        }
-        await persister.SaveObjectAsync(state, path) ;
-
-        persister = new JsonPersister();
-        var tasks = new List<Task>()
-        {
-            RestoreAbleService.SaveRestoreAblesToFile(AIs.Values.Cast<Uai>(),
-                directoryPath + "/" + Consts.FolderName_Ais, persister),
-            RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values.Cast<Bucket>(),
-                directoryPath + "/" + Consts.FolderName_Buckets, persister),
-            RestoreAbleService.SaveRestoreAblesToFile(Decisions.Values.Cast<Decision>(),
-                directoryPath + "/" + Consts.FolderName_Decisions, persister),
-            RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values.Cast<Consideration>(),
-                directoryPath + "/" + Consts.FolderName_Considerations, persister),
-            RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values.Cast<AgentAction>(),
-                directoryPath + "/" + Consts.FolderName_AgentActions, persister),
-            RestoreAbleService.SaveRestoreAblesToFile(ResponseCurves.Values.Cast<ResponseCurve>(),
-                directoryPath + "/" + Consts.FolderName_ResponseCurves, persister),
-        };
-        await Task.WhenAll(tasks);
-        DebugService.Log("Saving Complete", this);
-        //SetState("Ready");
-    }
-
-    private async Task RestoreAsync(UasTemplateServiceState state)
-    {
-        await RestoreInternalAsync(state);
-    }
+    //
+    //
+    // internal override RestoreState GetState()
+    // {
+    //     return new UasTemplateServiceState(AIs, Buckets, Decisions, Considerations, AgentActions, this);
+    // }
+    //
+    //
+    // protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    // {
+    //     DebugService.Log("Saving Ais: " + AIs.Values.Count, this);
+    //     var directoryPath = Path.GetDirectoryName(path) + "/" + Consts.FolderName_Templates;
+    //     if (!path.Contains(Consts.FileExtension_TemplateService))
+    //     {
+    //         path += "." + Consts.FileExtension_TemplateService;
+    //     }
+    //     await persister.SaveObjectAsync(state, path) ;
+    //
+    //     persister = new JsonPersister();
+    //     var tasks = new List<Task>()
+    //     {
+    //         RestoreAbleService.SaveRestoreAblesToFile(AIs.Values.Cast<Uai>(),
+    //             directoryPath + "/" + Consts.FolderName_Ais, persister),
+    //         RestoreAbleService.SaveRestoreAblesToFile(Buckets.Values.Cast<Bucket>(),
+    //             directoryPath + "/" + Consts.FolderName_Buckets, persister),
+    //         RestoreAbleService.SaveRestoreAblesToFile(Decisions.Values.Cast<Decision>(),
+    //             directoryPath + "/" + Consts.FolderName_Decisions, persister),
+    //         RestoreAbleService.SaveRestoreAblesToFile(Considerations.Values.Cast<Consideration>(),
+    //             directoryPath + "/" + Consts.FolderName_Considerations, persister),
+    //         RestoreAbleService.SaveRestoreAblesToFile(AgentActions.Values.Cast<AgentAction>(),
+    //             directoryPath + "/" + Consts.FolderName_AgentActions, persister),
+    //         RestoreAbleService.SaveRestoreAblesToFile(ResponseCurves.Values.Cast<ResponseCurve>(),
+    //             directoryPath + "/" + Consts.FolderName_ResponseCurves, persister),
+    //     };
+    //     await Task.WhenAll(tasks);
+    //     DebugService.Log("Saving Complete", this);
+    //     //SetState("Ready");
+    // }
+    //
+    // private async Task RestoreAsync(UasTemplateServiceState state)
+    // {
+    //     await RestoreInternalAsync(state);
+    // }
 
     internal void Add(AiObjectModel model)
     {
         var collection = GetCollection(model);
+        var x = collection.Values.Where(m => m.Guid == model.Guid).ToList();
+        if (x.Count > 0)
+        {
+            DebugService.LogError(model.Name + " already exists, in collection", nameof(TemplateService));
+        }
         collection.Add(model);
+    }
+
+    internal void Add(List<AiObjectModel> models)
+    {
+        if(models.Count == 0) return;
+
+        var collection = GetCollection(models.First());
+        foreach (var aiObjectModel in models)
+        {
+            var x = collection.Values.Where(m => m.Guid == aiObjectModel.Guid).ToList();
+            if (x.Count > 0)
+            {
+                DebugService.LogError(aiObjectModel.Name + " already exists, in collection", nameof(TemplateService));
+            }
+        }
+        collection.Add(models);
     }
 
     internal void Remove(AiObjectModel model)
@@ -354,7 +396,7 @@ internal class TemplateService: RestoreAble
         ResponseCurves?.ClearNoNotify();
     }
 
-    private ReactiveList<AiObjectModel> GetCollection(AiObjectModel model)
+    private ReactiveListNameSafe<AiObjectModel> GetCollection(AiObjectModel model)
     {
         var type = model.GetType();
 
@@ -385,41 +427,41 @@ internal class TemplateService: RestoreAble
     {
         return a.IsAssignableFrom(b) || a.IsSubclassOf(b);
     }
-
-    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
-    {
-        DebugService.Log("Start Restore: " + s.FileName, this);
-        ClearCollectionNoNotify();
-        SubscribeToCollectionChanges();
-        var loadDirectory = projectDirectory + "/" + Consts.FolderName_Templates;
-        var state = (UasTemplateServiceState)s;
-        var tasks = new List<Task>
-        {
-            RestoreAbleService
-                .LoadObjectsAndSortToCollection<Uai>(loadDirectory + Consts.FolderName_Ais, 
-                    state.aIs,AIs,restoreDebug),
-            RestoreAbleService
-                .LoadObjectsAndSortToCollection<Bucket>(loadDirectory + Consts.FolderName_Buckets, 
-                    state.buckets,Buckets,restoreDebug),
-            RestoreAbleService
-                .LoadObjectsAndSortToCollection<Decision>(loadDirectory + Consts.FolderName_Decisions, 
-                    state.decisions,Decisions,restoreDebug),
-            RestoreAbleService
-                .LoadObjectsAndSortToCollection<Consideration>(loadDirectory + Consts.FolderName_Considerations,
-                    state.considerations,Considerations,restoreDebug),
-            RestoreAbleService
-                .LoadObjectsAndSortToCollection<AgentAction>(loadDirectory + Consts.FolderName_AgentActions, 
-                    state.agentActions,AgentActions,restoreDebug),
-            RestoreAbleService
-                .LoadObjectsAndSortToCollection<ResponseCurve>(loadDirectory + Consts.FolderName_ResponseCurves, 
-                    state.responseCurves,ResponseCurves,restoreDebug)
-        };
-
-        await Task.WhenAll(tasks);
-        DebugService.Log("Finished Restore: " + s.FileName, this);
-
-        // onCollectionChanged.OnNext(AIs);
-    }
+    //
+    // protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
+    // {
+    //     DebugService.Log("Start Restore: " + s.FileName, this);
+    //     ClearCollectionNoNotify();
+    //     SubscribeToCollectionChanges();
+    //     var loadDirectory = projectDirectory + "/" + Consts.FolderName_Templates;
+    //     var state = (UasTemplateServiceState)s;
+    //     var tasks = new List<Task>
+    //     {
+    //         RestoreAbleService
+    //             .LoadObjectsAndSortToCollection<Uai>(loadDirectory + Consts.FolderName_Ais, 
+    //                 state.aIs,AIs,restoreDebug),
+    //         RestoreAbleService
+    //             .LoadObjectsAndSortToCollection<Bucket>(loadDirectory + Consts.FolderName_Buckets, 
+    //                 state.buckets,Buckets,restoreDebug),
+    //         RestoreAbleService
+    //             .LoadObjectsAndSortToCollection<Decision>(loadDirectory + Consts.FolderName_Decisions, 
+    //                 state.decisions,Decisions,restoreDebug),
+    //         RestoreAbleService
+    //             .LoadObjectsAndSortToCollection<Consideration>(loadDirectory + Consts.FolderName_Considerations,
+    //                 state.considerations,Considerations,restoreDebug),
+    //         RestoreAbleService
+    //             .LoadObjectsAndSortToCollection<AgentAction>(loadDirectory + Consts.FolderName_AgentActions, 
+    //                 state.agentActions,AgentActions,restoreDebug),
+    //         RestoreAbleService
+    //             .LoadObjectsAndSortToCollection<ResponseCurve>(loadDirectory + Consts.FolderName_ResponseCurves, 
+    //                 state.responseCurves,ResponseCurves,restoreDebug)
+    //     };
+    //
+    //     await Task.WhenAll(tasks);
+    //     DebugService.Log("Finished Restore: " + s.FileName, this);
+    //
+    //     // onCollectionChanged.OnNext(AIs);
+    // }
     
     ~TemplateService()
     {
@@ -428,36 +470,148 @@ internal class TemplateService: RestoreAble
         EditorApplication.playModeStateChanged -= HandlePlaymodeStateChange;
         DebugService.Log("Destroying Complete",this);
     }
+
+    protected override async Task RestoreFromFile(SingleFileState state)
+    {
+        ClearCollectionNoNotify();
+        SubscribeToCollectionChanges();
+        var loadDirectory = projectDirectory + "/" + Consts.FolderName_Templates;
+        var s = (UasTemplateServiceSingleFileState)state;
+
+        var tempList = new List<AiObjectModel>();
+        foreach (var oState in s.aIs)
+        {
+            AIs.Add(await Restore<Uai>(oState));
+        }
+        AIs.Add(tempList);
+        
+        tempList = new List<AiObjectModel>();
+        foreach (var oState in s.buckets)
+        {
+            Buckets.Add(await Restore<Bucket>(oState));
+        }
+        Buckets.Add(tempList);
+        
+        tempList = new List<AiObjectModel>();
+        foreach (var oState in s.decisions)
+        {
+            Decisions.Add(await Restore<Decision>(oState));
+        }
+        Decisions.Add(tempList);
+        
+        tempList = new List<AiObjectModel>();
+        foreach (var oState in s.considerations)
+        {
+            tempList.Add(await Restore<Consideration>(oState));
+        }
+        Considerations.Add(tempList);
+
+        tempList = new List<AiObjectModel>();
+        foreach (var oState in s.agentActions)        
+        {
+            tempList.Add(await Restore<AgentAction>(oState));
+        }
+        AgentActions.Add(tempList);
+        
+        tempList = new List<AiObjectModel>();
+        foreach (var oState in s.responseCurves)        
+        {
+            tempList.Add(await Restore<ResponseCurve>(oState));
+        }
+        ResponseCurves.Add(tempList);
+
+        DebugService.Log("Finished Restore", this);
+    }
+
+    public override SingleFileState GetSingleFileState()
+    {
+        return new UasTemplateServiceSingleFileState(this);
+    }
 }
 
 [Serializable]
-public class UasTemplateServiceState : RestoreState
+public class UasTemplateServiceSingleFileState : SingleFileState
 {
-    public List<string> aIs;
-    public List<string> buckets;
-    public List<string> decisions;
-    public List<string> considerations;
-    public List<string> agentActions;
-    public List<string> responseCurves;
-    public UasTemplateServiceState()
+    public List<UaiSingleFileState> aIs;
+    public List<BucketSingleFileState> buckets;
+    public List<DecisionSingleFileState> decisions;
+    public List<ConsiderationSingleFileState> considerations;
+    public List<AgentActionSingleFileState> agentActions;
+    public List<ResponseCurveSingleFileState> responseCurves;
+    public UasTemplateServiceSingleFileState()
     {
     }
 
-    internal UasTemplateServiceState(
-        ReactiveList<AiObjectModel> aiS,
-        ReactiveList<AiObjectModel> buckets, ReactiveList<AiObjectModel> decisions,
-        ReactiveList<AiObjectModel> considerations, ReactiveList<AiObjectModel> agentActions, TemplateService model) : base(model)
+    internal UasTemplateServiceSingleFileState(TemplateService o) : base(o)
     {
-        aIs = RestoreAbleService.NamesToList(aiS.Values);
+        aIs = new List<UaiSingleFileState>();
+        foreach (var oAI in o.AIs.Values)
+        {
+            aIs.Add(oAI.GetSingleFileState() as UaiSingleFileState);
+        }
 
-        this.buckets = RestoreAbleService.NamesToList(buckets.Values);
+        buckets = new List<BucketSingleFileState>();
+        foreach (var aiObjectModel in o.Buckets.Values)
+        {
+            buckets.Add(aiObjectModel.GetSingleFileState() as BucketSingleFileState);
+        }
 
-        this.decisions = RestoreAbleService.NamesToList(decisions.Values);
+        decisions = new List<DecisionSingleFileState>();
+        foreach (var aiObjectModel in o.Decisions.Values)
+        {
+            decisions.Add(aiObjectModel.GetSingleFileState() as DecisionSingleFileState);
+        }
 
-        this.considerations = RestoreAbleService.NamesToList(considerations.Values);
+        considerations = new List<ConsiderationSingleFileState>();
+        foreach (var aiObjectModel in o.Considerations.Values)
+        {
+            considerations.Add(aiObjectModel.GetSingleFileState() as ConsiderationSingleFileState);
+        };
 
-        this.agentActions = RestoreAbleService.NamesToList(agentActions.Values);
+        agentActions = new List<AgentActionSingleFileState>();
+        foreach (var aiObjectModel in o.AgentActions.Values)
+        {
+            agentActions.Add(aiObjectModel.GetSingleFileState() as AgentActionSingleFileState);
+        };
 
-        responseCurves = RestoreAbleService.NamesToList(model.ResponseCurves.Values);
+
+        responseCurves = new List<ResponseCurveSingleFileState>();
+        foreach (var aiObjectModel in o.ResponseCurves.Values)
+        {
+            responseCurves.Add(aiObjectModel.GetSingleFileState() as ResponseCurveSingleFileState);
+        };
     }
 }
+
+//
+// [Serializable]
+// public class UasTemplateServiceState : RestoreState
+// {
+//     public List<string> aIs;
+//     public List<string> buckets;
+//     public List<string> decisions;
+//     public List<string> considerations;
+//     public List<string> agentActions;
+//     public List<string> responseCurves;
+//     public UasTemplateServiceState()
+//     {
+//     }
+//
+//     internal UasTemplateServiceState(
+//         ReactiveList<AiObjectModel> aiS,
+//         ReactiveList<AiObjectModel> buckets, ReactiveList<AiObjectModel> decisions,
+//         ReactiveList<AiObjectModel> considerations, ReactiveList<AiObjectModel> agentActions, TemplateService model) : base(model)
+//     {
+//         aIs = RestoreAbleService.NamesToList(aiS.Values);
+//
+//         this.buckets = RestoreAbleService.NamesToList(buckets.Values);
+//
+//         this.decisions = RestoreAbleService.NamesToList(decisions.Values);
+//
+//         this.considerations = RestoreAbleService.NamesToList(considerations.Values);
+//
+//         this.agentActions = RestoreAbleService.NamesToList(agentActions.Values);
+//
+//         responseCurves = RestoreAbleService.NamesToList(model.ResponseCurves.Values);
+//     }
+// }

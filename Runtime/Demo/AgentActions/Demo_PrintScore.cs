@@ -11,13 +11,6 @@ internal class Demo_PrintScore : AgentAction
     {
     }
 
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-        };
-    }
-
     public override void OnStart(IAiContext context)
     {
         PrintScore(context);

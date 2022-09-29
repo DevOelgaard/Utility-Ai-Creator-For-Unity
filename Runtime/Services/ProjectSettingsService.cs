@@ -14,7 +14,7 @@ internal class ProjectSettingsService
     private readonly CompositeDisposable modelChangedSubscription = new CompositeDisposable();
     internal IObservable<bool> OnProjectSettingsChanged => onProjectSettingsChanged;
     private readonly Subject<bool> onProjectSettingsChanged = new Subject<bool>();
-    private readonly ProjectSettingsModel model;
+    public readonly ProjectSettingsModel model;
     private readonly IPersister persister;
 
     internal static ProjectSettingsService Instance => _instance ??= new ProjectSettingsService();
@@ -59,7 +59,7 @@ internal class ProjectSettingsService
         return new DirectoryInfo(Path.GetDirectoryName(path) ?? string.Empty).FullName+"/";
     }
     
-    public string GetProjectTemporaryPath()
+    private string GetProjectTemporaryPath()
     {
         var currentProjectName = GetCurrentProjectName(true);
         return Consts.FileUasProjectTemp + currentProjectName;
@@ -68,13 +68,15 @@ internal class ProjectSettingsService
     private void SetProjectPath(string path)
     {
         model.CurrentProjectPath = path + "/";
+        model.LastProjectDirectory = Directory.GetParent(path).ToString();
+        DebugService.Log("Last Project Directory set to: " + model.LastProjectDirectory, this);
         SaveSettings();
     }
 
     internal async Task CreateProject()
     {
         var path = EditorUtility
-            .SaveFolderPanel("New Project", "", "New Project");
+            .SaveFolderPanel("New Project", model.LastProjectDirectory, "New Project");
         DebugService.Log("Creating new Project at path: " + path, this);
 
         SetProjectPath(path);
@@ -92,10 +94,11 @@ internal class ProjectSettingsService
     internal async Task SaveProjectAs()
     {
         var path = EditorUtility
-            .SaveFilePanel("New Project", "", "New Project", 
-                Consts.FileExtension_TemplateService);
+            .SaveFolderPanel("New Project", model.LastProjectDirectory, "New Project");
         
         SetProjectPath(path);
+        SetProjectName(path);
+
         await TemplateService.Instance.Save();
         await TemplateService.Instance.LoadCurrentProject();
     }
@@ -109,7 +112,7 @@ internal class ProjectSettingsService
         filters[3] = "*";
 
 
-        var path = EditorUtility.OpenFolderPanel("Open Project","","UAI Project");
+        var path = EditorUtility.OpenFolderPanel("Open Project",model.LastProjectDirectory,"UAI Project");
         if (path.Length == 0) return;
         SetProjectPath(path);
     }

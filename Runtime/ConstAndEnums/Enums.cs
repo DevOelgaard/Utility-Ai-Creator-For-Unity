@@ -30,3 +30,14 @@ public enum UtilityContainerTypes
     Bucket,
     Decision,
 }
+
+public enum UnityTags
+{
+    Untagged,
+    Target,
+    Finish,
+    EditorOnly,
+    MainCamera,
+    Player,
+    GameController
+}

@@ -12,22 +12,10 @@ internal class TickerModeTimeBudget : TickerMode
     internal int TickedAgentsThisFrame { get; private set; }
     public TickerModeTimeBudget() : base(UaiTickerMode.TimeBudget, Consts.Description_TickerModeTimeBudget)
     {
+        ParameterContainer.AddParameter("Time Budget MS", 23);
+        ParameterContainer.AddParameter("Debug", false);
     }
-
-    internal override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-            new Parameter("Time Budget MS", 23),
-            new Parameter("Debug", false),
-        };
-    }
-
-    protected override string GetFileName()
-    {
-        return Consts.FileName_TickerModeTimeBudgetFrameRate;
-    }
-
+    
     internal override void Tick(List<IAgent> agents, TickMetaData metaData)
     {
         stopwatch.Reset();
@@ -36,9 +24,9 @@ internal class TickerModeTimeBudget : TickerMode
 
         while(TickedAgentsThisFrame < agents.Count)
         {
-            if (stopwatch.ElapsedMilliseconds >= Convert.ToSingle(ParameterContainer.GetParameter("Time Budget MS").Value))
+            if (stopwatch.ElapsedMilliseconds >= ParameterContainer.GetParamFloat("Time Budget MS").Value)
             {
-                if ((bool)ParameterContainer.GetParameter("Debug").Value)
+                if (ParameterContainer.GetParamBool("Debug").Value)
                 {
                     DebugService.Log("Breaking tickedAgents: " + TickedAgentsThisFrame + " Elapsed Time: " + stopwatch.ElapsedMilliseconds + "ms", this);
                 }
@@ -61,7 +49,7 @@ internal class TickerModeTimeBudget : TickerMode
             TickedAgentsThisFrame++;
             if (TickedAgentsThisFrame >= agents.Count)
             {
-                if ((bool)ParameterContainer.GetParameter("Debug").Value)
+                if (ParameterContainer.GetParamBool("Debug").Value)
                 {
                     DebugService.Log("All agents ticked agents.count: " + agents.Count + " Elapsed Time: " + stopwatch.ElapsedMilliseconds + "ms", this);
                 }

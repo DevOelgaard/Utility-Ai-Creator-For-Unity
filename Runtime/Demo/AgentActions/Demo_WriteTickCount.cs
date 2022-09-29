@@ -9,15 +9,16 @@ internal class Demo_WriteTickCount : AgentAction
 {
     public Demo_WriteTickCount(): base()
     {
+        ParameterContainer.AddParameter("Bool", true);
     }
     
-    protected override List<Parameter> GetParameters()
-    {
-        var result = new List<Parameter>();
-        var p = new Parameter("Bool", true);
-        result.Add(p);
-        return result;
-    }
+    // protected override List<Parameter> GetParameters()
+    // {
+    //     var result = new List<Parameter>();
+    //     var p = new Parameter("Bool", true);
+    //     result.Add(p);
+    //     return result;
+    // }
 
     public override void OnStart(IAiContext context)
     {

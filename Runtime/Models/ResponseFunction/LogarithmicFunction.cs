@@ -9,18 +9,11 @@ internal class LogarithmicFunction : ResponseFunction
 {
     public LogarithmicFunction() : base(TypeToName.RF_Logarithmic)
     {
-    }
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-            new Parameter("Base", 1f),
-        };
+        AddParameter("Base",1f);
     }
 
     protected override float CalculateResponseInternal(float x)
     {
-        return Mathf.Log(x, Convert.ToSingle(GetParameter("Base").Value)/10)/10;
+        return Mathf.Log(x, ParameterContainer.GetParamFloat("Base").Value)/10/10;
     }
 }

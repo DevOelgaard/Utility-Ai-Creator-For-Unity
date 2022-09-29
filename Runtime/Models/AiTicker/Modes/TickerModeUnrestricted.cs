@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 internal class TickerModeUnrestricted : TickerMode
 {
     public int TotalTicks = 0;
-    public long SampleTime => Convert.ToInt32(ParameterContainer.GetParameter("Sample Time").Value);
+    public long SampleTime => ParameterContainer.GetParamInt("Sample Time").Value;
     private bool isStarted = false;
     private bool isLogged = false;
     private readonly Stopwatch sampleTimeSW = new Stopwatch();
@@ -17,22 +17,8 @@ internal class TickerModeUnrestricted : TickerMode
     public TickerModeUnrestricted() : base(UaiTickerMode.Unrestricted, 
         Consts.Description_TickerModeUnrestricted)
     {
-        
-
-    }
-
-    protected override string GetFileName()
-    {
-        return Consts.FileName_TickerModeUnrestrictedFrameRate;
-    }
-
-    internal override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-            new Parameter("Sample Time", 300),
-            new Parameter("Run", false)
-        };
+        ParameterContainer.AddParameter("Sample Time", 300);
+        ParameterContainer.AddParameter("Run", false);
     }
 
     private int startCounter = 5;
@@ -46,7 +32,7 @@ internal class TickerModeUnrestricted : TickerMode
         {
             startCounter--;
         }
-        if ((bool) ParameterContainer.GetParameter("Run").Value != true) return;
+        if (ParameterContainer.GetParamBool("Run").Value != true) return;
         TimerService.Instance.LogSequenceStart(Consts.Sequence_CalculateUtility_UAI,"TickAgent");
 
         if (!isStarted)

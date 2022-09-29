@@ -11,14 +11,6 @@ internal class Demo_PrintEnum : AgentAction
         //Name = "";
         //Description = "";
         //HelpText = "";
+        ParameterContainer.AddParameter("Enum param", UtilityContainerTypes.Decision);
     }
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-            new ParameterEnum("Enum param", UtilityContainerTypes.Decision)
-        };
-    }
-
 }

@@ -8,7 +8,7 @@ using UnityEditor;
 using UniRx;
 using UnityEngine;
 
-public class PlayAbleAiService: RestoreAble
+public class PlayAbleAiService: PersistSingleFile
 {
     private static readonly CompositeDisposable Disposables = new CompositeDisposable();
     private static readonly CompositeDisposable AiDisposables = new CompositeDisposable();
@@ -49,7 +49,7 @@ public class PlayAbleAiService: RestoreAble
     {
         DebugService.Log("Initializing editor mode", nameof(PlayAbleAiService));
 
-        Instance.UpdateAisFromTemplateService(true);                
+        Instance.UpdateAisFromTemplateService(false);                
 
         TemplateService.Instance
             .AIs
@@ -83,8 +83,9 @@ public class PlayAbleAiService: RestoreAble
     {
         if (PlayAbleAIs.Count == 0)
         {
-            DebugService.LogWarning("No playable Ais. Have you marked an ai PlayAble", this);
-            return null;
+            AsyncHelpers.RunSync(Instance.RestoreService);
+            // DebugService.LogWarning("No playable Ais. Have you marked an ai PlayAble", this);
+            // return null;
         }
         var ai = PlayAbleAIs.FirstOrDefault(ai => ai.Name == name) ?? PlayAbleAIs.First();
         DebugService.Log("GetAiByName requested name: " + name +" returning: " + ai.Name,this);
@@ -95,11 +96,11 @@ public class PlayAbleAiService: RestoreAble
     {
         DebugService.Log("Restoring", this);
         var objectMetaData = await PersistenceAPI.Instance
-            .LoadObjectPathAsync<PlayAbleAiServiceState>(Consts.FilePath_PlayAbleAiWithExtention);
+            .LoadObjectPathAsync<PlayAbleAiServiceSingleFileState>(Consts.FilePath_PlayAbleAiWithExtention);
         if (objectMetaData.IsSuccessFullyLoaded)
         {
             var state = objectMetaData.LoadedObject;
-            await RestoreInternalAsync(state);
+            await RestoreFromFile(state);
             DebugService.Log("Restoring Complete", this);
         }
         else
@@ -120,14 +121,14 @@ public class PlayAbleAiService: RestoreAble
                 PlayAbleAIs.Add(ai);
             }
             ai.OnIsPlayableChanged
-                .Subscribe(_ => UpdateAisFromTemplateService(true))
+                .Subscribe(_ => UpdateAisFromTemplateService(false))
                 .AddTo(AiDisposables);
         }
         DebugService.Log("Ais Updated Count: " + PlayAbleAIs.Count, this);
 
         if (saveAfterUpdate)
         {
-            SaveState();
+            AsyncHelpers.RunSync(SaveState);
         }
 
         onAisChanged.OnNext(PlayAbleAIs);
@@ -136,44 +137,44 @@ public class PlayAbleAiService: RestoreAble
     private void ExitingPlayMode()
     {
         DebugService.Log("Exiting Editor Mode", this);
-        SaveState();
+        // SaveState();
+        // AsyncHelpers.RunSync(SaveState);
         DebugService.Log("Exiting Editor Mode - Complete", this);
     }
-    
-    protected override string GetFileName()
-    {
-        return Consts.FileName_PLayAbleAi;
-    }
-    
-    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
-    {
-        DebugService.Log("RestoringInternal", this);
-        PlayAbleAIs = await RestoreAbleService.GetAiObjectsSortedByIndex<Uai>(Consts.Folder_PlayAbleAi_Complete, restoreDebug);
+    //
+    // protected override string GetFileName()
+    // {
+    //     return Consts.FileName_PLayAbleAi;
+    // }
+    //
+    // protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
+    // {
+    //     DebugService.Log("RestoringInternal", this);
+    //     PlayAbleAIs = await RestoreAbleService. GetAiObjectsSortedByIndex<Uai>(Consts.Folder_PlayAbleAi_Complete, restoreDebug);
+    //
+    //     DebugService.Log("RestoringInternal Complete Ai count: " + PlayAbleAIs.Count, this);
+    // }
+    //
+    // protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    // {
+    //     DebugService.Log("InternalSaveToFile", this);
+    //
+    //     await persister.SaveObjectAsync(state, Consts.FilePath_PlayAbleAiWithExtention);
+    //     
+    //     await RestoreAbleService.SaveRestoreAblesToFile(PlayAbleAIs, Consts.Folder_PlayAbleAi_Complete, persister);
+    //     DebugService.Log("InternalSaveToFile - Complete", this);
+    // }
+    //
+    // internal override RestoreState GetState()
+    // {
+    //     return new PlayAbleAiServiceState(PlayAbleAIs,this);
+    // }
 
-        DebugService.Log("RestoringInternal Complete Ai count: " + PlayAbleAIs.Count, this);
-    }
-
-    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
-    {
-        DebugService.Log("InternalSaveToFile", this);
-
-        await persister.SaveObjectAsync(state, Consts.FilePath_PlayAbleAiWithExtention);
-        
-        
-        await RestoreAbleService.SaveRestoreAblesToFile(PlayAbleAIs, Consts.Folder_PlayAbleAi_Complete, persister);
-        DebugService.Log("InternalSaveToFile - Complete", this);
-    }
-
-    internal override RestoreState GetState()
-    {
-        return new PlayAbleAiServiceState(PlayAbleAIs,this);
-    }
-
-    private async void SaveState()
+    private async Task SaveState()
     {
         if (EditorApplication.isPlaying) return;
         DebugService.Log("Saving", this);
-        await PersistenceAPI.Instance.SaveObjectDestructivelyAsync(this, Consts.FilePath_PlayAbleAiWithExtention);
+        await PersistenceAPI.Instance.Persister.SaveObjectAsync(GetSingleFileState(), Consts.FilePath_PlayAbleAiWithExtention);
         DebugService.Log("Saving - Complete ais count: " + PlayAbleAIs.Count, this);
     }
     private void ClearSubscriptions()
@@ -191,17 +192,41 @@ public class PlayAbleAiService: RestoreAble
         ClearSubscriptions();
         DebugService.Log("Destroying complete", this);
     }
+
+    protected override async Task RestoreFromFile(SingleFileState state)
+    {
+        DebugService.Log("Restoring from file", this);
+        var s = state as PlayAbleAiServiceSingleFileState;
+        PlayAbleAIs = new List<Uai>();
+        foreach (var uaiSingleFileState in s.uaiStates)
+        {
+            PlayAbleAIs.Add(await Restore<Uai>(uaiSingleFileState));
+        }
+
+        DebugService.Log("Restoring from file Complete Ai count: " + PlayAbleAIs.Count, this);
+    }
+
+    public override SingleFileState GetSingleFileState()
+    {
+        return new PlayAbleAiServiceSingleFileState(this);
+    }
 }
 
 [Serializable]
-public class PlayAbleAiServiceState: RestoreState
+public class PlayAbleAiServiceSingleFileState: SingleFileState
 {
-    public PlayAbleAiServiceState()
+    public List<UaiSingleFileState> uaiStates;
+    public PlayAbleAiServiceSingleFileState()
     {
     }
 
-    public PlayAbleAiServiceState(IEnumerable<Uai> ais, PlayAbleAiService o): base(o)
+    public PlayAbleAiServiceSingleFileState(PlayAbleAiService o): base(o)
     {
+        uaiStates = new List<UaiSingleFileState>();
+        foreach (var oPlayAbleAI in o.PlayAbleAIs)
+        {
+            uaiStates.Add(oPlayAbleAI.GetSingleFileState() as UaiSingleFileState);
+        }
     }
 }
 

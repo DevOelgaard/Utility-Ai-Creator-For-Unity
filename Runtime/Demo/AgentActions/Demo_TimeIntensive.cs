@@ -14,13 +14,7 @@ internal class Demo_TimeIntensive : AgentAction
 
     public Demo_TimeIntensive() : base()
     {
-    }
-
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>() { 
-            new Parameter("ExecutionTime ms", 1) 
-        };
+        ParameterContainer.AddParameter("ExecutionTime ms", 1);
     }
 
     public override void OnStart(IAiContext context)
@@ -40,16 +34,7 @@ internal class Demo_TimeIntensive : AgentAction
 
     private void FreezeXMs(IAiContext context)
     {
-        // stopwatch.Restart();
-        // var time = stopwatch.ElapsedMilliseconds;
-        // var extra = Convert.ToInt32(GetParameter("ExecutionTime ms").Value);
-        // var end = time + extra;
-        //
-        // while (end > stopwatch.ElapsedMilliseconds)
-        // {
-        // }
-        
-        var endTime = Convert.ToInt32(GetParameter("ExecutionTime ms").Value);
+        var endTime = ParameterContainer.GetParamInt("ExecutionTime ms").Value;
         stopwatch.Restart();
         while (endTime > stopwatch.ElapsedMilliseconds)
         {

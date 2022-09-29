@@ -12,13 +12,6 @@ internal class Demo_MoveRandom : AgentAction
     {
     }
 
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-        };
-    }
-
     public override void OnStart(IAiContext context)
     {
         MoveRandom(context);

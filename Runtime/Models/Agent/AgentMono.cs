@@ -31,8 +31,9 @@ public class AgentMono : MonoBehaviour, IAgent
     }
     
 
-    void Start()
+    protected virtual void Start()
     {
+        Debug.Log("Called");
         Model.Name = SetAgentName();
         AgentManager.Instance.Register(this);
         var aiByName = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
@@ -40,15 +41,15 @@ public class AgentMono : MonoBehaviour, IAgent
         decisionScoreEvaluator = new DecisionScoreEvaluator();
     }
 
-    public void SetAi(Uai model)
+    public void SetAi(Uai newUai)
     {
-        if (model == null)
+        if (newUai == null)
         {
             DebugService.LogWarning("Setting Ai of agent: " + name +" to null", this);
             throw new NullReferenceException();
         }
-        DebugService.Log("Setting Ai of agent: " + model.Name, this);
-        Uai = model;
+        DebugService.Log("Setting Ai of agent: " + newUai.Name, this);
+        Uai = newUai;
     }
 
     void OnDestroy()
@@ -68,6 +69,11 @@ public class AgentMono : MonoBehaviour, IAgent
 
     public void Tick(TickMetaData metaData)
     {
+        if (Uai == null)
+        {
+            var aiByName = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
+            SetAi(aiByName);
+        }
         Uai.UaiContext.TickMetaData = metaData;
         Model.LastTickMetaData = metaData;
         Model.LastTickTime = Time.time;

@@ -11,13 +11,6 @@ internal class Demo_PrintName : AgentAction
     {
     }
 
-    protected override List<Parameter> GetParameters()
-    {
-        return new List<Parameter>()
-        {
-        };
-    }
-
     public override void OnStart(IAiContext context)
     {
         PrintName(context);

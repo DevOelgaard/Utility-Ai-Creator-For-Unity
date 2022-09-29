@@ -10,13 +10,13 @@ public abstract class ResponseFunction: AiObjectModel
 {
     private readonly CompositeDisposable parametersChangedDisposable = new CompositeDisposable();
     public int rcIndex = -1;
-    private Parameter max;
-    public Parameter Max => max ??= GetParameter("Max");
+    private ParamFloat max;
+    public ParamFloat Max => max ??= ParameterContainer.GetParamFloat("Max");
 
     public IObservable<bool> OnParametersChanged => onParametersChanged;
     protected readonly Subject<bool> onParametersChanged = new Subject<bool>();
 
-    private bool Inverse => (bool)GetParameter("Inverse").Value;
+    private bool Inverse => ParameterContainer.GetParamBool("Inverse").Value;
     protected ResponseFunction()
     {
         DebugService.Log("TT! Creating no name", this);
@@ -36,8 +36,8 @@ public abstract class ResponseFunction: AiObjectModel
 
     private void InitParameters()
     {
-        AddParameter(new Parameter("Inverse", false ));
-        AddParameter(new Parameter("Max", 1f));
+        AddParameter("Inverse", false);
+        AddParameter("Max", 1f);
     }
 
     public override void Initialize()
@@ -60,7 +60,6 @@ public abstract class ResponseFunction: AiObjectModel
 
     protected override AiObjectModel InternalClone()
     {
-
         var clone = AssetService.GetInstanceOfType<ResponseFunction>(GetType().ToString());
         DebugService.Log("TT! cloning Original Guid: " + Guid + " Clone Guid: " + clone.Guid, this,Thread.CurrentThread);
 
@@ -91,13 +90,6 @@ public abstract class ResponseFunction: AiObjectModel
 
     protected abstract float CalculateResponseInternal(float x);
 
-    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
-    {
-        await base.RestoreInternalAsync(s, restoreDebug);
-        var state = (ResponseFunctionState) s;
-        Name = state.Name;
-    }
-
     private void SubscribeToParameters()
     {
         parametersChangedDisposable.Clear();
@@ -114,18 +106,16 @@ public abstract class ResponseFunction: AiObjectModel
                 .AddTo(parametersChangedDisposable);
         }
     }
-
-
-    internal override RestoreState GetState()
+    
+    public override SingleFileState GetSingleFileState()
     {
-        return new ResponseFunctionState(this);
+        return new ResponseFunctionSingleFileState(this);
+    }
+    
+    protected override async Task RestoreInternalFromFile(SingleFileState state)
+    {
     }
 
-    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
-    {
-        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_ResponseFunction);
-        // await RestoreAbleService.SaveRestoreAblesToFile(Parameters,path + "/" + Consts.FolderName_Parameters, persister);
-    }
 
     ~ResponseFunction()
     {
@@ -134,24 +124,36 @@ public abstract class ResponseFunction: AiObjectModel
     }
 }
 
-[Serializable]
-public class ResponseFunctionState : AiObjectState
-{
-    public string Name;
-    public string Description;
-    public int RcIndex;
-    public List<string> Parameters;
+// [Serializable]
+// public class ResponseFunctionState : AiObjectState
+// {
+//     public string Name;
+//     public string Description;
+//     public int RcIndex;
+//     public List<string> Parameters;
+//
+//     public ResponseFunctionState() : base()
+//     {
+//     }
+//
+//     public ResponseFunctionState(ResponseFunction responseFunction) : base(responseFunction)
+//     {
+//         Name = responseFunction.Name;
+//         Description = responseFunction.Description;
+//         RcIndex = responseFunction.rcIndex;
+//         Parameters = RestoreAbleService.NamesToList(responseFunction.Parameters.ToList());
+//
+//     }
+// }
 
-    public ResponseFunctionState() : base()
+[Serializable]
+public class ResponseFunctionSingleFileState : AiObjectModelSingleFileState
+{
+    public ResponseFunctionSingleFileState()
     {
     }
 
-    public ResponseFunctionState(ResponseFunction responseFunction) : base(responseFunction)
+    public ResponseFunctionSingleFileState(ResponseFunction rF): base(rF)
     {
-        Name = responseFunction.Name;
-        Description = responseFunction.Description;
-        RcIndex = responseFunction.rcIndex;
-        Parameters = RestoreAbleService.NamesToList(responseFunction.Parameters.ToList());
-
     }
 }

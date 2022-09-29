@@ -7,7 +7,7 @@ using MoreLinq;
 using UniRxExtension;
 using UnityEngine;
 
-public abstract class AiObjectModel: RestoreAble, IInitializeAble
+public abstract class AiObjectModel: PersistSingleFile, IInitializeAble
 {
     public Type BaseAiObjectType { get; protected set; }
 
@@ -41,13 +41,16 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
     public List<ScoreModel> ScoreModels = new List<ScoreModel>();
     // ReSharper disable once MemberCanBePrivate.Global
     public ParameterContainer ParameterContainer { get; private set; }
-    public Dictionary<string, Parameter>.ValueCollection Parameters => ParameterContainer.Parameters;
+    // TODO Initialize this from parameterContainer
+    public List<ParamBase> Parameters => ParameterContainer.Parameters;
+    // public Dictionary<string, Parameter>.ValueCollection Parameters => ParameterContainer.Parameters;
+
     public Guid Guid { get; protected set; }
     protected AiObjectModel(): base()
     {
         Guid = Guid.NewGuid();
-        Name = StringService.SpaceBetweenUpperCase(GetType().ToString()) + "-Template";
-        ParameterContainer = new ParameterContainer(GetParameters);
+        Name = StringService.SpaceBetweenUpperCase(GetType().ToString());
+        ParameterContainer = new ParameterContainer();
     }
     
     public virtual void Initialize()
@@ -56,29 +59,19 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
         ContextAddress = new ContextAddress(this);
         UpdateInfo();
     }
+    public override string GetTypeDescription()
+    {
+        return GetType().ToString();
+    }
 
     protected virtual void UpdateInfo()
     {
         SetParent(ContextAddress.Parent,ContextAddress.Index);
     }
-    protected override string GetFileName()
-    {
-        return Name;
-    }
 
-    protected void AddParameter(Parameter param)
+    protected void AddParameter(string parameterName, object value)
     {
-        ParameterContainer.AddParameter(param);
-    }
-
-    public Parameter GetParameter(string parameterName)
-    {
-        return ParameterContainer.GetParameter(parameterName);
-    }
-    
-    protected virtual List<Parameter> GetParameters()
-    {
-        return new List<Parameter>();
+        ParameterContainer.AddParameter(parameterName, value);
     }
 
     protected abstract AiObjectModel InternalClone();
@@ -98,7 +91,6 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
         clone.Name = Name;
         clone.Description = Description;
         clone.HelpText = HelpText;
-        clone.CurrentDirectory = CurrentDirectory+"-Clone";
         clone.ParameterContainer = ParameterContainer.Clone();
     }
 
@@ -188,11 +180,24 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
         disposables.Clear();
     }
 
-    protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
+    // protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)
+    // {
+    //     var s = state as AiObjectState;
+    //     ParameterContainer.RestoreFromState(s.ParameterContainerState);
+    //     Guid = Guid.Parse(s.guid);
+    // }
+
+    protected override async Task RestoreFromFile(SingleFileState state)
     {
-        var s = state as AiObjectState;
+        var s = state as AiObjectModelSingleFileState;
         ParameterContainer.RestoreFromState(s.ParameterContainerState);
+        Guid = Guid.Parse(s.guid);
+        Name = s.Name;
+        Description = s.Description;
+        await RestoreInternalFromFile(state);
     }
+
+    protected abstract Task RestoreInternalFromFile(SingleFileState state);
 
     ~AiObjectModel()
     {
@@ -200,16 +205,38 @@ public abstract class AiObjectModel: RestoreAble, IInitializeAble
     }
 }
 
-public abstract class AiObjectState : RestoreState
+// public abstract class AiObjectState : RestoreState
+// {
+//     public ParameterContainerState ParameterContainerState;
+//     public string guid;
+//
+//     protected AiObjectState(): base()
+//     {
+//     }
+//
+//     protected AiObjectState(AiObjectModel o) : base(o)
+//     {
+//         ParameterContainerState = o.ParameterContainer.GetState();
+//         guid = o.Guid.ToString();
+//     }
+// }
+
+public abstract class AiObjectModelSingleFileState : SingleFileState
 {
     public ParameterContainerState ParameterContainerState;
+    public string guid;
+    public string Name;
+    public string Description;
 
-    protected AiObjectState(): base()
+    protected AiObjectModelSingleFileState(): base()
     {
     }
 
-    protected AiObjectState(AiObjectModel o) : base(o)
+    protected AiObjectModelSingleFileState(AiObjectModel o) : base(o)
     {
         ParameterContainerState = o.ParameterContainer.GetState();
+        guid = o.Guid.ToString();
+        Name = o.Name;
+        Description = o.Description;
     }
 }

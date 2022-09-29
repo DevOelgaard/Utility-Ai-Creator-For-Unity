@@ -11,7 +11,7 @@ using UniRx;
 // https://forum.unity.com/threads/draw-a-line-from-a-to-b.698618/
 public class ResponseCurve: AiObjectModel
 {
-    private readonly Dictionary<Parameter, IDisposable> segmentDisposables = new Dictionary<Parameter, IDisposable>();
+    private readonly Dictionary<ParamFloat, IDisposable> segmentDisposables = new Dictionary<ParamFloat, IDisposable>();
     private readonly Dictionary<ResponseFunction, IDisposable> responseFunctionDisposables = new Dictionary<ResponseFunction, IDisposable>();
     private float minY = 0.0f;
     private float maxY = 1.0f;
@@ -43,7 +43,7 @@ public class ResponseCurve: AiObjectModel
             return responseFunctions;
         }
     }
-    public List<Parameter> Segments = new List<Parameter>();
+    public List<ParamFloat> Segments = new List<ParamFloat>();
 
     public IObservable<bool> OnParametersChanged => onParametersChanged;
     private readonly Subject<bool> onParametersChanged = new Subject<bool>();
@@ -89,7 +89,7 @@ public class ResponseCurve: AiObjectModel
             {
                 segmentValue = (MaxX - MinX) / 2;
             }
-            var newSegment = new Parameter(Segments.Count.ToString(), segmentValue);
+            var newSegment = new ParamFloat(Segments.Count.ToString(), segmentValue);
             AddSegment(newSegment);
         }
 
@@ -168,7 +168,7 @@ public class ResponseCurve: AiObjectModel
 
     #region Segments
 
-    private void AddSegment(Parameter newSegment)
+    private void AddSegment(ParamFloat newSegment)
     {
         var sub = newSegment.OnValueChange
             .Subscribe(_ => onCurveValueChanged.OnNext(true));
@@ -190,7 +190,7 @@ public class ResponseCurve: AiObjectModel
         // onCurveValueChanged.OnNext(true);
     }
 
-    private void RemoveSegment(Parameter segment)
+    private void RemoveSegment(ParamFloat segment)
     {
         if (segmentDisposables.ContainsKey(segment))
         {
@@ -345,53 +345,93 @@ public class ResponseCurve: AiObjectModel
     {
         DebugService.Log("T! Cloning",this);
         var clone = (ResponseCurve)AiObjectFactory.CreateInstance(GetType());
-        var state = GetState() as ResponseCurveState;
-        clone.SetBaseValues(state,ResponseFunctions,Segments);
-        
+        var state = GetSingleFileState() as ResponseCurveSingleFileState;
+        AsyncHelpers.RunSync(async () => await clone.SetSavedValues(state));
         return clone;
     }
-    internal override RestoreState GetState()
+    // internal override RestoreState GetState()
+    // {
+    //     return new ResponseCurveState(Name, MinY, MaxY, Segments, this);
+    // }
+    //
+    // protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    // {
+    //     await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_ResponseCurve);
+    //     await RestoreAbleService.SaveRestoreAblesToFile(Segments,path + "/" + Consts.FolderName_Segments, persister);
+    //     await RestoreAbleService.SaveRestoreAblesToFile(ResponseFunctions,path + "/" + Consts.FolderName_ResponseFunctions, persister);
+    // }
+    //
+    // protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
+    // {
+    //     await base.RestoreInternalAsync(s, restoreDebug);
+    //     var tempRestoreFunctions = await RestoreAbleService
+    //         .GetAiObjectsSortedByIndex<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
+    //     var tempSegments = await RestoreAbleService
+    //         .GetParameters(CurrentDirectory + Consts.FolderName_Segments, restoreDebug);
+    //     
+    //     SetBaseValues(s as ResponseCurveState, tempRestoreFunctions, tempSegments);
+    // }
+    //
+    // private void SetBaseValues(ResponseCurveState state, List<ResponseFunction> rFs, List<Parameter> segments)
+    // {
+    //     MinY = state.MinY;
+    //     MaxY = state.MaxY;
+    //     MinX = state.MinX;
+    //     MaxX = state.MaxX;
+    //     isInversed = state.IsInversed;
+    //     
+    //     foreach (var responseFunction in rFs)
+    //     {
+    //         AddResponseFunction(responseFunction, true);
+    //     }
+    //     foreach (var seg in segments)
+    //     {
+    //         SetSegmentValue(Convert.ToSingle(seg.Value),segments.IndexOf(seg));
+    //     }
+    // }
+
+    protected override async Task RestoreInternalFromFile(SingleFileState state)
     {
-        return new ResponseCurveState(Name, MinY, MaxY, Segments, this);
+        await SetSavedValues(state as ResponseCurveSingleFileState);
     }
 
-    protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
+    private async Task SetSavedValues(ResponseCurveSingleFileState state)
     {
-        await persister.SaveObjectAsync(state, path + "." + Consts.FileExtension_ResponseCurve);
-        await RestoreAbleService.SaveRestoreAblesToFile(Segments,path + "/" + Consts.FolderName_Segments, persister);
-        await RestoreAbleService.SaveRestoreAblesToFile(ResponseFunctions,path + "/" + Consts.FolderName_ResponseFunctions, persister);
-    }
-
-    protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
-    {
-        await base.RestoreInternalAsync(s, restoreDebug);
-        var tempRestoreFunctions = await RestoreAbleService
-            .GetAiObjectsSortedByIndex<ResponseFunction>(CurrentDirectory + Consts.FolderName_ResponseFunctions, restoreDebug);
-        var tempSegments = await RestoreAbleService
-            .GetParameters(CurrentDirectory + Consts.FolderName_Segments, restoreDebug);
+        var s = state as ResponseCurveSingleFileState;
+        MinY = s.MinY;
+        MaxY = s.MaxY;
+        MinX = s.MinX;
+        MaxX = s.MaxX;
+        isInversed = s.IsInversed;
         
-        SetBaseValues(s as ResponseCurveState, tempRestoreFunctions, tempSegments);
-    }
-
-    private void SetBaseValues(ResponseCurveState state, List<ResponseFunction> rFs, List<Parameter> segments)
-    {
-        Name = state.Name;
-        Description = state.Description;
-        MinY = state.MinY;
-        MaxY = state.MaxY;
-        MinX = state.MinX;
-        MaxX = state.MaxX;
-        isInversed = state.IsInversed;
+        var tempRFs = new List<ResponseFunction>();
+        foreach (var rfState in s.responseFunctions)
+        {
+            var rF = await Restore<ResponseFunction>(rfState);
+            tempRFs.Add(rF);
+        }
         
-        foreach (var responseFunction in rFs)
+        var tempSegments = new List<Parameter>();
+        foreach (var segmentState in s.segments)
+        {
+            var segment = await RestoreAble.Restore<Parameter>(segmentState);
+            tempSegments.Add(segment);
+        }
+        
+        foreach (var responseFunction in tempRFs)
         {
             AddResponseFunction(responseFunction, true);
         }
-        foreach (var seg in segments)
+        foreach (var seg in tempSegments)
         {
-            SetSegmentValue(Convert.ToSingle(seg.Value),segments.IndexOf(seg));
+            SetSegmentValue(Convert.ToSingle(seg.Value),tempSegments.IndexOf(seg));
         }
     }
+    public override SingleFileState GetSingleFileState()
+    {
+        return new ResponseCurveSingleFileState(this);
+    }
+
     ~ResponseCurve()
     {
         DebugService.Log("Destroying Guid: " + guid + " Name: " + Name, this);
@@ -404,34 +444,71 @@ public class ResponseCurve: AiObjectModel
             disposable.Value.Dispose();
         }
     }
+
+
 }
 
+// [Serializable]
+// public class ResponseCurveState: AiObjectState
+// {
+//     public string Name;
+//     public string Description;
+//     public float MinY;
+//     public float MaxY;
+//     public float MinX;
+//     public float MaxX;
+//     public bool IsInversed;
+//
+//     public List<string> segments;
+//
+//
+//     public ResponseCurveState(): base()
+//     {
+//     }
+//
+//     public ResponseCurveState(string name, float minY, float maxY, List<Parameter> segments, ResponseCurve responseCurveModel): base(responseCurveModel)
+//     {
+//         Name = name;
+//         Description = responseCurveModel.Description;
+//         MinY = minY;
+//         MaxY = maxY;
+//         MinX = responseCurveModel.MinX;
+//         MaxX = responseCurveModel.MaxX;
+//         IsInversed = responseCurveModel.IsInversed;
+//     }
+// }
+
 [Serializable]
-public class ResponseCurveState: AiObjectState
+public class ResponseCurveSingleFileState : AiObjectModelSingleFileState
 {
-    public string Name;
-    public string Description;
     public float MinY;
     public float MaxY;
     public float MinX;
     public float MaxX;
     public bool IsInversed;
+    public List<ResponseFunctionSingleFileState> responseFunctions;
+    public List<ParameterState> segments;
 
-    public List<string> segments;
-
-
-    public ResponseCurveState(): base()
+    public ResponseCurveSingleFileState(): base()
     {
     }
 
-    public ResponseCurveState(string name, float minY, float maxY, List<Parameter> segments, ResponseCurve responseCurveModel): base(responseCurveModel)
+    public ResponseCurveSingleFileState(ResponseCurve responseCurveModel): base(responseCurveModel)
     {
-        Name = name;
-        Description = responseCurveModel.Description;
-        MinY = minY;
-        MaxY = maxY;
+        MinY = responseCurveModel.MinY;
+        MaxY = responseCurveModel.MaxY;
         MinX = responseCurveModel.MinX;
         MaxX = responseCurveModel.MaxX;
         IsInversed = responseCurveModel.IsInversed;
+        responseFunctions = new List<ResponseFunctionSingleFileState>();
+        foreach (var responseFunction in responseCurveModel.ResponseFunctions)
+        {
+            responseFunctions.Add((ResponseFunctionSingleFileState)responseFunction.GetSingleFileState());
+        }
+        segments = new List<ParameterState>();
+        foreach (var segment in responseCurveModel.Segments)
+        {
+            segments.Add((ParameterState)segment.GetState());
+        }
     }
 }

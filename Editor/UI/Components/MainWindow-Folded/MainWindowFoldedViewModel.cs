@@ -114,7 +114,7 @@ internal class MainWindowFoldedViewModel : VisualElement
 
         foreach (var parameter in model.Parameters)
         {
-            var labelText = parameter.Name + ": " + parameter.Value.ToString();
+            var labelText = parameter.Name + ": " + parameter.GetValueAsString();
             if (labelText.Length > 64)
             {
                 labelText = labelText.Substring(0, 64) + "...";
@@ -126,7 +126,7 @@ internal class MainWindowFoldedViewModel : VisualElement
             };
             footer.Add(pLabel);
             parameter.OnValueChange
-                .Subscribe(_ => pLabel.text = parameter.Name + ": " + parameter.Value)
+                .Subscribe(_ => pLabel.text = parameter.Name + ": " + parameter.GetValueAsString())
                 .AddTo(disposables);
         }
     }

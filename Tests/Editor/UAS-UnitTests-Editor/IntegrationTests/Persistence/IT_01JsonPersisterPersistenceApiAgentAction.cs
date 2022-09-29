@@ -144,7 +144,7 @@ namespace IntegrationTests.Persistence
 
             AsyncHelpers.RunSync(() => sut.SaveObjectAsync(saveFile, filePath));
 
-            var result = sut.LoadObjectPath<AgentActionState>(expectedPath);
+            var result = sut.LoadObjectPath<AgentActionSingleFileState>(expectedPath);
 
             DeleteFolder(filePath);
             Assert.AreEqual("T1",result.LoadedObject.Name);
@@ -162,7 +162,7 @@ namespace IntegrationTests.Persistence
 
             AsyncHelpers.RunSync(() => sut.SaveObjectAsync(saveFile, filePath));
 
-            var result = AsyncHelpers.RunSync(() => sut.LoadObjectPathAsync<AgentActionState>(expectedPath));
+            var result = AsyncHelpers.RunSync(() => sut.LoadObjectPathAsync<AgentActionSingleFileState>(expectedPath));
 
             DeleteFolder(filePath);
             Assert.AreEqual("T1",result.LoadedObject.Name);
@@ -184,7 +184,7 @@ namespace IntegrationTests.Persistence
             AsyncHelpers.RunSync(() => sut.SaveObjectAsync(saveFile, filePath));
             AsyncHelpers.RunSync(() => sut.SaveObjectAsync(saveFile2, filePath));
 
-            var result = AsyncHelpers.RunSync(() => sut.LoadObjectsOfTypeAsync<AgentActionState>(filePath,typeof(AgentAction)));
+            var result = AsyncHelpers.RunSync(() => sut.LoadObjectsOfTypeAsync<AgentActionSingleFileState>(filePath,typeof(AgentAction)));
 
             DeleteFolder(filePath);
             Assert.AreEqual("T1",result[0].LoadedObject.Name);
@@ -207,7 +207,7 @@ namespace IntegrationTests.Persistence
             AsyncHelpers.RunSync(() => sut.SaveObjectAsync(saveFile, filePath));
             AsyncHelpers.RunSync(() => sut.SaveObjectAsync(saveFile2, filePath));
 
-            var result = AsyncHelpers.RunSync(() => sut.LoadObjectsAsync<AgentActionState>(filePath,Consts.FileExtension_AgentAction));
+            var result = AsyncHelpers.RunSync(() => sut.LoadObjectsAsync<AgentActionSingleFileState>(filePath,Consts.FileExtension_AgentAction));
 
             DeleteFolder(filePath);
             Assert.AreEqual("T1",result[0].LoadedObject.Name);

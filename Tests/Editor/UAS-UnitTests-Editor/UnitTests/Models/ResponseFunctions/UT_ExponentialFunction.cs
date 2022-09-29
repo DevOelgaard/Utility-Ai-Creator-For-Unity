@@ -23,11 +23,10 @@ namespace UnitTests.Models.ResponseFunctions
         [TestCase(2,-2,0.0025f)]
         public void CalculateResponse_NoChange_ReturnsExpected(float x, float power, float expected)
         {
-            uut.GetParameter("Power").Value = power;
+            uut.ParameterContainer.GetParamFloat("Power").Value = power;
             var result = uut.CalculateResponse(x, 0, 100);
             
             Assert.AreEqual(expected,result);
         }
-        
     }
 }

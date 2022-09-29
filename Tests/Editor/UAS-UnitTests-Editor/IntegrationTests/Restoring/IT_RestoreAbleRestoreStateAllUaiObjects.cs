@@ -22,8 +22,8 @@ namespace IntegrationTests.Restoring
             var filePath = folderPath+"/"+sut.Name+ "."+FileExtensionService.GetFileExtensionFromType(type);
             AsyncHelpers.RunSync(() => PersistenceAPI.Instance.SaveObjectAsync(sut, folderPath));
 
-            var state = PersistenceAPI.Instance.LoadObjectPath<AgentActionState>(filePath);
-            var result = AsyncHelpers.RunSync(() => RestoreAble.Restore<AgentAction>(state.LoadedObject));
+            var state = PersistenceAPI.Instance.LoadObjectPath<AgentActionSingleFileState>(filePath);
+            var result = AsyncHelpers.RunSync(() => PersistSingleFile.Restore<AgentAction>(state.LoadedObject));
             
             Assert.AreEqual(sut.Name,result.Name);
             Assert.AreEqual(sut.Description,result.Description);
@@ -44,8 +44,8 @@ namespace IntegrationTests.Restoring
             var filePath = folderPath+"/"+sut.Name+ "."+FileExtensionService.GetFileExtensionFromType(type);
             AsyncHelpers.RunSync(() => PersistenceAPI.Instance.SaveObjectAsync(sut, folderPath));
 
-            var state = PersistenceAPI.Instance.LoadObjectPath<ConsiderationState>(filePath);
-            var result = AsyncHelpers.RunSync(() => RestoreAble.Restore<Consideration>(state.LoadedObject));
+            var state = PersistenceAPI.Instance.LoadObjectPath<ConsiderationSingleFileState>(filePath);
+            var result = AsyncHelpers.RunSync(() => PersistSingleFile.Restore<Consideration>(state.LoadedObject));
             
             Assert.AreEqual(sut.Name,result.Name);
             Assert.AreEqual(sut.Description,result.Description);
@@ -66,8 +66,8 @@ namespace IntegrationTests.Restoring
             var filePath = folderPath+"/"+sut.Name+ "."+FileExtensionService.GetFileExtensionFromType(type);
             AsyncHelpers.RunSync(() => PersistenceAPI.Instance.SaveObjectAsync(sut, folderPath));
 
-            var state = PersistenceAPI.Instance.LoadObjectPath<DecisionState>(filePath);
-            var result = AsyncHelpers.RunSync(() => RestoreAble.Restore<Decision>(state.LoadedObject));
+            var state = PersistenceAPI.Instance.LoadObjectPath<DecisionSingleFileState>(filePath);
+            var result = AsyncHelpers.RunSync(() => PersistSingleFile.Restore<Decision>(state.LoadedObject));
             
             Assert.AreEqual(sut.Name,result.Name);
             Assert.AreEqual(sut.Description,result.Description);
@@ -88,8 +88,8 @@ namespace IntegrationTests.Restoring
             var filePath = folderPath+"/"+sut.Name+ "."+FileExtensionService.GetFileExtensionFromType(type);
             AsyncHelpers.RunSync(() => PersistenceAPI.Instance.SaveObjectAsync(sut, folderPath));
 
-            var state = PersistenceAPI.Instance.LoadObjectPath<BucketState>(filePath);
-            var result = AsyncHelpers.RunSync(() => RestoreAble.Restore<Bucket>(state.LoadedObject));
+            var state = PersistenceAPI.Instance.LoadObjectPath<BucketSingleFileState>(filePath);
+            var result = AsyncHelpers.RunSync(() => PersistSingleFile.Restore<Bucket>(state.LoadedObject));
             
             Assert.AreEqual(sut.Name,result.Name);
             Assert.AreEqual(sut.Description,result.Description);
@@ -110,8 +110,8 @@ namespace IntegrationTests.Restoring
             var filePath = folderPath+"/"+sut.Name+ "."+FileExtensionService.GetFileExtensionFromType(type);
             AsyncHelpers.RunSync(() => PersistenceAPI.Instance.SaveObjectAsync(sut, folderPath));
 
-            var state = PersistenceAPI.Instance.LoadObjectPath<UaiState>(filePath);
-            var result = AsyncHelpers.RunSync(() => RestoreAble.Restore<Uai>(state.LoadedObject));
+            var state = PersistenceAPI.Instance.LoadObjectPath<UaiSingleFileState>(filePath);
+            var result = AsyncHelpers.RunSync(() => PersistSingleFile.Restore<Uai>(state.LoadedObject));
             
             Assert.AreEqual(sut.Name,result.Name);
             Assert.AreEqual(sut.Description,result.Description);
@@ -132,8 +132,8 @@ namespace IntegrationTests.Restoring
             var filePath = folderPath+"/"+sut.Name+ "."+FileExtensionService.GetFileExtensionFromType(type);
             AsyncHelpers.RunSync(() => PersistenceAPI.Instance.SaveObjectAsync(sut, folderPath));
 
-            var state = PersistenceAPI.Instance.LoadObjectPath<ResponseCurveState>(filePath);
-            var result = AsyncHelpers.RunSync(() => RestoreAble.Restore<ResponseCurve>(state.LoadedObject));
+            var state = PersistenceAPI.Instance.LoadObjectPath<ResponseCurveSingleFileState>(filePath);
+            var result = AsyncHelpers.RunSync(() => PersistSingleFile.Restore<ResponseCurve>(state.LoadedObject));
             
             Assert.AreEqual(sut.Name,result.Name);
             Assert.AreEqual(sut.Description,result.Description);

@@ -13,9 +13,10 @@ namespace Mocks
         public Stub_Consideration_IT(float returnValue, List<Parameter> parameters, float min = 0f, float max = 1f)
         {
             ReturnValue = returnValue;
+            throw new NotImplementedException("This doesn't work as inteded");
             foreach (var parameter in parameters)
             {
-                AddParameter(parameter);
+                // AddParameter(parameter);
             }
             CurrentResponseCurve = new Mock_ResponseCurve_IT("Mock");
             MinFloat.Value = min;
@@ -27,14 +28,12 @@ namespace Mocks
             var result = ReturnValue;
             foreach(var param in Parameters)
             {
-                result += Convert.ToSingle(param.Value);
+                throw new NotImplementedException("This doesn't work as inteded");
+
+                // result += Convert.ToSingle(param.Value);
             }
             return result;
         }
 
-        protected override List<Parameter> GetParameters()
-        {
-            return new List<Parameter>();
-        }
     }
 }

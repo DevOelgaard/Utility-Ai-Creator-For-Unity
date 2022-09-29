@@ -53,7 +53,7 @@ namespace IntegrationTests.Persistence
 
             AsyncHelpers.RunSync(() => sut.SaveObjectAsync(saveFile, filePath));
 
-            var result = sut.LoadObjectPath<ConsiderationState>(expectedPath);
+            var result = sut.LoadObjectPath<ConsiderationSingleFileState>(expectedPath);
 
             DeleteFolder(filePath);
             Assert.AreEqual("T1",result.LoadedObject.Name);

@@ -15,12 +15,13 @@ namespace Mocks
         {
         }
 
-        public Stub_Consideration_UT(float returnValue, List<Parameter> parameters)
+        public Stub_Consideration_UT(float returnValue, List<ParamBase> parameters)
         {
             ReturnValue = returnValue;
+            throw new NotImplementedException("This doesn't work as intended");
             foreach (var parameter in parameters)
             {
-                AddParameter(parameter);
+                AddParameter(parameter.Name,parameter);
             }
 
             CurrentResponseCurve = new Mock_ResponseCurve("Mock");
@@ -30,9 +31,5 @@ namespace Mocks
             return ReturnValue;
         }
 
-        protected override List<Parameter> GetParameters()
-        {
-            return new List<Parameter>();
-        }
     }
 }

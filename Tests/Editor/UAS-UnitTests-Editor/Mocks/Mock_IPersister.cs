@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute.Exceptions;
 
@@ -36,6 +37,11 @@ namespace Mocks
         {
             LoadObjectCount++;
             return null;
+        }
+
+        public ObjectMetaData<object> LoadObject(string path, Type t)
+        {
+            throw new NotImplementedException();
         }
     }
 }

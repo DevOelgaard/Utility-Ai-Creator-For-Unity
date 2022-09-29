@@ -28,9 +28,5 @@ namespace Mocks
             throw new System.NotImplementedException();
         }
 
-        protected override List<Parameter> GetParameters()
-        {
-            return new List<Parameter>();
-        }
     }
 }

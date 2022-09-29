@@ -16,9 +16,9 @@
             TickCalls++;
         }
 
-        public void SetAi(Uai model)
+        public void SetAi(Uai newUai)
         {
-            Uai = model;
+            Uai = newUai;
         }
 
         public Uai Uai { get; set; }

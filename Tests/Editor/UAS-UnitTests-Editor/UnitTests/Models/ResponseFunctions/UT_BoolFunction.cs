@@ -12,7 +12,7 @@ namespace UnitTests.Models.ResponseFunctions
         public void SetUp()
         {
             uut = new BoolFunction();
-            uut.GetParameter("CutOff").Value = 0.5f;
+            uut.ParameterContainer.GetParamFloat("CutOff").Value = 0.5f;
         }
 
         [TestCase(-1f)]

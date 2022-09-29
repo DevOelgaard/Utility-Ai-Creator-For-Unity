@@ -13,9 +13,5 @@ namespace Mocks
         {
         }
 
-        protected override List<Parameter> GetParameters()
-        {
-            return new List<Parameter>();
-        }
     }
 }

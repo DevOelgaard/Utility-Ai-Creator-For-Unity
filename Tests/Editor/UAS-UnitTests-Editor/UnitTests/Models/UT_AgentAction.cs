@@ -40,7 +40,7 @@ namespace UnitTests.Models
             Assert.AreEqual(uut.Info, result.Info);
             Assert.AreEqual(uut.Name, result.Name);
             Assert.AreEqual(uut.Parameters.Count, result.Parameters.Count);
-            Assert.AreEqual(uut.FileName, result.FileName);
+            // Assert.AreEqual(uut.FileName, result.FileName);
             Assert.AreEqual(uut.HelpText, result.HelpText);
             Assert.AreNotEqual(uut.Guid,result.Guid);
         }

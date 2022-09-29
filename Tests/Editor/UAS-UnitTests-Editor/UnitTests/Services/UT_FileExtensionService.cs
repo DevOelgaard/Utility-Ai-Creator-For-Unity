@@ -29,20 +29,20 @@ namespace UnitTests.Services
                         Assert.AreEqual(expectedType,result);
                 }
                 
-                [TestCase(Consts.FileExtension_UAI, typeof(UaiState))]
-                [TestCase(Consts.FileExtension_Bucket, typeof(BucketState))]
-                [TestCase(Consts.FileExtension_Decision, typeof(DecisionState))]
-                [TestCase(Consts.FileExtension_Consideration, typeof(ConsiderationState))]
-                [TestCase(Consts.FileExtension_AgentAction, typeof(AgentActionState))]
-                [TestCase(Consts.FileExtension_ResponseCurve, typeof(ResponseCurveState))]
-                [TestCase(Consts.FileExtension_ResponseFunction, typeof(ResponseFunctionState))]
+                [TestCase(Consts.FileExtension_UAI, typeof(UaiSingleFileState))]
+                [TestCase(Consts.FileExtension_Bucket, typeof(BucketSingleFileState))]
+                [TestCase(Consts.FileExtension_Decision, typeof(DecisionSingleFileState))]
+                [TestCase(Consts.FileExtension_Consideration, typeof(ConsiderationSingleFileState))]
+                [TestCase(Consts.FileExtension_AgentAction, typeof(AgentActionSingleFileState))]
+                [TestCase(Consts.FileExtension_ResponseCurve, typeof(ResponseCurveSingleFileState))]
+                [TestCase(Consts.FileExtension_ResponseFunction, typeof(ResponseFunctionSingleFileState))]
                 [TestCase(Consts.FileExtension_Parameter, typeof(ParameterState))]
-                [TestCase(Consts.FileExtension_TickerSettings, typeof(UaiTickerSettingsModelState))]
-                [TestCase(Consts.FileExtension_TickerModes, typeof(TickerModeState))]
-                [TestCase(Consts.FileExtension_UtilityContainerSelector, typeof(UtilityContainerSelectorState))]
+                [TestCase(Consts.FileExtension_TickerSettings, typeof(UaiTickerSettingsModelSingleFileState))]
+                [TestCase(Consts.FileExtension_TickerModes, typeof(TickerModeSingleFileState))]
+                [TestCase(Consts.FileExtension_UtilityContainerSelector, typeof(UtilityContainerSelectorSingleFileState))]
                 public void GetStateFromFileName_CorrectExtension_ReturnsExpectedType(string fileName, Type expectedType)
                 {
-                        var result = FileExtensionService.GetStateFromFileName(fileName);
+                        var result = FileExtensionService.GetStateTypeFromFileName(fileName);
                         
                         Assert.AreEqual(expectedType,result);
                 }
@@ -59,19 +59,19 @@ namespace UnitTests.Services
                 [TestCase(Consts.FileExtension_TickerModes, typeof(TickerMode))]
                 [TestCase(Consts.FileExtension_UtilityContainerSelector, typeof(UtilityContainerSelector))]
                 [TestCase(Consts.FileExtension_ProjectSettings, typeof(ProjectSettingsModel))]
-                [TestCase(Consts.FileExtension_UAI, typeof(UaiState))]
-                [TestCase(Consts.FileExtension_Bucket, typeof(BucketState))]
-                [TestCase(Consts.FileExtension_Decision, typeof(DecisionState))]
-                [TestCase(Consts.FileExtension_Consideration, typeof(ConsiderationState))]
-                [TestCase(Consts.FileExtension_AgentAction, typeof(AgentActionState))]
-                [TestCase(Consts.FileExtension_ResponseCurve, typeof(ResponseCurveState))]
-                [TestCase(Consts.FileExtension_ResponseFunction, typeof(ResponseFunctionState))]
+                [TestCase(Consts.FileExtension_UAI, typeof(UaiSingleFileState))]
+                [TestCase(Consts.FileExtension_Bucket, typeof(BucketSingleFileState))]
+                [TestCase(Consts.FileExtension_Decision, typeof(DecisionSingleFileState))]
+                [TestCase(Consts.FileExtension_Consideration, typeof(ConsiderationSingleFileState))]
+                [TestCase(Consts.FileExtension_AgentAction, typeof(AgentActionSingleFileState))]
+                [TestCase(Consts.FileExtension_ResponseCurve, typeof(ResponseCurveSingleFileState))]
+                [TestCase(Consts.FileExtension_ResponseFunction, typeof(ResponseFunctionSingleFileState))]
                 [TestCase(Consts.FileExtension_Parameter, typeof(ParameterState))]
-                [TestCase(Consts.FileExtension_TickerSettings, typeof(UaiTickerSettingsModelState))]
-                [TestCase(Consts.FileExtension_TickerModes, typeof(TickerModeState))]
-                [TestCase(Consts.FileExtension_UtilityContainerSelector, typeof(UtilityContainerSelectorState))]
+                [TestCase(Consts.FileExtension_TickerSettings, typeof(UaiTickerSettingsModelSingleFileState))]
+                [TestCase(Consts.FileExtension_TickerModes, typeof(TickerModeSingleFileState))]
+                [TestCase(Consts.FileExtension_UtilityContainerSelector, typeof(UtilityContainerSelectorSingleFileState))]
                 [TestCase(Consts.FileExtension_TemplateService, typeof(TemplateService))]
-                [TestCase(Consts.FileExtension_TemplateService, typeof(UasTemplateServiceState))]
+                [TestCase(Consts.FileExtension_TemplateService, typeof(UasTemplateServiceSingleFileState))]
                 [TestCase("", typeof(float))]
                 public void GetFileExtensionFromType_CorrectType_ReturnsExpectedExtension(string expectedExtension, Type type)
                 {

@@ -19,7 +19,7 @@ namespace UnitTests.Models.Considerations
         [SetUp]
         public void SetUp()
         {
-            uut = new Stub_Consideration_UT(0.5f, new List<Parameter>());
+            uut = new Stub_Consideration_UT(0.5f, new List<ParamBase>());
             uut.MinFloat.Value = 0f;
             uut.MaxFloat.Value = 1f;
         }

@@ -1,0 +1,237 @@
+\hypertarget{_response_curve_lc_view_model_8cs_source}{}\doxysection{Response\+Curve\+Lc\+View\+Model.\+cs}
+\label{_response_curve_lc_view_model_8cs_source}\index{Editor/UI/Components/ResponseCurve/ResponseCurveLcViewModel.cs@{Editor/UI/Components/ResponseCurve/ResponseCurveLcViewModel.cs}}
+\mbox{\hyperlink{_response_curve_lc_view_model_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00006}00006 \textcolor{keyword}{using }UnityEngine.UIElements;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00007}00007 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx}{UniRx}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00008}00008 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00009}00009 \textcolor{keyword}{using }UnityEditor.UIElements;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00011}00011 \textcolor{keyword}{internal} \textcolor{keyword}{class }ResponseCurveLcViewModel : VisualElement}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00013}00013     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}} functionDisposables = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}}();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00014}00014     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}} responseCurveDisposables = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}}();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00015}00015     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}} disposables = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}}();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00016}00016     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}} toggleDisposable = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}}();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00017}00017     }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00018}00018     \textcolor{keyword}{private} readonly Label ownerLabel;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00019}00019     \textcolor{keyword}{private} \mbox{\hyperlink{class_response_curve}{ResponseCurve}} responseCurve;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00020}00020     \textcolor{keyword}{private} readonly LineChartComponent lineChart;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00022}00022     \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<ResponseCurve>}} OnResponseCurveChanged => onResponseCurveChanged;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00023}00023     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<ResponseCurve>}} onResponseCurveChanged = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<ResponseCurve>}}();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00025}00025     \textcolor{keyword}{private} \textcolor{keywordtype}{float} Min => (float)responseCurve.\mbox{\hyperlink{class_response_curve_a872961281346b93b2e62fab975283c51}{MinX}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00026}00026     \textcolor{keyword}{private} \textcolor{keywordtype}{float} Max => (\textcolor{keywordtype}{float})responseCurve.\mbox{\hyperlink{class_response_curve_a741d5a0839480d74d2259d7e2897f06a}{MaxX}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00027}00027     \textcolor{keyword}{private} readonly \textcolor{keywordtype}{int} steps = ConstsEditor.ResponseCurve\_Steps;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00029}00029     \textcolor{keyword}{private} Button foldButton;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00030}00030     \textcolor{keyword}{private} readonly VisualElement functionsContainer;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00031}00031     \textcolor{keyword}{private} readonly VisualElement header;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00032}00032     \textcolor{keyword}{private} VisualElement footer;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00033}00033     \textcolor{keyword}{private} readonly ToolbarToggle inverseToggle;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00034}00034     \textcolor{keyword}{private} IntegerField resolution;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00035}00035     \textcolor{keyword}{private} readonly DropdownField curveDropDown;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00037}00037     \textcolor{keyword}{private} Guid guid;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00039}00039     \textcolor{keyword}{public} ResponseCurveLcViewModel()}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00040}00040     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00041}00041         var root = AssetService.GetTemplateContainer(GetType().FullName);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00042}00042         Add(root);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00043}00043         guid = Guid.NewGuid();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00044}00044         root.styleSheets.Add(StylesService.GetStyleSheet(\textcolor{stringliteral}{"{}ResponseCurve"{}}));}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00045}00045         header = root.Q<VisualElement>(\textcolor{stringliteral}{"{}Header"{}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00046}00046         ownerLabel = root.Q<Label>(\textcolor{stringliteral}{"{}Name-\/Label"{}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00047}00047         foldButton = root.Q<Button>(\textcolor{stringliteral}{"{}FoldButton"{}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00048}00048         var curveContainer = root.Q<VisualElement>(\textcolor{stringliteral}{"{}CurveContainer"{}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00049}00049         functionsContainer = root.Q<VisualElement>(\textcolor{stringliteral}{"{}FunctionsContainer"{}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00050}00050         footer = root.Q<VisualElement>(\textcolor{stringliteral}{"{}Footer"{}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00051}00051         inverseToggle = root.Q<ToolbarToggle>(\textcolor{stringliteral}{"{}Inverse-\/ToolbarToggle"{}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00052}00052         inverseToggle.RegisterCallback<ChangeEvent<bool>>(evt =>}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00053}00053         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00054}00054             \textcolor{keywordflow}{if} (responseCurve != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00055}00055             \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00056}00056                 responseCurve.IsInversed = evt.newValue;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00057}00057             \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00058}00058         \});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00059}00059         }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00060}00060         var addFunctionButton = root.Q<Button>(\textcolor{stringliteral}{"{}AddFunctionButton"{}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00061}00061         var saveTemplateButton = root.Q<Button>(\textcolor{stringliteral}{"{}SaveTemplateButton"{}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00062}00062         lineChart = \textcolor{keyword}{new} LineChartComponent();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00063}00063         curveContainer.Add(lineChart);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00065}00065         curveDropDown = root.Q<DropdownField>(\textcolor{stringliteral}{"{}ResponseCurve-\/Dropdown"{}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00066}00066         curveDropDown.RegisterCallback<ChangeEvent<string>>(OnCurveDropdownValueChanged);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00067}00067         curveDropDown.label = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00069}00069         addFunctionButton.RegisterCallback<MouseUpEvent>(evt =>}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00070}00070         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00071}00071             var \textcolor{keyword}{function} = AssetService}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00072}00072                 .GetFirstInstanceOfType<\mbox{\hyperlink{class_response_function}{ResponseFunction}}>();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00073}00073             responseCurve.\mbox{\hyperlink{class_response_curve_a7f4c8537574a481150c6301c12d398e1}{AddResponseFunction}}(\textcolor{keyword}{function});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00074}00074         \});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00075}00075         }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00076}00076         TemplateService.Instance.ResponseCurves.OnValueChanged}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00077}00077             .Subscribe(InitCurveDropDownChoices)}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00078}00078             .AddTo(disposables);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00080}00080         InitCurveDropDownChoices(TemplateService.Instance.ResponseCurves.Values);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00081}00081         saveTemplateButton.RegisterCallback<MouseUpEvent>(SaveTemplate);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00082}00082     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00084}00084     \textcolor{keyword}{private} async \textcolor{keywordtype}{void} SaveTemplate(MouseUpEvent evt)}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00085}00085     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00086}00086         var clone = await responseCurve.CloneAsync();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00087}00087         TemplateService.Instance.Add(clone);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00088}00088     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00090}00090     \textcolor{keyword}{internal} \textcolor{keywordtype}{void} UpdateUi(\mbox{\hyperlink{class_response_curve}{ResponseCurve}} rCurve, \textcolor{keywordtype}{bool} showSelection = \textcolor{keyword}{true}, \textcolor{keywordtype}{string} newOwnerName = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00091}00091     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00092}00092         responseCurve = rCurve;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00093}00093         }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00094}00094         inverseToggle.SetValueWithoutNotify(responseCurve.\mbox{\hyperlink{class_response_curve_a60e925be846fb55649b3983272b43125}{IsInversed}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00095}00095         }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00096}00096         \textcolor{keywordflow}{if} (newOwnerName != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00097}00097         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00098}00098             ownerLabel.text = \textcolor{stringliteral}{"{}Owner: "{}} + newOwnerName;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00099}00099         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00100}00100         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00101}00101         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00102}00102             ownerLabel.text = \textcolor{stringliteral}{"{}Template"{}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00103}00103         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00104}00104         \textcolor{keywordflow}{if} (showSelection)}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00105}00105         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00106}00106             header.Add(curveDropDown);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00107}00107             curveDropDown.SetValueWithoutNotify(rCurve.\mbox{\hyperlink{class_ai_object_model_a8e121beeb65ae729387702b132bbe6ec}{Name}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00108}00108         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00109}00109         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00110}00110         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00111}00111             curveDropDown.SetEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00112}00112             curveDropDown.style.flexGrow = 0;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00113}00113         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00115}00115         responseCurveDisposables.Clear();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00116}00116         responseCurve.OnCurveValueChanged}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00117}00117             .Subscribe(\_ =>}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00118}00118             \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00119}00119                 ReDrawChart();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00120}00120             \})}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00121}00121             .AddTo(responseCurveDisposables);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00122}00122 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00123}00123         responseCurve}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00124}00124             .\mbox{\hyperlink{class_response_curve_a932cd2579ba688a345dccf411da694e1}{OnParametersChanged}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00125}00125             .\mbox{\hyperlink{interface_uni_rx_1_1_i_observable_a81a2566f451cf1ddc8de265d019d1b88}{Subscribe}}(\_ =>}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00126}00126             \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00127}00127                 ReDrawChart();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00128}00128             \})}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00129}00129             .AddTo(responseCurveDisposables);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00130}00130 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00131}00131         responseCurve.OnFunctionsChanged}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00132}00132             .Subscribe(\_ => UpdateFunctionsAndRedrawChart())}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00133}00133             .AddTo(responseCurveDisposables);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00134}00134 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00135}00135         UpdateFunctionsAndRedrawChart();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00136}00136     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00137}00137 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00138}00138     \textcolor{keyword}{private} async \textcolor{keywordtype}{void} OnCurveDropdownValueChanged(ChangeEvent<string> evt)}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00139}00139     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00140}00140         \textcolor{keywordflow}{if} (evt.newValue != \textcolor{keyword}{null} \&\& evt.newValue != Consts.LineBreakBaseTypes \&\&}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00141}00141             evt.newValue != Consts.LineBreakTemplates \&\& evt.newValue != Consts.LineBreakDemos)}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00142}00142         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00143}00143             var rC =}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00144}00144                 await AddCopyService.GetAiObjectClone(evt.newValue, TemplateService.Instance.ResponseCurves.Values);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00145}00145                 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00146}00146             onResponseCurveChanged.OnNext(rC as \mbox{\hyperlink{class_response_curve}{ResponseCurve}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00147}00147         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00148}00148         curveDropDown.SetValueWithoutNotify(\textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00149}00149     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00150}00150 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00151}00151     \textcolor{keyword}{private} \textcolor{keywordtype}{void} UpdateFunctionsAndRedrawChart()}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00152}00152     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00153}00153         \textcolor{comment}{//Debug.LogWarning("{}This could be more effective by using a pool"{});}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00154}00154         functionsContainer.Clear();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00155}00155         functionDisposables.Clear();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00156}00156         \textcolor{keywordflow}{foreach} (var \textcolor{keyword}{function} \textcolor{keywordflow}{in} responseCurve.\mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}})}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00157}00157         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00158}00158             var functionComponent = \textcolor{keyword}{new} ResponseFunctionViewModel();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00159}00159             \textcolor{keywordflow}{if} (responseCurve.\mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}.Count <= 1)}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00160}00160             \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00161}00161                 functionComponent.UpdateUi(\textcolor{keyword}{function}, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00162}00162             \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00163}00163             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00164}00164             \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00165}00165                 functionComponent.UpdateUi(\textcolor{keyword}{function});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00166}00166             \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00167}00167             functionsContainer.Add(functionComponent);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00168}00168 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00169}00169             functionComponent}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00170}00170                 .OnRemoveClicked}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00171}00171                 .Subscribe(f => responseCurve.\mbox{\hyperlink{class_response_curve_a1b50c5d912469fbd8e0a632cf2cdc817}{RemoveResponseFunction}}(f))}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00172}00172                 .AddTo(functionDisposables);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00173}00173 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00174}00174             functionComponent}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00175}00175                 .OnResponseFunctionChanged}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00176}00176                 .Subscribe(f =>}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00177}00177                 \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00178}00178                     HandleFunctionChanged(\textcolor{keyword}{function}, f);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00179}00179                     functionComponent.UpdateUi(f);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00180}00180                 \})}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00181}00181                 .AddTo(functionDisposables);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00182}00182 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00183}00183             var functionIndex = responseCurve.\mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}.IndexOf(\textcolor{keyword}{function});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00184}00184             \textcolor{keywordflow}{if} (responseCurve.\mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}.Count > functionIndex)}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00185}00185             \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00186}00186                 var segmentParam = responseCurve.\mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}[functionIndex];}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00187}00187                 var paramComponent = \textcolor{keyword}{new} \mbox{\hyperlink{class_parameter_component}{ParameterComponent}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00188}00188                 \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00189}00189                     name = \textcolor{stringliteral}{"{}Segment"{}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00190}00190                 \};}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00191}00191                 paramComponent.UpdateUi(segmentParam);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00192}00192 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00193}00193                 functionsContainer.Add(paramComponent);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00194}00194             \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00195}00195         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00196}00196         ReDrawChart();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00197}00197     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00198}00198 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00199}00199     \textcolor{keyword}{private} \textcolor{keywordtype}{void} HandleFunctionChanged(\mbox{\hyperlink{class_response_function}{ResponseFunction}} oldFunction, \mbox{\hyperlink{class_response_function}{ResponseFunction}} newFunction)}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00200}00200     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00201}00201         responseCurve.UpdateFunction(oldFunction, newFunction);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00202}00202     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00203}00203 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00204}00204     \textcolor{keyword}{private} \textcolor{keywordtype}{void} InitCurveDropDownChoices(List<AiObjectModel> responseCurveTemplates)}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00205}00205     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00206}00206         curveDropDown.choices = AddCopyService.GetChoices(typeof(\mbox{\hyperlink{class_response_curve}{ResponseCurve}}), responseCurveTemplates);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00207}00207         curveDropDown.SetValueWithoutNotify(\textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00208}00208     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00209}00209 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00210}00210     \textcolor{keyword}{private} \textcolor{keywordtype}{void} ReDrawChart()}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00211}00211     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00212}00212         var points = \textcolor{keyword}{new} List<Vector2>();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00213}00213         var stepSize = (\mbox{\hyperlink{namespace_uni_rx_a7690e4daf7332d765b3418f2e0df9bf5a6a061313d22e51e0f25b7cd4dc065233}{Max}} -\/ Min) / steps;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00214}00214         \textcolor{keywordflow}{for} (var i = 0; i <= steps; i++)}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00215}00215         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00216}00216             var x = i * stepSize + Min;}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00217}00217             var y = responseCurve.\mbox{\hyperlink{class_response_curve_a927aeecbbb421ee3e46cf80977fdf952}{CalculateResponse}}(x);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00218}00218             points.Add(\textcolor{keyword}{new} Vector2(x, y));}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00219}00219         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00220}00220 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00221}00221         lineChart?.DrawCurve(points, Min, Max);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00222}00222         onResponseCurveChanged.OnNext(responseCurve);}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00223}00223     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00224}00224 }
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00225}00225     \string~ResponseCurveLcViewModel()\{}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00226}00226         functionDisposables.Clear();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00227}00227         responseCurveDisposables.Clear();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00228}00228         disposables.Clear();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00229}00229         toggleDisposable.Clear();}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00230}00230     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_lc_view_model_8cs_source_l00231}00231 \}}
+
+\end{DoxyCode}

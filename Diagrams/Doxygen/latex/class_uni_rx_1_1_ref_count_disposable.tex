@@ -1,0 +1,121 @@
+\hypertarget{class_uni_rx_1_1_ref_count_disposable}{}\doxysection{Uni\+Rx.\+Ref\+Count\+Disposable Class Reference}
+\label{class_uni_rx_1_1_ref_count_disposable}\index{UniRx.RefCountDisposable@{UniRx.RefCountDisposable}}
+
+
+Represents a disposable resource that only disposes its underlying disposable resource when all \mbox{\hyperlink{class_uni_rx_1_1_ref_count_disposable_a47cc7125154d118ca28916c0dac4ff1f}{dependent disposable objects}} have been disposed.  
+
+
+Inheritance diagram for Uni\+Rx.\+Ref\+Count\+Disposable\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_uni_rx_1_1_ref_count_disposable}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_ref_count_disposable_a5d50f7750aa8ef7b4286560b31852a47}{Ref\+Count\+Disposable}} (IDisposable disposable)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the T\+:\+System.\+Reactive.\+Disposables.\+Ref\+Count\+Disposable class with the specified disposable. \end{DoxyCompactList}\item 
+IDisposable \mbox{\hyperlink{class_uni_rx_1_1_ref_count_disposable_a47cc7125154d118ca28916c0dac4ff1f}{Get\+Disposable}} ()
+\begin{DoxyCompactList}\small\item\em Returns a dependent disposable that when disposed decreases the refcount on the underlying disposable. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_ref_count_disposable_ac766028198e65efb10321ef24c20453c}{Dispose}} ()
+\begin{DoxyCompactList}\small\item\em Disposes the underlying disposable only when all dependent disposables have been disposed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_ref_count_disposable_adf65740b29887967090c30618aa1221d}{Is\+Disposed}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a value that indicates whether the object is disposed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a disposable resource that only disposes its underlying disposable resource when all \mbox{\hyperlink{class_uni_rx_1_1_ref_count_disposable_a47cc7125154d118ca28916c0dac4ff1f}{dependent disposable objects}} have been disposed. 
+
+Definition at line \mbox{\hyperlink{_ref_count_disposable_8cs_source_l00015}{15}} of file \mbox{\hyperlink{_ref_count_disposable_8cs_source}{Ref\+Count\+Disposable.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_ref_count_disposable_a5d50f7750aa8ef7b4286560b31852a47}\label{class_uni_rx_1_1_ref_count_disposable_a5d50f7750aa8ef7b4286560b31852a47}} 
+\index{UniRx.RefCountDisposable@{UniRx.RefCountDisposable}!RefCountDisposable@{RefCountDisposable}}
+\index{RefCountDisposable@{RefCountDisposable}!UniRx.RefCountDisposable@{UniRx.RefCountDisposable}}
+\doxysubsubsection{\texorpdfstring{RefCountDisposable()}{RefCountDisposable()}}
+{\footnotesize\ttfamily Uni\+Rx.\+Ref\+Count\+Disposable.\+Ref\+Count\+Disposable (\begin{DoxyParamCaption}\item[{IDisposable}]{disposable }\end{DoxyParamCaption})}
+
+
+
+Initializes a new instance of the T\+:\+System.\+Reactive.\+Disposables.\+Ref\+Count\+Disposable class with the specified disposable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disposable} & Underlying disposable.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Null\+Exception} & {\itshape disposable}  is null.\\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_ref_count_disposable_8cs_source_l00027}{27}} of file \mbox{\hyperlink{_ref_count_disposable_8cs_source}{Ref\+Count\+Disposable.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_ref_count_disposable_ac766028198e65efb10321ef24c20453c}\label{class_uni_rx_1_1_ref_count_disposable_ac766028198e65efb10321ef24c20453c}} 
+\index{UniRx.RefCountDisposable@{UniRx.RefCountDisposable}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!UniRx.RefCountDisposable@{UniRx.RefCountDisposable}}
+\doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
+{\footnotesize\ttfamily void Uni\+Rx.\+Ref\+Count\+Disposable.\+Dispose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disposes the underlying disposable only when all dependent disposables have been disposed. 
+
+
+
+Definition at line \mbox{\hyperlink{_ref_count_disposable_8cs_source_l00069}{69}} of file \mbox{\hyperlink{_ref_count_disposable_8cs_source}{Ref\+Count\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_ref_count_disposable_a47cc7125154d118ca28916c0dac4ff1f}\label{class_uni_rx_1_1_ref_count_disposable_a47cc7125154d118ca28916c0dac4ff1f}} 
+\index{UniRx.RefCountDisposable@{UniRx.RefCountDisposable}!GetDisposable@{GetDisposable}}
+\index{GetDisposable@{GetDisposable}!UniRx.RefCountDisposable@{UniRx.RefCountDisposable}}
+\doxysubsubsection{\texorpdfstring{GetDisposable()}{GetDisposable()}}
+{\footnotesize\ttfamily IDisposable Uni\+Rx.\+Ref\+Count\+Disposable.\+Get\+Disposable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns a dependent disposable that when disposed decreases the refcount on the underlying disposable. 
+
+\begin{DoxyReturn}{Returns}
+A dependent disposable contributing to the reference count that manages the underlying disposable\textquotesingle{}s lifetime.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_ref_count_disposable_8cs_source_l00050}{50}} of file \mbox{\hyperlink{_ref_count_disposable_8cs_source}{Ref\+Count\+Disposable.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_ref_count_disposable_adf65740b29887967090c30618aa1221d}\label{class_uni_rx_1_1_ref_count_disposable_adf65740b29887967090c30618aa1221d}} 
+\index{UniRx.RefCountDisposable@{UniRx.RefCountDisposable}!IsDisposed@{IsDisposed}}
+\index{IsDisposed@{IsDisposed}!UniRx.RefCountDisposable@{UniRx.RefCountDisposable}}
+\doxysubsubsection{\texorpdfstring{IsDisposed}{IsDisposed}}
+{\footnotesize\ttfamily bool Uni\+Rx.\+Ref\+Count\+Disposable.\+Is\+Disposed\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets a value that indicates whether the object is disposed. 
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable_aefb0dc0bc3db77afdf28a4853db5eef3}{Uni\+Rx.\+ICancelable}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ref_count_disposable_8cs_source_l00040}{40}} of file \mbox{\hyperlink{_ref_count_disposable_8cs_source}{Ref\+Count\+Disposable.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Disposables/\mbox{\hyperlink{_ref_count_disposable_8cs}{Ref\+Count\+Disposable.\+cs}}\end{DoxyCompactItemize}

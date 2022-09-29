@@ -1,0 +1,4 @@
+var _i_t__04_json_persister_persistence_api_decision_8cs =
+[
+    [ "IntegrationTests.Persistence.IT_04JsonPersisterPersistenceApiDecision", "class_integration_tests_1_1_persistence_1_1_i_t__04_json_persister_persistence_api_decision.html", "class_integration_tests_1_1_persistence_1_1_i_t__04_json_persister_persistence_api_decision" ]
+];

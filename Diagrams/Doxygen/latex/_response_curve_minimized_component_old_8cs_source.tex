@@ -1,0 +1,154 @@
+\hypertarget{_response_curve_minimized_component_old_8cs_source}{}\doxysection{Response\+Curve\+Minimized\+Component\+Old.\+cs}
+\label{_response_curve_minimized_component_old_8cs_source}\index{Editor/UI/Components/ResponseCurve/ResponseCurveMinimizedComponent/ResponseCurveMinimizedComponentOld.cs@{Editor/UI/Components/ResponseCurve/ResponseCurveMinimizedComponent/ResponseCurveMinimizedComponentOld.cs}}
+\mbox{\hyperlink{_response_curve_minimized_component_old_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00001}00001 \textcolor{comment}{// using System;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00002}00002 \textcolor{comment}{// using System.Collections.Generic;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00003}00003 \textcolor{comment}{// using System.Linq;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00004}00004 \textcolor{comment}{// using UniRx;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00005}00005 \textcolor{comment}{// using UnityEngine.UIElements;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00006}00006 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00007}00007 \textcolor{comment}{// public class ResponseCurveMinimizedComponentOld : VisualElement}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00008}00008 \textcolor{comment}{// \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00009}00009 \textcolor{comment}{//     private ResponseCurve responseCurve;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00010}00010 \textcolor{comment}{//     private string ownerName;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00011}00011 \textcolor{comment}{//     }}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00012}00012 \textcolor{comment}{//     private readonly Label nameLabel;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00013}00013 \textcolor{comment}{//     private readonly DropdownField curveDropDown;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00014}00014 \textcolor{comment}{//     private readonly LineChartButton responseCurveButton;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00015}00015 \textcolor{comment}{//     private ResponseCurveWindow responseCurveWindow;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00016}00016 \textcolor{comment}{//     private readonly Toggle inverseToggle;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00017}00017 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00018}00018 \textcolor{comment}{//     public IObservable<ResponseCurve> OnResponseCurveChanged => onResponseCurveChanged;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00019}00019 \textcolor{comment}{//     private readonly Subject<ResponseCurve> onResponseCurveChanged = new Subject<ResponseCurve>();}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00020}00020 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00021}00021 \textcolor{comment}{//     private readonly CompositeDisposable rcDisposable = new CompositeDisposable();}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00022}00022 \textcolor{comment}{//     private readonly CompositeDisposable disposable = new CompositeDisposable();}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00023}00023 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00024}00024 \textcolor{comment}{//     public ResponseCurveMinimizedComponentOld()}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00025}00025 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00026}00026 \textcolor{comment}{//         var root = AssetDatabaseService.GetTemplateContainer(GetType());}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00027}00027 \textcolor{comment}{//         Add(root);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00028}00028 \textcolor{comment}{//         styleSheets.Add(StylesService.GetStyleSheet("{}ResponseCurveMinimizedComponent"{}));}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00029}00029 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00030}00030 \textcolor{comment}{//         // Header}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00031}00031 \textcolor{comment}{//         nameLabel = root.Q<Label>("{}Name-\/Label"{});}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00032}00032 \textcolor{comment}{//         curveDropDown = root.Q<DropdownField>("{}ResponseCurve-\/DropDown"{});}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00033}00033 \textcolor{comment}{//         TemplateService.Instance.ResponseCurves.OnValueChanged}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00034}00034 \textcolor{comment}{//             .Subscribe(InitCurveDropDownChoices)}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00035}00035 \textcolor{comment}{//             .AddTo(disposable);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00036}00036 \textcolor{comment}{//         InitCurveDropDownChoices(TemplateService.Instance.ResponseCurves.Values);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00037}00037 \textcolor{comment}{//         curveDropDown.SetValueWithoutNotify(null);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00038}00038 \textcolor{comment}{//         curveDropDown.RegisterCallback<ChangeEvent<string>>(OnCurveDropdownValueChanged);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00039}00039 \textcolor{comment}{//         }}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00040}00040 \textcolor{comment}{//         // Body}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00041}00041 \textcolor{comment}{//         responseCurveButton = new LineChartButton}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00042}00042 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00043}00043 \textcolor{comment}{//             name = "{}ResponseCurveButton"{}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00044}00044 \textcolor{comment}{//         \};}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00045}00045 \textcolor{comment}{//         responseCurveButton.RegisterCallback<MouseUpEvent>(\_ =>}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00046}00046 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00047}00047 \textcolor{comment}{//             responseCurveWindow = WindowOpener.GetNewResponseCurveWindow();}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00048}00048 \textcolor{comment}{//             if (responseCurve == null) return;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00049}00049 \textcolor{comment}{//             responseCurveWindow.UpdateUi(responseCurve);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00050}00050 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00051}00051 \textcolor{comment}{//             // rcDisposable.Clear();}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00052}00052 \textcolor{comment}{//             // responseCurveWindow.ResponseCurveComponent.OnResponseCurveChanged}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00053}00053 \textcolor{comment}{//             //     .Subscribe(UpdateUiNoNotifyWindow)}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00054}00054 \textcolor{comment}{//             //     .AddTo(rcDisposable);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00055}00055 \textcolor{comment}{//         \});}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00056}00056 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00057}00057 \textcolor{comment}{//         var body = root.Q<VisualElement>("{}Body"{});}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00058}00058 \textcolor{comment}{//         body.Add(responseCurveButton);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00059}00059 \textcolor{comment}{//         }}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00060}00060 \textcolor{comment}{//         // Footer}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00061}00061 \textcolor{comment}{//         var saveTemplateButton = root.Q<Button>("{}SaveTemplateButton"{});}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00062}00062 \textcolor{comment}{//         saveTemplateButton.RegisterCallback<MouseUpEvent>(SaveTemplate);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00063}00063 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00064}00064 \textcolor{comment}{//         inverseToggle = root.Q<Toggle>("{}IsInversed-\/Toggle"{});}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00065}00065 \textcolor{comment}{//         inverseToggle.RegisterCallback<ChangeEvent<bool>>(evt =>}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00066}00066 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00067}00067 \textcolor{comment}{//             responseCurve.IsInversed = evt.newValue;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00068}00068 \textcolor{comment}{//         \});}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00069}00069 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00070}00070 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00071}00071 \textcolor{comment}{//     private void InitCurveDropDownChoices(List<AiObjectModel> responseCurves)}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00072}00072 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00073}00073 \textcolor{comment}{//         curveDropDown.choices = AddCopyService.GetChoices(typeof(ResponseCurve),responseCurves);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00074}00074 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00075}00075 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00076}00076 \textcolor{comment}{//     public void UpdateUi(ResponseCurve rC, string newOwnerName = null)}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00077}00077 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00078}00078 \textcolor{comment}{//         SetResponseCurve(rC);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00079}00079 \textcolor{comment}{//         nameLabel.text = responseCurve.Name;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00080}00080 \textcolor{comment}{//         if (!string.IsNullOrEmpty(newOwnerName))}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00081}00081 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00082}00082 \textcolor{comment}{//             nameLabel.text += "{} -\/ "{} + newOwnerName;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00083}00083 \textcolor{comment}{//         \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00084}00084 \textcolor{comment}{//         responseCurveButton.UpdateUi(responseCurve);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00085}00085 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00086}00086 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00087}00087 \textcolor{comment}{//     private void UpdateUiNoNotifyWindow(ResponseCurve rC)}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00088}00088 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00089}00089 \textcolor{comment}{//         SetResponseCurve(rC,false);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00090}00090 \textcolor{comment}{//         responseCurve = rC;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00091}00091 \textcolor{comment}{//         nameLabel.text = responseCurve.Name;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00092}00092 \textcolor{comment}{//         if (!string.IsNullOrEmpty(ownerName))}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00093}00093 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00094}00094 \textcolor{comment}{//             nameLabel.text += "{} -\/ "{} + ownerName;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00095}00095 \textcolor{comment}{//         \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00096}00096 \textcolor{comment}{//         responseCurveButton.UpdateUi(responseCurve);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00097}00097 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00098}00098 \textcolor{comment}{//     }}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00099}00099 \textcolor{comment}{//     private async void OnCurveDropdownValueChanged(ChangeEvent<string> evt)}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00100}00100 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00101}00101 \textcolor{comment}{//         if (evt.newValue is null or null) return;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00102}00102 \textcolor{comment}{//         var template = TemplateService}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00103}00103 \textcolor{comment}{//             .Instance}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00104}00104 \textcolor{comment}{//             .ResponseCurves}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00105}00105 \textcolor{comment}{//             .Values}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00106}00106 \textcolor{comment}{//             .FirstOrDefault(e => e.Name == evt.newValue);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00107}00107 \textcolor{comment}{//         }}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00108}00108 \textcolor{comment}{//         if (template != null)}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00109}00109 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00110}00110 \textcolor{comment}{//             var clone = await template.CloneAsync() as ResponseCurve;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00111}00111 \textcolor{comment}{//             SetResponseCurve(clone);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00112}00112 \textcolor{comment}{//         \} else}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00113}00113 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00114}00114 \textcolor{comment}{//             SetResponseCurve(AssetDatabaseService.GetInstanceOfType<ResponseCurve>(evt.newValue));}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00115}00115 \textcolor{comment}{//         \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00116}00116 \textcolor{comment}{//         curveDropDown.SetValueWithoutNotify(null);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00117}00117 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00118}00118 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00119}00119 \textcolor{comment}{//     private void SetResponseCurve(ResponseCurve newResponseCurve, bool updateWindow = true, bool windowNotify = false)}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00120}00120 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00121}00121 \textcolor{comment}{//         responseCurve = newResponseCurve;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00122}00122 \textcolor{comment}{//         if (updateWindow \&\& responseCurveWindow != null)}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00123}00123 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00124}00124 \textcolor{comment}{//             responseCurveWindow.UpdateUi(responseCurve, true, windowNotify);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00125}00125 \textcolor{comment}{//         \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00126}00126 \textcolor{comment}{//         rcDisposable.Clear();}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00127}00127 \textcolor{comment}{//         responseCurve.OnCurveValueChanged}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00128}00128 \textcolor{comment}{//             .Subscribe(\_ =>}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00129}00129 \textcolor{comment}{//             \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00130}00130 \textcolor{comment}{//                 UpdateUiNoNotifyWindow(responseCurve);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00131}00131 \textcolor{comment}{//             \})}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00132}00132 \textcolor{comment}{//             .AddTo(rcDisposable);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00133}00133 \textcolor{comment}{//         }}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00134}00134 \textcolor{comment}{//         onResponseCurveChanged.OnNext(responseCurve);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00135}00135 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00136}00136 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00137}00137 \textcolor{comment}{//     private async void SaveTemplate(MouseUpEvent evt)}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00138}00138 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00139}00139 \textcolor{comment}{//         var clone = await responseCurve.CloneAsync();}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00140}00140 \textcolor{comment}{//         TemplateService.Instance.Add(clone);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00141}00141 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00142}00142 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00143}00143 \textcolor{comment}{//     \string~ResponseCurveMinimizedComponentOld()}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00144}00144 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00145}00145 \textcolor{comment}{//         rcDisposable.Clear();}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00146}00146 \textcolor{comment}{//         disposable.Clear();}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00147}00147 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_minimized_component_old_8cs_source_l00148}00148 \textcolor{comment}{// \}}}
+
+\end{DoxyCode}

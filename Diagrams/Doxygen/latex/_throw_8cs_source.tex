@@ -1,0 +1,75 @@
+\hypertarget{_throw_8cs_source}{}\doxysection{Throw.\+cs}
+\label{_throw_8cs_source}\index{Editor/UniRx/Scripts/Operators/Throw.cs@{Editor/UniRx/Scripts/Operators/Throw.cs}}
+\mbox{\hyperlink{_throw_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{UniRx.Operators}}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00005}00005     \textcolor{keyword}{internal} \textcolor{keyword}{class }ThrowObservable<T> : OperatorObservableBase<T>}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00006}00006     \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00007}00007         readonly Exception error;}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00008}00008         readonly IScheduler scheduler;}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00010}00010         \textcolor{keyword}{public} ThrowObservable(Exception error, IScheduler scheduler)}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00011}00011             : base(scheduler == Scheduler.CurrentThread)}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00012}00012         \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00013}00013             this.error = error;}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00014}00014             this.scheduler = scheduler;}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00015}00015         \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00017}00017         \textcolor{keyword}{protected} \textcolor{keyword}{override} IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel)}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00018}00018         \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00019}00019             observer = \textcolor{keyword}{new} Throw(observer, cancel);}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00021}00021             \textcolor{keywordflow}{if} (scheduler == Scheduler.Immediate)}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00022}00022             \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00023}00023                 observer.OnError(error);}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00024}00024                 \textcolor{keywordflow}{return} Disposable.Empty;}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00025}00025             \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00026}00026             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00027}00027             \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00028}00028                 \textcolor{keywordflow}{return} scheduler.Schedule(() =>}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00029}00029                 \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00030}00030                     observer.OnError(error);}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00031}00031                     observer.OnCompleted();}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00032}00032                 \});}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00033}00033             \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00034}00034         \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00036}00036         \textcolor{keyword}{class }Throw : OperatorObserverBase<T, T>}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00037}00037         \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00038}00038             \textcolor{keyword}{public} Throw(IObserver<T> observer, IDisposable cancel)}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00039}00039                 : base(observer, cancel)}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00040}00040             \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00041}00041             \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00043}00043             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a400001c0136d7539f7395398c51846c8}{OnNext}}(T value)}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00044}00044             \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00045}00045                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00046}00046                 \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00047}00047                     base.observer.OnNext(value);}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00048}00048                 \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00049}00049                 \textcolor{keywordflow}{catch}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00050}00050                 \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00051}00051                     \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}();}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00052}00052                     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00053}00053                 \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00054}00054             \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00056}00056             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83a44cdeb54c6f2aebad54611201c26d6f0}{OnError}}(Exception error)}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00057}00057             \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00058}00058                 \textcolor{keywordflow}{try} \{ observer.OnError(error); \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00059}00059                 \textcolor{keywordflow}{finally} \{ \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}(); \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00060}00060             \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00062}00062             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83ad3f2303a2d7ea4ac7945de6d166d9c73}{OnCompleted}}()}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00063}00063             \{}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00064}00064                 \textcolor{keywordflow}{try} \{ observer.OnCompleted(); \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00065}00065                 \textcolor{keywordflow}{finally} \{ \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}(); \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00066}00066             \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00067}00067         \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00068}00068     \}}
+\DoxyCodeLine{\Hypertarget{_throw_8cs_source_l00069}00069 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,33 @@
+\hypertarget{_u_t___random_value_8cs_source}{}\doxysection{UT\+\_\+\+Random\+Value.\+cs}
+\label{_u_t___random_value_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/Considerations/UT\_RandomValue.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/Considerations/UT\_RandomValue.cs}}
+\mbox{\hyperlink{_u_t___random_value_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00001}00001 \textcolor{keyword}{using }NUnit.Framework;}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_unit_tests_1_1_models_1_1_considerations}{UnitTests.Models.Considerations}}}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00005}00005     [TestFixture]}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00006}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___random_value}{00006}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___random_value}{UT\_RandomValue}}}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00007}00007     }
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00009}00009         \textcolor{keyword}{private} RandomValue uut;}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00010}00010         \textcolor{keyword}{private} \mbox{\hyperlink{class_ai_context}{AiContext}} mock\_AiContext;}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00012}00012         [\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___random_value_aa35d0c0c8abe9504c846c40371c60dcb}{SetUp}}]}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00013}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___random_value_aa35d0c0c8abe9504c846c40371c60dcb}{00013}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___random_value_aa35d0c0c8abe9504c846c40371c60dcb}{SetUp}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00014}00014         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00015}00015             mock\_AiContext = \textcolor{keyword}{new} \mbox{\hyperlink{class_ai_context}{AiContext}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00016}00016             uut = \textcolor{keyword}{new} RandomValue();}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00017}00017             uut.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00019}00019         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00020}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___random_value_a231c93b1a1dcd02065f327693b6c97bb}{00020}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___random_value_a231c93b1a1dcd02065f327693b6c97bb}{CalculateScore\_NoChange\_ReturnsOne}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00021}00021         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00022}00022             var result = uut.CalculateScore(mock\_AiContext);}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00023}00023             }
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00024}00024             Assert.AreEqual(typeof(\textcolor{keywordtype}{float}),result.GetType());}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00025}00025         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00026}00026     \}}
+\DoxyCodeLine{\Hypertarget{_u_t___random_value_8cs_source_l00027}00027 \}}
+
+\end{DoxyCode}

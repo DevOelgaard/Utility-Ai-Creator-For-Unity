@@ -1,0 +1,105 @@
+\hypertarget{class_uni_rx_1_1_message_broker}{}\doxysection{Uni\+Rx.\+Message\+Broker Class Reference}
+\label{class_uni_rx_1_1_message_broker}\index{UniRx.MessageBroker@{UniRx.MessageBroker}}
+
+
+In-\/\+Memory Pub\+Sub filtered by Type.  
+
+
+Inheritance diagram for Uni\+Rx.\+Message\+Broker\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_uni_rx_1_1_message_broker}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_message_broker_a46832bf89e16df21958ed804ebaa0d19}{Publish$<$ T $>$}} (T message)
+\begin{DoxyCompactList}\small\item\em Send Message to all receiver. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_message_broker_ad69d18187962b8304cfb0d54f74a8234}{Receive$<$ T $>$}} ()
+\begin{DoxyCompactList}\small\item\em Subscribe typed message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_message_broker_addd8488b66da7f7cfc2de9f2b41fb29c}{Dispose}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static readonly \mbox{\hyperlink{interface_uni_rx_1_1_i_message_broker}{IMessage\+Broker}} \mbox{\hyperlink{class_uni_rx_1_1_message_broker_a3ce413b09f615ec0b0e1643da37dbc61}{Default}} = new \mbox{\hyperlink{class_uni_rx_1_1_message_broker}{Message\+Broker}}()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_uni_rx_1_1_message_broker}{Message\+Broker}} in Global scope. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+In-\/\+Memory Pub\+Sub filtered by Type. 
+
+Definition at line \mbox{\hyperlink{_message_broker_8cs_source_l00050}{50}} of file \mbox{\hyperlink{_message_broker_8cs_source}{Message\+Broker.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_message_broker_addd8488b66da7f7cfc2de9f2b41fb29c}\label{class_uni_rx_1_1_message_broker_addd8488b66da7f7cfc2de9f2b41fb29c}} 
+\index{UniRx.MessageBroker@{UniRx.MessageBroker}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!UniRx.MessageBroker@{UniRx.MessageBroker}}
+\doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
+{\footnotesize\ttfamily void Uni\+Rx.\+Message\+Broker.\+Dispose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_message_broker_8cs_source_l00093}{93}} of file \mbox{\hyperlink{_message_broker_8cs_source}{Message\+Broker.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_message_broker_a46832bf89e16df21958ed804ebaa0d19}\label{class_uni_rx_1_1_message_broker_a46832bf89e16df21958ed804ebaa0d19}} 
+\index{UniRx.MessageBroker@{UniRx.MessageBroker}!Publish$<$ T $>$@{Publish$<$ T $>$}}
+\index{Publish$<$ T $>$@{Publish$<$ T $>$}!UniRx.MessageBroker@{UniRx.MessageBroker}}
+\doxysubsubsection{\texorpdfstring{Publish$<$ T $>$()}{Publish< T >()}}
+{\footnotesize\ttfamily void Uni\+Rx.\+Message\+Broker.\+Publish$<$ T $>$ (\begin{DoxyParamCaption}\item[{T}]{message }\end{DoxyParamCaption})}
+
+
+
+Send Message to all receiver. 
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_message_publisher_a7ddb97391ff296ff97a49584a4d51e92}{Uni\+Rx.\+IMessage\+Publisher}}.
+
+
+
+Definition at line \mbox{\hyperlink{_message_broker_8cs_source_l00060}{60}} of file \mbox{\hyperlink{_message_broker_8cs_source}{Message\+Broker.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_message_broker_ad69d18187962b8304cfb0d54f74a8234}\label{class_uni_rx_1_1_message_broker_ad69d18187962b8304cfb0d54f74a8234}} 
+\index{UniRx.MessageBroker@{UniRx.MessageBroker}!Receive$<$ T $>$@{Receive$<$ T $>$}}
+\index{Receive$<$ T $>$@{Receive$<$ T $>$}!UniRx.MessageBroker@{UniRx.MessageBroker}}
+\doxysubsubsection{\texorpdfstring{Receive$<$ T $>$()}{Receive< T >()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ T $>$ Uni\+Rx.\+Message\+Broker.\+Receive$<$ T $>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Subscribe typed message. 
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_message_receiver_a4edd76701aa89ddcc41a476b5c466745}{Uni\+Rx.\+IMessage\+Receiver}}.
+
+
+
+Definition at line \mbox{\hyperlink{_message_broker_8cs_source_l00075}{75}} of file \mbox{\hyperlink{_message_broker_8cs_source}{Message\+Broker.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_message_broker_a3ce413b09f615ec0b0e1643da37dbc61}\label{class_uni_rx_1_1_message_broker_a3ce413b09f615ec0b0e1643da37dbc61}} 
+\index{UniRx.MessageBroker@{UniRx.MessageBroker}!Default@{Default}}
+\index{Default@{Default}!UniRx.MessageBroker@{UniRx.MessageBroker}}
+\doxysubsubsection{\texorpdfstring{Default}{Default}}
+{\footnotesize\ttfamily readonly \mbox{\hyperlink{interface_uni_rx_1_1_i_message_broker}{IMessage\+Broker}} Uni\+Rx.\+Message\+Broker.\+Default = new \mbox{\hyperlink{class_uni_rx_1_1_message_broker}{Message\+Broker}}()\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\mbox{\hyperlink{class_uni_rx_1_1_message_broker}{Message\+Broker}} in Global scope. 
+
+
+
+Definition at line \mbox{\hyperlink{_message_broker_8cs_source_l00055}{55}} of file \mbox{\hyperlink{_message_broker_8cs_source}{Message\+Broker.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Notifiers/\mbox{\hyperlink{_message_broker_8cs}{Message\+Broker.\+cs}}\end{DoxyCompactItemize}

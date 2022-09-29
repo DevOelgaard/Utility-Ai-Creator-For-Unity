@@ -1,0 +1,77 @@
+\hypertarget{_connectable_observable_8cs_source}{}\doxysection{Connectable\+Observable.\+cs}
+\label{_connectable_observable_8cs_source}\index{Editor/UniRx/Scripts/Subjects/ConnectableObservable.cs@{Editor/UniRx/Scripts/Subjects/ConnectableObservable.cs}}
+\mbox{\hyperlink{_connectable_observable_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx}{UniRx}}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00005}\mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{00005}}     \textcolor{keyword}{public} \textcolor{keyword}{interface }\mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable}}<T> : \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}<T>}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00006}00006     \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00007}\mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable_ab4258aad9c8ad2ff2c00727bffc6e095}{00007}}         IDisposable \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable_ab4258aad9c8ad2ff2c00727bffc6e095}{Connect}}();}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00008}00008     \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00010}00010     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00011}00011     \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00012}00012         \textcolor{keyword}{class }ConnectableObservable<T> : \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable}}<T>}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00013}00013         \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00014}00014             readonly \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source;}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00015}00015             readonly \mbox{\hyperlink{interface_uni_rx_1_1_i_subject}{ISubject<T>}} subject;}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00016}00016             readonly \textcolor{keywordtype}{object} gate = \textcolor{keyword}{new} object();}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00017}00017             Connection connection;}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00019}00019             \textcolor{keyword}{public} ConnectableObservable(\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \mbox{\hyperlink{interface_uni_rx_1_1_i_subject}{ISubject<T>}} subject)}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00020}00020             \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00021}00021                 this.source = source.AsObservable();}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00022}00022                 this.subject = subject;}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00023}00023             \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00025}00025             \textcolor{keyword}{public} IDisposable Connect()}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00026}00026             \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00027}00027                 lock (gate)}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00028}00028                 \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00029}00029                     \textcolor{comment}{// don't subscribe twice}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00030}00030                     \textcolor{keywordflow}{if} (connection == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00031}00031                     \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00032}00032                         var subscription = source.\mbox{\hyperlink{interface_uni_rx_1_1_i_observable_a81a2566f451cf1ddc8de265d019d1b88}{Subscribe}}(subject);}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00033}00033                         connection = \textcolor{keyword}{new} Connection(\textcolor{keyword}{this}, subscription);}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00034}00034                     \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00036}00036                     \textcolor{keywordflow}{return} connection;}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00037}00037                 \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00038}00038             \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00040}00040             \textcolor{keyword}{public} IDisposable Subscribe(IObserver<T> observer)}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00041}00041             \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00042}00042                 \textcolor{keywordflow}{return} subject.\mbox{\hyperlink{interface_uni_rx_1_1_i_observable_a81a2566f451cf1ddc8de265d019d1b88}{Subscribe}}(observer);}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00043}00043             \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00045}00045             \textcolor{keyword}{class }Connection : IDisposable}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00046}00046             \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00047}00047                 readonly ConnectableObservable<T> parent;}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00048}00048                 IDisposable subscription;}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00050}00050                 \textcolor{keyword}{public} Connection(ConnectableObservable<T> parent, IDisposable subscription)}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00051}00051                 \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00052}00052                     this.parent = parent;}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00053}00053                     this.subscription = subscription;}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00054}00054                 \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00056}00056                 \textcolor{keyword}{public} \textcolor{keywordtype}{void} Dispose()}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00057}00057                 \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00058}00058                     lock (parent.gate)}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00059}00059                     \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00060}00060                         \textcolor{keywordflow}{if} (subscription != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00061}00061                         \{}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00062}00062                             subscription.Dispose();}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00063}00063                             subscription = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00064}00064                             parent.connection = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00065}00065                         \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00066}00066                     \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00067}00067                 \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00068}00068             \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00069}00069         \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00070}00070     \}}
+\DoxyCodeLine{\Hypertarget{_connectable_observable_8cs_source_l00071}00071 \}}
+
+\end{DoxyCode}

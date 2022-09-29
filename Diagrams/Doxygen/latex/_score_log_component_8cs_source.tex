@@ -1,0 +1,37 @@
+\hypertarget{_score_log_component_8cs_source}{}\doxysection{Score\+Log\+Component.\+cs}
+\label{_score_log_component_8cs_source}\index{Editor/UI/Components/Logger/Components/ScoreLogComponent.cs@{Editor/UI/Components/Logger/Components/ScoreLogComponent.cs}}
+\mbox{\hyperlink{_score_log_component_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00006}00006 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00007}00007 \textcolor{keyword}{using }UnityEngine.UIElements;}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00009}00009 \textcolor{keyword}{internal} \textcolor{keyword}{class }ScoreLogComponent: VisualElement}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00011}00011     \textcolor{keyword}{private} readonly Label scoreLabel;}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00012}00012     \textcolor{keyword}{private} readonly \textcolor{keywordtype}{string} identifier;}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00013}00013     \textcolor{keyword}{public} ScoreLogComponent(\textcolor{keywordtype}{string} identifier, \textcolor{keywordtype}{string} value)}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00014}00014     \{}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00015}00015         scoreLabel = \textcolor{keyword}{new} Label();}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00016}00016         Add(scoreLabel);}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00017}00017         this.identifier = identifier;}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00018}00018         UpdateScore(identifier, value);}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00019}00019     \}}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00021}00021     \textcolor{keyword}{private} \textcolor{keywordtype}{void} UpdateScore(\textcolor{keywordtype}{string} identifier, \textcolor{keywordtype}{string} value)}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00022}00022     \{}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00023}00023         scoreLabel.text = identifier + \textcolor{stringliteral}{"{}: "{}} + value;}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00024}00024     \}}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00026}00026     \textcolor{keyword}{internal} \textcolor{keywordtype}{void} UpdateScore(\textcolor{keywordtype}{float} score)}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00027}00027     \{}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00028}00028         UpdateScore(this.identifier, score.ToString(\textcolor{stringliteral}{"{}0.00"{}}));}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00029}00029     \}}
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_score_log_component_8cs_source_l00031}00031 \}}
+
+\end{DoxyCode}

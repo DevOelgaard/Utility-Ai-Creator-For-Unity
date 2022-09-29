@@ -1,0 +1,43 @@
+\hypertarget{_u_t___path_service_8cs_source}{}\doxysection{UT\+\_\+\+Path\+Service.\+cs}
+\label{_u_t___path_service_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Services/UT\_PathService.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Services/UT\_PathService.cs}}
+\mbox{\hyperlink{_u_t___path_service_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00001}00001 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00002}00002 \textcolor{keyword}{using }NUnit.Framework;}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00003}00003 \textcolor{keyword}{using }UnityEngine.Windows;}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00005}00005 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_unit_tests_1_1_services}{UnitTests.Services}}}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00006}00006 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00007}00007     [TestFixture]}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00008}\mbox{\hyperlink{class_unit_tests_1_1_services_1_1_u_t___path_service}{00008}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_unit_tests_1_1_services_1_1_u_t___path_service}{UT\_PathService}}}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00009}00009     \{}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00011}00011         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00012}\mbox{\hyperlink{class_unit_tests_1_1_services_1_1_u_t___path_service_aa277973bcc5b95a0fec13058f75c9caf}{00012}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_services_1_1_u_t___path_service_aa277973bcc5b95a0fec13058f75c9caf}{FormatFileName\_NameShorterThanFourNoIndex\_ReturnsShortenedName}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00013}00013         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00014}00014             var restoreState = \textcolor{keyword}{new} \mbox{\hyperlink{class_parameter_state}{ParameterState}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00015}00015             var name = \textcolor{stringliteral}{"{}SomeLongFileName"{}};}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00016}00016             var expected = \textcolor{stringliteral}{"{}Some"{}};}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00017}00017             restoreState.FileName = name;}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00018}00018             restoreState.Index = -\/1;}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00020}00020             var result = \mbox{\hyperlink{class_path_service}{PathService}}.\mbox{\hyperlink{class_path_service_a2b82afc473e152abf8ef82cb18564790}{FormatFileName}}(restoreState);}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00021}00021             Assert.AreEqual(expected,result);}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00022}00022         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00023}00023         }
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00024}00024         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00025}\mbox{\hyperlink{class_unit_tests_1_1_services_1_1_u_t___path_service_a98e3a9b18452672b54c244dff1753133}{00025}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_services_1_1_u_t___path_service_a98e3a9b18452672b54c244dff1753133}{FormatFileName\_NameShorterThanFour\_ReturnsShortenedNameWithIndex}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00026}00026         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00027}00027             var restoreState = \textcolor{keyword}{new} \mbox{\hyperlink{class_parameter_state}{ParameterState}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00028}00028             var name = \textcolor{stringliteral}{"{}SomeLongFileName"{}};}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00029}00029             var expected = \textcolor{stringliteral}{"{}0 Some"{}};}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00030}00030             restoreState.FileName = name;}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00031}00031             restoreState.Index = 0;}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00033}00033             var result = \mbox{\hyperlink{class_path_service}{PathService}}.\mbox{\hyperlink{class_path_service_a2b82afc473e152abf8ef82cb18564790}{FormatFileName}}(restoreState);}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00034}00034             Assert.AreEqual(expected,result);}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00035}00035         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00036}00036     \}}
+\DoxyCodeLine{\Hypertarget{_u_t___path_service_8cs_source_l00037}00037 \}}
+
+\end{DoxyCode}

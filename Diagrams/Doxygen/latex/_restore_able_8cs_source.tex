@@ -1,0 +1,136 @@
+\hypertarget{_restore_able_8cs_source}{}\doxysection{Restore\+Able.\+cs}
+\label{_restore_able_8cs_source}\index{Runtime/Models/Abstract/RestoreAble.cs@{Runtime/Models/Abstract/RestoreAble.cs}}
+\mbox{\hyperlink{_restore_able_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00002}00002 \textcolor{keyword}{using }System.IO;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Threading;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00006}\mbox{\hyperlink{class_restore_able}{00006}} \textcolor{keyword}{public} \textcolor{keyword}{abstract} \textcolor{keyword}{class }\mbox{\hyperlink{class_restore_able}{RestoreAble}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00008}\mbox{\hyperlink{class_restore_able_ae844be532382585be9c226f913274e53}{00008}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_restore_able_ae844be532382585be9c226f913274e53}{FileName}} => \mbox{\hyperlink{class_restore_able_a393024c90e2fc2024076dd1fa6fc82bb}{GetFileName}}();}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00009}\mbox{\hyperlink{class_restore_able_a0b16a1de2ec54a5ac3d46f92882133c7}{00009}}     \textcolor{keyword}{public} readonly Type \mbox{\hyperlink{class_restore_able_a0b16a1de2ec54a5ac3d46f92882133c7}{DerivedType}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00010}\mbox{\hyperlink{class_restore_able_a3517b013a336bdcba9ecace7489cabca}{00010}}     \textcolor{keyword}{protected} \mbox{\hyperlink{class_restore_able_a3517b013a336bdcba9ecace7489cabca}{RestoreAble}}()}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00011}00011     \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00012}00012         \mbox{\hyperlink{class_restore_able_a0b16a1de2ec54a5ac3d46f92882133c7}{DerivedType}} = GetType();}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00013}00013     \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00015}\mbox{\hyperlink{class_restore_able_ae5647afd431bfdec2ac656337464642b}{00015}}     \textcolor{keyword}{public} \textcolor{keyword}{virtual} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_restore_able_ae5647afd431bfdec2ac656337464642b}{GetTypeDescription}}()}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00016}00016     \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00017}00017         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_restore_able_a0b16a1de2ec54a5ac3d46f92882133c7}{DerivedType}}.ToString();}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00018}00018     \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00020}\mbox{\hyperlink{class_restore_able_a393024c90e2fc2024076dd1fa6fc82bb}{00020}}     \textcolor{keyword}{protected} \textcolor{keyword}{abstract} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_restore_able_a393024c90e2fc2024076dd1fa6fc82bb}{GetFileName}}();}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00022}\mbox{\hyperlink{class_restore_able_a01e4768f5f26b7611167be8ee015b55b}{00022}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_restore_able_a01e4768f5f26b7611167be8ee015b55b}{CurrentDirectory}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00023}\mbox{\hyperlink{class_restore_able_a4bb68a4eca4fab8e1f04c7bab703b747}{00023}}     \textcolor{keyword}{protected} \textcolor{keyword}{abstract} Task \mbox{\hyperlink{class_restore_able_a4bb68a4eca4fab8e1f04c7bab703b747}{RestoreInternalAsync}}(\mbox{\hyperlink{class_restore_state}{RestoreState}} state, \textcolor{keywordtype}{bool} restoreDebug = \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00024}\mbox{\hyperlink{class_restore_able_a1e861e2e07c4d5eba88b2a94b908ceab}{00024}}     \textcolor{keyword}{public} \textcolor{keyword}{static} async Task<T> \mbox{\hyperlink{class_restore_able_a1e861e2e07c4d5eba88b2a94b908ceab}{Restore<T>}}(\mbox{\hyperlink{class_restore_state}{RestoreState}} state, \textcolor{keywordtype}{bool} restoreDebug = \textcolor{keyword}{false}) where T:\mbox{\hyperlink{class_restore_able}{RestoreAble}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00025}00025     \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00026}00026         \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00027}00027         \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00028}00028             var type = Type.GetType(state.\mbox{\hyperlink{class_restore_state_aac7c1eef5632b245e3f50d7c94c99684}{AssemblyQualifiedName}});}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00029}00029             T element = \textcolor{keywordflow}{default}(T);}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00030}00030             \textcolor{keywordflow}{if} (type == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00031}00031             \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00032}00032                 element = AssetService.GetInstanceOfType<T>(state.\mbox{\hyperlink{class_restore_state_aac7c1eef5632b245e3f50d7c94c99684}{AssemblyQualifiedName}});}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00033}00033             \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00034}00034             \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00035}00035                 element = (T)AiObjectFactory.CreateInstance(type,\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00036}00036             \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00037}00037             element.CurrentDirectory = state.FolderLocation + \textcolor{stringliteral}{"{}/"{}} + state.FileName + \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00038}00038             DebugService.Log(\textcolor{stringliteral}{"{}Setting CurrentDirectory: "{}} + element.CurrentDirectory + \textcolor{stringliteral}{"{} of type: "{}} + typeof(T), nameof(\mbox{\hyperlink{class_restore_able}{RestoreAble}}));}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00039}00039             await element.\mbox{\hyperlink{class_restore_able_a4bb68a4eca4fab8e1f04c7bab703b747}{RestoreInternalAsync}}(state, restoreDebug);}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00040}00040             element.OnRestoreComplete();}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00041}00041             \textcolor{keywordflow}{return} element;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00042}00042         \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00043}00043         \textcolor{keywordflow}{catch}(Exception ex)}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00044}00044         \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00045}00045             DebugService.LogError(\textcolor{stringliteral}{"{}Failed to restore: "{}} + state.\mbox{\hyperlink{class_restore_state_a6f099928063496efa3653120342069c2}{FileName}} + \textcolor{stringliteral}{"{} path: "{}} + state.\mbox{\hyperlink{class_restore_state_adddcd07db0de5b9cb6abb798e7e0b2bd}{FolderLocation}}, nameof(\mbox{\hyperlink{class_restore_able}{RestoreAble}}), ex);}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00046}00046             \textcolor{keywordflow}{throw} ex;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00047}00047         \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00048}00048     \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00049}00049     }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00050}\mbox{\hyperlink{class_restore_able_a62eaebde59e465366a737425a123b06e}{00050}}     \textcolor{keyword}{protected} \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_restore_able_a62eaebde59e465366a737425a123b06e}{OnRestoreComplete}}()\{\}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00052}\mbox{\hyperlink{class_restore_able_a46e3d455780dc6aea6bf7b8d92b2c47d}{00052}}     \textcolor{keyword}{public} \textcolor{keyword}{static} async Task<RestoreAble> \mbox{\hyperlink{class_restore_able_a46e3d455780dc6aea6bf7b8d92b2c47d}{Restore}}(\mbox{\hyperlink{class_restore_state}{RestoreState}} state, Type type, \textcolor{keywordtype}{bool} restoreDebug = \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00053}00053     \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00054}00054         var element = (\mbox{\hyperlink{class_restore_able_a3517b013a336bdcba9ecace7489cabca}{RestoreAble}})AiObjectFactory.CreateInstance(type, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00055}00055         element.CurrentDirectory = state.FolderLocation + \textcolor{stringliteral}{"{}/"{}} + state.FileName + \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00057}00057         await element.RestoreInternalAsync(state, restoreDebug);}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00058}00058         element.OnRestoreComplete();}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00059}00059         \textcolor{keywordflow}{return} element;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00060}00060     \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00062}00062     \textcolor{keyword}{internal} \textcolor{keyword}{virtual} async Task SaveToFile(\textcolor{keywordtype}{string} path, \mbox{\hyperlink{interface_i_persister}{IPersister}} persister, \textcolor{keywordtype}{int} index = -\/1)}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00063}00063     \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00064}00064         var task = Task.Factory.StartNew(async () =>}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00065}00065         \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00066}00066             DebugService.Log(\textcolor{stringliteral}{"{}Start SaveToFile path: "{}} + path, \textcolor{keyword}{this}, Thread.CurrentThread);}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00068}00068             if (\textcolor{keywordtype}{string}.IsNullOrEmpty(path))}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00069}00069             \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00070}00070                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00071}00071             \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00073}00073             var state = GetState();}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00074}00074             state.Index = index;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00075}00075             \textcolor{keywordflow}{if} (!path.Contains(\textcolor{stringliteral}{"{}."{}}))}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00076}00076             \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00077}00077                 state.FileName = \mbox{\hyperlink{class_path_service}{PathService}}.\mbox{\hyperlink{class_path_service_a2b82afc473e152abf8ef82cb18564790}{FormatFileName}}(state);}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00078}00078                 path = path + \textcolor{stringliteral}{"{}/"{}} + state.FileName;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00079}00079             \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00080}00080             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00081}00081             \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00082}00082                 state.FileName = \mbox{\hyperlink{class_restore_able_a393024c90e2fc2024076dd1fa6fc82bb}{GetFileName}}();}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00083}00083             \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00084}00084             state.FolderLocation = Path.GetDirectoryName(path);}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00085}00085             \textcolor{comment}{// DebugService.Log("{}Setting folder location of "{} + state.FileName + "{} Folder location: "{} + state.FolderLocation + "{} Path: "{} + path, this);}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00088}00088             await \mbox{\hyperlink{class_restore_able_a5689d8b83d65ba48c726f7b71f51de84}{InternalSaveToFile}}(path, persister, state);}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00089}00089             DebugService.Log(\textcolor{stringliteral}{"{}Done SaveToFile path: "{}} + path, \textcolor{keyword}{this}, Thread.CurrentThread);}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00090}00090         \});}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00091}00091         await task;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00092}00092     \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00095}\mbox{\hyperlink{class_restore_able_a5689d8b83d65ba48c726f7b71f51de84}{00095}}     \textcolor{keyword}{protected} \textcolor{keyword}{abstract} Task \mbox{\hyperlink{class_restore_able_a5689d8b83d65ba48c726f7b71f51de84}{InternalSaveToFile}}(\textcolor{keywordtype}{string} path, \mbox{\hyperlink{interface_i_persister}{IPersister}} persister, \mbox{\hyperlink{class_restore_state}{RestoreState}} state);}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00097}00097     \textcolor{keyword}{internal} \textcolor{keyword}{abstract} \mbox{\hyperlink{class_restore_state}{RestoreState}} GetState();}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00098}00098     }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00099}\mbox{\hyperlink{class_restore_able_adba8c739ceb77da7560f7eba866d012e}{00099}}     \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_restore_able_adba8c739ceb77da7560f7eba866d012e}{ToString}}()}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00100}00100     \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00101}00101         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}FileName: "{}} + \mbox{\hyperlink{class_restore_able_ae844be532382585be9c226f913274e53}{FileName}} + \textcolor{stringliteral}{"{} DerivedType: "{}} + \mbox{\hyperlink{class_restore_able_a0b16a1de2ec54a5ac3d46f92882133c7}{DerivedType}} + \textcolor{stringliteral}{"{} CurrentDirectory: "{}} + \mbox{\hyperlink{class_restore_able_a01e4768f5f26b7611167be8ee015b55b}{CurrentDirectory}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00102}00102     \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00103}00103 \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00105}\mbox{\hyperlink{class_restore_state}{00105}} \textcolor{keyword}{public} \textcolor{keyword}{abstract} \textcolor{keyword}{class }\mbox{\hyperlink{class_restore_state}{RestoreState}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00106}00106 \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00107}\mbox{\hyperlink{class_restore_state_a6f099928063496efa3653120342069c2}{00107}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_restore_state_a6f099928063496efa3653120342069c2}{FileName}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00108}00108     \textcolor{comment}{// public string DerivedTypeString;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00109}\mbox{\hyperlink{class_restore_state_adddcd07db0de5b9cb6abb798e7e0b2bd}{00109}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_restore_state_adddcd07db0de5b9cb6abb798e7e0b2bd}{FolderLocation}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00110}00110     \textcolor{comment}{// public Type DerivedType;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00111}\mbox{\hyperlink{class_restore_state_a6635ab4f57aa0c95fbfa8b0c5d7451ff}{00111}}     \textcolor{keyword}{public} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_restore_state_a6635ab4f57aa0c95fbfa8b0c5d7451ff}{Index}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00112}\mbox{\hyperlink{class_restore_state_a669bdbeebb53f46e85c8e8d9bc756202}{00112}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_restore_state_a669bdbeebb53f46e85c8e8d9bc756202}{AssemblyName}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00113}\mbox{\hyperlink{class_restore_state_aac7c1eef5632b245e3f50d7c94c99684}{00113}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_restore_state_aac7c1eef5632b245e3f50d7c94c99684}{AssemblyQualifiedName}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00115}\mbox{\hyperlink{class_restore_state_a1c8925cc5000e19b45011669617de650}{00115}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_restore_state_a1c8925cc5000e19b45011669617de650}{RestoreState}}()}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00116}00116     \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00117}00117     \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00119}\mbox{\hyperlink{class_restore_state_afea5ddce367a886eb3371b300000c28c}{00119}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_restore_state_afea5ddce367a886eb3371b300000c28c}{RestoreState}}(\mbox{\hyperlink{class_restore_able}{RestoreAble}} o)}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00120}00120     \{}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00121}00121         \mbox{\hyperlink{class_restore_state_a6f099928063496efa3653120342069c2}{FileName}} = o.\mbox{\hyperlink{class_restore_able_ae844be532382585be9c226f913274e53}{FileName}};}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00122}00122         \textcolor{comment}{// DerivedType = o.DerivedType;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00123}00123         \textcolor{comment}{// DerivedTypeString = o.DerivedType.ToString();}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00124}00124         \mbox{\hyperlink{class_restore_state_a669bdbeebb53f46e85c8e8d9bc756202}{AssemblyName}} = o.\mbox{\hyperlink{class_restore_able_a0b16a1de2ec54a5ac3d46f92882133c7}{DerivedType}}.Assembly.FullName;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00125}00125         \mbox{\hyperlink{class_restore_state_aac7c1eef5632b245e3f50d7c94c99684}{AssemblyQualifiedName}} = o.\mbox{\hyperlink{class_restore_able_a0b16a1de2ec54a5ac3d46f92882133c7}{DerivedType}}.AssemblyQualifiedName;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00126}00126         \mbox{\hyperlink{class_restore_state_a6635ab4f57aa0c95fbfa8b0c5d7451ff}{Index}} = -\/1;}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00127}00127     \}}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00129}\mbox{\hyperlink{class_restore_state_ae15949b7a055983001ecd6dc615f307c}{00129}}     \textcolor{keyword}{public} Type \mbox{\hyperlink{class_restore_state_ae15949b7a055983001ecd6dc615f307c}{OriginalType}} => Type.GetType(\mbox{\hyperlink{class_restore_state_aac7c1eef5632b245e3f50d7c94c99684}{AssemblyQualifiedName}});}
+\DoxyCodeLine{\Hypertarget{_restore_able_8cs_source_l00130}00130 \}}
+
+\end{DoxyCode}

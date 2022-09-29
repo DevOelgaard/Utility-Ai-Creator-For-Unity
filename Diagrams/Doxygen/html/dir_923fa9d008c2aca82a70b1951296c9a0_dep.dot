@@ -1,0 +1,38 @@
+digraph "Editor/UI/Components"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_f7d6d090f0bcfa8a66d7f61ab6a0ceb7 {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", style="filled,dashed,", label="UI", fontname="Helvetica", fontsize="10", URL="dir_f7d6d090f0bcfa8a66d7f61ab6a0ceb7.html"]
+  subgraph clusterdir_923fa9d008c2aca82a70b1951296c9a0 {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", style="filled,bold,", label="", fontname="Helvetica", fontsize="10", URL="dir_923fa9d008c2aca82a70b1951296c9a0.html"]
+    dir_923fa9d008c2aca82a70b1951296c9a0 [shape=plaintext, label="Components"];
+  dir_45f9ddf677ec72fbdd111fa733b00ebf [shape=box, label="Agent", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_45f9ddf677ec72fbdd111fa733b00ebf.html"];
+  dir_2e335016cc01cc8d8c39902e1d139242 [shape=box, label="AgentAction", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_2e335016cc01cc8d8c39902e1d139242.html"];
+  dir_13eaea026b4497c9efecfdc0f2c22977 [shape=box, label="Ai", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_13eaea026b4497c9efecfdc0f2c22977.html"];
+  dir_44bf01a8882d74adb3806bb198b7fc98 [shape=box, label="AiObject", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_44bf01a8882d74adb3806bb198b7fc98.html"];
+  dir_7f2264f6d650cb93fc92fb69a3647fc3 [shape=box, label="Bucket", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_7f2264f6d650cb93fc92fb69a3647fc3.html"];
+  dir_ba0a8a7684682ecba0273818205fbe7f [shape=box, label="Collection", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_ba0a8a7684682ecba0273818205fbe7f.html"];
+  dir_dc90c184cea1628134767ea0fcef9976 [shape=box, label="Consideration", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_dc90c184cea1628134767ea0fcef9976.html"];
+  dir_7884fd5e7f0e72c83591ed96b0f44a23 [shape=box, label="Decision", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_7884fd5e7f0e72c83591ed96b0f44a23.html"];
+  dir_86131d97cf894515ce34b7ac799fd0c3 [shape=box, label="DropdownContainer", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_86131d97cf894515ce34b7ac799fd0c3.html"];
+  dir_bbb92b2cd181e9ea9217bae8f47718cf [shape=box, label="DropdownDescription", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_bbb92b2cd181e9ea9217bae8f47718cf.html"];
+  dir_9b758f9851cd52062953dadf5eb6972a [shape=box, label="Foldable", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_9b758f9851cd52062953dadf5eb6972a.html"];
+  dir_ae4fe2af191ce09f62048d806577e00c [shape=box, label="Info", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_ae4fe2af191ce09f62048d806577e00c.html"];
+  dir_fdad5809923d1b806dc15edd82f0f7e9 [shape=box, label="LabelContainer", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_fdad5809923d1b806dc15edd82f0f7e9.html"];
+  dir_7627b9a4c65397380d2181c22611cc23 [shape=box, label="LeftButton", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_7627b9a4c65397380d2181c22611cc23.html"];
+  dir_23dd7dd819f652f202d1c2381706397f [shape=box, label="LineChart", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_23dd7dd819f652f202d1c2381706397f.html"];
+  dir_4510dabccfddbd93644370ea4c6ea338 [shape=box, label="ListView", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_4510dabccfddbd93644370ea4c6ea338.html"];
+  dir_56703d181b58042adc3cc358f0279165 [shape=box, label="Logger", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_56703d181b58042adc3cc358f0279165.html"];
+  dir_25911dca0b32f16574dcece5673cd306 [shape=box, label="MainWindow-Folded", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_25911dca0b32f16574dcece5673cd306.html"];
+  dir_0ae58036f700aadc0e62415e8155b4e6 [shape=box, label="ResponseCurve", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_0ae58036f700aadc0e62415e8155b4e6.html"];
+  dir_d2b791ebd03709448ad30eeef4e94f3a [shape=box, label="ResponseFunction", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_d2b791ebd03709448ad30eeef4e94f3a.html"];
+  dir_18e6cc138089fe5040c5492428254cf4 [shape=box, label="ScoreComponent", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_18e6cc138089fe5040c5492428254cf4.html"];
+  dir_500c85cc1aa4fb5b8008e409b51b935d [shape=box, label="TabView", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_500c85cc1aa4fb5b8008e409b51b935d.html"];
+  dir_5824ef4ef714e740d5065ee613fef689 [shape=box, label="UCS", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_5824ef4ef714e740d5065ee613fef689.html"];
+  dir_71a58b64f9d9d8b1648e2b74065cad78 [shape=box, label="UiToolkitExtensions", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_71a58b64f9d9d8b1648e2b74065cad78.html"];
+  }
+  }
+}

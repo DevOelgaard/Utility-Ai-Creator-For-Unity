@@ -1,0 +1,79 @@
+\hypertarget{_observable_8_binding_8cs_source}{}\doxysection{Observable.\+Binding.\+cs}
+\label{_observable_8_binding_8cs_source}\index{Editor/UniRx/Scripts/Observable.Binding.cs@{Editor/UniRx/Scripts/Observable.Binding.cs}}
+\mbox{\hyperlink{_observable_8_binding_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00002}00002 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{UniRx.Operators}};}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00004}00004 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx}{UniRx}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00006}00006     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00007}00007     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00008}\mbox{\hyperlink{class_uni_rx_1_1_observable_aa07300d16edbcb3f00cb9518171c26ef}{00008}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_aa07300d16edbcb3f00cb9518171c26ef}{Multicast<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \mbox{\hyperlink{interface_uni_rx_1_1_i_subject}{ISubject<T>}} subject)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00009}00009         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00010}00010             \textcolor{keywordflow}{return} \textcolor{keyword}{new} ConnectableObservable<T>(source, subject);}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00011}00011         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00013}\mbox{\hyperlink{class_uni_rx_1_1_observable_a73ac2bda7d05465e4bfe3b5d5ea55ff8}{00013}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a73ac2bda7d05465e4bfe3b5d5ea55ff8}{Publish<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00014}00014         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00015}00015             \textcolor{keywordflow}{return} source.Multicast(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<T>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00016}00016         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00018}\mbox{\hyperlink{class_uni_rx_1_1_observable_a25c75cae15e0ddca9985446101f3feb7}{00018}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a73ac2bda7d05465e4bfe3b5d5ea55ff8}{Publish<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, T initialValue)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00019}00019         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00020}00020             \textcolor{keywordflow}{return} source.Multicast(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject}{BehaviorSubject<T>}}(initialValue));}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00021}00021         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00023}\mbox{\hyperlink{class_uni_rx_1_1_observable_a1496a3ed0e15d82be60764a9c0067d16}{00023}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a1496a3ed0e15d82be60764a9c0067d16}{PublishLast<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00024}00024         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00025}00025             \textcolor{keywordflow}{return} source.Multicast(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_async_subject}{AsyncSubject<T>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00026}00026         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00028}\mbox{\hyperlink{class_uni_rx_1_1_observable_a213f45eb4ab3dd328143a51addb7d0c5}{00028}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a213f45eb4ab3dd328143a51addb7d0c5}{Replay<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00029}00029         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00030}00030             \textcolor{keywordflow}{return} source.Multicast(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{ReplaySubject<T>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00031}00031         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00033}\mbox{\hyperlink{class_uni_rx_1_1_observable_ae16ed609d8835b81e1d16affc9654c7f}{00033}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a213f45eb4ab3dd328143a51addb7d0c5}{Replay<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} scheduler)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00034}00034         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00035}00035             \textcolor{keywordflow}{return} source.Multicast(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{ReplaySubject<T>}}(scheduler));}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00036}00036         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00038}\mbox{\hyperlink{class_uni_rx_1_1_observable_a47745cae74cc6874eecb5821097c9e09}{00038}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a213f45eb4ab3dd328143a51addb7d0c5}{Replay<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{int} bufferSize)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00039}00039         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00040}00040             \textcolor{keywordflow}{return} source.Multicast(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{ReplaySubject<T>}}(bufferSize));}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00041}00041         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00043}\mbox{\hyperlink{class_uni_rx_1_1_observable_afeea44e32b1e2f320599f967c691c790}{00043}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a213f45eb4ab3dd328143a51addb7d0c5}{Replay<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{int} bufferSize, \mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} scheduler)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00044}00044         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00045}00045             \textcolor{keywordflow}{return} source.Multicast(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{ReplaySubject<T>}}(bufferSize, scheduler));}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00046}00046         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00048}\mbox{\hyperlink{class_uni_rx_1_1_observable_ae6dabdb9b121beff379aaa71c0ecf2c5}{00048}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a213f45eb4ab3dd328143a51addb7d0c5}{Replay<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, TimeSpan window)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00049}00049         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00050}00050             \textcolor{keywordflow}{return} source.Multicast(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{ReplaySubject<T>}}(window));}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00051}00051         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00053}\mbox{\hyperlink{class_uni_rx_1_1_observable_aa698c034bf9952b5524c958fb8807214}{00053}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a213f45eb4ab3dd328143a51addb7d0c5}{Replay<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, TimeSpan window, \mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} scheduler)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00054}00054         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00055}00055             \textcolor{keywordflow}{return} source.Multicast(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{ReplaySubject<T>}}(window, scheduler));}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00056}00056         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00058}\mbox{\hyperlink{class_uni_rx_1_1_observable_a6832495773f56f7fd4c453e6fc39bb9b}{00058}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a213f45eb4ab3dd328143a51addb7d0c5}{Replay<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{int} bufferSize, TimeSpan window, \mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} scheduler)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00059}00059         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00060}00060             \textcolor{keywordflow}{return} source.Multicast(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{ReplaySubject<T>}}(bufferSize, window, scheduler));}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00061}00061         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00063}\mbox{\hyperlink{class_uni_rx_1_1_observable_ad1cb3792631d6ea1015ffe46ca7e0711}{00063}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ad1cb3792631d6ea1015ffe46ca7e0711}{RefCount<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_connectable_observable}{IConnectableObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00064}00064         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00065}00065             \textcolor{keywordflow}{return} \textcolor{keyword}{new} RefCountObservable<T>(source);}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00066}00066         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00071}\mbox{\hyperlink{class_uni_rx_1_1_observable_a71a4463de6b793bf5097b23e7700ab8b}{00071}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a71a4463de6b793bf5097b23e7700ab8b}{Share<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00072}00072         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00073}00073             \textcolor{keywordflow}{return} source.Publish().RefCount();}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00074}00074         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00075}00075     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_binding_8cs_source_l00076}00076 \}}
+
+\end{DoxyCode}

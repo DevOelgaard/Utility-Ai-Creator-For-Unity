@@ -1,0 +1,86 @@
+\hypertarget{_bucket_view_model_8cs_source}{}\doxysection{Bucket\+View\+Model.\+cs}
+\label{_bucket_view_model_8cs_source}\index{Editor/UI/Components/Bucket/BucketViewModel.cs@{Editor/UI/Components/Bucket/BucketViewModel.cs}}
+\mbox{\hyperlink{_bucket_view_model_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00006}00006 \textcolor{keyword}{using }UnityEngine.UIElements;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00007}00007 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx}{UniRx}};}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00009}00009 \textcolor{keyword}{internal} \textcolor{keyword}{class }BucketViewModel : AiObjectViewModel }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00011}00011     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}} disposables = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}}();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00012}00012     \textcolor{keyword}{private} readonly TemplateContainer root;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00013}00013     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_collection_view_model}{CollectionViewModel<Consideration>}} considerationCollections;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00014}00014     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_collection_view_model}{CollectionViewModel<Decision>}} decisionCollections;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00015}00015     \textcolor{keyword}{private} \mbox{\hyperlink{class_bucket}{Bucket}} model;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00016}00016     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_parameter_component}{ParameterComponent}} weightComponent;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00017}00017     \textcolor{keyword}{private} readonly TabViewViewModel tabView;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00018}00018     \textcolor{keyword}{private} readonly Button considerationsTab;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00019}00019     \textcolor{keyword}{private} readonly Button decisionTab;}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00021}00021     \textcolor{keyword}{internal} BucketViewModel() : base()}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00022}00022     \{}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00023}00023         root = AssetService.GetTemplateContainer(GetType().FullName);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00025}00025         weightComponent = \textcolor{keyword}{new} \mbox{\hyperlink{class_parameter_component}{ParameterComponent}}();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00026}00026         tabView = \textcolor{keyword}{new} TabViewViewModel();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00027}00027         considerationCollections = \textcolor{keyword}{new} \mbox{\hyperlink{class_collection_view_model}{CollectionViewModel<Consideration>}}(TemplateService.Instance.Considerations, \textcolor{stringliteral}{"{}Consideration"{}}, \textcolor{stringliteral}{"{}Considerations"{}});}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00028}00028         decisionCollections = \textcolor{keyword}{new} \mbox{\hyperlink{class_collection_view_model}{CollectionViewModel<Decision>}}(TemplateService.Instance.Decisions, \textcolor{stringliteral}{"{}Decision"{}}, \textcolor{stringliteral}{"{}Decisions"{}});}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00030}00030         considerationsTab = tabView.AddTabGroup(\textcolor{stringliteral}{"{}Considerations"{}}, considerationCollections);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00031}00031         decisionTab = tabView.AddTabGroup(\textcolor{stringliteral}{"{}Decisions"{}}, decisionCollections);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00032}00032         root.Add(tabView);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00034}00034         Body.Clear();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00035}00035         Body.Add(root);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00036}00036     \}}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00038}00038     \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{void} UpdateInternal(\mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} model)}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00039}00039     \{}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00040}00040         var sw = \textcolor{keyword}{new} \mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}.Diagnostics.Stopwatch();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00041}00041         sw.Start();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00042}00042         var bucket = model as \mbox{\hyperlink{_enums_8cs_a67de60c500ce84fef3cf0c7a5be97b4fa30edf70db68aa84f05d3e72326807b0c}{Bucket}};}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00043}00043         disposables.Clear();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00045}00045         considerationsTab.text = \textcolor{stringliteral}{"{}Considerations ("{}} + bucket.Considerations.Count + \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00046}00046         decisionTab.text = \textcolor{stringliteral}{"{}Decisions ("{}} + bucket.Decisions.Count + \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00047}00047         }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00048}00048         ScoreContainer.Add(weightComponent);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00049}00049         bucket.Considerations.OnValueChanged}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00050}00050             .Subscribe(list => considerationsTab.text = \textcolor{stringliteral}{"{}Considerations ("{}} + list.Count + \textcolor{stringliteral}{"{})"{}})}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00051}00051             .AddTo(disposables);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00053}00053         bucket.Decisions.OnValueChanged}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00054}00054             .Subscribe(list => decisionTab.text = \textcolor{stringliteral}{"{}Decisions ("{}} + list.Count + \textcolor{stringliteral}{"{})"{}})}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00055}00055             .AddTo(disposables);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00056}00056         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, \textcolor{stringliteral}{"{}UIBucket Init"{}});}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00057}00057         sw.Restart();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00058}00058         considerationCollections.SetElements(bucket.Considerations);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00059}00059         considerationCollections}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00060}00060             .OnSortClicked}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00061}00061             .Subscribe(\_ => bucket.SortConsiderations())}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00062}00062             .AddTo(disposables);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00063}00063         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, \textcolor{stringliteral}{"{}UIBucket considerationCollections"{}});}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00064}00064         sw.Restart();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00065}00065         decisionCollections.SetElements(bucket.Decisions);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00066}00066         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, \textcolor{stringliteral}{"{}UIBucket decisionCollections"{}});}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00067}00067         sw.Restart();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00068}00068         weightComponent.UpdateUi(bucket.Weight);}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00069}00069         TimerService.Instance.LogCall(sw.ElapsedMilliseconds, \textcolor{stringliteral}{"{}UIBucket weightComponent"{}});}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00070}00070         sw.Restart();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00072}00072     \}}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00074}00074     \string~BucketViewModel()}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00075}00075     \{}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00076}00076         disposables.Clear();}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00077}00077     \}}
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{_bucket_view_model_8cs_source_l00080}00080 \}}
+
+\end{DoxyCode}

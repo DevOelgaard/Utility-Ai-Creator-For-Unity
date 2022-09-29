@@ -1,0 +1,240 @@
+\hypertarget{class_response_function}{}\doxysection{Response\+Function Class Reference}
+\label{class_response_function}\index{ResponseFunction@{ResponseFunction}}
+Inheritance diagram for Response\+Function\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.206897cm]{class_response_function}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override void \mbox{\hyperlink{class_response_function_a4d8e781beb13246c5b245ddf768eb606}{Initialize}} ()
+\item 
+virtual float \mbox{\hyperlink{class_response_function_a9686271edd69f97432cd7c723f84d37e}{Calculate\+Response}} (float x, float prev\+Result, float maxY)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_response_function_a76fa4a4c007005dde5f92694c1923224}{rc\+Index}} = -\/1
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_response_function_aaa46e69536fa2ea34792be9b9a844bb4}{Response\+Function}} ()
+\item 
+\mbox{\hyperlink{class_response_function_ad92b0176fac91b641b397accc4b9ff6a}{Response\+Function}} (string name)
+\item 
+override void \mbox{\hyperlink{class_response_function_ab7c939b9a79f2a026cd402162c29d006}{On\+Clone\+Complete}} ()
+\item 
+override void \mbox{\hyperlink{class_response_function_aabd389c09fce73c219c623399f2785b3}{On\+Restore\+Complete}} ()
+\item 
+override \mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} \mbox{\hyperlink{class_response_function_a8874db6ffe364444a8b31aedef3533cf}{Internal\+Clone}} ()
+\item 
+abstract float \mbox{\hyperlink{class_response_function_a7781e9748ee1d105f5076d9048b91c7c}{Calculate\+Response\+Internal}} (float x)
+\item 
+override async Task \mbox{\hyperlink{class_response_function_ac8af9fce09a0ce8b6e6fa2b6410b7db2}{Restore\+Internal\+Async}} (\mbox{\hyperlink{class_restore_state}{Restore\+State}} s, bool restore\+Debug=false)
+\item 
+override async Task \mbox{\hyperlink{class_response_function_a575be96bf2b773f9fa4efb860231d890}{Internal\+Save\+To\+File}} (string path, \mbox{\hyperlink{interface_i_persister}{IPersister}} persister, \mbox{\hyperlink{class_restore_state}{Restore\+State}} state)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+readonly \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject}}$<$ bool $>$ \mbox{\hyperlink{class_response_function_a372f0d317f9abeb8c0cbdcc8449b06b4}{on\+Parameters\+Changed}} = new \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject}}$<$bool$>$()
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_parameter}{Parameter}} \mbox{\hyperlink{class_response_function_a7c0c5387615921ce4002c3b558fabec8}{Max}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ bool $>$ \mbox{\hyperlink{class_response_function_a45b3a657ba5a310998812988d300926a}{On\+Parameters\+Changed}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00009}{9}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_response_function_aaa46e69536fa2ea34792be9b9a844bb4}\label{class_response_function_aaa46e69536fa2ea34792be9b9a844bb4}} 
+\index{ResponseFunction@{ResponseFunction}!ResponseFunction@{ResponseFunction}}
+\index{ResponseFunction@{ResponseFunction}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{ResponseFunction()}{ResponseFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Response\+Function.\+Response\+Function (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00020}{20}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+\mbox{\Hypertarget{class_response_function_ad92b0176fac91b641b397accc4b9ff6a}\label{class_response_function_ad92b0176fac91b641b397accc4b9ff6a}} 
+\index{ResponseFunction@{ResponseFunction}!ResponseFunction@{ResponseFunction}}
+\index{ResponseFunction@{ResponseFunction}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{ResponseFunction()}{ResponseFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Response\+Function.\+Response\+Function (\begin{DoxyParamCaption}\item[{string}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00028}{28}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_response_function_a9686271edd69f97432cd7c723f84d37e}\label{class_response_function_a9686271edd69f97432cd7c723f84d37e}} 
+\index{ResponseFunction@{ResponseFunction}!CalculateResponse@{CalculateResponse}}
+\index{CalculateResponse@{CalculateResponse}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{CalculateResponse()}{CalculateResponse()}}
+{\footnotesize\ttfamily virtual float Response\+Function.\+Calculate\+Response (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{prev\+Result,  }\item[{float}]{maxY }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00077}{77}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+\mbox{\Hypertarget{class_response_function_a7781e9748ee1d105f5076d9048b91c7c}\label{class_response_function_a7781e9748ee1d105f5076d9048b91c7c}} 
+\index{ResponseFunction@{ResponseFunction}!CalculateResponseInternal@{CalculateResponseInternal}}
+\index{CalculateResponseInternal@{CalculateResponseInternal}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{CalculateResponseInternal()}{CalculateResponseInternal()}}
+{\footnotesize\ttfamily abstract float Response\+Function.\+Calculate\+Response\+Internal (\begin{DoxyParamCaption}\item[{float}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_exponential_function_a23b1cca8d1eb5cce35f881041500cf85}{Exponential\+Function}}, \mbox{\hyperlink{class_inverse_logistic_function_a10d5478d53f7cac60873832827158581}{Inverse\+Logistic\+Function}}, \mbox{\hyperlink{class_linear_function_a65ce704853303811850e39464cf66523}{Linear\+Function}}, \mbox{\hyperlink{class_logistic_function_a528de24339a2ac19efd67affed52190a}{Logistic\+Function}}, and \mbox{\hyperlink{class_mocks_1_1_mock___response_function_a753ecd9f10b37e9ab1197a37f1586d87}{Mocks.\+Mock\+\_\+\+Response\+Function}}.
+
+\mbox{\Hypertarget{class_response_function_a4d8e781beb13246c5b245ddf768eb606}\label{class_response_function_a4d8e781beb13246c5b245ddf768eb606}} 
+\index{ResponseFunction@{ResponseFunction}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily override void Response\+Function.\+Initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_ai_object_model_a8caafa8e6a6366e43da6b6d5403d8161}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00043}{43}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+\mbox{\Hypertarget{class_response_function_a8874db6ffe364444a8b31aedef3533cf}\label{class_response_function_a8874db6ffe364444a8b31aedef3533cf}} 
+\index{ResponseFunction@{ResponseFunction}!InternalClone@{InternalClone}}
+\index{InternalClone@{InternalClone}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{InternalClone()}{InternalClone()}}
+{\footnotesize\ttfamily override \mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} Response\+Function.\+Internal\+Clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_ai_object_model_af71d2ef63ca2a5bc7dfdcb65b5f4ecdd}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00061}{61}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+\mbox{\Hypertarget{class_response_function_a575be96bf2b773f9fa4efb860231d890}\label{class_response_function_a575be96bf2b773f9fa4efb860231d890}} 
+\index{ResponseFunction@{ResponseFunction}!InternalSaveToFile@{InternalSaveToFile}}
+\index{InternalSaveToFile@{InternalSaveToFile}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{InternalSaveToFile()}{InternalSaveToFile()}}
+{\footnotesize\ttfamily override async Task Response\+Function.\+Internal\+Save\+To\+File (\begin{DoxyParamCaption}\item[{string}]{path,  }\item[{\mbox{\hyperlink{interface_i_persister}{IPersister}}}]{persister,  }\item[{\mbox{\hyperlink{class_restore_state}{Restore\+State}}}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_restore_able_a5689d8b83d65ba48c726f7b71f51de84}{Restore\+Able}}.
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00124}{124}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+\mbox{\Hypertarget{class_response_function_ab7c939b9a79f2a026cd402162c29d006}\label{class_response_function_ab7c939b9a79f2a026cd402162c29d006}} 
+\index{ResponseFunction@{ResponseFunction}!OnCloneComplete@{OnCloneComplete}}
+\index{OnCloneComplete@{OnCloneComplete}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{OnCloneComplete()}{OnCloneComplete()}}
+{\footnotesize\ttfamily override void Response\+Function.\+On\+Clone\+Complete (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_ai_object_model_a9c679b704d3a25f87774384b63490158}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00049}{49}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+\mbox{\Hypertarget{class_response_function_aabd389c09fce73c219c623399f2785b3}\label{class_response_function_aabd389c09fce73c219c623399f2785b3}} 
+\index{ResponseFunction@{ResponseFunction}!OnRestoreComplete@{OnRestoreComplete}}
+\index{OnRestoreComplete@{OnRestoreComplete}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{OnRestoreComplete()}{OnRestoreComplete()}}
+{\footnotesize\ttfamily override void Response\+Function.\+On\+Restore\+Complete (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_ai_object_model_a7f68821aae792e0fdfb75503fe6f1472}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00055}{55}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+\mbox{\Hypertarget{class_response_function_ac8af9fce09a0ce8b6e6fa2b6410b7db2}\label{class_response_function_ac8af9fce09a0ce8b6e6fa2b6410b7db2}} 
+\index{ResponseFunction@{ResponseFunction}!RestoreInternalAsync@{RestoreInternalAsync}}
+\index{RestoreInternalAsync@{RestoreInternalAsync}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{RestoreInternalAsync()}{RestoreInternalAsync()}}
+{\footnotesize\ttfamily override async Task Response\+Function.\+Restore\+Internal\+Async (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_restore_state}{Restore\+State}}}]{s,  }\item[{bool}]{restore\+Debug = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_ai_object_model_a2cd00022a3a7876e7cb5fb4a6449b1cf}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00094}{94}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_response_function_a372f0d317f9abeb8c0cbdcc8449b06b4}\label{class_response_function_a372f0d317f9abeb8c0cbdcc8449b06b4}} 
+\index{ResponseFunction@{ResponseFunction}!onParametersChanged@{onParametersChanged}}
+\index{onParametersChanged@{onParametersChanged}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{onParametersChanged}{onParametersChanged}}
+{\footnotesize\ttfamily readonly \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject}}$<$bool$>$ Response\+Function.\+on\+Parameters\+Changed = new \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject}}$<$bool$>$()\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00017}{17}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+\mbox{\Hypertarget{class_response_function_a76fa4a4c007005dde5f92694c1923224}\label{class_response_function_a76fa4a4c007005dde5f92694c1923224}} 
+\index{ResponseFunction@{ResponseFunction}!rcIndex@{rcIndex}}
+\index{rcIndex@{rcIndex}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{rcIndex}{rcIndex}}
+{\footnotesize\ttfamily int Response\+Function.\+rc\+Index = -\/1}
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00012}{12}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_response_function_a7c0c5387615921ce4002c3b558fabec8}\label{class_response_function_a7c0c5387615921ce4002c3b558fabec8}} 
+\index{ResponseFunction@{ResponseFunction}!Max@{Max}}
+\index{Max@{Max}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{Max}{Max}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_parameter}{Parameter}} Response\+Function.\+Max\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+\mbox{\Hypertarget{class_response_function_a45b3a657ba5a310998812988d300926a}\label{class_response_function_a45b3a657ba5a310998812988d300926a}} 
+\index{ResponseFunction@{ResponseFunction}!OnParametersChanged@{OnParametersChanged}}
+\index{OnParametersChanged@{OnParametersChanged}!ResponseFunction@{ResponseFunction}}
+\doxysubsubsection{\texorpdfstring{OnParametersChanged}{OnParametersChanged}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$bool$>$ Response\+Function.\+On\+Parameters\+Changed\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_response_function_8cs_source_l00016}{16}} of file \mbox{\hyperlink{_response_function_8cs_source}{Response\+Function.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Runtime/\+Models/\+Response\+Function/\mbox{\hyperlink{_response_function_8cs}{Response\+Function.\+cs}}\end{DoxyCompactItemize}

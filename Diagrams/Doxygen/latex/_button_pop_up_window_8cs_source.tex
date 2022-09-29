@@ -1,0 +1,40 @@
+\hypertarget{_button_pop_up_window_8cs_source}{}\doxysection{Button\+Pop\+Up\+Window.\+cs}
+\label{_button_pop_up_window_8cs_source}\index{Editor/UI/EditorWindows/ButtonPopUp/ButtonPopUpWindow.cs@{Editor/UI/EditorWindows/ButtonPopUp/ButtonPopUpWindow.cs}}
+\mbox{\hyperlink{_button_pop_up_window_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00001}00001 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00002}00002 \textcolor{keyword}{using }UnityEditor;}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00003}00003 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00004}00004 \textcolor{keyword}{using }UnityEngine.UIElements;}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00006}\mbox{\hyperlink{class_button_pop_up_window}{00006}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_button_pop_up_window}{ButtonPopUpWindow}}: EditorWindow}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00008}00008         \textcolor{keyword}{private} Label textLabel;}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00009}00009         \textcolor{keyword}{private} VisualElement buttonContainer;}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00011}\mbox{\hyperlink{class_button_pop_up_window_af63fd788aeeb12ad68eb08faf90bd6e4}{00011}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_button_pop_up_window_af63fd788aeeb12ad68eb08faf90bd6e4}{CreateGUI}}()}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00012}00012         \{}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00013}00013                 var root = rootVisualElement;}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00014}00014         }
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00015}00015                 var treeAsset = AssetService.GetVisualTreeAsset(GetType().FullName);}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00016}00016                 treeAsset.CloneTree(root);}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00017}00017                 root.styleSheets.Add(StylesService.GetStyleSheet(GetType().FullName));}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00018}00018                 textLabel = root.Q<Label>(\textcolor{stringliteral}{"{}Text"{}});}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00019}00019                 buttonContainer = root.Q<VisualElement>(\textcolor{stringliteral}{"{}ButtonContainer"{}});}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00020}00020         \}}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00022}00022         \textcolor{keyword}{internal} \textcolor{keywordtype}{void} Open(\textcolor{keywordtype}{string} windowTitle, \textcolor{keywordtype}{string} text, List<Button> buttons)}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00023}00023         \{}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00024}00024                 titleContent = \textcolor{keyword}{new} GUIContent(windowTitle);}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00026}00026                 buttonContainer.Clear();}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00027}00027                 textLabel.text = text;}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00028}00028                 \textcolor{keywordflow}{foreach} (var button \textcolor{keywordflow}{in} buttons)}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00029}00029                 \{}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00030}00030                         buttonContainer.Add(button);}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00031}00031                 \}}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00032}00032                 Show();}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00033}00033         \}}
+\DoxyCodeLine{\Hypertarget{_button_pop_up_window_8cs_source_l00034}00034 \}}
+
+\end{DoxyCode}

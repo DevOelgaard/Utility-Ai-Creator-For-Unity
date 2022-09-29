@@ -1,0 +1,129 @@
+\hypertarget{_throttle_first_frame_8cs_source}{}\doxysection{Throttle\+First\+Frame.\+cs}
+\label{_throttle_first_frame_8cs_source}\index{Editor/UniRx/Scripts/UnityEngineBridge/Operators/ThrottleFirstFrame.cs@{Editor/UniRx/Scripts/UnityEngineBridge/Operators/ThrottleFirstFrame.cs}}
+\mbox{\hyperlink{_throttle_first_frame_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00003}00003 \textcolor{preprocessor}{\#if UniRxLibrary}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00004}00004 \textcolor{keyword}{using }\mbox{\hyperlink{_delay_frame_subscription_8cs_a4f66b59d9fe5fef0ac77e3c17331ed4f}{UnityObservable}} = \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.ObservableUnity;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00005}00005 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00006}\mbox{\hyperlink{_throttle_first_frame_8cs_a4f66b59d9fe5fef0ac77e3c17331ed4f}{00006}} \textcolor{keyword}{using }\mbox{\hyperlink{_delay_frame_subscription_8cs_a4f66b59d9fe5fef0ac77e3c17331ed4f}{UnityObservable}} = \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}};}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00007}00007 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00009}00009 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{UniRx.Operators}}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00011}00011     \textcolor{keyword}{internal} \textcolor{keyword}{class }ThrottleFirstFrameObservable<T> : OperatorObservableBase<T>}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00012}00012     \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00013}00013         readonly IObservable<T> source;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00014}00014         readonly \textcolor{keywordtype}{int} frameCount;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00015}00015         readonly \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00017}00017         \textcolor{keyword}{public} ThrottleFirstFrameObservable(IObservable<T> source, \textcolor{keywordtype}{int} frameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType) : base(source.IsRequiredSubscribeOnCurrentThread())}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00018}00018         \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00019}00019             this.source = source;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00020}00020             this.frameCount = frameCount;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00021}00021             this.frameCountType = frameCountType;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00022}00022         \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00024}00024         \textcolor{keyword}{protected} \textcolor{keyword}{override} IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00025}00025         \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00026}00026             \textcolor{keywordflow}{return} \textcolor{keyword}{new} ThrottleFirstFrame(\textcolor{keyword}{this}, observer, cancel).Run();}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00027}00027         \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00029}00029         \textcolor{keyword}{class }ThrottleFirstFrame : OperatorObserverBase<T, T>}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00030}00030         \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00031}00031             readonly ThrottleFirstFrameObservable<T> parent;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00032}00032             readonly \textcolor{keywordtype}{object} gate = \textcolor{keyword}{new} object();}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00033}00033             \textcolor{keywordtype}{bool} open = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00034}00034             SerialDisposable cancelable;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00036}00036             ThrottleFirstFrameTick tick;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00038}00038             \textcolor{keyword}{public} ThrottleFirstFrame(ThrottleFirstFrameObservable<T> parent, IObserver<T> observer, IDisposable cancel) : base(observer, cancel)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00039}00039             \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00040}00040                 this.parent = parent;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00041}00041             \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00043}00043             \textcolor{keyword}{public} IDisposable Run()}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00044}00044             \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00045}00045                 tick = \textcolor{keyword}{new} ThrottleFirstFrameTick(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00046}00046                 cancelable = \textcolor{keyword}{new} SerialDisposable();}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00048}00048                 var subscription = parent.source.Subscribe(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00049}00049                 \textcolor{keywordflow}{return} StableCompositeDisposable.Create(cancelable, subscription);}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00050}00050             \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00052}00052             \textcolor{keywordtype}{void} OnNext()}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00053}00053             \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00054}00054                 lock (gate)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00055}00055                 \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00056}00056                     open = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00057}00057                 \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00058}00058             \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00060}00060             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} OnNext(T value)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00061}00061             \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00062}00062                 lock (gate)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00063}00063                 \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00064}00064                     \textcolor{keywordflow}{if} (!open) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00065}00065                     observer.OnNext(value);}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00066}00066                     open = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00067}00067                 \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00069}00069                 var d = \textcolor{keyword}{new} SingleAssignmentDisposable();}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00070}00070                 cancelable.Disposable = d;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00071}00071                 d.Disposable = \mbox{\hyperlink{_delay_frame_subscription_8cs_a4f66b59d9fe5fef0ac77e3c17331ed4f}{UnityObservable}}.TimerFrame(parent.frameCount, parent.frameCountType)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00072}00072                     .Subscribe(tick);}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00073}00073             \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00075}00075             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} OnError(Exception error)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00076}00076             \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00077}00077                 cancelable.Dispose();}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00079}00079                 lock (gate)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00080}00080                 \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00081}00081                     \textcolor{keywordflow}{try} \{ observer.OnError(error); \} \textcolor{keywordflow}{finally} \{ Dispose(); \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00082}00082                 \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00083}00083             \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00085}00085             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} OnCompleted()}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00086}00086             \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00087}00087                 cancelable.Dispose();}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00089}00089                 lock (gate)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00090}00090                 \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00091}00091                     \textcolor{keywordflow}{try} \{ observer.OnCompleted(); \} \textcolor{keywordflow}{finally} \{ Dispose(); \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00092}00092                 \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00093}00093             \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00095}00095             \textcolor{comment}{// immutable, can share.}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00096}00096             \textcolor{keyword}{class }ThrottleFirstFrameTick : IObserver<long>}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00097}00097             \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00098}00098                 readonly ThrottleFirstFrame parent;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00100}00100                 \textcolor{keyword}{public} ThrottleFirstFrameTick(ThrottleFirstFrame parent)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00101}00101                 \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00102}00102                     this.parent = parent;}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00103}00103                 \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00105}00105                 \textcolor{keyword}{public} \textcolor{keywordtype}{void} OnCompleted()}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00106}00106                 \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00107}00107                 \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00109}00109                 \textcolor{keyword}{public} \textcolor{keywordtype}{void} OnError(Exception error)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00110}00110                 \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00111}00111                 \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00113}00113                 \textcolor{keyword}{public} \textcolor{keywordtype}{void} OnNext(\textcolor{keywordtype}{long} \_)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00114}00114                 \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00115}00115                     lock (parent.gate)}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00116}00116                     \{}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00117}00117                         parent.open = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00118}00118                     \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00119}00119                 \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00120}00120             \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00121}00121         \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00122}00122     \}}
+\DoxyCodeLine{\Hypertarget{_throttle_first_frame_8cs_source_l00123}00123 \}}
+
+\end{DoxyCode}

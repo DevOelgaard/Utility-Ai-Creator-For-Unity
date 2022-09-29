@@ -1,0 +1,203 @@
+\hypertarget{_consts_8cs_source}{}\doxysection{Consts.\+cs}
+\label{_consts_8cs_source}\index{Runtime/ConstAndEnums/Consts.cs@{Runtime/ConstAndEnums/Consts.cs}}
+\mbox{\hyperlink{_consts_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00007}00007 \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{class }Consts}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00009}00009     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{int} MaxPathLengthWindows = 260;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00011}00011     \textcolor{comment}{// Paths}}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00012}00012     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} MenuName = \textcolor{stringliteral}{"{}UAI Creator/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00013}00013     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} PathMainFolder = \textcolor{stringliteral}{"{}Assets/UAS/bin/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00015}00015     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} ProjectSettingsPath =}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00016}00016         PathMainFolder + \textcolor{stringliteral}{"{}Settings/ProjectSettings."{}} + FileExtension\_ProjectSettings;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00018}00018     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} CurrentProjectPath => ProjectSettingsService.Instance.GetCurrentProjectDirectory();}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00019}00019     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} Folder\_TickerSettings\_Complete => Folder\_TickerSettings + FileName\_TickerSettings + \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00020}00020     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} Folder\_PlayAbleAi\_Complete => Folder\_PLayAbleAi + FileName\_PLayAbleAi + \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00022}00022     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} FilePath\_TickerSettingsWithExtention =>}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00023}00023         Folder\_TickerSettings + FileName\_TickerSettings + \textcolor{stringliteral}{"{}."{}} + FileExtension\_TickerSettings;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00025}00025     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} FilePath\_PlayAbleAiWithExtention =>}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00026}00026         Folder\_PLayAbleAi + FileName\_PLayAbleAi + \textcolor{stringliteral}{"{}."{}} + FileExtension\_PlayAble;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00028}00028     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} Folder\_TickerSettings => CurrentProjectPath + \textcolor{stringliteral}{"{}Settings/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00029}00029     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} Folder\_PLayAbleAi => CurrentProjectPath + FileName\_PLayAbleAi + \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00030}00030     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileName\_TickerSettings = \textcolor{stringliteral}{"{}TickerSettings"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00032}00032     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} FolderPath\_TickerModes\_Complete => Folder\_TickerSettings\_Complete + FolderName\_TickerModes;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00033}00033     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} FolderPath\_PlayAbleAi\_Complete => Folder\_PlayAbleAi\_Complete + FolderName\_PlayAbleAis;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00035}00035     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} FileUasProjectTemp => CurrentProjectPath + \textcolor{stringliteral}{"{}Temp/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00037}00037     \textcolor{comment}{// internal static string FileUasPlayAblePathWithNameAndExtension => FileUasPlayAblePath + FileName\_PLayAbleAi + "{}."{} + FileExtension\_PlayAble;}}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00038}00038     \textcolor{comment}{// internal static string FileUasPlayAblePath => CurrentProjectPath + FileName\_PLayAbleAi+"{}/"{};}}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00039}00039     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileName\_PLayAbleAi = \textcolor{stringliteral}{"{}PlAi"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00042}00042     \textcolor{comment}{// Folder Names}}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00043}00043     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileName\_Templates = \textcolor{stringliteral}{"{}Te"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00044}00044     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_Templates = FileName\_Templates + \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00045}00045     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_PlayAbleAis = FileName\_PLayAbleAi + \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00046}00046     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_Parameters = \textcolor{stringliteral}{"{}Pa/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00047}00047     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_ResponseFunctions = \textcolor{stringliteral}{"{}RF/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00048}00048     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_Segments = \textcolor{stringliteral}{"{}Se/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00049}00049     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_ResponseCurves = \textcolor{stringliteral}{"{}RC/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00050}00050     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_AgentActions = \textcolor{stringliteral}{"{}Act/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00051}00051     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_Considerations = \textcolor{stringliteral}{"{}Co/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00052}00052     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_Decisions = \textcolor{stringliteral}{"{}Dec/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00053}00053     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_Buckets = \textcolor{stringliteral}{"{}Buc/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00054}00054     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_BucketSelectors = \textcolor{stringliteral}{"{}BuS/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00055}00055     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_DecisionSelectors = \textcolor{stringliteral}{"{}DeS/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00056}00056     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_Ais = \textcolor{stringliteral}{"{}Ais/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00057}00057     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_TickerModes = \textcolor{stringliteral}{"{}TM/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00058}00058     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_Weight = \textcolor{stringliteral}{"{}W/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00059}00059     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_MinParameter = \textcolor{stringliteral}{"{}Min/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00060}00060     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FolderName\_MaxParameter = \textcolor{stringliteral}{"{}Max/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00063}00063     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} File\_MainSavePath = PathMainFolder + \textcolor{stringliteral}{"{}Persistence/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00065}00065     \textcolor{comment}{// Labels}}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00066}00066     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Label\_MainWindowModel = \textcolor{stringliteral}{"{}MainWindowModel"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00067}00067     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Label\_AgentActionModel = \textcolor{stringliteral}{"{}AgentActions"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00068}00068     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Label\_ConsiderationModel = \textcolor{stringliteral}{"{}Considerations"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00069}00069     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Label\_DecisionModel = \textcolor{stringliteral}{"{}Decisions"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00070}00070     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Label\_BucketModel = \textcolor{stringliteral}{"{}Buckets"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00071}00071     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Label\_UAIModel = \textcolor{stringliteral}{"{}AIs"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00072}00072     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Label\_ResponseCurve = \textcolor{stringliteral}{"{}Response Curve"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00073}00073     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Label\_DebuggerText = \textcolor{stringliteral}{"{}Debugging"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00077}00077     \textcolor{comment}{// Scorers}}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00078}00078     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Default\_UtilityScorer = Name\_USAverageScore;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00079}00079     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Default\_BucketSelector = UCS\_HighestScore\_Name;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00080}00080     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Default\_DecisionSelector = UCS\_HighestScore\_Name;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00082}00082     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} UCS\_HighestScore\_Name = \textcolor{stringliteral}{"{}Highest Score"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00083}00083     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} UCS\_HighestScore\_Description = \textcolor{stringliteral}{"{}Selects the highest scored object"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00085}00085     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} UCS\_RandomXHighest\_Name = \textcolor{stringliteral}{"{}Random X Highest"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00087}00087     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} UCS\_RandomXHighest\_Description =}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00088}00088         \textcolor{stringliteral}{"{}Returns random element among X highest. If X < 1, all valid AiObjects are considered. Can be completely random or relative to score."{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00091}00091     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Name\_USAverageScore = \textcolor{stringliteral}{"{}Average"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00093}00093     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Description\_USAverageScore =}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00094}00094         \textcolor{stringliteral}{"{}Returns the average score of all considerations. Returns 0 if one consideration is 0"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00096}00096     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Name\_USCompensationScorer = \textcolor{stringliteral}{"{}Compensation"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00098}00098     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Description\_USCompensationScorer =}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00099}00099         \textcolor{stringliteral}{"{}Returns all considerations scores multiplied and compensates for multiplying by <1."{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00101}00101     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Name\_DefaultDSE = \textcolor{stringliteral}{"{}Default DSE"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00102}00102     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Description\_DefaultDSE = \textcolor{stringliteral}{"{}Selects the highest scored object"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00104}00104     \textcolor{comment}{// Editor Windows}}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00105}00105     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Window\_TemplateManager\_Name = \textcolor{stringliteral}{"{}Template Manager"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00106}00106     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Window\_RuntimeInspector\_Name = \textcolor{stringliteral}{"{}Runtime Inspector"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00107}00107     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Window\_AiTickerManager\_Name = \textcolor{stringliteral}{"{}Settings"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00108}00108     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Window\_Logger\_Name = \textcolor{stringliteral}{"{}Logger"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00109}00109     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Window\_SelectProject\_Name = \textcolor{stringliteral}{"{}Select Project"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00112}00112     \textcolor{comment}{// Ticker Modes}}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00113}00113     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Description\_TickerModeUnrestricted = \textcolor{stringliteral}{"{}No restrictions to execution time"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00115}00115     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Description\_TickerModeDesiredFrameRate =}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00116}00116         \textcolor{stringliteral}{"{}Dynamically alters ticks/frame to stay above target framerate. Increasing samplerate trades Reaction time for framerate precision."{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00118}00118     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Description\_TickerModeTimeBudget =}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00119}00119         \textcolor{stringliteral}{"{}Executes as many ticks as possible in a given timeframe. The Time budget may be exceeded by the execution time of one agent"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00120}00120 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00122}00122     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{int} LengthOfLongestExtension = 8;}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00123}00123     \textcolor{comment}{// File extensions}}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00124}00124     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_TemplateService = \textcolor{stringliteral}{"{}uasproj"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00125}00125     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_PlayAble = \textcolor{stringliteral}{"{}uasplay"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00126}00126     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_UAI = \textcolor{stringliteral}{"{}uasuai"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00127}00127     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_Bucket = \textcolor{stringliteral}{"{}uasbuc"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00128}00128     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_Decision = \textcolor{stringliteral}{"{}uasdec"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00129}00129     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_Consideration = \textcolor{stringliteral}{"{}uascons"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00130}00130     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_AgentAction = \textcolor{stringliteral}{"{}uasact"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00131}00131     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_ResponseCurve = \textcolor{stringliteral}{"{}uasrcrv"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00132}00132     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_ResponseFunction = \textcolor{stringliteral}{"{}uasrfunc"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00133}00133     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_Parameter = \textcolor{stringliteral}{"{}uasparam"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00134}00134     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_TickerSettings = \textcolor{stringliteral}{"{}uasttset"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00135}00135     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_TickerModes = \textcolor{stringliteral}{"{}uastmod"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00136}00136     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_UtilityContainerSelector = \textcolor{stringliteral}{"{}uasucs"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00137}00137     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_RestoreAbleCollection = \textcolor{stringliteral}{"{}uascol"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00138}00138     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_AiTicker = \textcolor{stringliteral}{"{}uastick"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00139}00139     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_ProjectSettings = \textcolor{stringliteral}{"{}uaspset"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00140}00140 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00141}00141     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileExtension\_JSON = \textcolor{stringliteral}{"{}.json"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00142}00142 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00143}00143     \textcolor{keyword}{public} \textcolor{keyword}{static} readonly List<string> FileExtensions = \textcolor{keyword}{new} List<string>()}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00144}00144     \{}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00145}00145         FileExtension\_AgentAction,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00146}00146         FileExtension\_AiTicker,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00147}00147         FileExtension\_Bucket,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00148}00148         FileExtension\_Consideration,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00149}00149         FileExtension\_Decision,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00150}00150         FileExtension\_Parameter,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00151}00151         FileExtension\_PlayAble,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00152}00152         FileExtension\_ProjectSettings,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00153}00153         FileExtension\_ResponseCurve,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00154}00154         FileExtension\_ResponseFunction,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00155}00155         FileExtension\_TemplateService,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00156}00156         FileExtension\_TickerModes,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00157}00157         FileExtension\_RestoreAbleCollection,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00158}00158         FileExtension\_UAI,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00159}00159         FileExtension\_UtilityContainerSelector,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00160}00160     \};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00161}00161 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00162}00162     }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00163}00163     \textcolor{keyword}{public} \textcolor{keyword}{static} readonly \textcolor{keywordtype}{string}[] FileExtensionsFilters =}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00164}00164     \{}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00165}00165         \textcolor{stringliteral}{"{}UAS Objects"{}}, \textcolor{stringliteral}{"{}uas*"{}},}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00166}00166         \textcolor{stringliteral}{"{}Project"{}}, FileExtension\_TemplateService,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00167}00167         \textcolor{stringliteral}{"{}Ais"{}}, FileExtension\_UAI,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00168}00168         \textcolor{stringliteral}{"{}Buckets"{}}, FileExtension\_Bucket,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00169}00169         \textcolor{stringliteral}{"{}Decisions"{}}, FileExtension\_Decision,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00170}00170         \textcolor{stringliteral}{"{}Considerations"{}}, FileExtension\_Consideration,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00171}00171         \textcolor{stringliteral}{"{}Response Curves"{}}, FileExtension\_ResponseCurve,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00172}00172         \textcolor{stringliteral}{"{}Ticker Settings"{}}, FileExtension\_TickerSettings,}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00173}00173         \textcolor{stringliteral}{"{}All Files"{}}, \textcolor{stringliteral}{"{}*"{}},}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00174}00174     \};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00175}00175 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00176}00176     \textcolor{comment}{// UI Element Text}}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00177}00177     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Text\_Button\_SortByPerformance = \textcolor{stringliteral}{"{}Performance Sort"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00178}00178     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Text\_Button\_SortByWeight = \textcolor{stringliteral}{"{}Sort By Weight"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00179}00179     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Text\_Button\_Folded = \textcolor{stringliteral}{"{}Expand"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00180}00180     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Text\_Button\_Expanded = \textcolor{stringliteral}{"{}Fold"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00181}00181     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Text\_Button\_Up = \textcolor{stringliteral}{"{}+"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00182}00182     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Text\_Button\_Down = \textcolor{stringliteral}{"{}-\/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00183}00183 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00184}00184     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} LineBreakBaseTypes = \textcolor{stringliteral}{"{}-\/-\/-\/-\/Base Types-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00185}00185     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} LineBreakTemplates = \textcolor{stringliteral}{"{}-\/-\/-\/-\/Templates-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00186}00186     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} LineBreakDemos = \textcolor{stringliteral}{"{}-\/-\/-\/-\/Demos-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00187}00187 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00189}00189     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileName\_TickerModeDesiredFrameRate = \textcolor{stringliteral}{"{}DsFr"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00190}00190     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileName\_TickerModeUnrestrictedFrameRate = \textcolor{stringliteral}{"{}Unre"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00191}00191     \textcolor{keyword}{public} \textcolor{keyword}{const} \textcolor{keywordtype}{string} FileName\_TickerModeTimeBudgetFrameRate = \textcolor{stringliteral}{"{}TiBu"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00192}00192 }
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00193}00193     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Sequence\_CalculateUtility\_UAI = \textcolor{stringliteral}{"{}CalculateUtility\_UAI"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00194}00194     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Sequence\_CalculateUtility\_User = \textcolor{stringliteral}{"{}CalculateUtility\_User"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00195}00195     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Sequence\_Persistence\_Load = \textcolor{stringliteral}{"{}Load Project"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00196}00196     \textcolor{keyword}{internal} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Sequence\_Persistence\_Save = \textcolor{stringliteral}{"{}Save Project"{}};}
+\DoxyCodeLine{\Hypertarget{_consts_8cs_source_l00197}00197 \}}
+
+\end{DoxyCode}

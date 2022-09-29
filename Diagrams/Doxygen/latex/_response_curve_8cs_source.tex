@@ -1,0 +1,443 @@
+\hypertarget{_response_curve_8cs_source}{}\doxysection{Response\+Curve.\+cs}
+\label{_response_curve_8cs_source}\index{Runtime/Models/ResponseCurve/ResponseCurve.cs@{Runtime/Models/ResponseCurve/ResponseCurve.cs}}
+\mbox{\hyperlink{_response_curve_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00003}00003 \textcolor{keyword}{using }System.ComponentModel;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Threading;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00008}00008 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00009}00009 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx}{UniRx}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00011}00011 \textcolor{comment}{// https://forum.unity.com/threads/draw-\/a-\/line-\/from-\/a-\/to-\/b.698618/}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00012}\mbox{\hyperlink{class_response_curve}{00012}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_response_curve}{ResponseCurve}}: \mbox{\hyperlink{class_ai_object_model}{AiObjectModel}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00013}00013 \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00014}00014     \textcolor{keyword}{private} readonly Dictionary<Parameter, IDisposable> segmentDisposables = \textcolor{keyword}{new} Dictionary<Parameter, IDisposable>();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00015}00015     \textcolor{keyword}{private} readonly Dictionary<ResponseFunction, IDisposable> responseFunctionDisposables = \textcolor{keyword}{new} Dictionary<ResponseFunction, IDisposable>();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00016}00016     \textcolor{keyword}{private} \textcolor{keywordtype}{float} minY = 0.0f;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00017}00017     \textcolor{keyword}{private} \textcolor{keywordtype}{float} maxY = 1.0f;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00018}00018     \textcolor{keyword}{private} \textcolor{keywordtype}{float} minX = 0.0f;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00019}00019     \textcolor{keyword}{private} \textcolor{keywordtype}{float} maxX = 1.0f;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00020}00020     \textcolor{keyword}{private} \textcolor{keywordtype}{bool} isInversed = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00022}\mbox{\hyperlink{class_response_curve_a60e925be846fb55649b3983272b43125}{00022}}     \textcolor{keyword}{public} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_response_curve_a60e925be846fb55649b3983272b43125}{IsInversed}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00023}00023     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00024}00024         \textcolor{keyword}{get} => isInversed;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00025}00025         \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00026}00026         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00027}00027             isInversed = value;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00028}00028             onCurveValueChanged.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00029}00029         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00030}00030     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00032}00032     \textcolor{keyword}{private} List<ResponseFunction> responseFunctions;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00034}\mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{00034}}     \textcolor{keyword}{public} List<ResponseFunction> \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00035}00035     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00036}00036         \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00037}00037         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00038}00038             \textcolor{keywordflow}{if} (responseFunctions == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00039}00039             \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00040}00040                 responseFunctions = \textcolor{keyword}{new} List<ResponseFunction>();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00041}00041             \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00043}00043             \textcolor{keywordflow}{return} responseFunctions;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00044}00044         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00045}00045     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00046}\mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{00046}}     \textcolor{keyword}{public} List<Parameter> \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}} = \textcolor{keyword}{new} List<Parameter>();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00048}\mbox{\hyperlink{class_response_curve_a932cd2579ba688a345dccf411da694e1}{00048}}     \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<bool>}} \mbox{\hyperlink{class_response_curve_a932cd2579ba688a345dccf411da694e1}{OnParametersChanged}} => onParametersChanged;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00049}00049     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<bool>}} onParametersChanged = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<bool>}}();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00050}\mbox{\hyperlink{class_response_curve_a5d5436400c813b5f5905d58c93a4302b}{00050}}     \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<bool>}} \mbox{\hyperlink{class_response_curve_a5d5436400c813b5f5905d58c93a4302b}{OnCurveValueChanged}} => onCurveValueChanged;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00051}00051     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<bool>}} onCurveValueChanged = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<bool>}}();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00052}00052     }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00053}\mbox{\hyperlink{class_response_curve_ab8b78fe59a51b427f03e03d81ca44ac8}{00053}}     \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<bool>}} \mbox{\hyperlink{class_response_curve_ab8b78fe59a51b427f03e03d81ca44ac8}{OnFunctionsChanged}} => onFunctionsChanged;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00054}00054     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<bool>}} onFunctionsChanged = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<bool>}}();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00055}00055     \textcolor{keyword}{private} \mbox{\hyperlink{class_ai_object_model_a54b5a2885a8ea927082cf52797a1fc06}{Guid}} guid;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00056}\mbox{\hyperlink{class_response_curve_a2fa81e92ec1cb3d6058505a197493666}{00056}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_response_curve_a2fa81e92ec1cb3d6058505a197493666}{ResponseCurve}}()}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00057}00057     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00058}00058         DebugService.Log(\textcolor{stringliteral}{"{}T! Creating"{}},\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00059}00059         \mbox{\hyperlink{class_ai_object_model_a5b2286d2138f54d4499c1926354ace70}{BaseAiObjectType}} = typeof(\mbox{\hyperlink{class_response_curve}{ResponseCurve}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00060}00060     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00062}\mbox{\hyperlink{class_response_curve_a72a39f3ac79d5de3af47f25bdc75c6e5}{00062}}     \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_response_curve_a72a39f3ac79d5de3af47f25bdc75c6e5}{Initialize}}()}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00063}00063     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00064}00064         DebugService.Log(\textcolor{stringliteral}{"{}T! Initializing"{}},\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00065}00065         base.Initialize();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00066}00066         guid = \mbox{\hyperlink{class_ai_object_model_a54b5a2885a8ea927082cf52797a1fc06}{Guid}}.NewGuid();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00067}00067         DebugService.Log(\textcolor{stringliteral}{"{}Subscribing to change Guid: "{}} + guid, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00068}00068         \mbox{\hyperlink{class_response_curve_a5d5436400c813b5f5905d58c93a4302b}{OnCurveValueChanged}}.\mbox{\hyperlink{interface_uni_rx_1_1_i_observable_a81a2566f451cf1ddc8de265d019d1b88}{Subscribe}}(\_ => DebugService.Log(\textcolor{stringliteral}{"{}CurveValue Changed"{}}, \textcolor{keyword}{this}))}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00069}00069             .AddTo(\mbox{\hyperlink{class_ai_object_model_ac0a75da448b3e88b743819609b2d7bbf}{disposables}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00070}00070         DebugService.Log(\textcolor{stringliteral}{"{}Created Guid: "{}} + guid + \textcolor{stringliteral}{"{} Name: "{}} + \mbox{\hyperlink{class_ai_object_model_a8e121beeb65ae729387702b132bbe6ec}{Name}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00071}00071     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00073}00073 \textcolor{preprocessor}{    \#region ResponseFunctions}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00075}\mbox{\hyperlink{class_response_curve_a7f4c8537574a481150c6301c12d398e1}{00075}}     \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_response_curve_a7f4c8537574a481150c6301c12d398e1}{AddResponseFunction}}(\mbox{\hyperlink{class_response_function}{ResponseFunction}} newFunction, \textcolor{keywordtype}{bool} updateSegments = \textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00076}00076     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00077}00077         DebugService.Log(\textcolor{stringliteral}{"{}TT! Adding RF: "{}} + newFunction.\mbox{\hyperlink{class_ai_object_model_a54b5a2885a8ea927082cf52797a1fc06}{Guid}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00078}00078         var previousFunction = \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}.LastOrDefault();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00080}00080         \textcolor{keywordflow}{if} (previousFunction != \textcolor{keyword}{null} \&\& updateSegments) \textcolor{comment}{// Not First function}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00081}00081         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00082}00082             var previousSegment = \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}.LastOrDefault();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00083}00083             var segmentValue = 0f;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00084}00084             \textcolor{keywordflow}{if} (previousSegment != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00085}00085             \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00086}00086                 segmentValue = (\mbox{\hyperlink{class_response_curve_a741d5a0839480d74d2259d7e2897f06a}{MaxX}} -\/ Convert.ToSingle(previousSegment.Value)) / 2 + Convert.ToSingle(previousSegment.Value);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00088}00088             \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00089}00089             \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00090}00090                 segmentValue = (\mbox{\hyperlink{class_response_curve_a741d5a0839480d74d2259d7e2897f06a}{MaxX}} -\/ \mbox{\hyperlink{class_response_curve_a872961281346b93b2e62fab975283c51}{MinX}}) / 2;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00091}00091             \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00092}00092             var newSegment = \textcolor{keyword}{new} \mbox{\hyperlink{class_parameter}{Parameter}}(\mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}.Count.ToString(), segmentValue);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00093}00093             AddSegment(newSegment);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00094}00094         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00096}00096         DebugService.Log(\textcolor{stringliteral}{"{}Adding response function: "{}} + newFunction.\mbox{\hyperlink{class_ai_object_model_a8e121beeb65ae729387702b132bbe6ec}{Name}}, \textcolor{keyword}{this} );}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00097}00097         \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}.Add(newFunction);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00098}00098         var sub = newFunction.OnParametersChanged}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00099}00099             .Subscribe(\_ => onCurveValueChanged.OnNext(\textcolor{keyword}{true}));}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00100}00100         }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00101}00101         responseFunctionDisposables.Add(newFunction,sub);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00102}00102         onFunctionsChanged.OnNext(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00103}00103         UpdateResponseFunctionIndexes();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00104}00104     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00105}00105     \textcolor{keyword}{private} \textcolor{keywordtype}{void} UpdateResponseFunctionIndexes()}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00106}00106     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00107}00107         \textcolor{keywordflow}{foreach} (var responseFunction \textcolor{keywordflow}{in} \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}})}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00108}00108         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00109}00109             responseFunction.rcIndex = \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}.IndexOf(responseFunction);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00110}00110         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00111}00111     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00113}00113     \textcolor{keyword}{internal} \textcolor{keywordtype}{void} UpdateFunction(\mbox{\hyperlink{class_response_function}{ResponseFunction}} oldFunction, \mbox{\hyperlink{class_response_function}{ResponseFunction}} newFunction)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00114}00114     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00115}00115         var oldFunctionIndex = \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}.IndexOf(oldFunction);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00116}00116         \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}[oldFunctionIndex] = newFunction;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00117}00117         var sub = newFunction.OnParametersChanged}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00118}00118             .Subscribe(\_ => onCurveValueChanged.OnNext(\textcolor{keyword}{true}));}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00119}00119         responseFunctionDisposables.Add(newFunction,sub);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00120}00120         \textcolor{keywordflow}{if} (responseFunctionDisposables.ContainsKey(oldFunction))}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00121}00121         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00122}00122             responseFunctionDisposables[oldFunction].Dispose();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00123}00123             responseFunctionDisposables.Remove(oldFunction);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00124}00124         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00125}00125         }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00126}00126         onFunctionsChanged.OnNext(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00127}00127     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00129}\mbox{\hyperlink{class_response_curve_a1b50c5d912469fbd8e0a632cf2cdc817}{00129}}     \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_response_curve_a1b50c5d912469fbd8e0a632cf2cdc817}{RemoveResponseFunction}}(\mbox{\hyperlink{class_response_function}{ResponseFunction}} responseFunction)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00130}00130     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00131}00131         DebugService.Log(\textcolor{stringliteral}{"{}TT! Removing RF: "{}} + responseFunction.\mbox{\hyperlink{class_ai_object_model_a54b5a2885a8ea927082cf52797a1fc06}{Guid}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00132}00132         var functionIndex = \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}.IndexOf(responseFunction);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00133}00133         var removeIndex = functionIndex -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00134}00134         \textcolor{keywordflow}{if} (removeIndex < 0) \textcolor{comment}{// Removing first or only function}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00135}00135         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00136}00136             \textcolor{comment}{// if (ResponseFunctions.Count <= 1)}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00137}00137             \textcolor{comment}{// \{}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00138}00138             \textcolor{comment}{//     throw new Exception("{}Can't remove the last Response function"{});}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00139}00139             \textcolor{comment}{// \}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00140}00140             \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}.Remove(responseFunction);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00141}00141             }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00142}00142             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}.Count > 0)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00143}00143             \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00144}00144                 RemoveSegment(\mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}[0]);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00145}00145             \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00146}00146         \} }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00147}00147         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (functionIndex == \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}.Count) \textcolor{comment}{// Removing last function}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00148}00148         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00149}00149             \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}.Remove(responseFunction);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00150}00150             RemoveSegment(\mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}[removeIndex]);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00151}00151         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00152}00152         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00153}00153         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00154}00154             RemoveSegment(\mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}[removeIndex]);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00155}00155             \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}.Remove(responseFunction);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00156}00156         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00157}00157 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00158}00158         \textcolor{keywordflow}{if} (responseFunctionDisposables.ContainsKey(responseFunction))}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00159}00159         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00160}00160             responseFunctionDisposables[responseFunction].Dispose();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00161}00161             responseFunctionDisposables.Remove(responseFunction);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00162}00162         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00163}00163         onFunctionsChanged.OnNext(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00164}00164         UpdateResponseFunctionIndexes();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00165}00165     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00167}00167 \textcolor{preprocessor}{    \#endregion}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00168}00168 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00169}00169 \textcolor{preprocessor}{    \#region Segments}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00170}00170 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00171}00171     \textcolor{keyword}{private} \textcolor{keywordtype}{void} AddSegment(\mbox{\hyperlink{class_parameter}{Parameter}} newSegment)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00172}00172     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00173}00173         var sub = newSegment.OnValueChange}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00174}00174             .Subscribe(\_ => onCurveValueChanged.OnNext(\textcolor{keyword}{true}));}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00175}00175         segmentDisposables.Add(newSegment,sub);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00176}00176         \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}.Add(newSegment);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00177}00177     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00178}00178 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00179}00179     \textcolor{keyword}{private} \textcolor{keywordtype}{void} SetSegmentValue(\textcolor{keywordtype}{float} value, \textcolor{keywordtype}{int} index)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00180}00180     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00181}00181         \textcolor{keywordflow}{if} (index > \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}.Count)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00182}00182         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00183}00183             DebugService.LogError(\textcolor{stringliteral}{"{}Can't access segment at index: "{}} + index + \textcolor{stringliteral}{"{} Segments.Count: "{}} + \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}.Count, \textcolor{keyword}{this} + \textcolor{stringliteral}{"{} "{}} + \mbox{\hyperlink{class_ai_object_model_a8e121beeb65ae729387702b132bbe6ec}{Name}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00184}00184         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00185}00185         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00186}00186         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00187}00187             DebugService.Log(\textcolor{stringliteral}{"{}Setting Segment value at index: "{}} + index + \textcolor{stringliteral}{"{} to: "{}} + value, \textcolor{keyword}{this} + \textcolor{stringliteral}{"{} "{}} + \mbox{\hyperlink{class_ai_object_model_a8e121beeb65ae729387702b132bbe6ec}{Name}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00188}00188             \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}[index].Value = value;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00189}00189         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00190}00190         \textcolor{comment}{// onCurveValueChanged.OnNext(true);}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00191}00191     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00192}00192 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00193}00193     \textcolor{keyword}{private} \textcolor{keywordtype}{void} RemoveSegment(\mbox{\hyperlink{class_parameter}{Parameter}} segment)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00194}00194     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00195}00195         \textcolor{keywordflow}{if} (segmentDisposables.ContainsKey(segment))}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00196}00196         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00197}00197             segmentDisposables[segment].Dispose();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00198}00198             segmentDisposables.Remove(segment);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00199}00199         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00200}00200 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00201}00201         \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}.Remove(segment);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00202}00202     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00203}00203     }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00204}00204     \textcolor{keyword}{private} \textcolor{keywordtype}{float} GetSegmentMin(\textcolor{keywordtype}{float} x)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00205}00205     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00206}00206         var segmentWithLowerValue = \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00207}00207             .LastOrDefault(s => Convert.ToSingle(s.Value) < x);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00208}00208 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00209}00209         \textcolor{keywordflow}{if} (segmentWithLowerValue == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00210}00210         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00211}00211             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_response_curve_a69858412e0ab46eb4918ff48a2a84baf}{MinY}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00212}00212         \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00213}00213         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00214}00214             \textcolor{keywordflow}{return} Convert.ToSingle(segmentWithLowerValue.Value);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00215}00215         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00216}00216     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00217}00217 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00218}00218     \textcolor{keyword}{private} \textcolor{keywordtype}{float} GetSegmentMax(\textcolor{keywordtype}{float} x)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00219}00219     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00220}00220         var segmentWithHigherValue = \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00221}00221             .FirstOrDefault(s => Convert.ToSingle(s.Value) >= x);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00222}00222 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00223}00223         \textcolor{keywordflow}{if} (segmentWithHigherValue == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00224}00224         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00225}00225             \textcolor{keywordflow}{return} maxX;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00226}00226         \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00227}00227         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00228}00228             \textcolor{keywordflow}{return} Convert.ToSingle(segmentWithHigherValue.Value);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00229}00229         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00230}00230     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00231}00231 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00232}00232 \textcolor{preprocessor}{    \#endregion}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00233}00233 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00234}00234 \textcolor{preprocessor}{    \#region Calculate}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00235}00235 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00236}\mbox{\hyperlink{class_response_curve_a927aeecbbb421ee3e46cf80977fdf952}{00236}}     \textcolor{keyword}{public} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_response_curve_a927aeecbbb421ee3e46cf80977fdf952}{CalculateResponse}}(\textcolor{keywordtype}{float} x)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00237}00237     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00238}00238         \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}.Count <= 0)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00239}00239         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00240}00240             var cast = (\mbox{\hyperlink{class_linear_function}{LinearFunction}}) AiObjectFactory.CreateInstance(typeof(\mbox{\hyperlink{class_linear_function}{LinearFunction}}));}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00241}00241             DebugService.Log(\textcolor{stringliteral}{"{}TT! Creating new RF Rf Guid: "{}} + cast.Guid,\textcolor{keyword}{this} ,Thread.CurrentThread);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00242}00242             \mbox{\hyperlink{class_response_curve_a7f4c8537574a481150c6301c12d398e1}{AddResponseFunction}}(cast);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00243}00243         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00244}00244         var result = 0f;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00245}00245 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00246}00246         var validSegments = \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00247}00247             .Where(s => Convert.ToSingle(s.Value) < x)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00248}00248             .ToList();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00249}00249         var normalized = 0f;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00250}00250         var min = GetSegmentMin(x);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00251}00251         var max = GetSegmentMax(x);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00252}00252 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00253}00253         \textcolor{keywordflow}{if} (validSegments.Count == 0)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00254}00254         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00255}00255             normalized = Normalize(x, min, max);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00256}00256             result = \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}[0].CalculateResponse(normalized,minY, maxY);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00257}00257         \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00258}00258         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00259}00259             var indexOfLastFunction = validSegments.Count;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00260}00260             var previousMax = 0f;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00261}00261             \textcolor{keywordflow}{for} (var i = 0; i < indexOfLastFunction; i++)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00262}00262             \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00263}00263                 \textcolor{comment}{// Getting max of previous functions}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00264}00264                 var currentMax = Convert.ToSingle(validSegments[i].Value);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00265}00265                 normalized = Normalize(x, previousMax, currentMax);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00266}00266                 previousMax = currentMax;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00267}00267                 result = \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}[i].CalculateResponse(normalized, result,maxY);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00268}00268             \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00269}00269 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00270}00270             normalized = Normalize(x, min, max);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00271}00271             result = \mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}}[indexOfLastFunction].CalculateResponse(normalized, result, maxY);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00272}00272         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00273}00273         result = Mathf.Clamp(result,minY,maxY);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00274}00274 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00275}00275         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_response_curve_a60e925be846fb55649b3983272b43125}{IsInversed}} ? 1 -\/ result : result;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00276}00276     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00277}00277 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00278}00278     \textcolor{keyword}{private} \textcolor{keywordtype}{float} Normalize(\textcolor{keywordtype}{float} value, \textcolor{keywordtype}{float} min, \textcolor{keywordtype}{float} max)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00279}00279     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00280}00280         var x = (value -\/ min) / (max -\/ min);\textcolor{comment}{// * ResultFactor;}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00281}00281         x = Mathf.Clamp(x, 0, 1);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00282}00282         \textcolor{keywordflow}{return} x;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00283}00283     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00284}00284 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00285}00285 \textcolor{preprocessor}{    \#endregion}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00286}00286 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00287}00287 \textcolor{preprocessor}{    \#region Fields}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00288}00288 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00289}\mbox{\hyperlink{class_response_curve_a69858412e0ab46eb4918ff48a2a84baf}{00289}}     \textcolor{keyword}{public} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_response_curve_a69858412e0ab46eb4918ff48a2a84baf}{MinY}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00290}00290     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00291}00291         \textcolor{keyword}{get} => minY;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00292}00292         \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00293}00293         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00294}00294             minY = value;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00295}00295             onParametersChanged.OnNext(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00296}00296         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00297}00297     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00298}\mbox{\hyperlink{class_response_curve_a244e471f461d22f2251d7cae209bf4ac}{00298}}     \textcolor{keyword}{public} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_response_curve_a244e471f461d22f2251d7cae209bf4ac}{MaxY}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00299}00299     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00300}00300         \textcolor{keyword}{get} => maxY;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00301}00301         \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00302}00302         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00303}00303             maxY = value;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00304}00304             onParametersChanged.OnNext(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00305}00305         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00306}00306     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00307}\mbox{\hyperlink{class_response_curve_a872961281346b93b2e62fab975283c51}{00307}}     \textcolor{keyword}{public} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_response_curve_a872961281346b93b2e62fab975283c51}{MinX}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00308}00308     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00309}00309         \textcolor{keyword}{get} => minX; }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00310}00310         \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00311}00311         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00312}00312             var oldRange = \mbox{\hyperlink{class_response_curve_a741d5a0839480d74d2259d7e2897f06a}{MaxX}} -\/ \mbox{\hyperlink{class_response_curve_a872961281346b93b2e62fab975283c51}{MinX}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00313}00313             minX = value;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00314}00314             UpdateMinMax(oldRange);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00315}00315             onParametersChanged.OnNext(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00316}00316         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00317}00317  }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00318}00318     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00319}\mbox{\hyperlink{class_response_curve_a741d5a0839480d74d2259d7e2897f06a}{00319}}     \textcolor{keyword}{public} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_response_curve_a741d5a0839480d74d2259d7e2897f06a}{MaxX}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00320}00320     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00321}00321         \textcolor{keyword}{get} => maxX;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00322}00322         \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00323}00323         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00324}00324             var oldRange = \mbox{\hyperlink{class_response_curve_a741d5a0839480d74d2259d7e2897f06a}{MaxX}} -\/ \mbox{\hyperlink{class_response_curve_a872961281346b93b2e62fab975283c51}{MinX}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00325}00325             maxX = value;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00326}00326             UpdateMinMax(oldRange);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00327}00327             onParametersChanged.OnNext(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00328}00328         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00329}00329     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00330}00330 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00331}00331     \textcolor{keyword}{private} \textcolor{keywordtype}{void} UpdateMinMax(\textcolor{keywordtype}{float} oldRange)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00332}00332     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00333}00333         var factor = (\mbox{\hyperlink{class_response_curve_a741d5a0839480d74d2259d7e2897f06a}{MaxX}}-\/\mbox{\hyperlink{class_response_curve_a872961281346b93b2e62fab975283c51}{MinX}}) / oldRange;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00334}00334 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00335}00335         \textcolor{keywordflow}{foreach} (var segment \textcolor{keywordflow}{in} \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}})}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00336}00336         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00337}00337             var v = Convert.ToSingle(segment.Value);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00338}00338             segment.Value = v * factor;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00339}00339         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00340}00340     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00341}00341 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00342}00342 \textcolor{preprocessor}{    \#endregion}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00343}00343    }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00344}\mbox{\hyperlink{class_response_curve_a06d263984d67fc1799a20390de8c0af8}{00344}}     \textcolor{keyword}{protected} \textcolor{keyword}{override} \mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} \mbox{\hyperlink{class_response_curve_a06d263984d67fc1799a20390de8c0af8}{InternalClone}}()}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00345}00345     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00346}00346         DebugService.Log(\textcolor{stringliteral}{"{}T! Cloning"{}},\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00347}00347         var clone = (\mbox{\hyperlink{class_response_curve_a2fa81e92ec1cb3d6058505a197493666}{ResponseCurve}})AiObjectFactory.CreateInstance(GetType());}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00348}00348         var state = GetState() as \mbox{\hyperlink{class_response_curve_state}{ResponseCurveState}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00349}00349         clone.SetBaseValues(state,\mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}},\mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00350}00350         }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00351}00351         \textcolor{keywordflow}{return} clone;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00352}00352     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00353}00353     \textcolor{keyword}{internal} \textcolor{keyword}{override} \mbox{\hyperlink{class_restore_state}{RestoreState}} GetState()}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00354}00354     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00355}00355         \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_response_curve_state}{ResponseCurveState}}(\mbox{\hyperlink{class_ai_object_model_a8e121beeb65ae729387702b132bbe6ec}{Name}}, \mbox{\hyperlink{class_response_curve_a69858412e0ab46eb4918ff48a2a84baf}{MinY}}, \mbox{\hyperlink{class_response_curve_a244e471f461d22f2251d7cae209bf4ac}{MaxY}}, \mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00356}00356     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00357}00357 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00358}\mbox{\hyperlink{class_response_curve_a261ffcf61450914c8f9faf57992d3f72}{00358}}     \textcolor{keyword}{protected} \textcolor{keyword}{override} async Task \mbox{\hyperlink{class_response_curve_a261ffcf61450914c8f9faf57992d3f72}{InternalSaveToFile}}(\textcolor{keywordtype}{string} path, \mbox{\hyperlink{interface_i_persister}{IPersister}} persister, \mbox{\hyperlink{class_restore_state}{RestoreState}} state)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00359}00359     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00360}00360         await persister.SaveObjectAsync(state, path + \textcolor{stringliteral}{"{}."{}} + Consts.FileExtension\_ResponseCurve);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00361}00361         await RestoreAbleService.SaveRestoreAblesToFile(\mbox{\hyperlink{class_response_curve_a53769f16f4de725625ac80f70b3fd7d6}{Segments}},path + \textcolor{stringliteral}{"{}/"{}} + Consts.FolderName\_Segments, persister);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00362}00362         await RestoreAbleService.SaveRestoreAblesToFile(\mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}},path + \textcolor{stringliteral}{"{}/"{}} + Consts.FolderName\_ResponseFunctions, persister);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00363}00363     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00364}00364 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00365}\mbox{\hyperlink{class_response_curve_afd5de8eb037be5afa3ab7ba18fd7f775}{00365}}     \textcolor{keyword}{protected} \textcolor{keyword}{override} async Task \mbox{\hyperlink{class_response_curve_afd5de8eb037be5afa3ab7ba18fd7f775}{RestoreInternalAsync}}(\mbox{\hyperlink{class_restore_state}{RestoreState}} s, \textcolor{keywordtype}{bool} restoreDebug = \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00366}00366     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00367}00367         await base.RestoreInternalAsync(s, restoreDebug);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00368}00368         var tempRestoreFunctions = await RestoreAbleService}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00369}00369             .GetAiObjectsSortedByIndex<\mbox{\hyperlink{class_response_function}{ResponseFunction}}>(\mbox{\hyperlink{class_restore_able_a01e4768f5f26b7611167be8ee015b55b}{CurrentDirectory}} + Consts.FolderName\_ResponseFunctions, restoreDebug);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00370}00370         var tempSegments = await RestoreAbleService}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00371}00371             .\mbox{\hyperlink{class_ai_object_model_adfb5d5c1c3fa585bd9287b509870af1b}{GetParameters}}(\mbox{\hyperlink{class_restore_able_a01e4768f5f26b7611167be8ee015b55b}{CurrentDirectory}} + Consts.FolderName\_Segments, restoreDebug);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00372}00372         }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00373}00373         SetBaseValues(s as \mbox{\hyperlink{class_response_curve_state}{ResponseCurveState}}, tempRestoreFunctions, tempSegments);}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00374}00374     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00375}00375 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00376}00376     \textcolor{keyword}{private} \textcolor{keywordtype}{void} SetBaseValues(\mbox{\hyperlink{class_response_curve_state}{ResponseCurveState}} state, List<ResponseFunction> rFs, List<Parameter> segments)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00377}00377     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00378}00378         \mbox{\hyperlink{class_ai_object_model_a8e121beeb65ae729387702b132bbe6ec}{Name}} = state.\mbox{\hyperlink{class_response_curve_state_a2d346d3b655381ade50b1e143ce6fe31}{Name}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00379}00379         \mbox{\hyperlink{class_ai_object_model_adab42d538c709b620941c13f27c0ee0b}{Description}} = state.\mbox{\hyperlink{class_response_curve_state_a00457295e51faae1cc78b444b6a85d9a}{Description}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00380}00380         \mbox{\hyperlink{class_response_curve_a69858412e0ab46eb4918ff48a2a84baf}{MinY}} = state.\mbox{\hyperlink{class_response_curve_state_a6e2709acc72aaaf6b89777f80c9223a6}{MinY}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00381}00381         \mbox{\hyperlink{class_response_curve_a244e471f461d22f2251d7cae209bf4ac}{MaxY}} = state.\mbox{\hyperlink{class_response_curve_state_a2c6cd9cf31b8c6174d4165eff6215424}{MaxY}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00382}00382         \mbox{\hyperlink{class_response_curve_a872961281346b93b2e62fab975283c51}{MinX}} = state.\mbox{\hyperlink{class_response_curve_state_a9373294ce00b5870e8ec8b4a0a87cb43}{MinX}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00383}00383         \mbox{\hyperlink{class_response_curve_a741d5a0839480d74d2259d7e2897f06a}{MaxX}} = state.\mbox{\hyperlink{class_response_curve_state_ac2adcb8904e01b0d26d43a4b02a2a2ef}{MaxX}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00384}00384         isInversed = state.\mbox{\hyperlink{class_response_curve_state_aae4a167720dd14e342c748e13b9b97d1}{IsInversed}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00385}00385         }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00386}00386         \textcolor{keywordflow}{foreach} (var responseFunction \textcolor{keywordflow}{in} rFs)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00387}00387         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00388}00388             \mbox{\hyperlink{class_response_curve_a7f4c8537574a481150c6301c12d398e1}{AddResponseFunction}}(responseFunction, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00389}00389         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00390}00390         \textcolor{keywordflow}{foreach} (var seg \textcolor{keywordflow}{in} segments)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00391}00391         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00392}00392             SetSegmentValue(Convert.ToSingle(seg.Value),segments.IndexOf(seg));}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00393}00393         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00394}00394     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00395}00395     \mbox{\hyperlink{class_response_curve}{\string~ResponseCurve}}()}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00396}00396     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00397}00397         DebugService.Log(\textcolor{stringliteral}{"{}Destroying Guid: "{}} + guid + \textcolor{stringliteral}{"{} Name: "{}} + \mbox{\hyperlink{class_ai_object_model_a8e121beeb65ae729387702b132bbe6ec}{Name}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00398}00398         \textcolor{keywordflow}{foreach}(var disposable \textcolor{keywordflow}{in} segmentDisposables)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00399}00399         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00400}00400             disposable.Value.Dispose();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00401}00401         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00402}00402         \textcolor{keywordflow}{foreach}(var disposable \textcolor{keywordflow}{in} responseFunctionDisposables)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00403}00403         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00404}00404             disposable.Value.Dispose();}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00405}00405         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00406}00406     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00407}00407 \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00408}00408 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00409}00409 [Serializable]}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00410}\mbox{\hyperlink{class_response_curve_state}{00410}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_response_curve_state}{ResponseCurveState}}: \mbox{\hyperlink{class_ai_object_state}{AiObjectState}}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00411}00411 \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00412}\mbox{\hyperlink{class_response_curve_state_a2d346d3b655381ade50b1e143ce6fe31}{00412}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_response_curve_state_a2d346d3b655381ade50b1e143ce6fe31}{Name}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00413}\mbox{\hyperlink{class_response_curve_state_a00457295e51faae1cc78b444b6a85d9a}{00413}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_response_curve_state_a00457295e51faae1cc78b444b6a85d9a}{Description}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00414}\mbox{\hyperlink{class_response_curve_state_a6e2709acc72aaaf6b89777f80c9223a6}{00414}}     \textcolor{keyword}{public} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_response_curve_state_a6e2709acc72aaaf6b89777f80c9223a6}{MinY}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00415}\mbox{\hyperlink{class_response_curve_state_a2c6cd9cf31b8c6174d4165eff6215424}{00415}}     \textcolor{keyword}{public} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_response_curve_state_a2c6cd9cf31b8c6174d4165eff6215424}{MaxY}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00416}\mbox{\hyperlink{class_response_curve_state_a9373294ce00b5870e8ec8b4a0a87cb43}{00416}}     \textcolor{keyword}{public} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_response_curve_state_a9373294ce00b5870e8ec8b4a0a87cb43}{MinX}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00417}\mbox{\hyperlink{class_response_curve_state_ac2adcb8904e01b0d26d43a4b02a2a2ef}{00417}}     \textcolor{keyword}{public} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_response_curve_state_ac2adcb8904e01b0d26d43a4b02a2a2ef}{MaxX}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00418}\mbox{\hyperlink{class_response_curve_state_aae4a167720dd14e342c748e13b9b97d1}{00418}}     \textcolor{keyword}{public} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_response_curve_state_aae4a167720dd14e342c748e13b9b97d1}{IsInversed}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00419}00419 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00420}\mbox{\hyperlink{class_response_curve_state_a638a2aa6d9732d118ad03d6ecc577bdd}{00420}}     \textcolor{keyword}{public} List<string> \mbox{\hyperlink{class_response_curve_state_a638a2aa6d9732d118ad03d6ecc577bdd}{segments}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00421}00421 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00422}00422 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00423}\mbox{\hyperlink{class_response_curve_state_af415a149806a75a36cde1d5f9a38b7f1}{00423}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_response_curve_state_af415a149806a75a36cde1d5f9a38b7f1}{ResponseCurveState}}(): base()}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00424}00424     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00425}00425     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00426}00426 }
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00427}\mbox{\hyperlink{class_response_curve_state_ae5f9406f4d896e997762397284c7ad88}{00427}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_response_curve_state_ae5f9406f4d896e997762397284c7ad88}{ResponseCurveState}}(\textcolor{keywordtype}{string} name, \textcolor{keywordtype}{float} minY, \textcolor{keywordtype}{float} maxY, List<Parameter> \mbox{\hyperlink{class_response_curve_state_a638a2aa6d9732d118ad03d6ecc577bdd}{segments}}, \mbox{\hyperlink{class_response_curve}{ResponseCurve}} responseCurveModel): base(responseCurveModel)}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00428}00428     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00429}00429         \mbox{\hyperlink{class_response_curve_state_a2d346d3b655381ade50b1e143ce6fe31}{Name}} = name;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00430}00430         \mbox{\hyperlink{class_response_curve_state_a00457295e51faae1cc78b444b6a85d9a}{Description}} = responseCurveModel.\mbox{\hyperlink{class_ai_object_model_adab42d538c709b620941c13f27c0ee0b}{Description}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00431}00431         \mbox{\hyperlink{class_response_curve_state_a6e2709acc72aaaf6b89777f80c9223a6}{MinY}} = minY;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00432}00432         \mbox{\hyperlink{class_response_curve_state_a2c6cd9cf31b8c6174d4165eff6215424}{MaxY}} = maxY;}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00433}00433         \mbox{\hyperlink{class_response_curve_state_a9373294ce00b5870e8ec8b4a0a87cb43}{MinX}} = responseCurveModel.\mbox{\hyperlink{class_response_curve_a872961281346b93b2e62fab975283c51}{MinX}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00434}00434         \mbox{\hyperlink{class_response_curve_state_ac2adcb8904e01b0d26d43a4b02a2a2ef}{MaxX}} = responseCurveModel.\mbox{\hyperlink{class_response_curve_a741d5a0839480d74d2259d7e2897f06a}{MaxX}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00435}00435         \mbox{\hyperlink{class_response_curve_state_aae4a167720dd14e342c748e13b9b97d1}{IsInversed}} = responseCurveModel.\mbox{\hyperlink{class_response_curve_a60e925be846fb55649b3983272b43125}{IsInversed}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00436}00436     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_8cs_source_l00437}00437 \}}
+
+\end{DoxyCode}

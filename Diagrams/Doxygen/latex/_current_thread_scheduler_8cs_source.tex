@@ -1,0 +1,134 @@
+\hypertarget{_current_thread_scheduler_8cs_source}{}\doxysection{Current\+Thread\+Scheduler.\+cs}
+\label{_current_thread_scheduler_8cs_source}\index{Editor/UniRx/Scripts/Schedulers/CurrentThreadScheduler.cs@{Editor/UniRx/Scripts/Schedulers/CurrentThreadScheduler.cs}}
+\mbox{\hyperlink{_current_thread_scheduler_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00001}00001 \textcolor{comment}{// this code is borrowed from RxOfficial(rx.codeplex.com) and modified}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00003}00003 \textcolor{comment}{// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00005}00005 \textcolor{keyword}{using }System.ComponentModel;}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Threading;}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00007}00007 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_1_1_internal_util}{UniRx.InternalUtil}};}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00008}00008 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx}{UniRx}};}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00009}00009 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00010}00010 \textcolor{keyword}{using }System.Diagnostics;}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00011}00011 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00013}00013 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx}{UniRx}}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00014}00014 \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00016}00016     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{partial class }Scheduler}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00017}00017     \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00018}00018         \textcolor{keyword}{public} \textcolor{keyword}{static} readonly \mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} CurrentThread = \textcolor{keyword}{new} CurrentThreadScheduler();}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00020}00020         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} IsCurrentThreadSchedulerScheduleRequired \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} CurrentThreadScheduler.IsScheduleRequired; \} \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00026}00026         \textcolor{keyword}{class }CurrentThreadScheduler : \mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00027}00027         \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00028}00028             [ThreadStatic]}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00029}00029             \textcolor{keyword}{static} SchedulerQueue s\_threadLocalQueue;}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00031}00031             [ThreadStatic]}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00032}00032             \textcolor{keyword}{static} Stopwatch s\_clock;}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00034}00034             \textcolor{keyword}{private} \textcolor{keyword}{static} SchedulerQueue GetQueue()}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00035}00035             \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00036}00036                 \textcolor{keywordflow}{return} s\_threadLocalQueue;}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00037}00037             \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00039}00039             \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{void} SetQueue(SchedulerQueue newQueue)}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00040}00040             \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00041}00041                 s\_threadLocalQueue = newQueue;}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00042}00042             \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00044}00044             \textcolor{keyword}{private} \textcolor{keyword}{static} TimeSpan Time}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00045}00045             \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00046}00046                 \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00047}00047                 \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00048}00048                     \textcolor{keywordflow}{if} (s\_clock == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00049}00049                         s\_clock = Stopwatch.StartNew();}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00051}00051                     \textcolor{keywordflow}{return} s\_clock.Elapsed;}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00052}00052                 \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00053}00053             \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00058}00058             [EditorBrowsable(EditorBrowsableState.Advanced)]}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00059}00059             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} IsScheduleRequired}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00060}00060             \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00061}00061                 \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00062}00062                 \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00063}00063                     \textcolor{keywordflow}{return} GetQueue() == \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00064}00064                 \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00065}00065             \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00067}00067             \textcolor{keyword}{public} IDisposable Schedule(Action action)}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00068}00068             \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00069}00069                 \textcolor{keywordflow}{return} Schedule(TimeSpan.Zero, action);}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00070}00070             \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00072}00072             \textcolor{keyword}{public} IDisposable Schedule(TimeSpan dueTime, Action action)}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00073}00073             \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00074}00074                 \textcolor{keywordflow}{if} (action == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00075}00075                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}action"{}});}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00077}00077                 var dt = Time + Scheduler.Normalize(dueTime);}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00079}00079                 var si = \textcolor{keyword}{new} ScheduledItem(action, dt);}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00080}00080 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00081}00081                 var queue = GetQueue();}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00083}00083                 \textcolor{keywordflow}{if} (queue == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00084}00084                 \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00085}00085                     queue = \textcolor{keyword}{new} SchedulerQueue(4);}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00086}00086                     queue.Enqueue(si);}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00088}00088                     CurrentThreadScheduler.SetQueue(queue);}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00089}00089                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00090}00090                     \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00091}00091                         Trampoline.Run(queue);}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00092}00092                     \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00093}00093                     \textcolor{keywordflow}{finally}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00094}00094                     \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00095}00095                         CurrentThreadScheduler.SetQueue(\textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00096}00096                     \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00097}00097                 \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00098}00098                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00099}00099                 \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00100}00100                     queue.Enqueue(si);}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00101}00101                 \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00103}00103                 \textcolor{keywordflow}{return} si.Cancellation;}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00104}00104             \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00106}00106             \textcolor{keyword}{static} \textcolor{keyword}{class }Trampoline}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00107}00107             \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00108}00108                 \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} Run(SchedulerQueue queue)}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00109}00109                 \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00110}00110                     \textcolor{keywordflow}{while} (queue.Count > 0)}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00111}00111                     \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00112}00112                         var item = queue.Dequeue();}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00113}00113                         \textcolor{keywordflow}{if} (!item.IsCanceled)}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00114}00114                         \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00115}00115                             var wait = item.DueTime -\/ CurrentThreadScheduler.Time;}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00116}00116                             \textcolor{keywordflow}{if} (wait.Ticks > 0)}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00117}00117                             \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00118}00118                                 Thread.Sleep(wait);}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00119}00119                             \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00120}00120 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00121}00121                             \textcolor{keywordflow}{if} (!item.IsCanceled)}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00122}00122                                 item.Invoke();}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00123}00123                         \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00124}00124                     \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00125}00125                 \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00126}00126             \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00127}00127 }
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00128}00128             \textcolor{keyword}{public} DateTimeOffset Now}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00129}00129             \{}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00130}00130                 \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} Scheduler.Now; \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00131}00131             \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00132}00132         \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00133}00133     \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00134}00134 \}}
+\DoxyCodeLine{\Hypertarget{_current_thread_scheduler_8cs_source_l00135}00135 }
+
+\end{DoxyCode}

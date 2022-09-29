@@ -1,0 +1,81 @@
+\hypertarget{_consideration_log_view_model_8cs_source}{}\doxysection{Consideration\+Log\+View\+Model.\+cs}
+\label{_consideration_log_view_model_8cs_source}\index{Editor/UI/Components/Logger/Components/ConsiderationLog/ConsiderationLogViewModel.cs@{Editor/UI/Components/Logger/Components/ConsiderationLog/ConsiderationLogViewModel.cs}}
+\mbox{\hyperlink{_consideration_log_view_model_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00006}00006 \textcolor{keyword}{using }UnityEngine.UIElements;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00008}00008 \textcolor{keyword}{internal} \textcolor{keyword}{class }ConsiderationLogViewModel : AiObjectLogViewModel}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00010}00010     \textcolor{keyword}{private} readonly ScoreLogComponent baseScore;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00011}00011     \textcolor{keyword}{private} readonly ScoreLogComponent normalizedScore;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00012}00012     \textcolor{keyword}{private} readonly ResponseCurveLogViewModel responseCurve;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00013}00013     \textcolor{keyword}{private} readonly LogComponentPool<ParameterLogViewModel> parameterPool;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00014}00014     \textcolor{keyword}{private} ConsiderationLog considerationLog;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00015}00015     \textcolor{keyword}{public} ConsiderationLogViewModel(): base()}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00016}00016     \{}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00017}00017         var root = AssetService.GetTemplateContainer(GetType().FullName);}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00018}00018         Body.Add(root);}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00020}00020         var parametersContainer = root.Q<VisualElement>(\textcolor{stringliteral}{"{}ParametersContainer"{}});}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00021}00021         var responseCurveContainer = root.Q<VisualElement>(\textcolor{stringliteral}{"{}ResponseCurveContainer"{}});}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00022}00022         baseScore = \textcolor{keyword}{new} ScoreLogComponent(\textcolor{stringliteral}{"{}BaseScore"{}}, 0.ToString());}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00023}00023         ScoreContainer.Add(baseScore);}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00024}00024         normalizedScore = \textcolor{keyword}{new} ScoreLogComponent(\textcolor{stringliteral}{"{}Normalized"{}}, 0.ToString());}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00025}00025         ScoreContainer.Add(normalizedScore);}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00027}00027         responseCurve = \textcolor{keyword}{new} ResponseCurveLogViewModel();}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00028}00028         responseCurveContainer.Add(responseCurve);}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00030}00030         parameterPool = \textcolor{keyword}{new} LogComponentPool<ParameterLogViewModel>(parametersContainer, \textcolor{keyword}{false},\textcolor{stringliteral}{"{}Parameters"{}},1);}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00031}00031     \}}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00033}00033     \textcolor{keyword}{internal} \textcolor{keyword}{override} \textcolor{keywordtype}{string} GetUiName()}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00034}00034     \{}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00035}00035         var uiName = base.GetUiName() + \textcolor{stringliteral}{"{} S: "{}} + considerationLog.NormalizedScore.ToString(\textcolor{stringliteral}{"{}0.00"{}});}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00036}00036         \textcolor{keywordflow}{if} (IsSelected)}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00037}00037         \{}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00038}00038             uiName += \textcolor{stringliteral}{"{} *S*"{}};}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00039}00039         \}}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00040}00040         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!IsEvaluated)}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00041}00041         \{}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00042}00042             uiName += \textcolor{stringliteral}{"{} *!E*"{}};}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00043}00043         \}}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00044}00044         \textcolor{keywordflow}{return} uiName;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00045}00045     \}}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00047}00047     \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{void} UpdateUiInternal(AiObjectLog aiObjectDebug)}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00048}00048     \{}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00049}00049         considerationLog = aiObjectDebug as ConsiderationLog;}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00050}00050         NameLabel.text = considerationLog.Name; \textcolor{comment}{// Setting it here to avoid Double type}}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00052}00052         var logModels = \textcolor{keyword}{new} List<ILogModel>();}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00053}00053         \textcolor{keywordflow}{foreach}(var p \textcolor{keywordflow}{in} considerationLog.Parameters)}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00054}00054         \{}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00055}00055             logModels.Add(p);}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00056}00056         \}}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00058}00058         parameterPool.Display(logModels);}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00060}00060         baseScore.UpdateScore(considerationLog.BaseScore);}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00061}00061         normalizedScore.UpdateScore(considerationLog.NormalizedScore);}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00062}00062         responseCurve.UpdateUi(considerationLog.ResponseCurve);}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00063}00063     \}}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00065}00065     \textcolor{keyword}{internal} \textcolor{keyword}{override} \textcolor{keywordtype}{void} Hide()}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00066}00066     \{}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00067}00067         base.Hide();}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00068}00068         parameterPool.Hide();}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00069}00069     \}}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00071}00071     \textcolor{keyword}{internal} \textcolor{keyword}{override} \textcolor{keywordtype}{void} ResetColor()}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00072}00072     \{}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00073}00073         base.ResetColor();}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00074}00074     \}}
+\DoxyCodeLine{\Hypertarget{_consideration_log_view_model_8cs_source_l00075}00075 \}}
+
+\end{DoxyCode}

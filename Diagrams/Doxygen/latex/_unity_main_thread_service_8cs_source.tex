@@ -1,0 +1,55 @@
+\hypertarget{_unity_main_thread_service_8cs_source}{}\doxysection{Unity\+Main\+Thread\+Service.\+cs}
+\label{_unity_main_thread_service_8cs_source}\index{Editor/Services/UnityMainThreadService.cs@{Editor/Services/UnityMainThreadService.cs}}
+\mbox{\hyperlink{_unity_main_thread_service_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00001}00001 \textcolor{comment}{// using System;}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00002}00002 \textcolor{comment}{// using System.Collections;}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00003}00003 \textcolor{comment}{// using System.Collections.Concurrent;}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00004}00004 \textcolor{comment}{// using Unity.EditorCoroutines.Editor;}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00005}00005 \textcolor{comment}{// using UnityEditor;}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00006}00006 \textcolor{comment}{// using UnityEngine;}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00007}00007 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00008}00008 \textcolor{comment}{// // TODO Delete this}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00009}00009 \textcolor{comment}{// [InitializeOnLoad]}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00010}00010 \textcolor{comment}{// internal class UnityMainThreadService}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00011}00011 \textcolor{comment}{// \{}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00012}00012 \textcolor{comment}{//         private static readonly ConcurrentQueue<Action> MainThreadActions = new ConcurrentQueue<Action>();}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00013}00013 \textcolor{comment}{//         private static EditorCoroutine \_mainThreadCoroutine;}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00014}00014 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00015}00015 \textcolor{comment}{//         static UnityMainThreadService()}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00016}00016 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00017}00017 \textcolor{comment}{//                 var instance = new UnityMainThreadService();}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00018}00018 \textcolor{comment}{//                 Debug.Log("{}Starting Coroutine"{});}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00019}00019 \textcolor{comment}{//                 \_mainThreadCoroutine = EditorCoroutineUtility.StartCoroutine(InvokeActions(), instance);}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00020}00020 \textcolor{comment}{//         \}}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00021}00021 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00022}00022 \textcolor{comment}{//         private static Action \_currentAction;}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00023}00023 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00024}00024 \textcolor{comment}{//         private static IEnumerator InvokeActions()}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00025}00025 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00026}00026 \textcolor{comment}{//                 while (true)}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00027}00027 \textcolor{comment}{//                 \{}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00028}00028 \textcolor{comment}{//                         Debug.Log("{}Running"{});}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00029}00029 \textcolor{comment}{//                         if (!MainThreadActions.IsEmpty \&\& \_currentAction == null)}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00030}00030 \textcolor{comment}{//                         \{}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00031}00031 \textcolor{comment}{//                                 MainThreadActions.TryDequeue(out \_currentAction);}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00032}00032 \textcolor{comment}{//                         \}}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00033}00033 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00034}00034 \textcolor{comment}{//                         if (\_currentAction != null)}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00035}00035 \textcolor{comment}{//                         \{}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00036}00036 \textcolor{comment}{//                                 \_currentAction.Invoke();}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00037}00037 \textcolor{comment}{//                                 \_currentAction = null;}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00038}00038 \textcolor{comment}{//                         \}}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00039}00039 \textcolor{comment}{//                         yield return null;}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00040}00040 \textcolor{comment}{//                 \}}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00041}00041 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00042}00042 \textcolor{comment}{//                 yield return null;}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00043}00043 \textcolor{comment}{//         \}}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00044}00044 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00045}00045 \textcolor{comment}{//         internal static void InvokeActionOnMainThread(Action action)}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00046}00046 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00047}00047 \textcolor{comment}{//                 MainThreadActions.Enqueue(action);}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00048}00048 \textcolor{comment}{//         \}}}
+\DoxyCodeLine{\Hypertarget{_unity_main_thread_service_8cs_source_l00049}00049 \textcolor{comment}{// \}}}
+
+\end{DoxyCode}

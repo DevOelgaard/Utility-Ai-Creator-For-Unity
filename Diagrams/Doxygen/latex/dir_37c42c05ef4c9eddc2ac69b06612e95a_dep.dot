@@ -1,0 +1,22 @@
+digraph "Editor/UI/EditorWindows"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_f7d6d090f0bcfa8a66d7f61ab6a0ceb7 {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", style="filled,dashed,", label="UI", fontname="Helvetica", fontsize="10", URL="dir_f7d6d090f0bcfa8a66d7f61ab6a0ceb7.html"]
+  subgraph clusterdir_37c42c05ef4c9eddc2ac69b06612e95a {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", style="filled,bold,", label="", fontname="Helvetica", fontsize="10", URL="dir_37c42c05ef4c9eddc2ac69b06612e95a.html"]
+    dir_37c42c05ef4c9eddc2ac69b06612e95a [shape=plaintext, label="EditorWindows"];
+  dir_43fe2153c6130fa66c29d9bdc676748e [shape=box, label="Abstracts", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_43fe2153c6130fa66c29d9bdc676748e.html"];
+  dir_bee232d7be8111e59b29ff5e4fc421ea [shape=box, label="AiLog", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_bee232d7be8111e59b29ff5e4fc421ea.html"];
+  dir_be663aab61634f8fb2ab3fccce693986 [shape=box, label="AiTickerSettings", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_be663aab61634f8fb2ab3fccce693986.html"];
+  dir_44a4945240353e73c895bda40f876c01 [shape=box, label="ButtonPopUp", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_44a4945240353e73c895bda40f876c01.html"];
+  dir_05abacd4edf72f12c6454c0c975b9b4a [shape=box, label="CurveWindow", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_05abacd4edf72f12c6454c0c975b9b4a.html"];
+  dir_e58bac0199165d6753d15c89cf2ac871 [shape=box, label="RuntimeInspector", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_e58bac0199165d6753d15c89cf2ac871.html"];
+  dir_6637fc100173a98af49d262a20cea194 [shape=box, label="SelectProjectWindow", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_6637fc100173a98af49d262a20cea194.html"];
+  dir_7f1ce0727d16d90a2b49cb46ea4af1e5 [shape=box, label="TemplateManager", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_7f1ce0727d16d90a2b49cb46ea4af1e5.html"];
+  }
+  }
+}

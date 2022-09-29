@@ -1,0 +1,34 @@
+\hypertarget{_u_t___inverse_logistic_function_8cs_source}{}\doxysection{UT\+\_\+\+Inverse\+Logistic\+Function.\+cs}
+\label{_u_t___inverse_logistic_function_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/ResponseFunctions/UT\_InverseLogisticFunction.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/ResponseFunctions/UT\_InverseLogisticFunction.cs}}
+\mbox{\hyperlink{_u_t___inverse_logistic_function_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00001}00001 \textcolor{keyword}{using }NUnit.Framework;}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00002}00002 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_tests_1_1_editor_1_1_unit_tests}{Tests.Editor.UnitTests}};}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00004}00004 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_unit_tests_1_1_models_1_1_response_functions}{UnitTests.Models.ResponseFunctions}}}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00006}00006     [TestFixture]}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00007}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_response_functions_1_1_u_t___inverse_logistic}{00007}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_response_functions_1_1_u_t___inverse_logistic}{UT\_InverseLogistic}}}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00009}00009         \textcolor{keyword}{private} \mbox{\hyperlink{class_inverse_logistic_function}{InverseLogisticFunction}} uut;}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00010}00010         }
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00011}00011         [\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_response_functions_1_1_u_t___inverse_logistic_af41ee5a2f672df3c4e21112806963b1d}{SetUp}}]}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00012}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_response_functions_1_1_u_t___inverse_logistic_af41ee5a2f672df3c4e21112806963b1d}{00012}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_response_functions_1_1_u_t___inverse_logistic_af41ee5a2f672df3c4e21112806963b1d}{SetUp}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00013}00013         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00014}00014             uut = \textcolor{keyword}{new} \mbox{\hyperlink{class_inverse_logistic_function}{InverseLogisticFunction}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00015}00015         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00016}00016         }
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00017}00017         [TestCase(0.1f,0.3415f)]}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00018}00018         [TestCase(0.3f,0.4389f)]}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00019}00019         [TestCase(0.5f,0.5f)]}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00020}00020         [TestCase(0.9f,0.6585f)]}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00021}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_response_functions_1_1_u_t___inverse_logistic_ac373739649f8af82ff9226dd98e5a18e}{00021}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_response_functions_1_1_u_t___inverse_logistic_ac373739649f8af82ff9226dd98e5a18e}{CalculateResponse\_NoChange\_ReturnsExpected}}(\textcolor{keywordtype}{float} x,\textcolor{keywordtype}{float} expected)}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00022}00022         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00023}00023             var result = uut.\mbox{\hyperlink{class_response_function_a9686271edd69f97432cd7c723f84d37e}{CalculateResponse}}(x, 0, 1);}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00024}00024             }
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00025}00025             Assert.That(\mbox{\hyperlink{class_tests_1_1_editor_1_1_unit_tests_1_1_test_helpers}{TestHelpers}}.\mbox{\hyperlink{class_tests_1_1_editor_1_1_unit_tests_1_1_test_helpers_a80cb4fc9fcae0945e315db703c4e9c9e}{FloatEqualTwoDecimals}}(result,expected));}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00026}00026         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00027}00027     \}}
+\DoxyCodeLine{\Hypertarget{_u_t___inverse_logistic_function_8cs_source_l00028}00028 \}}
+
+\end{DoxyCode}

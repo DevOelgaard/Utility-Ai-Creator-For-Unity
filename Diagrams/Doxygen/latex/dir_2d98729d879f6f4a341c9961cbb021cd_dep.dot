@@ -1,0 +1,18 @@
+digraph "Editor/UniRx/Scripts/UnityEngineBridge"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_78290d64b6a94e1392a62afc773d87b1 {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", style="filled,dashed,", label="Scripts", fontname="Helvetica", fontsize="10", URL="dir_78290d64b6a94e1392a62afc773d87b1.html"]
+  subgraph clusterdir_2d98729d879f6f4a341c9961cbb021cd {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", style="filled,bold,", label="", fontname="Helvetica", fontsize="10", URL="dir_2d98729d879f6f4a341c9961cbb021cd.html"]
+    dir_2d98729d879f6f4a341c9961cbb021cd [shape=plaintext, label="UnityEngineBridge"];
+  dir_d8a380bbfc13288444dddc9d67a12cbf [shape=box, label="Diagnostics", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_d8a380bbfc13288444dddc9d67a12cbf.html"];
+  dir_746c7b6798b742a113bb7fc5b94ea7d3 [shape=box, label="Operators", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_746c7b6798b742a113bb7fc5b94ea7d3.html"];
+  dir_e076e82738a77c237a62d5b203b32b0a [shape=box, label="Toolkit", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_e076e82738a77c237a62d5b203b32b0a.html"];
+  dir_ca68452432f4e1cb46d509cbb31777e5 [shape=box, label="Triggers", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_ca68452432f4e1cb46d509cbb31777e5.html"];
+  }
+  }
+}

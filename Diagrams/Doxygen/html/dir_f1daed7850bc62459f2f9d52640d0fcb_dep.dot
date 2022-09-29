@@ -1,0 +1,11 @@
+digraph "Models/AiContext"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_22305cb0964bbe63c21991dd2265ce48 {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", style="filled,dashed,", label="Models", fontname="Helvetica", fontsize="10", URL="dir_22305cb0964bbe63c21991dd2265ce48.html"]
+  dir_f1daed7850bc62459f2f9d52640d0fcb [shape=box, label="AiContext", style="filled,bold,", fillcolor="#edf0f7", color="grey25", URL="dir_f1daed7850bc62459f2f9d52640d0fcb.html"];
+  }
+}

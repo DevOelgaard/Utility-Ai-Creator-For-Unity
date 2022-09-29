@@ -1,0 +1,105 @@
+\hypertarget{_ai_context_8cs_source}{}\doxysection{Ai\+Context.\+cs}
+\label{_ai_context_8cs_source}\index{Runtime/Models/AiContext/AiContext.cs@{Runtime/Models/AiContext/AiContext.cs}}
+\mbox{\hyperlink{_ai_context_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00007}00007 [Serializable]}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00008}\mbox{\hyperlink{class_ai_context}{00008}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_ai_context}{AiContext}}: \mbox{\hyperlink{interface_i_ai_context}{IAiContext}}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00010}\mbox{\hyperlink{class_ai_context_a2cf4c3460a10366643505d8e733cacf0}{00010}}     \textcolor{keyword}{public} \mbox{\hyperlink{interface_i_agent}{IAgent}} \mbox{\hyperlink{class_ai_context_a2cf4c3460a10366643505d8e733cacf0}{Agent}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00011}00011     \textcolor{keyword}{private} Dictionary<object, object> context;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00012}\mbox{\hyperlink{class_ai_context_af19293caf76845cdb99519a803bd9ed0}{00012}}     \textcolor{keyword}{public} \mbox{\hyperlink{interface_i_utility_scorer}{IUtilityScorer}} \mbox{\hyperlink{class_ai_context_af19293caf76845cdb99519a803bd9ed0}{UtilityScorer}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00013}\mbox{\hyperlink{class_ai_context_a82e66d06351bd3e43cdf363cd7e350d4}{00013}}     \textcolor{keyword}{public} List<AgentAction> \mbox{\hyperlink{class_ai_context_a82e66d06351bd3e43cdf363cd7e350d4}{LastActions}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00018}\mbox{\hyperlink{class_ai_context_a3382e9ec945eeb6c3772c6fb4e3c034c}{00018}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_decision}{Decision}} \mbox{\hyperlink{class_ai_context_a3382e9ec945eeb6c3772c6fb4e3c034c}{LastSelectedDecision}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00020}\mbox{\hyperlink{class_ai_context_ab54e4096cd1b7cee4e52e2538cd1a1bd}{00020}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_decision}{Decision}} \mbox{\hyperlink{class_ai_context_ab54e4096cd1b7cee4e52e2538cd1a1bd}{CurrentEvaluatedDecision}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00021}00021     }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00026}\mbox{\hyperlink{class_ai_context_ac3328cff8fd138eda6fa48b2436f7243}{00026}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_bucket}{Bucket}} \mbox{\hyperlink{class_ai_context_ac3328cff8fd138eda6fa48b2436f7243}{LastSelectedBucket}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00027}\mbox{\hyperlink{class_ai_context_a102fb2575b5b800cf497f929f2a24cbc}{00027}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_bucket}{Bucket}} \mbox{\hyperlink{class_ai_context_a102fb2575b5b800cf497f929f2a24cbc}{CurrentEvaluatedBucket}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00028}00028     \textcolor{keyword}{private} \mbox{\hyperlink{class_tick_meta_data}{TickMetaData}} tickMetaData;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00030}\mbox{\hyperlink{class_ai_context_a5d4109b359435fd561e83067c9c6a6eb}{00030}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_tick_meta_data}{TickMetaData}} \mbox{\hyperlink{class_tick_meta_data}{TickMetaData}}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00031}00031     \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00032}00032         \textcolor{keyword}{get} => tickMetaData ?? (tickMetaData = \textcolor{keyword}{new} \mbox{\hyperlink{class_ai_context_a5d4109b359435fd561e83067c9c6a6eb}{TickMetaData}}());}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00033}00033         \textcolor{keyword}{set} => tickMetaData = value;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00034}00034     \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00036}00036     \textcolor{keyword}{private} \textcolor{keyword}{const} \textcolor{keywordtype}{int} IterationMax = 20;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00038}\mbox{\hyperlink{class_ai_context_a9d90df8e0c92549d66cf0c4ec9602f0c}{00038}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_ai_context_a9d90df8e0c92549d66cf0c4ec9602f0c}{AiContext}}()}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00039}00039     \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00040}00040         \mbox{\hyperlink{class_ai_context_af19293caf76845cdb99519a803bd9ed0}{UtilityScorer}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_us_average_scorer}{UsAverageScorer}}();}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00041}00041         \mbox{\hyperlink{class_ai_context_a82e66d06351bd3e43cdf363cd7e350d4}{LastActions}} = \textcolor{keyword}{new} List<AgentAction>();}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00042}00042         context = \textcolor{keyword}{new} Dictionary<object, object>();}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00043}00043         \textcolor{comment}{// TickMetaData = new TickMetaData();}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00044}00044     \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00052}\mbox{\hyperlink{class_ai_context_a35d36531b65730b76bc4f0eedc64a141}{00052}}     \textcolor{keyword}{public} T \mbox{\hyperlink{class_ai_context_a35d36531b65730b76bc4f0eedc64a141}{GetContext<T>}}(\textcolor{keywordtype}{object} key, \mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} requester = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00053}00053     \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00054}00054         var numberOfIterations = 0;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00055}00055         \textcolor{keywordflow}{while} (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00056}00056         \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00057}00057             \textcolor{comment}{//Base case}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00058}00058             \textcolor{keywordflow}{if} (requester == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00059}00059             \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00060}00060                 \textcolor{comment}{// If global value is set}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00061}00061                 \textcolor{keywordflow}{if} (context.ContainsKey(key))}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00062}00062                 \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00063}00063                     \textcolor{keywordflow}{return} (T) context[key];}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00064}00064                 \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00065}00065                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00066}00066                 \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00067}00067                     \textcolor{keywordflow}{return} \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00068}00068                 \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00069}00069             \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00071}00071             var requesterKey = GetKey(key, requester);}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00072}00072             \textcolor{keywordflow}{if} (context.ContainsKey(requesterKey))}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00073}00073             \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00074}00074                 \textcolor{keywordflow}{return} (T) context[requesterKey];}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00075}00075             \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00077}00077             requester = requester.ContextAddress.Parent;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00079}00079             numberOfIterations++;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00080}00080             \textcolor{keywordflow}{if} (numberOfIterations > IterationMax)}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00081}00081             \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00082}00082                 DebugService.LogWarning(\textcolor{stringliteral}{"{}Failed to find AiContext at key: "{}} + key + \textcolor{stringliteral}{"{} and failed to break out of loop."{}},\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00083}00083             \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00084}00084         \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00085}00085     \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00094}\mbox{\hyperlink{class_ai_context_a59c66dae7878d8b55f5fa8fdc3c32ae0}{00094}}     \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ai_context_a59c66dae7878d8b55f5fa8fdc3c32ae0}{SetContext}}(\textcolor{keywordtype}{object} key, \textcolor{keywordtype}{object} value, \mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} owner = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00095}00095     \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00096}00096         var requesterKey = GetKey(key, owner);}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00098}00098         \textcolor{keywordflow}{if} (!context.ContainsKey(requesterKey))}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00099}00099         \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00100}00100             context.Add(requesterKey, value);}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00101}00101         \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00102}00102         \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00103}00103             context[requesterKey] = value;}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00104}00104         \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00105}00105     \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00113}\mbox{\hyperlink{class_ai_context_a9de0a993b3a2ad112214163bf384700c}{00113}}     \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ai_context_a9de0a993b3a2ad112214163bf384700c}{RemoveContext}}(\textcolor{keywordtype}{object} key, \mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} owner = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00114}00114     \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00115}00115         var ownerKey = GetKey(key, owner);}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00116}00116         \textcolor{keywordflow}{if} (context.ContainsKey(ownerKey))}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00117}00117         \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00118}00118             context.Remove(key);}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00119}00119         \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00120}00120     \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00121}00121     }
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00122}00122     \textcolor{keyword}{private} \textcolor{keywordtype}{string} GetKey(\textcolor{keywordtype}{object} key, \mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} requester)}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00123}00123     \{}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00124}00124         \textcolor{keywordflow}{return} key + requester?.\mbox{\hyperlink{class_ai_object_model_ac41719ca10fb2197cde593358e58649c}{ContextAddress}}.\mbox{\hyperlink{class_context_address_a39483174c83d992f3a3ec028d67f1521}{Address}};}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00125}00125     \}}
+\DoxyCodeLine{\Hypertarget{_ai_context_8cs_source_l00126}00126 \}}
+
+\end{DoxyCode}

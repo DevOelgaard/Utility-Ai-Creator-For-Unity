@@ -1,0 +1,39 @@
+\hypertarget{_operator_observer_base_8cs_source}{}\doxysection{Operator\+Observer\+Base.\+cs}
+\label{_operator_observer_base_8cs_source}\index{Editor/UniRx/Scripts/Operators/OperatorObserverBase.cs@{Editor/UniRx/Scripts/Operators/OperatorObserverBase.cs}}
+\mbox{\hyperlink{_operator_observer_base_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Threading;}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00004}00004 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{UniRx.Operators}}}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00006}\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base}{00006}}     \textcolor{keyword}{public} \textcolor{keyword}{abstract} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base}{OperatorObserverBase}}<TSource, TResult> : IDisposable, \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}<TSource>}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00007}00007     \{}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00008}00008         \textcolor{keyword}{protected} \textcolor{keyword}{internal} \textcolor{keyword}{volatile} \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<TResult>}} observer;}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00009}00009         IDisposable cancel;}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00011}\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a3bcb9ed31d90763f1419d3a104ff8092}{00011}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a3bcb9ed31d90763f1419d3a104ff8092}{OperatorObserverBase}}(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<TResult>}} observer, IDisposable cancel)}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00012}00012         \{}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00013}00013             this.observer = observer;}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00014}00014             this.cancel = cancel;}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00015}00015         \}}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00017}\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a400001c0136d7539f7395398c51846c8}{00017}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a400001c0136d7539f7395398c51846c8}{OnNext}}(TSource value);}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00019}\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a2540e8195849f4131159e19e399171c3}{00019}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a2540e8195849f4131159e19e399171c3}{OnError}}(Exception error);}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00021}\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a18ae287edd8c5de97857958f46d0c08e}{00021}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a18ae287edd8c5de97857958f46d0c08e}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00023}\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{00023}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}()}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00024}00024         \{}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00025}00025             observer = \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_internal_util}{InternalUtil}}.\mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_empty_observer}{EmptyObserver}}<TResult>.\mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_empty_observer_a192140ae525d9dcb61d9a555120706da}{Instance}};}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00026}00026             var target = \mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}.Threading.Interlocked.Exchange(ref cancel, \textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00027}00027             \textcolor{keywordflow}{if} (target != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00028}00028             \{}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00029}00029                 target.Dispose();}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00030}00030             \}}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00031}00031         \}}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00032}00032     \}}
+\DoxyCodeLine{\Hypertarget{_operator_observer_base_8cs_source_l00033}00033 \}}
+
+\end{DoxyCode}

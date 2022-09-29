@@ -1,0 +1,236 @@
+\hypertarget{class_uni_rx_1_1_reactive_command}{}\doxysection{Uni\+Rx.\+Reactive\+Command\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_uni_rx_1_1_reactive_command}\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+
+
+Represents \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Reactive\+Command}}\texorpdfstring{$<$}{<}\mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}}\texorpdfstring{$>$}{>}  
+
+
+Inheritance diagram for Uni\+Rx.\+Reactive\+Command\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_uni_rx_1_1_reactive_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_reactive_command_aadbdcf6b10f9301974db96a27016bca7}{Reactive\+Command}} ()
+\begin{DoxyCompactList}\small\item\em Can\+Execute is always true. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_uni_rx_1_1_reactive_command_aaef2b4f6a384ff61978220dc9f78f176}{Reactive\+Command}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ bool $>$ can\+Execute\+Source, bool initial\+Value=true)
+\begin{DoxyCompactList}\small\item\em Can\+Execute is changed from can\+Execute sequence. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_reactive_command_a181580d0c413977183fc1035076cbb81}{Execute}} ()
+\begin{DoxyCompactList}\small\item\em Push null to subscribers.\end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_reactive_command_a311efd9d5dcf04876d0ff11c2250396e}{Force\+Execute}} ()
+\begin{DoxyCompactList}\small\item\em Force push parameter to subscribers.\end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_uni_rx_1_1_reactive_command_aadbdcf6b10f9301974db96a27016bca7}{Reactive\+Command}} ()
+\begin{DoxyCompactList}\small\item\em Can\+Execute is always true. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_uni_rx_1_1_reactive_command_aaef2b4f6a384ff61978220dc9f78f176}{Reactive\+Command}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ bool $>$ can\+Execute\+Source, bool initial\+Value=true)
+\begin{DoxyCompactList}\small\item\em Can\+Execute is changed from can\+Execute sequence. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_reactive_command_aec292b55e613e285e2ea5276d8cccc3c}{Execute}} (T parameter)
+\begin{DoxyCompactList}\small\item\em Push parameter to subscribers when Can\+Execute.\end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_reactive_command_a64953ad50bfd52ae46da5e35a5ee3381}{Force\+Execute}} (T parameter)
+\begin{DoxyCompactList}\small\item\em Force push parameter to subscribers.\end{DoxyCompactList}\item 
+IDisposable \mbox{\hyperlink{class_uni_rx_1_1_reactive_command_adc60136edd21f26309710ca0df046b38}{Subscribe}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$ observer)
+\begin{DoxyCompactList}\small\item\em Subscribe execute.\end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_reactive_command_a2a06d70a2fd8972108bb9c26e9181838}{Dispose}} ()
+\begin{DoxyCompactList}\small\item\em Stop all subscription and lock Can\+Execute is false. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_property}{IRead\+Only\+Reactive\+Property}}$<$ bool $>$ \mbox{\hyperlink{class_uni_rx_1_1_reactive_command_a3ed4b7c64ca6e231c07e16d1d2a6fb80}{Can\+Execute}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_reactive_command_a802008a110e26680e82a914789a10ed4}{Is\+Disposed}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Reactive\+Command}}\texorpdfstring{$<$}{<}\mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}}\texorpdfstring{$>$}{>} 
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00057}{57}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_aadbdcf6b10f9301974db96a27016bca7}\label{class_uni_rx_1_1_reactive_command_aadbdcf6b10f9301974db96a27016bca7}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!ReactiveCommand@{ReactiveCommand}}
+\index{ReactiveCommand@{ReactiveCommand}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReactiveCommand()}{ReactiveCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Reactive\+Command}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Can\+Execute is always true. 
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00032}{32}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_aaef2b4f6a384ff61978220dc9f78f176}\label{class_uni_rx_1_1_reactive_command_aaef2b4f6a384ff61978220dc9f78f176}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!ReactiveCommand@{ReactiveCommand}}
+\index{ReactiveCommand@{ReactiveCommand}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReactiveCommand()}{ReactiveCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Reactive\+Command}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ bool $>$}]{can\+Execute\+Source,  }\item[{bool}]{initial\+Value = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Can\+Execute is changed from can\+Execute sequence. 
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00039}{39}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_aadbdcf6b10f9301974db96a27016bca7}\label{class_uni_rx_1_1_reactive_command_aadbdcf6b10f9301974db96a27016bca7}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!ReactiveCommand@{ReactiveCommand}}
+\index{ReactiveCommand@{ReactiveCommand}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReactiveCommand()}{ReactiveCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Reactive\+Command}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Can\+Execute is always true. 
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00076}{76}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_aaef2b4f6a384ff61978220dc9f78f176}\label{class_uni_rx_1_1_reactive_command_aaef2b4f6a384ff61978220dc9f78f176}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!ReactiveCommand@{ReactiveCommand}}
+\index{ReactiveCommand@{ReactiveCommand}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReactiveCommand()}{ReactiveCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Reactive\+Command}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ bool $>$}]{can\+Execute\+Source,  }\item[{bool}]{initial\+Value = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Can\+Execute is changed from can\+Execute sequence. 
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00085}{85}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_a2a06d70a2fd8972108bb9c26e9181838}\label{class_uni_rx_1_1_reactive_command_a2a06d70a2fd8972108bb9c26e9181838}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.Dispose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stop all subscription and lock Can\+Execute is false. 
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00122}{122}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_a181580d0c413977183fc1035076cbb81}\label{class_uni_rx_1_1_reactive_command_a181580d0c413977183fc1035076cbb81}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!Execute@{Execute}}
+\index{Execute@{Execute}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Execute()}{Execute()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.Execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Push null to subscribers.
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00045}{45}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_aec292b55e613e285e2ea5276d8cccc3c}\label{class_uni_rx_1_1_reactive_command_aec292b55e613e285e2ea5276d8cccc3c}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!Execute@{Execute}}
+\index{Execute@{Execute}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Execute()}{Execute()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.Execute (\begin{DoxyParamCaption}\item[{T}]{parameter }\end{DoxyParamCaption})}
+
+
+
+Push parameter to subscribers when Can\+Execute.
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_reactive_command_a28c7a2b5249cea17c4d5b7d783f2e66b}{Uni\+Rx.\+IReactive\+Command$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00094}{94}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_a311efd9d5dcf04876d0ff11c2250396e}\label{class_uni_rx_1_1_reactive_command_a311efd9d5dcf04876d0ff11c2250396e}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!ForceExecute@{ForceExecute}}
+\index{ForceExecute@{ForceExecute}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ForceExecute()}{ForceExecute()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.Force\+Execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Force push parameter to subscribers.
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00051}{51}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_a64953ad50bfd52ae46da5e35a5ee3381}\label{class_uni_rx_1_1_reactive_command_a64953ad50bfd52ae46da5e35a5ee3381}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!ForceExecute@{ForceExecute}}
+\index{ForceExecute@{ForceExecute}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ForceExecute()}{ForceExecute()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.Force\+Execute (\begin{DoxyParamCaption}\item[{T}]{parameter }\end{DoxyParamCaption})}
+
+
+
+Force push parameter to subscribers.
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00108}{108}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_adc60136edd21f26309710ca0df046b38}\label{class_uni_rx_1_1_reactive_command_adc60136edd21f26309710ca0df046b38}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!Subscribe@{Subscribe}}
+\index{Subscribe@{Subscribe}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Subscribe()}{Subscribe()}}
+{\footnotesize\ttfamily IDisposable \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.Subscribe (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$}]{observer }\end{DoxyParamCaption})}
+
+
+
+Subscribe execute.
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observable_a81a2566f451cf1ddc8de265d019d1b88}{Uni\+Rx.\+IObservable$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00114}{114}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_a3ed4b7c64ca6e231c07e16d1d2a6fb80}\label{class_uni_rx_1_1_reactive_command_a3ed4b7c64ca6e231c07e16d1d2a6fb80}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!CanExecute@{CanExecute}}
+\index{CanExecute@{CanExecute}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CanExecute}{CanExecute}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_property}{IRead\+Only\+Reactive\+Property}}$<$bool$>$ \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.Can\+Execute\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_reactive_command_a68147faf37adbb36135576f638c7299a}{Uni\+Rx.\+IReactive\+Command$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00063}{63}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_reactive_command_a802008a110e26680e82a914789a10ed4}\label{class_uni_rx_1_1_reactive_command_a802008a110e26680e82a914789a10ed4}} 
+\index{UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}!IsDisposed@{IsDisposed}}
+\index{IsDisposed@{IsDisposed}!UniRx.ReactiveCommand$<$ T $>$@{UniRx.ReactiveCommand$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{IsDisposed}{IsDisposed}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{class_uni_rx_1_1_reactive_command}{Uni\+Rx.\+Reactive\+Command}}$<$ T $>$.Is\+Disposed\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_command_8cs_source_l00071}{71}} of file \mbox{\hyperlink{_reactive_command_8cs_source}{Reactive\+Command.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Unity\+Engine\+Bridge/\mbox{\hyperlink{_reactive_command_8cs}{Reactive\+Command.\+cs}}\end{DoxyCompactItemize}

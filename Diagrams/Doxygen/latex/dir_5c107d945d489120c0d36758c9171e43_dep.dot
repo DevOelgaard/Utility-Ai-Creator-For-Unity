@@ -1,0 +1,11 @@
+digraph "Runtime/Models/AiTicker/Modes"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_f04a430843e971eda3bc30023a39b2de {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", style="filled,dashed,", label="AiTicker", fontname="Helvetica", fontsize="10", URL="dir_f04a430843e971eda3bc30023a39b2de.html"]
+  dir_5c107d945d489120c0d36758c9171e43 [shape=box, label="Modes", style="filled,bold,", fillcolor="#edf0f7", color="grey25", URL="dir_5c107d945d489120c0d36758c9171e43.html"];
+  }
+}

@@ -1,0 +1,74 @@
+\hypertarget{_restore_able_collection_8cs_source}{}\doxysection{Restore\+Able\+Collection.\+cs}
+\label{_restore_able_collection_8cs_source}\index{Runtime/Services/Persistence/RestoreAbleCollection.cs@{Runtime/Services/Persistence/RestoreAbleCollection.cs}}
+\mbox{\hyperlink{_restore_able_collection_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00001}00001 \textcolor{comment}{// using System;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00002}00002 \textcolor{comment}{// using System.Collections.Generic;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00003}00003 \textcolor{comment}{// using System.Linq;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00004}00004 \textcolor{comment}{// using System.Text;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00005}00005 \textcolor{comment}{// using System.Threading.Tasks;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00006}00006 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00007}00007 \textcolor{comment}{// public class RestoreAbleCollection: RestoreAble}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00008}00008 \textcolor{comment}{// \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00009}00009 \textcolor{comment}{//     internal List<RestoreAble> Models = new List<RestoreAble>();}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00010}00010 \textcolor{comment}{//     public Type Type \{ get; private set; \}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00011}00011 \textcolor{comment}{//     public RestoreAbleCollection()}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00012}00012 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00013}00013 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00014}00014 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00015}00015 \textcolor{comment}{//     public RestoreAbleCollection(List<RestoreAble> states, Type type)}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00016}00016 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00017}00017 \textcolor{comment}{//         this.Models = states;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00018}00018 \textcolor{comment}{//         this.Type = type;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00019}00019 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00020}00020 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00021}00021 \textcolor{comment}{//     internal override RestoreState GetState()}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00022}00022 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00023}00023 \textcolor{comment}{//         return new RestoreAbleCollectionState(Models, Type, this);}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00024}00024 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00025}00025 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00026}00026 \textcolor{comment}{//     protected override string GetFileName()}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00027}00027 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00028}00028 \textcolor{comment}{//         return "{}RestoreableCollection"{};}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00029}00029 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00030}00030 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00031}00031 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00032}00032 \textcolor{comment}{//     protected override async Task RestoreInternalAsync(RestoreState state, bool restoreDebug = false)}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00033}00033 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00034}00034 \textcolor{comment}{//         var s = state as RestoreAbleCollectionState;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00035}00035 \textcolor{comment}{//         Models = new List<RestoreAble>();}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00036}00036 \textcolor{comment}{//         s.States.ForEach(e =>}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00037}00037 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00038}00038 \textcolor{comment}{//             Models.Add(await Restore<RestoreAble>(e, restoreDebug));}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00039}00039 \textcolor{comment}{//         \});}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00040}00040 \textcolor{comment}{//         Type = Type.GetType(s.DerivedTypeString);}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00041}00041 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00042}00042 \textcolor{comment}{//     private async Task<}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00043}00043 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00044}00044 \textcolor{comment}{//     protected override void InternalSaveToFile(string path, IPersister persister, RestoreState state)}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00045}00045 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00046}00046 \textcolor{comment}{//         persister.SaveObject(state, path);}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00047}00047 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00048}00048 \textcolor{comment}{// \}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00049}00049 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00050}00050 \textcolor{comment}{// public class RestoreAbleCollectionState: RestoreState}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00051}00051 \textcolor{comment}{// \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00052}00052 \textcolor{comment}{//     public readonly List<RestoreState> States;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00053}00053 \textcolor{comment}{//     // public string TypeString;}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00054}00054 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00055}00055 \textcolor{comment}{//     public RestoreAbleCollectionState()}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00056}00056 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00057}00057 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00058}00058 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00059}00059 \textcolor{comment}{//     internal RestoreAbleCollectionState(List<RestoreAble> restoreAbles, Type typeString, RestoreAbleCollection o) : base(o)}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00060}00060 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00061}00061 \textcolor{comment}{//         States = new List<RestoreState>();}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00062}00062 \textcolor{comment}{//         restoreAbles.ForEach(e =>}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00063}00063 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00064}00064 \textcolor{comment}{//             States.Add(e.GetState());}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00065}00065 \textcolor{comment}{//         \});}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00066}00066 \textcolor{comment}{//         DerivedTypeString = typeString.ToString();}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00067}00067 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_restore_able_collection_8cs_source_l00068}00068 \textcolor{comment}{// \}}}
+
+\end{DoxyCode}

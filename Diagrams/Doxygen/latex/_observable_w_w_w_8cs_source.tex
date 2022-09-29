@@ -1,0 +1,448 @@
+\hypertarget{_observable_w_w_w_8cs_source}{}\doxysection{Observable\+WWW.\+cs}
+\label{_observable_w_w_w_8cs_source}\index{Editor/UniRx/Scripts/UnityEngineBridge/ObservableWWW.cs@{Editor/UniRx/Scripts/UnityEngineBridge/ObservableWWW.cs}}
+\mbox{\hyperlink{_observable_w_w_w_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00003}00003 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00005}00005 \textcolor{preprocessor}{\#if !UniRxLibrary}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00006}\mbox{\hyperlink{_observable_w_w_w_8cs_af08064cc44970a356b0dff2deebd7b21}{00006}} \textcolor{keyword}{using }\mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}} = \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00007}00007 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00009}00009 \textcolor{preprocessor}{\#if UNITY\_2018\_3\_OR\_NEWER}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00010}00010 \textcolor{preprocessor}{\#pragma warning disable CS0618}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00011}00011 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00013}00013 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx}{UniRx}}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00014}00014 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00015}00015     \textcolor{keyword}{using }System.Threading;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00016}00016 \textcolor{preprocessor}{\#if !(UNITY\_METRO || UNITY\_WP8) \&\& (UNITY\_4\_4 || UNITY\_4\_3 || UNITY\_4\_2 || UNITY\_4\_1 || UNITY\_4\_0\_1 || UNITY\_4\_0 || UNITY\_3\_5 || UNITY\_3\_4 || UNITY\_3\_3 || UNITY\_3\_2 || UNITY\_3\_1 || UNITY\_3\_0\_0 || UNITY\_3\_0 || UNITY\_2\_6\_1 || UNITY\_2\_6)}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00017}00017     \textcolor{comment}{// Fallback for Unity versions below 4.5}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00018}00018     \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} = \mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}.Collections.Hashtable;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00019}00019     \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_a2f58050a878c8cacd1567faf5d92773d}{HashEntry}} = \mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}.Collections.DictionaryEntry;    }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00020}00020 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00021}00021     \textcolor{comment}{// Unity 4.5 release notes: }}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00022}00022     \textcolor{comment}{// WWW: deprecated 'WWW(string url, byte[] postData, Hashtable headers)', }}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00023}00023     \textcolor{comment}{// use 'public WWW(string url, byte[] postData, Dictionary<string, string> headers)' instead.}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00024}\mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{00024}}     \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} = \mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}.Collections.Generic.Dictionary<string, \textcolor{keywordtype}{string}>;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00025}\mbox{\hyperlink{namespace_uni_rx_a2f58050a878c8cacd1567faf5d92773d}{00025}}     \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_a2f58050a878c8cacd1567faf5d92773d}{HashEntry}} = \mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}.Collections.Generic.KeyValuePair<string, \textcolor{keywordtype}{string}>;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00026}00026 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00028}00028 \textcolor{preprocessor}{\#if UNITY\_2018\_3\_OR\_NEWER}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00029}00029     [Obsolete(\textcolor{stringliteral}{"{}Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features"{}})]}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00030}00030 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00031}00031     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{partial class }ObservableWWW}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00032}00032     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00033}00033         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<string>}} Get(\textcolor{keywordtype}{string} url, \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} headers = \textcolor{keyword}{null}, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00034}00034         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00035}00035             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<\textcolor{keywordtype}{string}>((observer, cancellation) => FetchText(\textcolor{keyword}{new} WWW(url, \textcolor{keyword}{null}, (headers ?? \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}}())), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00036}00036         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00038}00038         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<byte[]>}} GetAndGetBytes(\textcolor{keywordtype}{string} url, \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} headers = \textcolor{keyword}{null}, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00039}00039         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00040}00040             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<\textcolor{keywordtype}{byte}[]>((observer, cancellation) => FetchBytes(\textcolor{keyword}{new} WWW(url, \textcolor{keyword}{null}, (headers ?? \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}}())), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00041}00041         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00042}00042         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<WWW>}} GetWWW(\textcolor{keywordtype}{string} url, \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} headers = \textcolor{keyword}{null}, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00043}00043         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00044}00044             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<WWW>((observer, cancellation) => Fetch(\textcolor{keyword}{new} WWW(url, \textcolor{keyword}{null}, (headers ?? \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}}())), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00045}00045         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00047}00047         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<string>}} Post(\textcolor{keywordtype}{string} url, \textcolor{keywordtype}{byte}[] postData, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00048}00048         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00049}00049             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<\textcolor{keywordtype}{string}>((observer, cancellation) => FetchText(\textcolor{keyword}{new} WWW(url, postData), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00050}00050         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00052}00052         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<string>}} Post(\textcolor{keywordtype}{string} url, \textcolor{keywordtype}{byte}[] postData, \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} headers, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00053}00053         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00054}00054             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<\textcolor{keywordtype}{string}>((observer, cancellation) => FetchText(\textcolor{keyword}{new} WWW(url, postData, headers), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00055}00055         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00057}00057         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<string>}} Post(\textcolor{keywordtype}{string} url, WWWForm content, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00058}00058         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00059}00059             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<\textcolor{keywordtype}{string}>((observer, cancellation) => FetchText(\textcolor{keyword}{new} WWW(url, content), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00060}00060         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00062}00062         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<string>}} Post(\textcolor{keywordtype}{string} url, WWWForm content, \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} headers, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00063}00063         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00064}00064             var contentHeaders = content.headers;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00065}00065             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<\textcolor{keywordtype}{string}>((observer, cancellation) => FetchText(\textcolor{keyword}{new} WWW(url, content.data, MergeHash(contentHeaders, headers)), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00066}00066         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00068}00068         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<byte[]>}} PostAndGetBytes(\textcolor{keywordtype}{string} url, \textcolor{keywordtype}{byte}[] postData, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00069}00069         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00070}00070             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<\textcolor{keywordtype}{byte}[]>((observer, cancellation) => FetchBytes(\textcolor{keyword}{new} WWW(url, postData), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00071}00071         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00073}00073         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<byte[]>}} PostAndGetBytes(\textcolor{keywordtype}{string} url, \textcolor{keywordtype}{byte}[] postData, \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} headers, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00074}00074         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00075}00075             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<\textcolor{keywordtype}{byte}[]>((observer, cancellation) => FetchBytes(\textcolor{keyword}{new} WWW(url, postData, headers), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00076}00076         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00078}00078         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<byte[]>}} PostAndGetBytes(\textcolor{keywordtype}{string} url, WWWForm content, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00079}00079         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00080}00080             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<\textcolor{keywordtype}{byte}[]>((observer, cancellation) => FetchBytes(\textcolor{keyword}{new} WWW(url, content), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00081}00081         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00083}00083         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<byte[]>}} PostAndGetBytes(\textcolor{keywordtype}{string} url, WWWForm content, \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} headers, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00084}00084         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00085}00085             var contentHeaders = content.headers;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00086}00086             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<\textcolor{keywordtype}{byte}[]>((observer, cancellation) => FetchBytes(\textcolor{keyword}{new} WWW(url, content.data, MergeHash(contentHeaders, headers)), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00087}00087         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00089}00089         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<WWW>}} PostWWW(\textcolor{keywordtype}{string} url, \textcolor{keywordtype}{byte}[] postData, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00090}00090         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00091}00091             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<WWW>((observer, cancellation) => Fetch(\textcolor{keyword}{new} WWW(url, postData), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00092}00092         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00094}00094         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<WWW>}} PostWWW(\textcolor{keywordtype}{string} url, \textcolor{keywordtype}{byte}[] postData, \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} headers, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00095}00095         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00096}00096             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<WWW>((observer, cancellation) => Fetch(\textcolor{keyword}{new} WWW(url, postData, headers), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00097}00097         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00099}00099         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<WWW>}} PostWWW(\textcolor{keywordtype}{string} url, WWWForm content, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00100}00100         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00101}00101             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<WWW>((observer, cancellation) => Fetch(\textcolor{keyword}{new} WWW(url, content), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00102}00102         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00104}00104         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<WWW>}} PostWWW(\textcolor{keywordtype}{string} url, WWWForm content, \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} headers, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00105}00105         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00106}00106             var contentHeaders = content.headers;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00107}00107             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<WWW>((observer, cancellation) => Fetch(\textcolor{keyword}{new} WWW(url, content.data, MergeHash(contentHeaders, headers)), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00108}00108         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00110}00110         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<AssetBundle>}} LoadFromCacheOrDownload(\textcolor{keywordtype}{string} url, \textcolor{keywordtype}{int} version, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00111}00111         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00112}00112             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<AssetBundle>((observer, cancellation) => FetchAssetBundle(WWW.LoadFromCacheOrDownload(url, version), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00113}00113         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00115}00115         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<AssetBundle>}} LoadFromCacheOrDownload(\textcolor{keywordtype}{string} url, \textcolor{keywordtype}{int} version, uint crc, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00116}00116         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00117}00117             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<AssetBundle>((observer, cancellation) => FetchAssetBundle(WWW.LoadFromCacheOrDownload(url, version, crc), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00118}00118         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00119}00119 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00120}00120         \textcolor{comment}{// over Unity5 supports Hash128}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00121}00121 \textcolor{preprocessor}{\#if !(UNITY\_4\_7 || UNITY\_4\_6 || UNITY\_4\_5 || UNITY\_4\_4 || UNITY\_4\_3 || UNITY\_4\_2 || UNITY\_4\_1 || UNITY\_4\_0\_1 || UNITY\_4\_0 || UNITY\_3\_5 || UNITY\_3\_4 || UNITY\_3\_3 || UNITY\_3\_2 || UNITY\_3\_1 || UNITY\_3\_0\_0 || UNITY\_3\_0 || UNITY\_2\_6\_1 || UNITY\_2\_6)}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00122}00122         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<AssetBundle>}} LoadFromCacheOrDownload(\textcolor{keywordtype}{string} url, Hash128 hash128, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00123}00123         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00124}00124             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<AssetBundle>((observer, cancellation) => FetchAssetBundle(WWW.LoadFromCacheOrDownload(url, hash128), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00125}00125         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00126}00126 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00127}00127         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<AssetBundle>}} LoadFromCacheOrDownload(\textcolor{keywordtype}{string} url, Hash128 hash128, uint crc, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} progress = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00128}00128         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00129}00129             \textcolor{keywordflow}{return} \mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}.FromCoroutine<AssetBundle>((observer, cancellation) => FetchAssetBundle(WWW.LoadFromCacheOrDownload(url, hash128, crc), observer, progress, cancellation));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00130}00130         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00131}00131 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00132}00132 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00133}00133         \textcolor{comment}{// over 4.5, Hash define is Dictionary.}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00134}00134         \textcolor{comment}{// below Unity 4.5, WWW only supports Hashtable.}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00135}00135         \textcolor{comment}{// Unity 4.5, 4.6 WWW supports Dictionary and [Obsolete]Hashtable but WWWForm.content is Hashtable.}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00136}00136         \textcolor{comment}{// Unity 5.0 WWW only supports Dictionary and WWWForm.content is also Dictionary.}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00137}00137 \textcolor{preprocessor}{\#if !(UNITY\_METRO || UNITY\_WP8) \&\& (UNITY\_4\_5 || UNITY\_4\_6 || UNITY\_4\_7)}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00138}00138         \textcolor{keyword}{static} \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} MergeHash(Hashtable wwwFormHeaders, \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} externalHeaders)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00139}00139         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00140}00140             var newHeaders = \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}}();}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00141}00141             \textcolor{keywordflow}{foreach} (DictionaryEntry item \textcolor{keywordflow}{in} wwwFormHeaders)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00142}00142             \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00143}00143                 newHeaders[item.Key.ToString()] = item.Value.ToString();}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00144}00144             \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00145}00145             \textcolor{keywordflow}{foreach} (\mbox{\hyperlink{namespace_uni_rx_a2f58050a878c8cacd1567faf5d92773d}{HashEntry}} item \textcolor{keywordflow}{in} externalHeaders)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00146}00146             \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00147}00147                 newHeaders[item.Key] =  item.Value;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00148}00148             \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00149}00149             \textcolor{keywordflow}{return} newHeaders;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00150}00150         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00151}00151 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00152}00152         \textcolor{keyword}{static} \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} MergeHash(\mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} wwwFormHeaders, \mbox{\hyperlink{namespace_uni_rx_a69d203a16139d691be6f167d9344a557}{Hash}} externalHeaders)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00153}00153         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00154}00154             \textcolor{keywordflow}{foreach} (\mbox{\hyperlink{namespace_uni_rx_a2f58050a878c8cacd1567faf5d92773d}{HashEntry}} item \textcolor{keywordflow}{in} externalHeaders)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00155}00155             \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00156}00156                 wwwFormHeaders[item.Key] = item.Value;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00157}00157             \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00158}00158             \textcolor{keywordflow}{return} wwwFormHeaders;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00159}00159         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00160}00160 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00161}00161 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00162}00162         \textcolor{keyword}{static} IEnumerator Fetch(WWW www, \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<WWW>}} observer, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} reportProgress, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00163}00163         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00164}00164             \textcolor{keyword}{using} (www)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00165}00165             \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00166}00166                 \textcolor{keywordflow}{if} (reportProgress != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00167}00167                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00168}00168                     \textcolor{keywordflow}{while} (!www.isDone \&\& !cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00169}00169                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00170}00170                         \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00171}00171                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00172}00172                             reportProgress.\mbox{\hyperlink{interface_uni_rx_1_1_i_progress_ab709d28eef59b2141fb8e166b303c020}{Report}}(www.progress);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00173}00173                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00174}00174                         \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00175}00175                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00176}00176                             observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(ex);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00177}00177                             yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00178}00178                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00179}00179                         yield \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00180}00180                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00181}00181                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00182}00182                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00183}00183                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00184}00184                     \textcolor{keywordflow}{if} (!www.isDone)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00185}00185                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00186}00186                         yield \textcolor{keywordflow}{return} www;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00187}00187                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00188}00188                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00189}00189 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00190}00190                 \textcolor{keywordflow}{if} (cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00191}00191                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00192}00192                     yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00193}00193                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00194}00194 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00195}00195                 \textcolor{keywordflow}{if} (reportProgress != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00196}00196                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00197}00197                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00198}00198                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00199}00199                         reportProgress.\mbox{\hyperlink{interface_uni_rx_1_1_i_progress_ab709d28eef59b2141fb8e166b303c020}{Report}}(www.progress);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00200}00200                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00201}00201                     \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00202}00202                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00203}00203                         observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(ex);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00204}00204                         yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00205}00205                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00206}00206                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00207}00207 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00208}00208                 \textcolor{keywordflow}{if} (!\textcolor{keywordtype}{string}.IsNullOrEmpty(www.error))}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00209}00209                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00210}00210                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception}{WWWErrorException}}(www, www.text));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00211}00211                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00212}00212                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00213}00213                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00214}00214                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(www);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00215}00215                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00216}00216                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00217}00217             \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00218}00218         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00220}00220         \textcolor{keyword}{static} IEnumerator FetchText(WWW www, \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<string>}} observer, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} reportProgress, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00221}00221         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00222}00222             \textcolor{keyword}{using} (www)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00223}00223             \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00224}00224                 \textcolor{keywordflow}{if} (reportProgress != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00225}00225                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00226}00226                     \textcolor{keywordflow}{while} (!www.isDone \&\& !cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00227}00227                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00228}00228                         \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00229}00229                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00230}00230                             reportProgress.\mbox{\hyperlink{interface_uni_rx_1_1_i_progress_ab709d28eef59b2141fb8e166b303c020}{Report}}(www.progress);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00231}00231                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00232}00232                         \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00233}00233                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00234}00234                             observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(ex);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00235}00235                             yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00236}00236                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00237}00237                         yield \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00238}00238                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00239}00239                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00240}00240                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00241}00241                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00242}00242                     \textcolor{keywordflow}{if} (!www.isDone)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00243}00243                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00244}00244                         yield \textcolor{keywordflow}{return} www;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00245}00245                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00246}00246                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00247}00247 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00248}00248                 \textcolor{keywordflow}{if} (cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00249}00249                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00250}00250                     yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00251}00251                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00252}00252 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00253}00253                 \textcolor{keywordflow}{if} (reportProgress != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00254}00254                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00255}00255                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00256}00256                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00257}00257                         reportProgress.\mbox{\hyperlink{interface_uni_rx_1_1_i_progress_ab709d28eef59b2141fb8e166b303c020}{Report}}(www.progress);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00258}00258                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00259}00259                     \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00260}00260                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00261}00261                         observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(ex);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00262}00262                         yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00263}00263                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00264}00264                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00265}00265 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00266}00266                 \textcolor{keywordflow}{if} (!\textcolor{keywordtype}{string}.IsNullOrEmpty(www.error))}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00267}00267                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00268}00268                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception}{WWWErrorException}}(www, www.text));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00269}00269                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00270}00270                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00271}00271                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00272}00272                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(www.text);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00273}00273                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00274}00274                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00275}00275             \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00276}00276         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00277}00277 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00278}00278         \textcolor{keyword}{static} IEnumerator FetchBytes(WWW www, \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}<\textcolor{keywordtype}{byte}[]> observer, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} reportProgress, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00279}00279         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00280}00280             \textcolor{keyword}{using} (www)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00281}00281             \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00282}00282                 \textcolor{keywordflow}{if} (reportProgress != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00283}00283                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00284}00284                     \textcolor{keywordflow}{while} (!www.isDone \&\& !cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00285}00285                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00286}00286                         \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00287}00287                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00288}00288                             reportProgress.\mbox{\hyperlink{interface_uni_rx_1_1_i_progress_ab709d28eef59b2141fb8e166b303c020}{Report}}(www.progress);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00289}00289                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00290}00290                         \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00291}00291                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00292}00292                             observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(ex);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00293}00293                             yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00294}00294                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00295}00295                         yield \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00296}00296                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00297}00297                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00298}00298                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00299}00299                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00300}00300                     \textcolor{keywordflow}{if} (!www.isDone)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00301}00301                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00302}00302                         yield \textcolor{keywordflow}{return} www;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00303}00303                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00304}00304                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00305}00305 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00306}00306                 \textcolor{keywordflow}{if} (cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00307}00307                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00308}00308                     yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00309}00309                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00310}00310 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00311}00311                 \textcolor{keywordflow}{if} (reportProgress != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00312}00312                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00313}00313                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00314}00314                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00315}00315                         reportProgress.\mbox{\hyperlink{interface_uni_rx_1_1_i_progress_ab709d28eef59b2141fb8e166b303c020}{Report}}(www.progress);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00316}00316                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00317}00317                     \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00318}00318                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00319}00319                         observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(ex);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00320}00320                         yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00321}00321                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00322}00322                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00323}00323 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00324}00324                 \textcolor{keywordflow}{if} (!\textcolor{keywordtype}{string}.IsNullOrEmpty(www.error))}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00325}00325                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00326}00326                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception}{WWWErrorException}}(www, www.text));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00327}00327                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00328}00328                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00329}00329                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00330}00330                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(www.bytes);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00331}00331                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00332}00332                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00333}00333             \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00334}00334         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00335}00335 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00336}00336         \textcolor{keyword}{static} IEnumerator FetchAssetBundle(WWW www, \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<AssetBundle>}} observer, \mbox{\hyperlink{interface_uni_rx_1_1_i_progress}{IProgress<float>}} reportProgress, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00337}00337         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00338}00338             \textcolor{keyword}{using} (www)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00339}00339             \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00340}00340                 \textcolor{keywordflow}{if} (reportProgress != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00341}00341                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00342}00342                     \textcolor{keywordflow}{while} (!www.isDone \&\& !cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00343}00343                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00344}00344                         \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00345}00345                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00346}00346                             reportProgress.\mbox{\hyperlink{interface_uni_rx_1_1_i_progress_ab709d28eef59b2141fb8e166b303c020}{Report}}(www.progress);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00347}00347                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00348}00348                         \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00349}00349                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00350}00350                             observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(ex);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00351}00351                             yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00352}00352                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00353}00353                         yield \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00354}00354                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00355}00355                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00356}00356                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00357}00357                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00358}00358                     \textcolor{keywordflow}{if} (!www.isDone)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00359}00359                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00360}00360                         yield \textcolor{keywordflow}{return} www;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00361}00361                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00362}00362                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00363}00363 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00364}00364                 \textcolor{keywordflow}{if} (cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00365}00365                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00366}00366                     yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00367}00367                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00368}00368 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00369}00369                 \textcolor{keywordflow}{if} (reportProgress != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00370}00370                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00371}00371                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00372}00372                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00373}00373                         reportProgress.\mbox{\hyperlink{interface_uni_rx_1_1_i_progress_ab709d28eef59b2141fb8e166b303c020}{Report}}(www.progress);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00374}00374                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00375}00375                     \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00376}00376                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00377}00377                         observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(ex);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00378}00378                         yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00379}00379                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00380}00380                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00381}00381 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00382}00382                 \textcolor{keywordflow}{if} (!\textcolor{keywordtype}{string}.IsNullOrEmpty(www.error))}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00383}00383                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00384}00384                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(\textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception}{WWWErrorException}}(www, \textcolor{stringliteral}{"{}"{}}));}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00385}00385                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00386}00386                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00387}00387                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00388}00388                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(www.assetBundle);}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00389}00389                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00390}00390                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00391}00391             \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00392}00392         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00393}00393     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00394}00394 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00395}\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception}{00395}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception}{WWWErrorException}} : Exception}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00396}00396     \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00397}\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_ac23265af0e588a192606a5dd30174a46}{00397}}         \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_ac23265af0e588a192606a5dd30174a46}{RawErrorMessage}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00398}\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_aa463bc6b0aabc4bb35c01d6a43be718c}{00398}}         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_aa463bc6b0aabc4bb35c01d6a43be718c}{HasResponse}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00399}\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a7770562bed8d6a543d2f83a17e96ea63}{00399}}         \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a7770562bed8d6a543d2f83a17e96ea63}{Text}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00400}\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a8e4ef12e7a24d6d3267601665c7941d2}{00400}}         \textcolor{keyword}{public} System.Net.HttpStatusCode \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a8e4ef12e7a24d6d3267601665c7941d2}{StatusCode}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00401}\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a91dd8e7ccfb195aa1573910534e6e192}{00401}}         \textcolor{keyword}{public} \mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}.Collections.Generic.Dictionary<string, \textcolor{keywordtype}{string}> \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a91dd8e7ccfb195aa1573910534e6e192}{ResponseHeaders}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00402}\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a556292c783f08e0868760863313548c9}{00402}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a556292c783f08e0868760863313548c9}{WWW}} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a556292c783f08e0868760863313548c9}{WWW}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00403}00403 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00404}00404         \textcolor{comment}{// cache the text because if www was disposed, can't access it.}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00405}\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a2409e2397e1b74a9ccc1536153708b4b}{00405}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a2409e2397e1b74a9ccc1536153708b4b}{WWWErrorException}}(\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a556292c783f08e0868760863313548c9}{WWW}} www, \textcolor{keywordtype}{string} text)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00406}00406         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00407}00407             this.WWW = www;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00408}00408             this.RawErrorMessage = www.error;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00409}00409             this.ResponseHeaders = www.responseHeaders;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00410}00410             this.HasResponse = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00411}00411             this.Text = text; }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00412}00412 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00413}00413             var splitted = \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_ac23265af0e588a192606a5dd30174a46}{RawErrorMessage}}.Split(\textcolor{charliteral}{' '}, \textcolor{charliteral}{':'});}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00414}00414             \textcolor{keywordflow}{if} (splitted.Length != 0)}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00415}00415             \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00416}00416                 \textcolor{keywordtype}{int} statusCode;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00417}00417                 \textcolor{keywordflow}{if} (\textcolor{keywordtype}{int}.TryParse(splitted[0], out statusCode))}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00418}00418                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00419}00419                     this.HasResponse = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00420}00420                     this.StatusCode = (\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}.Net.HttpStatusCode)statusCode;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00421}00421                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00422}00422             \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00423}00423         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00424}00424 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00425}\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a7327b63ab9e40cb5f5474e476eea3f89}{00425}}         \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a7327b63ab9e40cb5f5474e476eea3f89}{ToString}}()}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00426}00426         \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00427}00427             var text = this.\mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_a7770562bed8d6a543d2f83a17e96ea63}{Text}};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00428}00428             \textcolor{keywordflow}{if} (\textcolor{keywordtype}{string}.IsNullOrEmpty(text))}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00429}00429             \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00430}00430                 \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_ac23265af0e588a192606a5dd30174a46}{RawErrorMessage}};}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00431}00431             \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00432}00432             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00433}00433             \{}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00434}00434                 \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_w_w_w_error_exception_ac23265af0e588a192606a5dd30174a46}{RawErrorMessage}} + \textcolor{stringliteral}{"{} "{}} + text;}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00435}00435             \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00436}00436         \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00437}00437     \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00438}00438 \}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00439}00439 }
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00440}00440 \textcolor{preprocessor}{\#if UNITY\_2018\_3\_OR\_NEWER}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00441}00441 \textcolor{preprocessor}{\#pragma warning restore CS0618}}
+\DoxyCodeLine{\Hypertarget{_observable_w_w_w_8cs_source_l00442}00442 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

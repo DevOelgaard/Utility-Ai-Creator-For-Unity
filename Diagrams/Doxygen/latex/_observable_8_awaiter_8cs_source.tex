@@ -1,0 +1,117 @@
+\hypertarget{_observable_8_awaiter_8cs_source}{}\doxysection{Observable.\+Awaiter.\+cs}
+\label{_observable_8_awaiter_8cs_source}\index{Editor/UniRx/Scripts/Observable.Awaiter.cs@{Editor/UniRx/Scripts/Observable.Awaiter.cs}}
+\mbox{\hyperlink{_observable_8_awaiter_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00001}00001 \textcolor{preprocessor}{\#if (NET\_4\_6 || NET\_STANDARD\_2\_0)}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00003}00003 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Threading;}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00008}00008 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00010}00010 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx}{UniRx}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00011}00011 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00012}00012     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{partial class }Observable}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00013}00013     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00019}00019         \textcolor{keyword}{public} \textcolor{keyword}{static} AsyncSubject<TSource> GetAwaiter<TSource>(\textcolor{keyword}{this} IObservable<TSource> source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00020}00020         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00021}00021             \textcolor{keywordflow}{if} (source == \textcolor{keyword}{null}) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}source"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00022}00022             }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00023}00023             \textcolor{keywordflow}{return} RunAsync(source, CancellationToken.None);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00024}00024         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00031}00031         \textcolor{keyword}{public} \textcolor{keyword}{static} AsyncSubject<TSource> GetAwaiter<TSource>(\textcolor{keyword}{this} IConnectableObservable<TSource> source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00032}00032         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00033}00033             \textcolor{keywordflow}{if} (source == \textcolor{keyword}{null}) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}source"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00035}00035             \textcolor{keywordflow}{return} RunAsync(source, CancellationToken.None);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00036}00036         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00044}00044         \textcolor{keyword}{public} \textcolor{keyword}{static} AsyncSubject<TSource> GetAwaiter<TSource>(\textcolor{keyword}{this} IObservable<TSource> source, CancellationToken cancellationToken)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00045}00045         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00046}00046             \textcolor{keywordflow}{if} (source == \textcolor{keyword}{null}) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}source"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00048}00048             \textcolor{keywordflow}{return} RunAsync(source, cancellationToken);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00049}00049         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00057}00057         \textcolor{keyword}{public} \textcolor{keyword}{static} AsyncSubject<TSource> GetAwaiter<TSource>(\textcolor{keyword}{this} IConnectableObservable<TSource> source, CancellationToken cancellationToken)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00058}00058         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00059}00059             \textcolor{keywordflow}{if} (source == \textcolor{keyword}{null}) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}source"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00061}00061             \textcolor{keywordflow}{return} RunAsync(source, cancellationToken);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00062}00062         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00064}00064         \textcolor{keyword}{static} AsyncSubject<TSource> RunAsync<TSource>(IObservable<TSource> source, CancellationToken cancellationToken)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00065}00065         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00066}00066             var s = \textcolor{keyword}{new} AsyncSubject<TSource>();}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00068}00068             \textcolor{keywordflow}{if} (cancellationToken.IsCancellationRequested)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00069}00069             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00070}00070                 \textcolor{keywordflow}{return} Cancel(s, cancellationToken);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00071}00071             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00073}00073             var d = source.Subscribe(s);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00075}00075             \textcolor{keywordflow}{if} (cancellationToken.CanBeCanceled)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00076}00076             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00077}00077                 RegisterCancelation(s, d, cancellationToken);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00078}00078             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00080}00080             \textcolor{keywordflow}{return} s;}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00081}00081         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00083}00083         \textcolor{keyword}{static} AsyncSubject<TSource> RunAsync<TSource>(IConnectableObservable<TSource> source, CancellationToken cancellationToken)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00084}00084         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00085}00085             var s = \textcolor{keyword}{new} AsyncSubject<TSource>();}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00087}00087             \textcolor{keywordflow}{if} (cancellationToken.IsCancellationRequested)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00088}00088             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00089}00089                 \textcolor{keywordflow}{return} Cancel(s, cancellationToken);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00090}00090             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00091}00091 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00092}00092             var d = source.Subscribe(s);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00093}00093             var c = source.Connect();}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00095}00095             \textcolor{keywordflow}{if} (cancellationToken.CanBeCanceled)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00096}00096             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00097}00097                 RegisterCancelation(s, StableCompositeDisposable.Create(d, c), cancellationToken);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00098}00098             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00100}00100             \textcolor{keywordflow}{return} s;}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00101}00101         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00103}00103         \textcolor{keyword}{static} AsyncSubject<T> Cancel<T>(AsyncSubject<T> subject, CancellationToken cancellationToken)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00104}00104         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00105}00105             subject.OnError(\textcolor{keyword}{new} OperationCanceledException(cancellationToken));}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00106}00106             \textcolor{keywordflow}{return} subject;}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00107}00107         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00109}00109         \textcolor{keyword}{static} \textcolor{keywordtype}{void} RegisterCancelation<T>(AsyncSubject<T> subject, IDisposable subscription, CancellationToken token)}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00110}00110         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00111}00111             \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00112}00112             \textcolor{comment}{// Separate method used to avoid heap allocation of closure when no cancellation is needed,}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00113}00113             \textcolor{comment}{// e.g. when CancellationToken.None is provided to the RunAsync overloads.}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00114}00114             \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00116}00116             var ctr = token.Register(() =>}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00117}00117             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00118}00118                 subscription.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00119}00119                 Cancel(subject, token);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00120}00120             \});}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00122}00122             \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00123}00123             \textcolor{comment}{// No null-\/check for ctr is needed:}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00124}00124             \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00125}00125             \textcolor{comment}{// -\/ CancellationTokenRegistration is a struct}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00126}00126             \textcolor{comment}{// -\/ Registration will succeed 99\% of the time, no warranting an attempt to avoid spurious Subscribe calls}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00127}00127             \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00128}00128             subject.Subscribe(Stubs<T>.Ignore, \_ => ctr.Dispose(), ctr.Dispose);}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00129}00129         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00130}00130     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00131}00131 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00132}00132 }
+\DoxyCodeLine{\Hypertarget{_observable_8_awaiter_8cs_source_l00133}00133 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

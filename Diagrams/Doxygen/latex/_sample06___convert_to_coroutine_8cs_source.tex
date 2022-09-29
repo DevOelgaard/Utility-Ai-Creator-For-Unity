@@ -1,0 +1,68 @@
+\hypertarget{_sample06___convert_to_coroutine_8cs_source}{}\doxysection{Sample06\+\_\+\+Convert\+To\+Coroutine.\+cs}
+\label{_sample06___convert_to_coroutine_8cs_source}\index{Editor/UniRx/Examples/Sample06\_ConvertToCoroutine.cs@{Editor/UniRx/Examples/Sample06\_ConvertToCoroutine.cs}}
+\mbox{\hyperlink{_sample06___convert_to_coroutine_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections;}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00003}00003 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00005}00005 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_examples}{UniRx.Examples}}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00006}00006 \{}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00007}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample06___convert_to_coroutine}{00007}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample06___convert_to_coroutine}{Sample06\_ConvertToCoroutine}} : MonoBehaviour}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00009}00009         \textcolor{comment}{// convert IObservable to Coroutine}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00010}00010         \textcolor{keywordtype}{void} Start()}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00011}00011         \{}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00012}00012             StartCoroutine(ComplexCoroutineTest());}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00013}00013         \}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00015}00015         IEnumerator ComplexCoroutineTest()}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00016}00016         \{}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00017}00017             yield \textcolor{keywordflow}{return} \textcolor{keyword}{new} WaitForSeconds(1);}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00019}00019             var v = \textcolor{keywordflow}{default}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00020}00020             yield \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}}.\mbox{\hyperlink{class_uni_rx_1_1_observable_aed7ec517b99bc92b57b3cc9f3132defb}{Range}}(1, 10).StartAsCoroutine(x => v = x);}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00022}00022             \mbox{\hyperlink{_ai_view_model_8cs_a828eaed3a7fec21688af492b377d63ed}{Debug}}.Log(v); \textcolor{comment}{// 10(callback is last value)}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00023}00023             yield \textcolor{keywordflow}{return} \textcolor{keyword}{new} WaitForSeconds(3);}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00025}00025             yield \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}}.\mbox{\hyperlink{class_uni_rx_1_1_observable_ab48d35b844f492273a7ceb207238f626}{Return}}(100).StartAsCoroutine(x => v = x);}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00027}00027             \mbox{\hyperlink{_ai_view_model_8cs_a828eaed3a7fec21688af492b377d63ed}{Debug}}.Log(v); \textcolor{comment}{// 100}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00028}00028         \}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00030}00030         \textcolor{comment}{// Note:ToAwaitableEnumerator/StartAsCoroutine/LazyTask are obsolete way on Unity 5.3}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00031}00031         \textcolor{comment}{// You can use ToYieldInstruction.}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00033}00033 \textcolor{preprocessor}{\#if !(UNITY\_4\_0 || UNITY\_4\_1 || UNITY\_4\_2 || UNITY\_4\_3 || UNITY\_4\_4 || UNITY\_4\_5 || UNITY\_4\_6 || UNITY\_5\_0 || UNITY\_5\_1 || UNITY\_5\_2)}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00034}00034 \textcolor{preprocessor}{\#if UNITY\_2018\_3\_OR\_NEWER}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00035}00035 \textcolor{preprocessor}{\#pragma warning disable CS0618}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00036}00036 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00038}00038         IEnumerator TestNewCustomYieldInstruction()}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00039}00039         \{}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00040}00040             \textcolor{comment}{// wait Rx Observable.}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00041}00041             yield \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}}.\mbox{\hyperlink{class_uni_rx_1_1_observable_abfa99186ab768c890d7f154fea17a372}{Timer}}(TimeSpan.FromSeconds(1)).ToYieldInstruction();}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00043}00043             \textcolor{comment}{// you can change the scheduler(this is ignore Time.scale)}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00044}00044             yield \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}}.\mbox{\hyperlink{class_uni_rx_1_1_observable_abfa99186ab768c890d7f154fea17a372}{Timer}}(TimeSpan.FromSeconds(1), Scheduler.MainThreadIgnoreTimeScale).ToYieldInstruction();}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00046}00046             \textcolor{comment}{// get return value from ObservableYieldInstruction}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00047}00047             var o = ObservableWWW.Get(\textcolor{stringliteral}{"{}http://unity3d.com/"{}}).ToYieldInstruction(throwOnError: \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00048}00048             yield \textcolor{keywordflow}{return} o;}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00050}00050             \textcolor{keywordflow}{if} (o.HasError) \{ \mbox{\hyperlink{_ai_view_model_8cs_a828eaed3a7fec21688af492b377d63ed}{Debug}}.Log(o.Error.ToString()); \}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00051}00051             \textcolor{keywordflow}{if} (o.HasResult) \{ \mbox{\hyperlink{_ai_view_model_8cs_a828eaed3a7fec21688af492b377d63ed}{Debug}}.Log(o.Result); \}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00053}00053             \textcolor{comment}{// other sample(wait until transform.position.y >= 100) }}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00054}00054             yield \textcolor{keywordflow}{return} this.ObserveEveryValueChanged(x => x.transform).FirstOrDefault(x => x.position.y >= 100).ToYieldInstruction();}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00055}00055         \}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00056}00056 \textcolor{preprocessor}{\#if UNITY\_2018\_3\_OR\_NEWER}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00057}00057 \textcolor{preprocessor}{\#pragma warning restore CS0618}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00058}00058 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00059}00059 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00061}00061     \}}
+\DoxyCodeLine{\Hypertarget{_sample06___convert_to_coroutine_8cs_source_l00062}00062 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,245 @@
+\hypertarget{_u_t___decision_score_evaluator_8cs_source}{}\doxysection{UT\+\_\+\+Decision\+Score\+Evaluator.\+cs}
+\label{_u_t___decision_score_evaluator_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Scorers/DecisionScoreEvaluator/UT\_DecisionScoreEvaluator.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Scorers/DecisionScoreEvaluator/UT\_DecisionScoreEvaluator.cs}}
+\mbox{\hyperlink{_u_t___decision_score_evaluator_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00001}00001 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00002}00002 \textcolor{keyword}{using }NUnit.Framework;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00003}00003 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_mocks}{Mocks}};}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00005}\mbox{\hyperlink{namespace_unit_tests_1_1_scorers}{00005}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_unit_tests_1_1_scorers_1_1_decision_score_evaluators}{UnitTests.Scorers.DecisionScoreEvaluators}}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00006}00006 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00007}00007     [TestFixture]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00008}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator}{00008}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator}{UtDecisionScoreEvaluator}}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00009}00009     \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00010}00010         \textcolor{keyword}{private} \mbox{\hyperlink{class_decision_score_evaluator}{DecisionScoreEvaluator}} uut;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00011}00011         \textcolor{keyword}{private} List<Decision> mockDecisions;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00012}00012         \textcolor{keyword}{private} List<Bucket> mockBuckets;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00013}00013         \textcolor{keyword}{private} \mbox{\hyperlink{class_mocks_1_1_mock___utility_container_selector}{Mock\_UtilityContainerSelector}} mockDecisionSelector;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00014}00014         \textcolor{keyword}{private} \mbox{\hyperlink{class_mocks_1_1_mock___utility_container_selector}{Mock\_UtilityContainerSelector}} mockBucketSelector;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00015}00015         \textcolor{keyword}{private} \mbox{\hyperlink{class_mocks_1_1_mock___uai}{Mock\_Uai}} mockUai;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00017}00017         [\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_abc42b73fefda4c6578f0db3446b35756}{SetUp}}]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00018}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_abc42b73fefda4c6578f0db3446b35756}{00018}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_abc42b73fefda4c6578f0db3446b35756}{SetUp}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00019}00019         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00020}00020 \textcolor{preprocessor}{            \#region Init Mock Decisions}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00022}00022             var d1 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00023}00023             var d2 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(5);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00024}00024             var d3 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(-\/5);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00025}00025             var d4 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(9.9f);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00026}00026             var d5 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(10.0f);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00027}00027             var d6 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(9.8f);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00029}00029             mockDecisions = \textcolor{keyword}{new} List<Decision>}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00030}00030             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00031}00031                 d1,}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00032}00032                 d2,}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00033}00033                 d3,}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00034}00034                 d4,}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00035}00035                 d5,}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00036}00036                 d6}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00037}00037             \};}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00038}00038             \textcolor{keywordflow}{foreach} (var decision \textcolor{keywordflow}{in} mockDecisions)}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00039}00039             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00040}00040                 decision.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00041}00041             \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00043}00043 \textcolor{preprocessor}{            \#endregion}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00045}00045 \textcolor{preprocessor}{            \#region Init Mock Buckets}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00047}00047             var b1 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00048}00048             var b2 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}(5);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00049}00049             var b3 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}(-\/5);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00050}00050             var b4 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}(9.9f);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00051}00051             var b5 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}(10.0f);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00052}00052             var b6 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}(9.8f);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00054}00054             mockBuckets = \textcolor{keyword}{new} List<Bucket>}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00055}00055             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00056}00056                 b1,}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00057}00057                 b2,}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00058}00058                 b3,}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00059}00059                 b4,}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00060}00060                 b5,}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00061}00061                 b6}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00062}00062             \};}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00064}00064             \textcolor{keywordflow}{foreach} (var bucket \textcolor{keywordflow}{in} mockBuckets)}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00065}00065             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00066}00066                 bucket.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00067}00067             \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00068}00068             \textcolor{keywordflow}{for} (var i = 0; i < mockBuckets.Count; i++)}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00069}00069             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00070}00070                 mockBuckets[i].Decisions.Add(mockDecisions[i]);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00071}00071             \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00073}00073 \textcolor{preprocessor}{            \#endregion}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00075}00075             mockDecisionSelector = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___utility_container_selector}{Mock\_UtilityContainerSelector}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00076}00076             mockBucketSelector = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___utility_container_selector}{Mock\_UtilityContainerSelector}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00078}00078             mockUai = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___uai}{Mock\_Uai}}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00079}00079             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00080}00080                 CurrentBucketSelector = mockBucketSelector,}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00081}00081                 CurrentDecisionSelector = mockDecisionSelector}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00082}00082             \};}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00084}00084             uut = \textcolor{keyword}{new} \mbox{\hyperlink{class_decision_score_evaluator}{DecisionScoreEvaluator}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00085}00085         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00087}00087         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00088}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_af61ee75e3185eb227148a1c5d0abac55}{00088}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_af61ee75e3185eb227148a1c5d0abac55}{GetName\_Default\_ReturnsCorrectName}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00089}00089         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00090}00090             Assert.AreEqual(Consts.Name\_DefaultDSE, uut.\mbox{\hyperlink{class_decision_score_evaluator_a7bef3a37ff3062473b7bf0d97ff295ef}{GetName}}());}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00091}00091         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00093}00093         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00094}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_a4b6c88bac959dec0271f139a1fb573ee}{00094}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_a4b6c88bac959dec0271f139a1fb573ee}{GetDescription\_Default\_ReturnsCorrectDescription}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00095}00095         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00096}00096             Assert.AreEqual(Consts.Description\_DefaultDSE, uut.\mbox{\hyperlink{class_decision_score_evaluator_aae2dcb4bded284476b890d59b31b17d4}{GetDescription}}());}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00097}00097         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00099}00099         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00100}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_ad5579abf5d3bc4377edd179b0201e1e2}{00100}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_ad5579abf5d3bc4377edd179b0201e1e2}{NextActions\_Decisions\_ReturnsCorrectCollection}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00101}00101         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00102}00102             var highest = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(11);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00103}00103             mockDecisions.Add(highest);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00105}00105             var someLow = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(2.5f);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00106}00106             mockDecisions.Add(someLow);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00108}00108             mockDecisionSelector.BestDecision = highest;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00111}00111             var result = uut.\mbox{\hyperlink{class_decision_score_evaluator_a1ba5801305bc129236fa21ddf697a0e2}{NextActions}}(mockDecisions, mockUai);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00113}00113             Assert.AreEqual(highest.AgentActions.Values, result);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00114}00114         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00116}00116         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00117}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_aaf56c31de611d2979ff1ac8440185504}{00117}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_aaf56c31de611d2979ff1ac8440185504}{NextActions\_DecisionsNoElements\_ReturnsZeroActions}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00118}00118         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00119}00119             mockDecisions = \textcolor{keyword}{new} List<Decision>();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00120}00120 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00121}00121             var result = uut.\mbox{\hyperlink{class_decision_score_evaluator_a1ba5801305bc129236fa21ddf697a0e2}{NextActions}}(mockDecisions, mockUai);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00122}00122 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00123}00123             Assert.AreEqual(0, result.Count);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00124}00124         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00126}00126         [TestCase(0)]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00127}00127         [TestCase(-\/0.0000001f)]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00128}00128         [TestCase(-\/1)]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00129}00129         [TestCase(-\/9999999)]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00130}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_a7a070d043d478679c5b89d86608cb760}{00130}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_a7a070d043d478679c5b89d86608cb760}{NextActions\_BestDecisionScoreZeroOrLower\_ReturnsZeroActions}}(\textcolor{keywordtype}{float} returnValue)}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00131}00131         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00132}00132             var failDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(returnValue);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00133}00133             mockDecisionSelector.BestDecision = failDecision;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00134}00134 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00135}00135             var result = uut.\mbox{\hyperlink{class_decision_score_evaluator_a1ba5801305bc129236fa21ddf697a0e2}{NextActions}}(mockDecisions, mockUai);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00137}00137             Assert.AreEqual(0, result.Count);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00138}00138         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00139}00139 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00140}00140         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00141}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_ab421b5528b4a90864679e66bfde69d21}{00141}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_ab421b5528b4a90864679e66bfde69d21}{NextActions\_BucketsNoElements\_ReturnsZeroActions}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00142}00142         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00143}00143             mockBuckets = \textcolor{keyword}{new} List<Bucket>();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00144}00144            }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00145}00145             var result = uut.\mbox{\hyperlink{class_decision_score_evaluator_a1ba5801305bc129236fa21ddf697a0e2}{NextActions}}(mockBuckets, mockUai);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00146}00146 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00147}00147             Assert.AreEqual(0, result.Count);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00148}00148         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00149}00149 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00150}00150         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00151}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_a2a4f0d21c28198c09c0662979cdb085a}{00151}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_a2a4f0d21c28198c09c0662979cdb085a}{NextActions\_BucketsOneElement\_ReturnsCorrectCollection}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00152}00152         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00153}00153             var highest = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}(15.5f);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00154}00154             highest.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00155}00155             var highDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(222f);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00156}00156             highDecision.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00157}00157             var resultAction = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___agent_action}{Mock\_AgentAction}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00158}00158             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00159}00159                 Name = \textcolor{stringliteral}{"{}Result"{}}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00160}00160             \};}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00161}00161             resultAction.\mbox{\hyperlink{class_ai_object_model_a8caafa8e6a6366e43da6b6d5403d8161}{Initialize}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00162}00162             highDecision.AgentActions.Add(resultAction);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00163}00163             highest.Decisions.Add(highDecision);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00164}00164             \textcolor{keywordflow}{foreach} (var d \textcolor{keywordflow}{in} mockDecisions)}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00165}00165             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00166}00166                 highest.Decisions.Add(d);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00167}00167             \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00168}00168             mockBuckets = \textcolor{keyword}{new} List<Bucket>}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00169}00169             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00170}00170                 highest}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00171}00171             \};}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00172}00172 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00173}00173             var result = uut.\mbox{\hyperlink{class_decision_score_evaluator_a1ba5801305bc129236fa21ddf697a0e2}{NextActions}}(mockBuckets, mockUai);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00174}00174 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00175}00175             Assert.AreEqual(highDecision.AgentActions.Values, result);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00176}00176         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00177}00177         }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00178}00178         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00179}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_ae1f252eb97d139b349bee646f195e13e}{00179}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_ae1f252eb97d139b349bee646f195e13e}{NextActions\_BucketsCorrectValues\_ReturnsCorrectCollection}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00180}00180         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00181}00181             var highestBucket = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}(15.5f);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00182}00182             highestBucket.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00183}00183             var highDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(222f);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00184}00184             highDecision.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00185}00185             highestBucket.Decisions.Add(highDecision);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00186}00186             \textcolor{keywordflow}{foreach} (var d \textcolor{keywordflow}{in} mockDecisions)}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00187}00187             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00188}00188                 highestBucket.Decisions.Add(d);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00189}00189             \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00190}00190 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00191}00191             var resultAction = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___agent_action}{Mock\_AgentAction}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00192}00192             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00193}00193                 Name = \textcolor{stringliteral}{"{}Result"{}}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00194}00194             \};}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00195}00195             resultAction.\mbox{\hyperlink{class_ai_object_model_a8caafa8e6a6366e43da6b6d5403d8161}{Initialize}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00196}00196             highDecision.AgentActions.Add(resultAction);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00197}00197         }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00198}00198             mockBuckets.Add(highestBucket);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00199}00199  }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00200}00200             var result = uut.\mbox{\hyperlink{class_decision_score_evaluator_a1ba5801305bc129236fa21ddf697a0e2}{NextActions}}(mockBuckets, mockUai);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00201}00201 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00202}00202             Assert.AreEqual(highDecision.AgentActions.Values, result);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00203}00203         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00204}00204 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00205}00205         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00206}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_abfa50a9d4570c04faeac8a9b49789b56}{00206}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_decision_score_evaluators_1_1_ut_decision_score_evaluator_abfa50a9d4570c04faeac8a9b49789b56}{NextActions\_HighestScoredBucketHasNoValidDecisions\_ReturnsActionsFromSecondBucket}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00207}00207         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00208}00208             var highValue = 15.5f;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00209}00209             var lowValue = 0.1f;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00210}00210             var invalidValue = 0f;}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00211}00211 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00212}00212             mockBuckets = \textcolor{keyword}{new} List<Bucket>();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00213}00213             var highBucket = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}(highValue);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00214}00214             highBucket.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00215}00215             var invalidDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(invalidValue);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00216}00216             invalidDecision.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00217}00217             highBucket.Decisions.Add(invalidDecision);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00218}00218             mockBuckets.Add(highBucket);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00220}00220             var lowBucket = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}(lowValue);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00221}00221             lowBucket.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00222}00222             var validDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}(highValue);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00223}00223             validDecision.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00224}00224             lowBucket.Decisions.Add(validDecision);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00225}00225             mockBuckets.Add(lowBucket);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00226}00226             }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00227}00227             var resultAction = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___agent_action}{Mock\_AgentAction}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00228}00228             \{}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00229}00229                 Name = \textcolor{stringliteral}{"{}Result"{}}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00230}00230             \};}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00231}00231             resultAction.\mbox{\hyperlink{class_ai_object_model_a8caafa8e6a6366e43da6b6d5403d8161}{Initialize}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00232}00232             validDecision.AgentActions.Add(resultAction);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00233}00233 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00234}00234             var result = uut.\mbox{\hyperlink{class_decision_score_evaluator_a1ba5801305bc129236fa21ddf697a0e2}{NextActions}}(mockBuckets, mockUai);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00235}00235 }
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00236}00236             Assert.AreEqual(validDecision.AgentActions.Values, result);}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00237}00237         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00238}00238     \}}
+\DoxyCodeLine{\Hypertarget{_u_t___decision_score_evaluator_8cs_source_l00239}00239 \}}
+
+\end{DoxyCode}

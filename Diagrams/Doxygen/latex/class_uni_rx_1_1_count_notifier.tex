@@ -1,0 +1,128 @@
+\hypertarget{class_uni_rx_1_1_count_notifier}{}\doxysection{Uni\+Rx.\+Count\+Notifier Class Reference}
+\label{class_uni_rx_1_1_count_notifier}\index{UniRx.CountNotifier@{UniRx.CountNotifier}}
+
+
+Notify event of count flag.  
+
+
+Inheritance diagram for Uni\+Rx.\+Count\+Notifier\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_uni_rx_1_1_count_notifier}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_count_notifier_abdca1659a9dffa92260442f2666572ca}{Count\+Notifier}} (int max=int.\+Max\+Value)
+\begin{DoxyCompactList}\small\item\em Setup max count of signal. \end{DoxyCompactList}\item 
+IDisposable \mbox{\hyperlink{class_uni_rx_1_1_count_notifier_a9c80032fce143a02b4f9cba58a420b3d}{Increment}} (int increment\+Count=1)
+\begin{DoxyCompactList}\small\item\em Increment count and notify status. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_count_notifier_a504ee141128916da6590f25b0f80ed4d}{Decrement}} (int decrement\+Count=1)
+\begin{DoxyCompactList}\small\item\em Decrement count and notify status. \end{DoxyCompactList}\item 
+IDisposable \mbox{\hyperlink{class_uni_rx_1_1_count_notifier_ab617b6574b81d50649a929d71a00fb30}{Subscribe}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ \mbox{\hyperlink{namespace_uni_rx_a7690e4daf7332d765b3418f2e0df9bf5}{Count\+Changed\+Status}} $>$ observer)
+\begin{DoxyCompactList}\small\item\em Subscribe observer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_uni_rx_1_1_count_notifier_a3c3d4fdd0986bd1df171d869c87fe8d7}{Max}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+int \mbox{\hyperlink{class_uni_rx_1_1_count_notifier_a7437b4f380ab245fecca4499516c791a}{Count}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Notify event of count flag. 
+
+Definition at line \mbox{\hyperlink{_count_notifier_8cs_source_l00023}{23}} of file \mbox{\hyperlink{_count_notifier_8cs_source}{Count\+Notifier.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_count_notifier_abdca1659a9dffa92260442f2666572ca}\label{class_uni_rx_1_1_count_notifier_abdca1659a9dffa92260442f2666572ca}} 
+\index{UniRx.CountNotifier@{UniRx.CountNotifier}!CountNotifier@{CountNotifier}}
+\index{CountNotifier@{CountNotifier}!UniRx.CountNotifier@{UniRx.CountNotifier}}
+\doxysubsubsection{\texorpdfstring{CountNotifier()}{CountNotifier()}}
+{\footnotesize\ttfamily Uni\+Rx.\+Count\+Notifier.\+Count\+Notifier (\begin{DoxyParamCaption}\item[{int}]{max = {\ttfamily int.MaxValue} }\end{DoxyParamCaption})}
+
+
+
+Setup max count of signal. 
+
+
+
+Definition at line \mbox{\hyperlink{_count_notifier_8cs_source_l00035}{35}} of file \mbox{\hyperlink{_count_notifier_8cs_source}{Count\+Notifier.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_count_notifier_a504ee141128916da6590f25b0f80ed4d}\label{class_uni_rx_1_1_count_notifier_a504ee141128916da6590f25b0f80ed4d}} 
+\index{UniRx.CountNotifier@{UniRx.CountNotifier}!Decrement@{Decrement}}
+\index{Decrement@{Decrement}!UniRx.CountNotifier@{UniRx.CountNotifier}}
+\doxysubsubsection{\texorpdfstring{Decrement()}{Decrement()}}
+{\footnotesize\ttfamily void Uni\+Rx.\+Count\+Notifier.\+Decrement (\begin{DoxyParamCaption}\item[{int}]{decrement\+Count = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Decrement count and notify status. 
+
+
+
+Definition at line \mbox{\hyperlink{_count_notifier_8cs_source_l00071}{71}} of file \mbox{\hyperlink{_count_notifier_8cs_source}{Count\+Notifier.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_count_notifier_a9c80032fce143a02b4f9cba58a420b3d}\label{class_uni_rx_1_1_count_notifier_a9c80032fce143a02b4f9cba58a420b3d}} 
+\index{UniRx.CountNotifier@{UniRx.CountNotifier}!Increment@{Increment}}
+\index{Increment@{Increment}!UniRx.CountNotifier@{UniRx.CountNotifier}}
+\doxysubsubsection{\texorpdfstring{Increment()}{Increment()}}
+{\footnotesize\ttfamily IDisposable Uni\+Rx.\+Count\+Notifier.\+Increment (\begin{DoxyParamCaption}\item[{int}]{increment\+Count = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Increment count and notify status. 
+
+
+
+Definition at line \mbox{\hyperlink{_count_notifier_8cs_source_l00048}{48}} of file \mbox{\hyperlink{_count_notifier_8cs_source}{Count\+Notifier.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_count_notifier_ab617b6574b81d50649a929d71a00fb30}\label{class_uni_rx_1_1_count_notifier_ab617b6574b81d50649a929d71a00fb30}} 
+\index{UniRx.CountNotifier@{UniRx.CountNotifier}!Subscribe@{Subscribe}}
+\index{Subscribe@{Subscribe}!UniRx.CountNotifier@{UniRx.CountNotifier}}
+\doxysubsubsection{\texorpdfstring{Subscribe()}{Subscribe()}}
+{\footnotesize\ttfamily IDisposable Uni\+Rx.\+Count\+Notifier.\+Subscribe (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ \mbox{\hyperlink{namespace_uni_rx_a7690e4daf7332d765b3418f2e0df9bf5}{Count\+Changed\+Status}} $>$}]{observer }\end{DoxyParamCaption})}
+
+
+
+Subscribe observer. 
+
+
+
+Definition at line \mbox{\hyperlink{_count_notifier_8cs_source_l00092}{92}} of file \mbox{\hyperlink{_count_notifier_8cs_source}{Count\+Notifier.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_count_notifier_a7437b4f380ab245fecca4499516c791a}\label{class_uni_rx_1_1_count_notifier_a7437b4f380ab245fecca4499516c791a}} 
+\index{UniRx.CountNotifier@{UniRx.CountNotifier}!Count@{Count}}
+\index{Count@{Count}!UniRx.CountNotifier@{UniRx.CountNotifier}}
+\doxysubsubsection{\texorpdfstring{Count}{Count}}
+{\footnotesize\ttfamily int Uni\+Rx.\+Count\+Notifier.\+Count\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_count_notifier_8cs_source_l00030}{30}} of file \mbox{\hyperlink{_count_notifier_8cs_source}{Count\+Notifier.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_count_notifier_a3c3d4fdd0986bd1df171d869c87fe8d7}\label{class_uni_rx_1_1_count_notifier_a3c3d4fdd0986bd1df171d869c87fe8d7}} 
+\index{UniRx.CountNotifier@{UniRx.CountNotifier}!Max@{Max}}
+\index{Max@{Max}!UniRx.CountNotifier@{UniRx.CountNotifier}}
+\doxysubsubsection{\texorpdfstring{Max}{Max}}
+{\footnotesize\ttfamily int Uni\+Rx.\+Count\+Notifier.\+Max\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_count_notifier_8cs_source_l00029}{29}} of file \mbox{\hyperlink{_count_notifier_8cs_source}{Count\+Notifier.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Notifiers/\mbox{\hyperlink{_count_notifier_8cs}{Count\+Notifier.\+cs}}\end{DoxyCompactItemize}

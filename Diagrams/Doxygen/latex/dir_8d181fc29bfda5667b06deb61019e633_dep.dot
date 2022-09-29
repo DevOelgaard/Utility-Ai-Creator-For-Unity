@@ -1,0 +1,11 @@
+digraph "Editor/UI/Inspector"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_f7d6d090f0bcfa8a66d7f61ab6a0ceb7 {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", style="filled,dashed,", label="UI", fontname="Helvetica", fontsize="10", URL="dir_f7d6d090f0bcfa8a66d7f61ab6a0ceb7.html"]
+  dir_8d181fc29bfda5667b06deb61019e633 [shape=box, label="Inspector", style="filled,bold,", fillcolor="#edf0f7", color="grey25", URL="dir_8d181fc29bfda5667b06deb61019e633.html"];
+  }
+}

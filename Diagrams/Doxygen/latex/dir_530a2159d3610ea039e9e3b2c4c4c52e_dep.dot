@@ -1,0 +1,17 @@
+digraph "Tests/Editor/UAS-UnitTests-Editor/UnitTests/Scorers"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_329039ea91725a406148b4cddeb407f9 {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", style="filled,dashed,", label="UnitTests", fontname="Helvetica", fontsize="10", URL="dir_329039ea91725a406148b4cddeb407f9.html"]
+  subgraph clusterdir_530a2159d3610ea039e9e3b2c4c4c52e {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", style="filled,bold,", label="", fontname="Helvetica", fontsize="10", URL="dir_530a2159d3610ea039e9e3b2c4c4c52e.html"]
+    dir_530a2159d3610ea039e9e3b2c4c4c52e [shape=plaintext, label="Scorers"];
+  dir_7b5cda801a0fd802d3c8fff39ba6dbc3 [shape=box, label="DecisionScoreEvaluator", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_7b5cda801a0fd802d3c8fff39ba6dbc3.html"];
+  dir_b60bd1023a304aedbd0903d21526814b [shape=box, label="UtilityContainerSelector", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_b60bd1023a304aedbd0903d21526814b.html"];
+  dir_2481a3d140d4e96a667d8bdc837d0b5e [shape=box, label="UtilityScorer", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_2481a3d140d4e96a667d8bdc837d0b5e.html"];
+  }
+  }
+}

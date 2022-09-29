@@ -1,0 +1,138 @@
+\hypertarget{class_uni_rx_1_1_scheduled_notifier}{}\doxysection{Uni\+Rx.\+Scheduled\+Notifier\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_uni_rx_1_1_scheduled_notifier}\index{UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}}
+
+
+Notify value on setuped scheduler.  
+
+
+Inheritance diagram for Uni\+Rx.\+Scheduled\+Notifier\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_uni_rx_1_1_scheduled_notifier}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier_ac50c9729207e2bc130bd01304afee094}{Scheduled\+Notifier}} ()
+\begin{DoxyCompactList}\small\item\em Use scheduler is Scheduler.\+Default\+Schedulers.\+Constant\+Time\+Operations. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier_a6f3f703b2d8390c86f965c1a3ea65906}{Scheduled\+Notifier}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} scheduler)
+\begin{DoxyCompactList}\small\item\em Use scheduler is argument\textquotesingle{}s scheduler. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier_ab4d712b7a1f782c245dbc1fb40b96553}{Report}} (T value)
+\begin{DoxyCompactList}\small\item\em Push value to subscribers on setuped scheduler. \end{DoxyCompactList}\item 
+IDisposable \mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier_a8bd7d0ab7fb43c565280adf65b98a351}{Report}} (T value, Time\+Span due\+Time)
+\begin{DoxyCompactList}\small\item\em Push value to subscribers on setuped scheduler. \end{DoxyCompactList}\item 
+IDisposable \mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier_a481c5b779539e9130eb41d061d3f1987}{Report}} (T value, Date\+Time\+Offset due\+Time)
+\begin{DoxyCompactList}\small\item\em Push value to subscribers on setuped scheduler. \end{DoxyCompactList}\item 
+IDisposable \mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier_ab4093f27b83fd72bc3a7f04fd60261ca}{Subscribe}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$ observer)
+\begin{DoxyCompactList}\small\item\em Subscribe observer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Notify value on setuped scheduler. 
+
+Definition at line \mbox{\hyperlink{_scheduled_notifier_8cs_source_l00008}{8}} of file \mbox{\hyperlink{_scheduled_notifier_8cs_source}{Scheduled\+Notifier.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_scheduled_notifier_ac50c9729207e2bc130bd01304afee094}\label{class_uni_rx_1_1_scheduled_notifier_ac50c9729207e2bc130bd01304afee094}} 
+\index{UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}!ScheduledNotifier@{ScheduledNotifier}}
+\index{ScheduledNotifier@{ScheduledNotifier}!UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ScheduledNotifier()}{ScheduledNotifier()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier}{Uni\+Rx.\+Scheduled\+Notifier}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier}{Scheduled\+Notifier}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Use scheduler is Scheduler.\+Default\+Schedulers.\+Constant\+Time\+Operations. 
+
+
+
+Definition at line \mbox{\hyperlink{_scheduled_notifier_8cs_source_l00016}{16}} of file \mbox{\hyperlink{_scheduled_notifier_8cs_source}{Scheduled\+Notifier.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_scheduled_notifier_a6f3f703b2d8390c86f965c1a3ea65906}\label{class_uni_rx_1_1_scheduled_notifier_a6f3f703b2d8390c86f965c1a3ea65906}} 
+\index{UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}!ScheduledNotifier@{ScheduledNotifier}}
+\index{ScheduledNotifier@{ScheduledNotifier}!UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ScheduledNotifier()}{ScheduledNotifier()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier}{Uni\+Rx.\+Scheduled\+Notifier}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier}{Scheduled\+Notifier}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}}}]{scheduler }\end{DoxyParamCaption})}
+
+
+
+Use scheduler is argument\textquotesingle{}s scheduler. 
+
+
+
+Definition at line \mbox{\hyperlink{_scheduled_notifier_8cs_source_l00023}{23}} of file \mbox{\hyperlink{_scheduled_notifier_8cs_source}{Scheduled\+Notifier.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_scheduled_notifier_ab4d712b7a1f782c245dbc1fb40b96553}\label{class_uni_rx_1_1_scheduled_notifier_ab4d712b7a1f782c245dbc1fb40b96553}} 
+\index{UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}!Report@{Report}}
+\index{Report@{Report}!UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Report()}{Report()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier}{Uni\+Rx.\+Scheduled\+Notifier}}$<$ T $>$.Report (\begin{DoxyParamCaption}\item[{T}]{value }\end{DoxyParamCaption})}
+
+
+
+Push value to subscribers on setuped scheduler. 
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_progress_ab709d28eef59b2141fb8e166b303c020}{Uni\+Rx.\+IProgress$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_scheduled_notifier_8cs_source_l00036}{36}} of file \mbox{\hyperlink{_scheduled_notifier_8cs_source}{Scheduled\+Notifier.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_scheduled_notifier_a481c5b779539e9130eb41d061d3f1987}\label{class_uni_rx_1_1_scheduled_notifier_a481c5b779539e9130eb41d061d3f1987}} 
+\index{UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}!Report@{Report}}
+\index{Report@{Report}!UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Report()}{Report()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily IDisposable \mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier}{Uni\+Rx.\+Scheduled\+Notifier}}$<$ T $>$.Report (\begin{DoxyParamCaption}\item[{T}]{value,  }\item[{Date\+Time\+Offset}]{due\+Time }\end{DoxyParamCaption})}
+
+
+
+Push value to subscribers on setuped scheduler. 
+
+
+
+Definition at line \mbox{\hyperlink{_scheduled_notifier_8cs_source_l00053}{53}} of file \mbox{\hyperlink{_scheduled_notifier_8cs_source}{Scheduled\+Notifier.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_scheduled_notifier_a8bd7d0ab7fb43c565280adf65b98a351}\label{class_uni_rx_1_1_scheduled_notifier_a8bd7d0ab7fb43c565280adf65b98a351}} 
+\index{UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}!Report@{Report}}
+\index{Report@{Report}!UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Report()}{Report()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily IDisposable \mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier}{Uni\+Rx.\+Scheduled\+Notifier}}$<$ T $>$.Report (\begin{DoxyParamCaption}\item[{T}]{value,  }\item[{Time\+Span}]{due\+Time }\end{DoxyParamCaption})}
+
+
+
+Push value to subscribers on setuped scheduler. 
+
+
+
+Definition at line \mbox{\hyperlink{_scheduled_notifier_8cs_source_l00044}{44}} of file \mbox{\hyperlink{_scheduled_notifier_8cs_source}{Scheduled\+Notifier.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_scheduled_notifier_ab4093f27b83fd72bc3a7f04fd60261ca}\label{class_uni_rx_1_1_scheduled_notifier_ab4093f27b83fd72bc3a7f04fd60261ca}} 
+\index{UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}!Subscribe@{Subscribe}}
+\index{Subscribe@{Subscribe}!UniRx.ScheduledNotifier$<$ T $>$@{UniRx.ScheduledNotifier$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Subscribe()}{Subscribe()}}
+{\footnotesize\ttfamily IDisposable \mbox{\hyperlink{class_uni_rx_1_1_scheduled_notifier}{Uni\+Rx.\+Scheduled\+Notifier}}$<$ T $>$.Subscribe (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$}]{observer }\end{DoxyParamCaption})}
+
+
+
+Subscribe observer. 
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observable_a81a2566f451cf1ddc8de265d019d1b88}{Uni\+Rx.\+IObservable$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_scheduled_notifier_8cs_source_l00062}{62}} of file \mbox{\hyperlink{_scheduled_notifier_8cs_source}{Scheduled\+Notifier.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Notifiers/\mbox{\hyperlink{_scheduled_notifier_8cs}{Scheduled\+Notifier.\+cs}}\end{DoxyCompactItemize}

@@ -1,0 +1,130 @@
+\hypertarget{_timer_8cs_source}{}\doxysection{Timer.\+cs}
+\label{_timer_8cs_source}\index{Editor/UniRx/Scripts/Operators/Timer.cs@{Editor/UniRx/Scripts/Operators/Timer.cs}}
+\mbox{\hyperlink{_timer_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{UniRx.Operators}}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00005}00005     \textcolor{keyword}{internal} \textcolor{keyword}{class }TimerObservable : OperatorObservableBase<long>}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00006}00006     \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00007}00007         readonly DateTimeOffset? dueTimeA;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00008}00008         readonly TimeSpan? dueTimeB;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00009}00009         readonly TimeSpan? period;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00010}00010         readonly IScheduler scheduler;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00012}00012         \textcolor{keyword}{public} TimerObservable(DateTimeOffset dueTime, TimeSpan? period, IScheduler scheduler)}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00013}00013             : base(scheduler == Scheduler.CurrentThread)}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00014}00014         \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00015}00015             this.dueTimeA = dueTime;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00016}00016             this.period = period;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00017}00017             this.scheduler = scheduler;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00020}00020         \textcolor{keyword}{public} TimerObservable(TimeSpan dueTime, TimeSpan? period, IScheduler scheduler)}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00021}00021             : base(scheduler == Scheduler.CurrentThread)}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00022}00022         \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00023}00023             this.dueTimeB = dueTime;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00024}00024             this.period = period;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00025}00025             this.scheduler = scheduler;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00026}00026         \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00028}00028         \textcolor{keyword}{protected} \textcolor{keyword}{override} IDisposable \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observable_base_a6d57a5066f5fb2b0e928f7c0f893e5db}{SubscribeCore}}(IObserver<long> observer, IDisposable cancel)}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00029}00029         \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00030}00030             var timerObserver = \textcolor{keyword}{new} Timer(observer, cancel);}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00032}00032             var dueTime = (dueTimeA != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00033}00033                 ? dueTimeA.Value -\/ scheduler.Now}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00034}00034                 : dueTimeB.Value;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00036}00036             \textcolor{comment}{// one-\/shot}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00037}00037             if (period == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00038}00038             \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00039}00039                 \textcolor{keywordflow}{return} scheduler.Schedule(Scheduler.Normalize(dueTime), () =>}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00040}00040                 \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00041}00041                     timerObserver.OnNext();}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00042}00042                     timerObserver.OnCompleted();}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00043}00043                 \});}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00044}00044             \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00045}00045             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00046}00046             \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00047}00047                 var periodicScheduler = scheduler as ISchedulerPeriodic;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00048}00048                 \textcolor{keywordflow}{if} (periodicScheduler != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00049}00049                 \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00050}00050                     \textcolor{keywordflow}{if} (dueTime == period.Value)}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00051}00051                     \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00052}00052                         \textcolor{comment}{// same(Observable.Interval), run periodic}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00053}00053                         \textcolor{keywordflow}{return} periodicScheduler.SchedulePeriodic(Scheduler.Normalize(dueTime), timerObserver.OnNext);}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00054}00054                     \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00055}00055                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00056}00056                     \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00057}00057                         \textcolor{comment}{// Schedule Once + Scheudle Periodic}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00058}00058                         var disposable = \textcolor{keyword}{new} SerialDisposable();}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00060}00060                         disposable.Disposable = scheduler.Schedule(Scheduler.Normalize(dueTime), () =>}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00061}00061                         \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00062}00062                             timerObserver.OnNext(); \textcolor{comment}{// run first}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00064}00064                             var timeP = Scheduler.Normalize(period.Value);}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00065}00065                             disposable.Disposable = periodicScheduler.SchedulePeriodic(timeP, timerObserver.OnNext); \textcolor{comment}{// run periodic}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00066}00066                         \});}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00068}00068                         \textcolor{keywordflow}{return} disposable;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00069}00069                     \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00070}00070                 \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00071}00071                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00072}00072                 \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00073}00073                     var timeP = Scheduler.Normalize(period.Value);}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00075}00075                     \textcolor{keywordflow}{return} scheduler.Schedule(Scheduler.Normalize(dueTime), \textcolor{keyword}{self} =>}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00076}00076                     \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00077}00077                         timerObserver.OnNext();}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00078}00078                         self(timeP);}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00079}00079                     \});}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00080}00080                 \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00081}00081             \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00082}00082         \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00084}00084         \textcolor{keyword}{class }Timer : OperatorObserverBase<long, long>}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00085}00085         \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00086}00086             \textcolor{keywordtype}{long} index = 0;}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00088}00088             \textcolor{keyword}{public} Timer(IObserver<long> observer, IDisposable cancel)}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00089}00089                 : base(observer, cancel)}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00090}00090             \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00091}00091             \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00093}00093             \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a400001c0136d7539f7395398c51846c8}{OnNext}}()}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00094}00094             \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00095}00095                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00096}00096                 \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00097}00097                     base.observer.OnNext(index++);}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00098}00098                 \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00099}00099                 \textcolor{keywordflow}{catch}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00100}00100                 \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00101}00101                     \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}();}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00102}00102                     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00103}00103                 \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00104}00104             \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00106}00106             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a400001c0136d7539f7395398c51846c8}{OnNext}}(\textcolor{keywordtype}{long} value)}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00107}00107             \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00108}00108                 \textcolor{comment}{// no use.}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00109}00109             \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00111}00111             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83a44cdeb54c6f2aebad54611201c26d6f0}{OnError}}(Exception error)}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00112}00112             \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00113}00113                 \textcolor{keywordflow}{try} \{ observer.OnError(error); \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00114}00114                 \textcolor{keywordflow}{finally} \{ \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}(); \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00115}00115             \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00117}00117             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83ad3f2303a2d7ea4ac7945de6d166d9c73}{OnCompleted}}()}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00118}00118             \{}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00119}00119                 \textcolor{keywordflow}{try} \{ observer.OnCompleted(); \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00120}00120                 \textcolor{keywordflow}{finally} \{ \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}(); \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00121}00121             \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00122}00122         \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00123}00123     \}}
+\DoxyCodeLine{\Hypertarget{_timer_8cs_source_l00124}00124 \}}
+
+\end{DoxyCode}

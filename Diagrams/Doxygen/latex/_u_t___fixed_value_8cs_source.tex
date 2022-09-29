@@ -1,0 +1,33 @@
+\hypertarget{_u_t___fixed_value_8cs_source}{}\doxysection{UT\+\_\+\+Fixed\+Value.\+cs}
+\label{_u_t___fixed_value_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/Considerations/UT\_FixedValue.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/Considerations/UT\_FixedValue.cs}}
+\mbox{\hyperlink{_u_t___fixed_value_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00001}00001 \textcolor{keyword}{using }NUnit.Framework;}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_unit_tests_1_1_models_1_1_considerations}{UnitTests.Models.Considerations}}}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00005}00005     [TestFixture]}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00006}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___fixed_value}{00006}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___fixed_value}{UT\_FixedValue}}}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00007}00007     }
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00009}00009         \textcolor{keyword}{private} FixedValue uut;}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00010}00010         \textcolor{keyword}{private} \mbox{\hyperlink{class_ai_context}{AiContext}} mock\_AiContext;}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00012}00012         [\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___fixed_value_ae29d54c1d6ae7f0b077cf91cb3285b68}{SetUp}}]}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00013}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___fixed_value_ae29d54c1d6ae7f0b077cf91cb3285b68}{00013}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___fixed_value_ae29d54c1d6ae7f0b077cf91cb3285b68}{SetUp}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00014}00014         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00015}00015             mock\_AiContext = \textcolor{keyword}{new} \mbox{\hyperlink{class_ai_context}{AiContext}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00016}00016             uut = \textcolor{keyword}{new} FixedValue();}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00017}00017             uut.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00019}00019         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00020}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___fixed_value_a734b1995a1e157f228799d027c0b2f63}{00020}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___fixed_value_a734b1995a1e157f228799d027c0b2f63}{CalculateScore\_NoChange\_ReturnsOne}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00021}00021         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00022}00022             var result = uut.CalculateScore(mock\_AiContext);}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00023}00023             }
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00024}00024             Assert.AreEqual(1,result);}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00025}00025         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00026}00026     \}}
+\DoxyCodeLine{\Hypertarget{_u_t___fixed_value_8cs_source_l00027}00027 \}}
+
+\end{DoxyCode}

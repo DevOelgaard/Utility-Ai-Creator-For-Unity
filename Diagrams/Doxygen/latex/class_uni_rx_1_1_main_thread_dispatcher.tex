@@ -1,0 +1,345 @@
+\hypertarget{class_uni_rx_1_1_main_thread_dispatcher}{}\doxysection{Uni\+Rx.\+Main\+Thread\+Dispatcher Class Reference}
+\label{class_uni_rx_1_1_main_thread_dispatcher}\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+Inheritance diagram for Uni\+Rx.\+Main\+Thread\+Dispatcher\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_uni_rx_1_1_main_thread_dispatcher}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6}{Culling\+Mode}} \{ \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6ab9f5c797ebbf55adccdd8539a65a0241}{Disabled}}
+, \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6aad6e7652b1bdfb38783486c2c3d5e806}{Self}}
+, \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6ab1c94ca2fbc3e78fc30069c8d0f01680}{All}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_adea2fc0bb660c5e7c17558c96b39915e}{Post}} (Action$<$ object $>$ action, object state)
+\begin{DoxyCompactList}\small\item\em Dispatch Asyncrhonous action.\end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_aa5340fe9e32e23da08c2c81d9ee92ccb}{Send}} (Action$<$ object $>$ action, object state)
+\begin{DoxyCompactList}\small\item\em Dispatch Synchronous action if possible.\end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a6a829f1313291c45c25d2a7fb41f1b3b}{Unsafe\+Send}} (Action action)
+\begin{DoxyCompactList}\small\item\em Run Synchronous action.\end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_afe37d95c977680d7f8363a15efd02cb2}{Unsafe\+Send$<$ T $>$}} (Action$<$ T $>$ action, T state)
+\begin{DoxyCompactList}\small\item\em Run Synchronous action.\end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a640bf26ac3ccf27095b01fd4aa566bf4}{Send\+Start\+Coroutine}} (IEnumerator routine)
+\begin{DoxyCompactList}\small\item\em Thread\+Safe Start\+Coroutine.\end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_af67e9ec52efd8d33d6a01333566a3705}{Start\+Update\+Micro\+Coroutine}} (IEnumerator routine)
+\item 
+static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a6e351bbbbd24120002d0cac446e88283}{Start\+Fixed\+Update\+Micro\+Coroutine}} (IEnumerator routine)
+\item 
+static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a6d254451221401bb0d822ac96642961a}{Start\+End\+Of\+Frame\+Micro\+Coroutine}} (IEnumerator routine)
+\item 
+new static Coroutine \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a0d6388bc9eb6cb93ff3b9af42e864216}{Start\+Coroutine}} (IEnumerator routine)
+\item 
+static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_ae0f613db6cc57f2a4ff26a950fffcca0}{Register\+Unhandled\+Exception\+Callback}} (Action$<$ Exception $>$ exception\+Callback)
+\item 
+static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_afa90100b117a5b83cdf49b3f28397660}{Initialize}} ()
+\item 
+static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a870df0388d9df11fe7f50ef58ab6e20f}{Cull\+All\+Excess\+Dispatchers}} ()
+\item 
+static \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}} $>$ \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a2405b6a876ab698a0246251ca1cddc5c}{Update\+As\+Observable}} ()
+\item 
+static \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}} $>$ \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_acc9ae909505ad7df4a4fb2727170dbee}{Late\+Update\+As\+Observable}} ()
+\item 
+static \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ bool $>$ \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_aef4bbfdc42e185dd3311c2b23ddc76f4}{On\+Application\+Focus\+As\+Observable}} ()
+\item 
+static \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ bool $>$ \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a868ace83e12c70389f97616736327795}{On\+Application\+Pause\+As\+Observable}} ()
+\item 
+static \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}} $>$ \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a765503f16387160a34eb5a981ee6b77f}{On\+Application\+Quit\+As\+Observable}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6}{Culling\+Mode}} \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_aa2696ebfab45164422ed77b37b8fbd8c}{culling\+Mode}} = \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6aad6e7652b1bdfb38783486c2c3d5e806}{Culling\+Mode.\+Self}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static string \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a0e69882402607a7f3fe8017770d9c19c}{Instance\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+static bool \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a48f2a7cb05768335ab7e1bad1608f182}{Is\+Initialized}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+static bool \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_ad52eefa3c1575b3327fafe839061f21d}{Is\+In\+Main\+Thread}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00015}{15}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6}\label{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!CullingMode@{CullingMode}}
+\index{CullingMode@{CullingMode}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{CullingMode}{CullingMode}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6}{Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Culling\+Mode}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Disabled@{Disabled}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!Disabled@{Disabled}}}\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6ab9f5c797ebbf55adccdd8539a65a0241}\label{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6ab9f5c797ebbf55adccdd8539a65a0241}} 
+Disabled&Won\textquotesingle{}t remove any Main\+Thread\+Dispatchers. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Self@{Self}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!Self@{Self}}}\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6aad6e7652b1bdfb38783486c2c3d5e806}\label{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6aad6e7652b1bdfb38783486c2c3d5e806}} 
+Self&Checks if there is an existing \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher}{Main\+Thread\+Dispatcher}} on Awake(). If so, the new dispatcher removes itself. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{All@{All}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!All@{All}}}\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6ab1c94ca2fbc3e78fc30069c8d0f01680}\label{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6ab1c94ca2fbc3e78fc30069c8d0f01680}} 
+All&Search for excess Main\+Thread\+Dispatchers and removes them all on Awake(). \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00017}{17}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a870df0388d9df11fe7f50ef58ab6e20f}\label{class_uni_rx_1_1_main_thread_dispatcher_a870df0388d9df11fe7f50ef58ab6e20f}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!CullAllExcessDispatchers@{CullAllExcessDispatchers}}
+\index{CullAllExcessDispatchers@{CullAllExcessDispatchers}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{CullAllExcessDispatchers()}{CullAllExcessDispatchers()}}
+{\footnotesize\ttfamily static void Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Cull\+All\+Excess\+Dispatchers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00578}{578}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_afa90100b117a5b83cdf49b3f28397660}\label{class_uni_rx_1_1_main_thread_dispatcher_afa90100b117a5b83cdf49b3f28397660}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily static void Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00440}{440}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_acc9ae909505ad7df4a4fb2727170dbee}\label{class_uni_rx_1_1_main_thread_dispatcher_acc9ae909505ad7df4a4fb2727170dbee}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!LateUpdateAsObservable@{LateUpdateAsObservable}}
+\index{LateUpdateAsObservable@{LateUpdateAsObservable}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{LateUpdateAsObservable()}{LateUpdateAsObservable()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}} $>$ Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Late\+Update\+As\+Observable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00641}{641}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_aef4bbfdc42e185dd3311c2b23ddc76f4}\label{class_uni_rx_1_1_main_thread_dispatcher_aef4bbfdc42e185dd3311c2b23ddc76f4}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!OnApplicationFocusAsObservable@{OnApplicationFocusAsObservable}}
+\index{OnApplicationFocusAsObservable@{OnApplicationFocusAsObservable}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{OnApplicationFocusAsObservable()}{OnApplicationFocusAsObservable()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ bool $>$ Uni\+Rx.\+Main\+Thread\+Dispatcher.\+On\+Application\+Focus\+As\+Observable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00653}{653}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a868ace83e12c70389f97616736327795}\label{class_uni_rx_1_1_main_thread_dispatcher_a868ace83e12c70389f97616736327795}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!OnApplicationPauseAsObservable@{OnApplicationPauseAsObservable}}
+\index{OnApplicationPauseAsObservable@{OnApplicationPauseAsObservable}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{OnApplicationPauseAsObservable()}{OnApplicationPauseAsObservable()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ bool $>$ Uni\+Rx.\+Main\+Thread\+Dispatcher.\+On\+Application\+Pause\+As\+Observable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00665}{665}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a765503f16387160a34eb5a981ee6b77f}\label{class_uni_rx_1_1_main_thread_dispatcher_a765503f16387160a34eb5a981ee6b77f}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!OnApplicationQuitAsObservable@{OnApplicationQuitAsObservable}}
+\index{OnApplicationQuitAsObservable@{OnApplicationQuitAsObservable}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{OnApplicationQuitAsObservable()}{OnApplicationQuitAsObservable()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}} $>$ Uni\+Rx.\+Main\+Thread\+Dispatcher.\+On\+Application\+Quit\+As\+Observable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00678}{678}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_adea2fc0bb660c5e7c17558c96b39915e}\label{class_uni_rx_1_1_main_thread_dispatcher_adea2fc0bb660c5e7c17558c96b39915e}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!Post@{Post}}
+\index{Post@{Post}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{Post()}{Post()}}
+{\footnotesize\ttfamily static void Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Post (\begin{DoxyParamCaption}\item[{Action$<$ object $>$}]{action,  }\item[{object}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Dispatch Asyncrhonous action.
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00218}{218}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_ae0f613db6cc57f2a4ff26a950fffcca0}\label{class_uni_rx_1_1_main_thread_dispatcher_ae0f613db6cc57f2a4ff26a950fffcca0}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!RegisterUnhandledExceptionCallback@{RegisterUnhandledExceptionCallback}}
+\index{RegisterUnhandledExceptionCallback@{RegisterUnhandledExceptionCallback}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{RegisterUnhandledExceptionCallback()}{RegisterUnhandledExceptionCallback()}}
+{\footnotesize\ttfamily static void Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Register\+Unhandled\+Exception\+Callback (\begin{DoxyParamCaption}\item[{Action$<$ Exception $>$}]{exception\+Callback }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00387}{387}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_aa5340fe9e32e23da08c2c81d9ee92ccb}\label{class_uni_rx_1_1_main_thread_dispatcher_aa5340fe9e32e23da08c2c81d9ee92ccb}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!Send@{Send}}
+\index{Send@{Send}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{Send()}{Send()}}
+{\footnotesize\ttfamily static void Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Send (\begin{DoxyParamCaption}\item[{Action$<$ object $>$}]{action,  }\item[{object}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Dispatch Synchronous action if possible.
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00233}{233}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a640bf26ac3ccf27095b01fd4aa566bf4}\label{class_uni_rx_1_1_main_thread_dispatcher_a640bf26ac3ccf27095b01fd4aa566bf4}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!SendStartCoroutine@{SendStartCoroutine}}
+\index{SendStartCoroutine@{SendStartCoroutine}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{SendStartCoroutine()}{SendStartCoroutine()}}
+{\footnotesize\ttfamily static void Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Send\+Start\+Coroutine (\begin{DoxyParamCaption}\item[{IEnumerator}]{routine }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Thread\+Safe Start\+Coroutine.
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00303}{303}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a0d6388bc9eb6cb93ff3b9af42e864216}\label{class_uni_rx_1_1_main_thread_dispatcher_a0d6388bc9eb6cb93ff3b9af42e864216}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!StartCoroutine@{StartCoroutine}}
+\index{StartCoroutine@{StartCoroutine}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{StartCoroutine()}{StartCoroutine()}}
+{\footnotesize\ttfamily new static Coroutine Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Start\+Coroutine (\begin{DoxyParamCaption}\item[{IEnumerator}]{routine }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00370}{370}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a6d254451221401bb0d822ac96642961a}\label{class_uni_rx_1_1_main_thread_dispatcher_a6d254451221401bb0d822ac96642961a}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!StartEndOfFrameMicroCoroutine@{StartEndOfFrameMicroCoroutine}}
+\index{StartEndOfFrameMicroCoroutine@{StartEndOfFrameMicroCoroutine}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{StartEndOfFrameMicroCoroutine()}{StartEndOfFrameMicroCoroutine()}}
+{\footnotesize\ttfamily static void Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Start\+End\+Of\+Frame\+Micro\+Coroutine (\begin{DoxyParamCaption}\item[{IEnumerator}]{routine }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00357}{357}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a6e351bbbbd24120002d0cac446e88283}\label{class_uni_rx_1_1_main_thread_dispatcher_a6e351bbbbd24120002d0cac446e88283}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!StartFixedUpdateMicroCoroutine@{StartFixedUpdateMicroCoroutine}}
+\index{StartFixedUpdateMicroCoroutine@{StartFixedUpdateMicroCoroutine}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{StartFixedUpdateMicroCoroutine()}{StartFixedUpdateMicroCoroutine()}}
+{\footnotesize\ttfamily static void Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Start\+Fixed\+Update\+Micro\+Coroutine (\begin{DoxyParamCaption}\item[{IEnumerator}]{routine }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00344}{344}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_af67e9ec52efd8d33d6a01333566a3705}\label{class_uni_rx_1_1_main_thread_dispatcher_af67e9ec52efd8d33d6a01333566a3705}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!StartUpdateMicroCoroutine@{StartUpdateMicroCoroutine}}
+\index{StartUpdateMicroCoroutine@{StartUpdateMicroCoroutine}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{StartUpdateMicroCoroutine()}{StartUpdateMicroCoroutine()}}
+{\footnotesize\ttfamily static void Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Start\+Update\+Micro\+Coroutine (\begin{DoxyParamCaption}\item[{IEnumerator}]{routine }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00331}{331}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a6a829f1313291c45c25d2a7fb41f1b3b}\label{class_uni_rx_1_1_main_thread_dispatcher_a6a829f1313291c45c25d2a7fb41f1b3b}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!UnsafeSend@{UnsafeSend}}
+\index{UnsafeSend@{UnsafeSend}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{UnsafeSend()}{UnsafeSend()}}
+{\footnotesize\ttfamily static void Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Unsafe\+Send (\begin{DoxyParamCaption}\item[{Action}]{action }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Run Synchronous action.
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00261}{261}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_afe37d95c977680d7f8363a15efd02cb2}\label{class_uni_rx_1_1_main_thread_dispatcher_afe37d95c977680d7f8363a15efd02cb2}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!UnsafeSend$<$ T $>$@{UnsafeSend$<$ T $>$}}
+\index{UnsafeSend$<$ T $>$@{UnsafeSend$<$ T $>$}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{UnsafeSend$<$ T $>$()}{UnsafeSend< T >()}}
+{\footnotesize\ttfamily static void \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a6a829f1313291c45c25d2a7fb41f1b3b}{Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Unsafe\+Send}}$<$ T $>$ (\begin{DoxyParamCaption}\item[{Action$<$ T $>$}]{action,  }\item[{T}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Run Synchronous action.
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00282}{282}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a2405b6a876ab698a0246251ca1cddc5c}\label{class_uni_rx_1_1_main_thread_dispatcher_a2405b6a876ab698a0246251ca1cddc5c}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!UpdateAsObservable@{UpdateAsObservable}}
+\index{UpdateAsObservable@{UpdateAsObservable}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{UpdateAsObservable()}{UpdateAsObservable()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}} $>$ Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Update\+As\+Observable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00629}{629}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_aa2696ebfab45164422ed77b37b8fbd8c}\label{class_uni_rx_1_1_main_thread_dispatcher_aa2696ebfab45164422ed77b37b8fbd8c}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!cullingMode@{cullingMode}}
+\index{cullingMode@{cullingMode}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{cullingMode}{cullingMode}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6}{Culling\+Mode}} Uni\+Rx.\+Main\+Thread\+Dispatcher.\+culling\+Mode = \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a90bacf60dc86b3276df8d3d6c02be7c6aad6e7652b1bdfb38783486c2c3d5e806}{Culling\+Mode.\+Self}}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00035}{35}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a0e69882402607a7f3fe8017770d9c19c}\label{class_uni_rx_1_1_main_thread_dispatcher_a0e69882402607a7f3fe8017770d9c19c}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!InstanceName@{InstanceName}}
+\index{InstanceName@{InstanceName}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{InstanceName}{InstanceName}}
+{\footnotesize\ttfamily string Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Instance\+Name\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00411}{411}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_a48f2a7cb05768335ab7e1bad1608f182}\label{class_uni_rx_1_1_main_thread_dispatcher_a48f2a7cb05768335ab7e1bad1608f182}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!IsInitialized@{IsInitialized}}
+\index{IsInitialized@{IsInitialized}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{IsInitialized}{IsInitialized}}
+{\footnotesize\ttfamily bool Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Is\+Initialized\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00423}{423}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_main_thread_dispatcher_ad52eefa3c1575b3327fafe839061f21d}\label{class_uni_rx_1_1_main_thread_dispatcher_ad52eefa3c1575b3327fafe839061f21d}} 
+\index{UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}!IsInMainThread@{IsInMainThread}}
+\index{IsInMainThread@{IsInMainThread}!UniRx.MainThreadDispatcher@{UniRx.MainThreadDispatcher}}
+\doxysubsubsection{\texorpdfstring{IsInMainThread}{IsInMainThread}}
+{\footnotesize\ttfamily bool Uni\+Rx.\+Main\+Thread\+Dispatcher.\+Is\+In\+Main\+Thread\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_thread_dispatcher_8cs_source_l00481}{481}} of file \mbox{\hyperlink{_main_thread_dispatcher_8cs_source}{Main\+Thread\+Dispatcher.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Unity\+Engine\+Bridge/\mbox{\hyperlink{_main_thread_dispatcher_8cs}{Main\+Thread\+Dispatcher.\+cs}}\end{DoxyCompactItemize}

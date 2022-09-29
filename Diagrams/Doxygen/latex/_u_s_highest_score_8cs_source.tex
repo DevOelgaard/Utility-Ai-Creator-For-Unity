@@ -1,0 +1,46 @@
+\hypertarget{_u_s_highest_score_8cs_source}{}\doxysection{USHighest\+Score.\+cs}
+\label{_u_s_highest_score_8cs_source}\index{Runtime/Services/Scorers/UtilityScorer/USHighestScore.cs@{Runtime/Services/Scorers/UtilityScorer/USHighestScore.cs}}
+\mbox{\hyperlink{_u_s_highest_score_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00001}00001 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00003}\mbox{\hyperlink{namespace_services}{00003}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_services_1_1_scorers_1_1_utility_scorer}{Services.Scorers.UtilityScorer}}}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00005}\mbox{\hyperlink{class_services_1_1_scorers_1_1_utility_scorer_1_1_u_s_highest_score}{00005}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_services_1_1_scorers_1_1_utility_scorer_1_1_u_s_highest_score}{USHighestScore}}: \mbox{\hyperlink{interface_i_utility_scorer}{IUtilityScorer}}}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00006}00006     \{}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00007}00007         \textcolor{keyword}{private} readonly \textcolor{keywordtype}{string} name = \textcolor{stringliteral}{"{}Highest Score"{}};}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00008}00008         \textcolor{keyword}{private} readonly \textcolor{keywordtype}{string} description = \textcolor{stringliteral}{"{}Returns the highest score among the considerations"{}};}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00010}\mbox{\hyperlink{class_services_1_1_scorers_1_1_utility_scorer_1_1_u_s_highest_score_ac29ad239df13ae36c001741006bd2b3e}{00010}}         \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_services_1_1_scorers_1_1_utility_scorer_1_1_u_s_highest_score_ac29ad239df13ae36c001741006bd2b3e}{GetName}}()}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00011}00011         \{}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00012}00012             \textcolor{keywordflow}{return} name;}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00013}00013         \}}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00015}\mbox{\hyperlink{class_services_1_1_scorers_1_1_utility_scorer_1_1_u_s_highest_score_a12922e74e6860f9282a60fa7959f1313}{00015}}         \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_services_1_1_scorers_1_1_utility_scorer_1_1_u_s_highest_score_a12922e74e6860f9282a60fa7959f1313}{GetDescription}}()}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00016}00016         \{}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00017}00017             \textcolor{keywordflow}{return} description;}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00020}\mbox{\hyperlink{class_services_1_1_scorers_1_1_utility_scorer_1_1_u_s_highest_score_a12a2dad278a5ea2ec34ac26ef9501e3b}{00020}}         \textcolor{keyword}{public} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_services_1_1_scorers_1_1_utility_scorer_1_1_u_s_highest_score_a12a2dad278a5ea2ec34ac26ef9501e3b}{CalculateUtility}}(List<Consideration> considerations, \mbox{\hyperlink{interface_i_ai_context}{IAiContext}} context)}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00021}00021         \{}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00022}00022             var highestScore = \textcolor{keywordtype}{float}.MinValue;}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00023}00023             \textcolor{keywordflow}{foreach} (var consideration \textcolor{keywordflow}{in} considerations)}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00024}00024             \{}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00025}00025                 var score = consideration.CalculateScore(context);}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00026}00026                 \textcolor{keywordflow}{if} (score <= 0)}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00027}00027                 \{}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00028}00028                     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00029}00029                 \}}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00030}00030                 \textcolor{keywordflow}{if}(!consideration.IsScorer) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00031}00031                 \textcolor{keywordflow}{if} (score > highestScore)}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00032}00032                 \{}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00033}00033                     highestScore = score;}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00034}00034                 \}}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00035}00035             \}}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00037}00037             \textcolor{keywordflow}{return} highestScore;}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00038}00038         \}}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00039}00039     \}}
+\DoxyCodeLine{\Hypertarget{_u_s_highest_score_8cs_source_l00040}00040 \}}
+
+\end{DoxyCode}

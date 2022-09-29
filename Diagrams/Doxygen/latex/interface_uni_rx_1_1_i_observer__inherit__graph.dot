@@ -1,0 +1,40 @@
+digraph "UniRx.IObserver&lt; T &gt;"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="UniRx.IObserver\< T \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Provides a mechanism for receiving push-based notifications and returning a response."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="UniRx.ISubject\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_uni_rx_1_1_i_subject.html",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="UniRx.AsyncSubject\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_async_subject.html",tooltip=" "];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="UniRx.BehaviorSubject\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_behavior_subject.html",tooltip=" "];
+  Node2 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node5 [label="UniRx.ReplaySubject\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_replay_subject.html",tooltip=" "];
+  Node2 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node6 [label="UniRx.Subject\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_subject.html",tooltip=" "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node7 [label="UniRx.InternalUtil.Disposed\lObserver\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_internal_util_1_1_disposed_observer.html",tooltip=" "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node8 [label="UniRx.InternalUtil.Empty\lObserver\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_internal_util_1_1_empty_observer.html",tooltip=" "];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node9 [label="UniRx.InternalUtil.ListObserver\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_internal_util_1_1_list_observer.html",tooltip=" "];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node10 [label="UniRx.InternalUtil.Throw\lObserver\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_internal_util_1_1_throw_observer.html",tooltip=" "];
+  Node1 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node11 [label="UniRx.ObserverNode\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node12 [label="UniRx.Operators.CombineLatest\lObserver\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node13 [label="UniRx.Operators.Synchronized\lObserver\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node14 [label="UniRx.Operators.Wait\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node15 [label="UniRx.Operators.ZipLatest\lObserver\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node16 [label="UniRx.Operators.ZipObserver\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node17 [label="UniRx.ReadOnlyReactiveProperty\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_read_only_reactive_property.html",tooltip="Lightweight property broker."];
+}

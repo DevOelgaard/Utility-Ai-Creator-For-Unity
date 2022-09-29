@@ -1,0 +1,56 @@
+\hypertarget{_context_address_8cs_source}{}\doxysection{Context\+Address.\+cs}
+\label{_context_address_8cs_source}\index{Runtime/Models/AiContext/ContextAddress.cs@{Runtime/Models/AiContext/ContextAddress.cs}}
+\mbox{\hyperlink{_context_address_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00003}\mbox{\hyperlink{class_context_address}{00003}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_context_address}{ContextAddress}}}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00005}\mbox{\hyperlink{class_context_address_a42d4d4a80e1c4c9300b2f6ad44aafa60}{00005}}        \textcolor{keyword}{public} \mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} \mbox{\hyperlink{class_context_address_a42d4d4a80e1c4c9300b2f6ad44aafa60}{Parent}}\{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00006}\mbox{\hyperlink{class_context_address_a69cd87c9e2c021ff0e51b4b620a6885f}{00006}}        \textcolor{keyword}{public} readonly \mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} \mbox{\hyperlink{class_context_address_a69cd87c9e2c021ff0e51b4b620a6885f}{AssociatedAiObject}};}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00007}\mbox{\hyperlink{class_context_address_a39483174c83d992f3a3ec028d67f1521}{00007}}        \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_context_address_a39483174c83d992f3a3ec028d67f1521}{Address}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00008}\mbox{\hyperlink{class_context_address_a0726166e27dc0d0c429f480d2e6b5eb0}{00008}}        \textcolor{keyword}{public} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_context_address_a0726166e27dc0d0c429f480d2e6b5eb0}{Index}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \} = -\/1;}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00010}\mbox{\hyperlink{class_context_address_a127fdd6e17e351f3792eacb7ae503482}{00010}}        \textcolor{keyword}{public} \mbox{\hyperlink{class_context_address_a127fdd6e17e351f3792eacb7ae503482}{ContextAddress}}(\mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} associatedAiObject, \mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} parent = \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00011}00011        \{}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00012}00012               \mbox{\hyperlink{class_context_address_a69cd87c9e2c021ff0e51b4b620a6885f}{AssociatedAiObject}} = associatedAiObject;}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00013}00013               \mbox{\hyperlink{class_context_address_a42d4d4a80e1c4c9300b2f6ad44aafa60}{Parent}} = parent;}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00014}00014               \mbox{\hyperlink{class_context_address_a1a10d1bbdab87382895c9f27b231f2ce}{UpdateAddress}}();}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00015}00015        \}}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00017}\mbox{\hyperlink{class_context_address_ae9629daafa42816dbd6b7ba351bbb11c}{00017}}        \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_context_address_ae9629daafa42816dbd6b7ba351bbb11c}{SetParent}}(\mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} parent)}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00018}00018        \{}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00019}00019               \mbox{\hyperlink{class_context_address_a3be0cbf39c2df7240cf19f2f8650e74d}{SetParentAndIndex}}(parent,\mbox{\hyperlink{class_context_address_a0726166e27dc0d0c429f480d2e6b5eb0}{Index}});}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00020}00020        \}}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00022}\mbox{\hyperlink{class_context_address_aaa4a30c905f6f7a826181505c27a88c2}{00022}}        \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_context_address_aaa4a30c905f6f7a826181505c27a88c2}{SetIndex}}(\textcolor{keywordtype}{int} indexInParent)}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00023}00023        \{}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00024}00024               \mbox{\hyperlink{class_context_address_a3be0cbf39c2df7240cf19f2f8650e74d}{SetParentAndIndex}}(\mbox{\hyperlink{class_context_address_a42d4d4a80e1c4c9300b2f6ad44aafa60}{Parent}},indexInParent);}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00025}00025        \}}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00026}00026        }
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00027}\mbox{\hyperlink{class_context_address_a3be0cbf39c2df7240cf19f2f8650e74d}{00027}}        \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_context_address_a3be0cbf39c2df7240cf19f2f8650e74d}{SetParentAndIndex}}(\mbox{\hyperlink{class_ai_object_model}{AiObjectModel}} parent, \textcolor{keywordtype}{int} indexInParent)}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00028}00028        \{}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00029}00029               \mbox{\hyperlink{class_context_address_a42d4d4a80e1c4c9300b2f6ad44aafa60}{Parent}} = parent;}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00030}00030               \mbox{\hyperlink{class_context_address_a0726166e27dc0d0c429f480d2e6b5eb0}{Index}} = indexInParent;}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00031}00031               \mbox{\hyperlink{class_context_address_a1a10d1bbdab87382895c9f27b231f2ce}{UpdateAddress}}();}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00032}00032        \}}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00034}\mbox{\hyperlink{class_context_address_a1a10d1bbdab87382895c9f27b231f2ce}{00034}}        \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_context_address_a1a10d1bbdab87382895c9f27b231f2ce}{UpdateAddress}}()}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00035}00035        \{}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00036}00036               var address = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00037}00037               \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_context_address_a42d4d4a80e1c4c9300b2f6ad44aafa60}{Parent}} != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00038}00038               \{}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00039}00039                      address += Parent.ContextAddress.Address + \textcolor{stringliteral}{"{}-\/"{}};}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00040}00040               \}}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00042}00042               \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_context_address_a42d4d4a80e1c4c9300b2f6ad44aafa60}{Parent}} == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00043}00043               \{}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00044}00044                      \mbox{\hyperlink{class_context_address_a0726166e27dc0d0c429f480d2e6b5eb0}{Index}} = 0;}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00045}00045               \}}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00046}00046               \mbox{\hyperlink{class_context_address_a39483174c83d992f3a3ec028d67f1521}{Address}} = address + \mbox{\hyperlink{class_context_address_a69cd87c9e2c021ff0e51b4b620a6885f}{AssociatedAiObject}}.\mbox{\hyperlink{class_ai_object_model_a5b2286d2138f54d4499c1926354ace70}{BaseAiObjectType}}.ToString()[..2] + \mbox{\hyperlink{class_context_address_a0726166e27dc0d0c429f480d2e6b5eb0}{Index}};}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00047}00047               }
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00048}00048               DebugService.Log(\textcolor{stringliteral}{"{}Setting address of: "{}} + \mbox{\hyperlink{class_context_address_a69cd87c9e2c021ff0e51b4b620a6885f}{AssociatedAiObject}}.\mbox{\hyperlink{class_ai_object_model_a8e121beeb65ae729387702b132bbe6ec}{Name}} + \textcolor{stringliteral}{"{} To: "{}} + \mbox{\hyperlink{class_context_address_a39483174c83d992f3a3ec028d67f1521}{Address}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00049}00049        \}}
+\DoxyCodeLine{\Hypertarget{_context_address_8cs_source_l00050}00050 \}}
+
+\end{DoxyCode}

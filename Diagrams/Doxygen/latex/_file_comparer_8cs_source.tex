@@ -1,0 +1,29 @@
+\hypertarget{_file_comparer_8cs_source}{}\doxysection{File\+Comparer.\+cs}
+\label{_file_comparer_8cs_source}\index{Runtime/Services/FileComparer.cs@{Runtime/Services/FileComparer.cs}}
+\mbox{\hyperlink{_file_comparer_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00001}00001 \textcolor{comment}{// https://docs.microsoft.com/en-\/us/dotnet/csharp/programming-\/guide/concepts/linq/how-\/to-\/compare-\/the-\/contents-\/of-\/two-\/folders-\/linq}}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00003}00003 \textcolor{keyword}{using }System.IO;}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Runtime.InteropServices.WindowsRuntime;}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00006}\mbox{\hyperlink{class_file_comparer}{00006}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_file_comparer}{FileComparer}}: \mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}.Collections.Generic.IEqualityComparer<System.IO.FileInfo> }
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00008}\mbox{\hyperlink{class_file_comparer_ad42e28276dae4be5b43baa8b594f64fb}{00008}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_file_comparer_ad42e28276dae4be5b43baa8b594f64fb}{FileComparer}}()}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00009}00009     \{}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00010}00010     \}}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00012}\mbox{\hyperlink{class_file_comparer_a6637f59632cac42fc0eb9e0b9efcb5f9}{00012}}     \textcolor{keyword}{public} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_file_comparer_a6637f59632cac42fc0eb9e0b9efcb5f9}{Equals}}(FileInfo f1, FileInfo f2)}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00013}00013     \{}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00014}00014         \textcolor{keywordflow}{return} (f1.Name == f2.Name \&\&}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00015}00015                 f1.Length == f2.Length);}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00016}00016     \}}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00018}\mbox{\hyperlink{class_file_comparer_aa0ba00e979d4591fa8f47ed5705b1266}{00018}}     \textcolor{keyword}{public} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_file_comparer_aa0ba00e979d4591fa8f47ed5705b1266}{GetHashCode}}(FileInfo fi)}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00019}00019     \{}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00020}00020         var s = \$\textcolor{stringliteral}{"{}\{fi.Name\}\{fi.Length\}"{}};}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00021}00021         \textcolor{keywordflow}{return} s.GetHashCode();}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00022}00022     \}}
+\DoxyCodeLine{\Hypertarget{_file_comparer_8cs_source_l00023}00023 \}}
+
+\end{DoxyCode}

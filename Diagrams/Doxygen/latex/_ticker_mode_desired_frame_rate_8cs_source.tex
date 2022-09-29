@@ -1,0 +1,127 @@
+\hypertarget{_ticker_mode_desired_frame_rate_8cs_source}{}\doxysection{Ticker\+Mode\+Desired\+Frame\+Rate.\+cs}
+\label{_ticker_mode_desired_frame_rate_8cs_source}\index{Runtime/Models/AiTicker/Modes/TickerModeDesiredFrameRate.cs@{Runtime/Models/AiTicker/Modes/TickerModeDesiredFrameRate.cs}}
+\mbox{\hyperlink{_ticker_mode_desired_frame_rate_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00006}00006 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00007}00007 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx}{UniRx}};}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00009}00009 \textcolor{keyword}{internal} \textcolor{keyword}{class }TickerModeDesiredFrameRate : \mbox{\hyperlink{class_ticker_mode}{TickerMode}}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00011}00011     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}} disposables = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{CompositeDisposable}}();}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00012}00012     \textcolor{keyword}{private} \textcolor{keywordtype}{int} framesThisSample = 0;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00013}00013     \textcolor{keyword}{private} \textcolor{keywordtype}{float} elapsedTime = 0f;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00014}00014     \textcolor{keyword}{private} \textcolor{keywordtype}{int} tickedItemsLastSample = 0;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00015}00015     \textcolor{comment}{//private int tickedItemsLastSampleStored = 0;}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00016}00016     \textcolor{keyword}{private} \textcolor{keywordtype}{int} allowedTicksPrFrame = \textcolor{keywordtype}{int}.MaxValue;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00017}00017     \textcolor{keyword}{private} \textcolor{keywordtype}{int} lastTickIndex = -\/1;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00018}00018     \textcolor{keyword}{internal} \textcolor{keywordtype}{float} LastFrameRate \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \} = \textcolor{keywordtype}{float}.MaxValue;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00020}00020     \textcolor{keyword}{internal} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<float>}} OnLastFrameRateChanged => onLastFrameRateChanged;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00021}00021     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<float>}} onLastFrameRateChanged = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<float>}}();}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00022}00022     \textcolor{keyword}{internal} \textcolor{keywordtype}{float} SampelTimeInSeconds => Convert.ToSingle(\mbox{\hyperlink{class_parameter_container}{ParameterContainer}}.GetParameter(\textcolor{stringliteral}{"{}Sample Time Seconds"{}}).\mbox{\hyperlink{class_parameter_a8b78365aa2ccbdefc1536d576d5fdba7}{Value}});}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00023}00023     \textcolor{keyword}{internal} \textcolor{keywordtype}{float} TargetFrameRate => Convert.ToSingle(\mbox{\hyperlink{class_parameter_container}{ParameterContainer}}.GetParameter(\textcolor{stringliteral}{"{}Target Framerate"{}}).\mbox{\hyperlink{class_parameter_a8b78365aa2ccbdefc1536d576d5fdba7}{Value}});}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00024}00024     \textcolor{keyword}{private} \textcolor{keywordtype}{int} debugTickCount = 0;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00027}00027     \textcolor{keyword}{public} TickerModeDesiredFrameRate() : base(\mbox{\hyperlink{_enums_8cs_a701a2d497af20098eed386f3134386d0}{UaiTickerMode}}.\mbox{\hyperlink{_enums_8cs_a701a2d497af20098eed386f3134386d0aaaa87f3fd079374c5bd03ea273948b3b}{DesiredFrameRate}}, Consts.Description\_TickerModeDesiredFrameRate)}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00028}00028     \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00029}00029     \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00032}00032     \textcolor{keyword}{internal} \textcolor{keyword}{override} List<Parameter> GetParameters()}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00033}00033     \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00034}00034         \textcolor{keywordflow}{return} \textcolor{keyword}{new} List<Parameter>()}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00035}00035         \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00036}00036             \textcolor{keyword}{new} \mbox{\hyperlink{class_parameter}{Parameter}}(\textcolor{stringliteral}{"{}Target Framerate"{}}, (\textcolor{keywordtype}{int})60),}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00037}00037             \textcolor{keyword}{new} \mbox{\hyperlink{class_parameter}{Parameter}}(\textcolor{stringliteral}{"{}Sample Time Seconds"{}}, 1f),}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00038}00038             \textcolor{keyword}{new} \mbox{\hyperlink{class_parameter}{Parameter}}(\textcolor{stringliteral}{"{}Debug"{}}, \textcolor{keyword}{false}),}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00039}00039             \textcolor{keyword}{new} \mbox{\hyperlink{class_parameter}{Parameter}}(\textcolor{stringliteral}{"{}DebugTickCount"{}}, (\textcolor{keywordtype}{int})0)}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00040}00040         \};}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00041}00041     \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00043}00043     \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_ticker_mode_a8b52d57bc27786a3a3cdbff603aaa8ec}{GetFileName}}()}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00044}00044     \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00045}00045         \textcolor{keywordflow}{return} Consts.FileName\_TickerModeDesiredFrameRate;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00046}00046     \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00048}00048     \textcolor{keyword}{internal} \textcolor{keyword}{override} \textcolor{keywordtype}{void} Tick(List<IAgent> agents, \mbox{\hyperlink{class_tick_meta_data}{TickMetaData}} metaData)}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00049}00049     \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00050}00050         \textcolor{keywordflow}{if} (elapsedTime < SampelTimeInSeconds)}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00051}00051         \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00052}00052             elapsedTime += Time.deltaTime;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00053}00053             framesThisSample++;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00054}00054         \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00055}00055         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00056}00056         \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00057}00057             LastFrameRate = framesThisSample / elapsedTime;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00058}00058             onLastFrameRateChanged.OnNext(LastFrameRate);}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00060}00060             \textcolor{keywordflow}{if} (LastFrameRate < TargetFrameRate)}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00061}00061             \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00062}00062                 var oldAllowedTicks = allowedTicksPrFrame;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00063}00063                 var optimizeFactor = LastFrameRate / TargetFrameRate;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00064}00064                 var ticksThisSample = tickedItemsLastSample * optimizeFactor;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00065}00065                 allowedTicksPrFrame = Mathf.FloorToInt(ticksThisSample / framesThisSample);}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00066}00066                 \textcolor{keywordflow}{if} ((\textcolor{keywordtype}{bool})\mbox{\hyperlink{class_parameter_container}{ParameterContainer}}.GetParameter(\textcolor{stringliteral}{"{}Debug"{}}).\mbox{\hyperlink{class_parameter_a8b78365aa2ccbdefc1536d576d5fdba7}{Value}})}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00067}00067                 \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00068}00068                     DebugService.Log(\textcolor{stringliteral}{"{}LastFrameRate: "{}} + LastFrameRate + \textcolor{stringliteral}{"{} TargetFrameRate: "{}} + TargetFrameRate + \textcolor{stringliteral}{"{} optimizeFactor: "{}} + optimizeFactor + \textcolor{stringliteral}{"{} tickedItemsLastSample: "{}} + tickedItemsLastSample + \textcolor{stringliteral}{"{} allowedTicsPrFrame: "{}} + allowedTicksPrFrame + \textcolor{stringliteral}{"{} oldAllowedTicks: "{}} + oldAllowedTicks, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00069}00069                 \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00070}00070             \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00073}00073             \textcolor{keywordflow}{if} ((\textcolor{keywordtype}{bool})\mbox{\hyperlink{class_parameter_container}{ParameterContainer}}.GetParameter(\textcolor{stringliteral}{"{}Debug"{}}).\mbox{\hyperlink{class_parameter_a8b78365aa2ccbdefc1536d576d5fdba7}{Value}})}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00074}00074             \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00075}00075                 DebugService.Log(\textcolor{stringliteral}{"{}LastFrameRate: "{}} + LastFrameRate + \textcolor{stringliteral}{"{} framesThisSample: "{}} + framesThisSample + \textcolor{stringliteral}{"{} elapsedTime: "{}} + elapsedTime + \textcolor{stringliteral}{"{} SampleTime: "{}} + SampelTimeInSeconds, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00076}00076             \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00077}00077             framesThisSample = 0;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00078}00078             elapsedTime = 0f;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00079}00079             tickedItemsLastSample = 0;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00080}00080         \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00084}00084         var tickCountThisFrame = 0;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00085}00085         \textcolor{keywordflow}{foreach}(var agent \textcolor{keywordflow}{in} agents)}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00086}00086         \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00087}00087             tickCountThisFrame++;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00088}00088             \textcolor{keywordflow}{if} (lastTickIndex >= agents.Count-\/1)}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00089}00089             \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00090}00090                 \textcolor{keywordflow}{if} ((\textcolor{keywordtype}{bool})\mbox{\hyperlink{class_parameter_container}{ParameterContainer}}.GetParameter(\textcolor{stringliteral}{"{}Debug"{}}).\mbox{\hyperlink{class_parameter_a8b78365aa2ccbdefc1536d576d5fdba7}{Value}})}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00091}00091                 \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00092}00092                     DebugService.Log(\textcolor{stringliteral}{"{}All Agents ticked Agent count: "{}} + agents.Count + \textcolor{stringliteral}{"{} TickCount: "{}} + metaData.\mbox{\hyperlink{class_tick_meta_data_a578debb0da4de844ebe5ad437a12ea93}{TickCount}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00093}00093                 \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00094}00094                 lastTickIndex = 0;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00095}00095             \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00096}00096             \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00097}00097                 lastTickIndex++;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00098}00098             \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00099}00099             agents[lastTickIndex].Tick(metaData);}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00100}00100             tickedItemsLastSample++;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00102}00102             }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00103}00103             \textcolor{keywordflow}{if} (tickCountThisFrame >= allowedTicksPrFrame)}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00104}00104             \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00105}00105                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00106}00106             \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00107}00107         \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00109}00109         debugTickCount++;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00110}00110         \textcolor{keywordflow}{if} ((\textcolor{keywordtype}{bool})\mbox{\hyperlink{class_parameter_container}{ParameterContainer}}.GetParameter(\textcolor{stringliteral}{"{}Debug"{}}).\mbox{\hyperlink{class_parameter_a8b78365aa2ccbdefc1536d576d5fdba7}{Value}} \&\& debugTickCount >= Convert.ToInt32(\mbox{\hyperlink{class_parameter_container}{ParameterContainer}}.GetParameter(\textcolor{stringliteral}{"{}DebugTickCount"{}}).\mbox{\hyperlink{class_parameter_a8b78365aa2ccbdefc1536d576d5fdba7}{Value}}))}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00111}00111         \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00112}00112             debugTickCount = 0;}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00113}00113             DebugService.Log(\textcolor{stringliteral}{"{}Framerate: "{}} + LastFrameRate + \textcolor{stringliteral}{"{} Allowed TicksPrFrame: "{}} + allowedTicksPrFrame + \textcolor{stringliteral}{"{} FrameCount: "{}} + framesThisSample, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00114}00114         \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00115}00115     \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00117}00117     \string~TickerModeDesiredFrameRate()}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00118}00118     \{}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00119}00119         disposables.Clear();}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00120}00120     \}}
+\DoxyCodeLine{\Hypertarget{_ticker_mode_desired_frame_rate_8cs_source_l00121}00121 \}}
+
+\end{DoxyCode}

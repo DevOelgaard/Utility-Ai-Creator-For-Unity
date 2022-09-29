@@ -1,0 +1,59 @@
+\hypertarget{_observable_rect_transform_trigger_8cs_source}{}\doxysection{Observable\+Rect\+Transform\+Trigger.\+cs}
+\label{_observable_rect_transform_trigger_8cs_source}\index{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableRectTransformTrigger.cs@{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableRectTransformTrigger.cs}}
+\mbox{\hyperlink{_observable_rect_transform_trigger_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00001}00001 \textcolor{comment}{// after uGUI(from 4.6)}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00002}00002 \textcolor{preprocessor}{\#if !(UNITY\_4\_0 || UNITY\_4\_1 || UNITY\_4\_2 || UNITY\_4\_3 || UNITY\_4\_4 || UNITY\_4\_5)}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00004}00004 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00005}00005 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00007}00007 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_triggers}{UniRx.Triggers}}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00009}00009     [DisallowMultipleComponent]}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00010}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_rect_transform_trigger}{00010}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_rect_transform_trigger}{ObservableRectTransformTrigger}} : \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_base}{ObservableTriggerBase}}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00011}00011     \{}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00012}00012         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}} onRectTransformDimensionsChange;}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00014}00014         \textcolor{comment}{// Callback that is sent if an associated RectTransform has it's dimensions changed}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00015}00015         \textcolor{keywordtype}{void} OnRectTransformDimensionsChange()}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00016}00016         \{}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00017}00017             \textcolor{keywordflow}{if} (onRectTransformDimensionsChange != \textcolor{keyword}{null}) onRectTransformDimensionsChange.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}}.\mbox{\hyperlink{struct_uni_rx_1_1_unit_a16a477eee98338be4ffd171335f492fe}{Default}});}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00021}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_rect_transform_trigger_a99eb6357b772cbbf73fe22f02f3f2821}{00021}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_rect_transform_trigger_a99eb6357b772cbbf73fe22f02f3f2821}{OnRectTransformDimensionsChangeAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00022}00022         \{}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00023}00023             \textcolor{keywordflow}{return} onRectTransformDimensionsChange ?? (onRectTransformDimensionsChange = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00024}00024         \}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00026}00026         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}} onRectTransformRemoved;}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00028}00028         \textcolor{comment}{// Callback that is sent if an associated RectTransform is removed}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00029}00029         \textcolor{keywordtype}{void} OnRectTransformRemoved()}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00030}00030         \{}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00031}00031             \textcolor{keywordflow}{if} (onRectTransformRemoved != \textcolor{keyword}{null}) onRectTransformRemoved.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}}.\mbox{\hyperlink{struct_uni_rx_1_1_unit_a16a477eee98338be4ffd171335f492fe}{Default}});}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00032}00032         \}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00035}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_rect_transform_trigger_ac59eef29106a7ea8173773a284aef5ce}{00035}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_rect_transform_trigger_ac59eef29106a7ea8173773a284aef5ce}{OnRectTransformRemovedAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00036}00036         \{}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00037}00037             \textcolor{keywordflow}{return} onRectTransformRemoved ?? (onRectTransformRemoved = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00038}00038         \}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00040}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_rect_transform_trigger_a0d9f334b56ad2d69e86aee8b71f4ac5f}{00040}}         \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_rect_transform_trigger_a0d9f334b56ad2d69e86aee8b71f4ac5f}{RaiseOnCompletedOnDestroy}}()}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00041}00041         \{}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00042}00042             \textcolor{keywordflow}{if} (onRectTransformDimensionsChange != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00043}00043             \{}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00044}00044                 onRectTransformDimensionsChange.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00045}00045             \}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00046}00046             \textcolor{keywordflow}{if} (onRectTransformRemoved != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00047}00047             \{}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00048}00048                 onRectTransformRemoved.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00049}00049             \}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00050}00050         \}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00052}00052     \}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00053}00053 \}}
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_observable_rect_transform_trigger_8cs_source_l00055}00055 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

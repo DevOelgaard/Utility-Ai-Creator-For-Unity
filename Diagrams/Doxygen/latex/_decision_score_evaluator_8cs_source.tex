@@ -1,0 +1,80 @@
+\hypertarget{_decision_score_evaluator_8cs_source}{}\doxysection{Decision\+Score\+Evaluator.\+cs}
+\label{_decision_score_evaluator_8cs_source}\index{Runtime/Services/Scorers/DecisionScoreEvaluator/DecisionScoreEvaluator.cs@{Runtime/Services/Scorers/DecisionScoreEvaluator/DecisionScoreEvaluator.cs}}
+\mbox{\hyperlink{_decision_score_evaluator_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00006}00006 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00008}\mbox{\hyperlink{class_decision_score_evaluator}{00008}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_decision_score_evaluator}{DecisionScoreEvaluator}}: \mbox{\hyperlink{interface_i_decision_score_evaluator}{IDecisionScoreEvaluator}}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00010}00010     \textcolor{keyword}{private} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Name = Consts.Name\_DefaultDSE;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00011}00011     \textcolor{keyword}{private} \textcolor{keyword}{const} \textcolor{keywordtype}{string} Description = Consts.Description\_DefaultDSE;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00013}\mbox{\hyperlink{class_decision_score_evaluator_aa0834e8ec6f3fddb6d099d0682a827c3}{00013}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_decision_score_evaluator_aa0834e8ec6f3fddb6d099d0682a827c3}{DecisionScoreEvaluator}}()}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00014}00014     \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00015}00015     \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00017}\mbox{\hyperlink{class_decision_score_evaluator_aae2dcb4bded284476b890d59b31b17d4}{00017}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_decision_score_evaluator_aae2dcb4bded284476b890d59b31b17d4}{GetDescription}}()}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00018}00018     \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00019}00019         \textcolor{keywordflow}{return} Description;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00020}00020     \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00022}\mbox{\hyperlink{class_decision_score_evaluator_a7bef3a37ff3062473b7bf0d97ff295ef}{00022}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_decision_score_evaluator_a7bef3a37ff3062473b7bf0d97ff295ef}{GetName}}()}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00023}00023     \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00024}00024         \textcolor{keywordflow}{return} Name;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00025}00025     \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00027}\mbox{\hyperlink{class_decision_score_evaluator_a1ba5801305bc129236fa21ddf697a0e2}{00027}}     \textcolor{keyword}{public} List<AgentAction> \mbox{\hyperlink{class_decision_score_evaluator_a1ba5801305bc129236fa21ddf697a0e2}{NextActions}}(List<Decision> decisions, \mbox{\hyperlink{class_uai}{Uai}} uai)}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00028}00028     \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00029}00029         \textcolor{keywordflow}{if} (decisions.Count == 0)}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00030}00030         \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00031}00031             \textcolor{keywordflow}{return} \textcolor{keyword}{new} List<AgentAction>();}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00032}00032         \} \textcolor{keywordflow}{else} }
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00033}00033         \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00034}00034             var bestDecision = uai.\mbox{\hyperlink{class_uai_af438e9503342408bd7518cb0cd780363}{CurrentDecisionSelector}}.\mbox{\hyperlink{class_utility_container_selector_a7b1818d050304feb5e1d3521764bc528}{GetBestUtilityContainer}}(decisions, uai.UaiContext);}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00035}00035             \textcolor{keywordflow}{if} (bestDecision == \textcolor{keyword}{null} || bestDecision.LastCalculatedUtility <= 0)}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00036}00036             \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00037}00037                 \textcolor{comment}{//Debug.LogWarning("{}No valid decision. Add a \(\backslash\)"{}fall back\(\backslash\)"{} decision (Ie. Idle), which always scores >0"{});}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00038}00038                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} List<AgentAction>();}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00039}00039                 \textcolor{comment}{//throw new Exception("{}No valid decision. Add a \(\backslash\)"{}fall back\(\backslash\)"{} decision (Ie. Idle), which always scores >0"{});}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00040}00040             \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00041}00041             uai.UaiContext.LastSelectedDecision = bestDecision;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00042}00042             uai.UaiContext.LastSelectedDecision.LastSelectedTickMetaData = uai.UaiContext.\mbox{\hyperlink{interface_i_ai_context_adfc535cc7b26ace8ce624ceb1d405bbd}{TickMetaData}};}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00043}00043             bestDecision.MetaData.LastTickSelected = uai.UaiContext.\mbox{\hyperlink{interface_i_ai_context_adfc535cc7b26ace8ce624ceb1d405bbd}{TickMetaData}}.\mbox{\hyperlink{class_tick_meta_data_a578debb0da4de844ebe5ad437a12ea93}{TickCount}};}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00044}00044             \textcolor{keywordflow}{return} bestDecision.AgentActions.Values;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00045}00045         \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00046}00046     \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00048}\mbox{\hyperlink{class_decision_score_evaluator_a838441579bc5ded9600887c56077a916}{00048}}     \textcolor{keyword}{public} List<AgentAction> \mbox{\hyperlink{class_decision_score_evaluator_a838441579bc5ded9600887c56077a916}{NextActions}}(List<Bucket> buckets, \mbox{\hyperlink{class_uai}{Uai}} uai)}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00049}00049     \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00050}00050         \textcolor{keywordflow}{if} (buckets.Count == 0)}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00051}00051         \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00052}00052             \textcolor{keywordflow}{return} \textcolor{keyword}{new} List<AgentAction>();}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00053}00053         \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00054}00054         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00055}00055         \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00056}00056             var bestBucket = uai.\mbox{\hyperlink{class_uai_ad7ae50b0074e50dd7c770e2c6f97a642}{CurrentBucketSelector}}.\mbox{\hyperlink{class_utility_container_selector_a7b1818d050304feb5e1d3521764bc528}{GetBestUtilityContainer}}(buckets, uai.UaiContext);}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00057}00057             \textcolor{keywordflow}{if} (bestBucket == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00058}00058             \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00059}00059                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} List<AgentAction>();}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00060}00060             \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00061}00061             var nextActions = \mbox{\hyperlink{class_decision_score_evaluator_a1ba5801305bc129236fa21ddf697a0e2}{NextActions}}(bestBucket.Decisions.Values, uai);}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00062}00062             \textcolor{keywordflow}{if} (nextActions == \textcolor{keyword}{null} || nextActions.Count == 0)}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00063}00063             \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00064}00064                 \textcolor{keywordflow}{return} \mbox{\hyperlink{class_decision_score_evaluator_a1ba5801305bc129236fa21ddf697a0e2}{NextActions}}(buckets.Where(bucket => bucket != bestBucket).ToList(), uai);}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00065}00065             \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00066}00066             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00067}00067             \{}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00068}00068                 uai.UaiContext.LastSelectedBucket = bestBucket;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00069}00069                 bestBucket.MetaData.LastTickSelected = uai.UaiContext.\mbox{\hyperlink{interface_i_ai_context_adfc535cc7b26ace8ce624ceb1d405bbd}{TickMetaData}}.\mbox{\hyperlink{class_tick_meta_data_a578debb0da4de844ebe5ad437a12ea93}{TickCount}};}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00070}00070                 \textcolor{keywordflow}{return} nextActions;}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00071}00071             \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00072}00072         \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00073}00073     \}}
+\DoxyCodeLine{\Hypertarget{_decision_score_evaluator_8cs_source_l00074}00074 \}}
+
+\end{DoxyCode}

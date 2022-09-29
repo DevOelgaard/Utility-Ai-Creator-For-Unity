@@ -1,0 +1,50 @@
+\hypertarget{_consideration_nearest_target_8cs_source}{}\doxysection{Consideration\+Nearest\+Target.\+cs}
+\label{_consideration_nearest_target_8cs_source}\index{Runtime/Models/Consideration/ConsiderationNearestTarget.cs@{Runtime/Models/Consideration/ConsiderationNearestTarget.cs}}
+\mbox{\hyperlink{_consideration_nearest_target_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00006}00006 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00008}00008 \textcolor{keyword}{internal} \textcolor{keyword}{class }ConsiderationNearestTarget : \mbox{\hyperlink{class_consideration}{Consideration}}}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00010}00010     \textcolor{keyword}{public} ConsiderationNearestTarget()}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00011}00011     \{}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00012}00012         MinFloat.Value = 0f;}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00013}00013         MaxFloat.Value = 1000f;}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00014}00014         \mbox{\hyperlink{class_ai_object_model_aa0a1a7323388412beb45034d0f0cddf5}{HelpText}} = \textcolor{stringliteral}{"{}The parent must set a "{}} + AiContextKey.CurrentTargetGameObject + \textcolor{stringliteral}{"{} for it to evaluate"{}};}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00015}00015     \}}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00017}00017     \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_consideration_a18449c58d28c024392ba5755ce3c8b48}{CalculateBaseScore}}(\mbox{\hyperlink{interface_i_ai_context}{IAiContext}} context)}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00018}00018     \{}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00019}00019         var agent = (\mbox{\hyperlink{class_agent_mono}{AgentMono}})context.\mbox{\hyperlink{interface_i_ai_context_ac58278c7d08095d457dba8547cbb6661}{Agent}};}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00020}00020         var address = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00021}00021         if (context.\mbox{\hyperlink{interface_i_ai_context_a662363a271838e61956ffaf8173f435c}{CurrentEvaluatedDecision}} != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00022}00022         \{}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00023}00023             address = context.\mbox{\hyperlink{interface_i_ai_context_a662363a271838e61956ffaf8173f435c}{CurrentEvaluatedDecision}}.\mbox{\hyperlink{class_ai_object_model_ac41719ca10fb2197cde593358e58649c}{ContextAddress}}.\mbox{\hyperlink{class_context_address_a39483174c83d992f3a3ec028d67f1521}{Address}};}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00024}00024         \}}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00025}00025         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00026}00026         \{}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00027}00027             address = context.\mbox{\hyperlink{interface_i_ai_context_a0b64c6e90ee2d78579963d499e26a374}{CurrentEvaluatedBucket}}.\mbox{\hyperlink{class_ai_object_model_ac41719ca10fb2197cde593358e58649c}{ContextAddress}}.\mbox{\hyperlink{class_context_address_a39483174c83d992f3a3ec028d67f1521}{Address}};}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00028}00028         \}}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00029}00029         var target = context.GetContext<GameObject>(address + \mbox{\hyperlink{_enums_8cs_a687f1e53fd40a338a22bb4c946416a4c}{AiContextKey}}.CurrentTargetGameObject);}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00030}00030         \textcolor{keywordflow}{if} (target == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00031}00031         \{}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00032}00032             \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00033}00033         \}}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00034}00034         var distance = Vector3.Distance(agent.transform.position, target.transform.position);}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00035}00035         \textcolor{keywordflow}{return} Convert.ToSingle(\mbox{\hyperlink{class_consideration_a98fa625398597bbc077629813c74f612}{MaxFloat}}.\mbox{\hyperlink{class_parameter_a8b78365aa2ccbdefc1536d576d5fdba7}{Value}}) -\/ distance;}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00036}00036     \}}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00038}00038     \textcolor{keyword}{protected} \textcolor{keyword}{override} List<Parameter> \mbox{\hyperlink{class_ai_object_model_adfb5d5c1c3fa585bd9287b509870af1b}{GetParameters}}()}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00039}00039     \{}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00040}00040         \textcolor{keywordflow}{return} \textcolor{keyword}{new} List<Parameter>();}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00041}00041     \}}
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{_consideration_nearest_target_8cs_source_l00044}00044 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,106 @@
+\hypertarget{_reactive_list_8cs_source}{}\doxysection{Reactive\+List.\+cs}
+\label{_reactive_list_8cs_source}\index{Runtime/Services/UniRxExtension/ReactiveList.cs@{Runtime/Services/UniRxExtension/ReactiveList.cs}}
+\mbox{\hyperlink{_reactive_list_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00004}00004 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx}{UniRx}};}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00005}00005 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00007}\mbox{\hyperlink{namespace_uni_rx_extension}{00007}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_extension}{UniRxExtension}}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00009}00009     [Serializable]}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00010}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list}{00010}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list}{ReactiveList}}<T>}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00011}00011     \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00012}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{00012}}         \textcolor{keyword}{protected} List<T> \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}};}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00013}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a274760002f0e3b727ff9fdb2fde5efe8}{00013}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<List<T>}}> \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a274760002f0e3b727ff9fdb2fde5efe8}{OnValueChanged}} => \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{onValueChanged}};}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00014}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{00014}}         \textcolor{keyword}{protected} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<List<T>}}> \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{onValueChanged}};}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00016}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_ae8d8ec6ec1318263d1fab726aab3dbfb}{00016}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_ae8d8ec6ec1318263d1fab726aab3dbfb}{ReactiveList}}()}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00017}00017         \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00018}00018             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}} = \textcolor{keyword}{new} List<T>();}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00019}00019             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{onValueChanged}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<List<T>}}>();}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00020}00020         \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00022}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a2d618f1b427f6117eefd0af92b0dbdf8}{00022}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a2d618f1b427f6117eefd0af92b0dbdf8}{ReactiveList}}(List<T> list)\{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00023}00023             this.List = list;}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00024}00024             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{onValueChanged}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<List<T>}}>();}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00025}00025         \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00028}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_afbe63d1b8798f6952677987a6bc1e021}{00028}}         \textcolor{keyword}{public} List<T> \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_afbe63d1b8798f6952677987a6bc1e021}{Values}} => CopyList();}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00030}00030         \textcolor{keyword}{private} List<T> CopyList()}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00031}00031         \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00032}00032             \textcolor{keywordflow}{return} \textcolor{keyword}{new} List<T>(\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}});}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00033}00033         \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00035}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a47e22fc8d16ceb9dfcfb8d33cb2785dc}{00035}}         \textcolor{keyword}{public} \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a47e22fc8d16ceb9dfcfb8d33cb2785dc}{Add}}(T element)}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00036}00036         \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00037}00037             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}.Add(element);}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00038}00038             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{onValueChanged}}.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_afbe63d1b8798f6952677987a6bc1e021}{Values}});}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00039}00039         \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00041}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a8bf709422a35136e347d5b13fd676197}{00041}}         \textcolor{keyword}{public} \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a8bf709422a35136e347d5b13fd676197}{Add}}(IEnumerable<T> elements)}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00042}00042         \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00043}00043             var elementsAsList = elements.ToList();}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00044}00044             \textcolor{keywordflow}{if} (!elementsAsList.Any())}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00045}00045             \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00046}00046                 DebugService.Log(\textcolor{stringliteral}{"{}Returning no elements to add of type: "{}} + typeof(T), nameof(\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list}{ReactiveList<T>}}));}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00047}00047             \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00048}00048             DebugService.Log(\textcolor{stringliteral}{"{}Adding "{}} + elementsAsList.Count() + \textcolor{stringliteral}{"{} elements of type: "{}} + typeof(T), nameof(\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list}{ReactiveList<T>}}));}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00049}00049             \textcolor{keywordflow}{foreach}(var e \textcolor{keywordflow}{in} elementsAsList)}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00050}00050             \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00051}00051                 \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}.Add(e);}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00052}00052             \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00053}00053             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{onValueChanged}}.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_afbe63d1b8798f6952677987a6bc1e021}{Values}});}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00054}00054         \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00056}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a66706ff8e98e8e37e7f296c82636d17f}{00056}}         \textcolor{keyword}{public} \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a66706ff8e98e8e37e7f296c82636d17f}{Remove}}(T element)}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00057}00057         \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00058}00058             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}.Remove(element);}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00059}00059             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{onValueChanged}}.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_afbe63d1b8798f6952677987a6bc1e021}{Values}});}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00060}00060         \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00062}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a05d06afa97cf7304fc4deae0714794ad}{00062}}         \textcolor{keyword}{public} \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a05d06afa97cf7304fc4deae0714794ad}{ChangeAll}}(List<T> elements)}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00063}00063         \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00064}00064             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}} = elements;}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00065}00065             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{onValueChanged}}.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_afbe63d1b8798f6952677987a6bc1e021}{Values}});}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00066}00066         \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00068}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a925ffdee6b04c586f951f3cf76c07e16}{00068}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a925ffdee6b04c586f951f3cf76c07e16}{Clear}}()}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00069}00069         \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00070}00070             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}} = \textcolor{keyword}{new} List<T>();}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00071}00071             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{onValueChanged}}.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_afbe63d1b8798f6952677987a6bc1e021}{Values}});}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00072}00072         \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00074}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a976fc41d4e647c9409b4a5e5fca5a9b9}{00074}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a976fc41d4e647c9409b4a5e5fca5a9b9}{ClearNoNotify}}()}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00075}00075         \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00076}00076             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}} = \textcolor{keyword}{new} List<T>();}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00077}00077         \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00079}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a62b3c75e34f64fcc7814fad408816087}{00079}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a62b3c75e34f64fcc7814fad408816087}{IncreaIndex}}(T element)}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00080}00080         \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00081}00081             var index = \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}.IndexOf(element);}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00082}00082             \textcolor{keywordflow}{if} (index >= \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}.Count-\/1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00083}00083             var itemToReplace = \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}[index+1];}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00084}00084             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}[index + 1] = element;}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00085}00085             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}[index] = itemToReplace;}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00086}00086             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{onValueChanged}}.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}});}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00087}00087         \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00089}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a41d1d8a33692fa9f71b09539c8ae446e}{00089}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a41d1d8a33692fa9f71b09539c8ae446e}{DecreaseIndex}}(T element)}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00090}00090         \{}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00091}00091             var index = \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}.IndexOf(element);}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00092}00092             \textcolor{keywordflow}{if} (index <= 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00093}00093             var itemToReplace = \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}[index -\/ 1];}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00094}00094             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}[index -\/ 1] = element;}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00095}00095             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}[index] = itemToReplace;}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00096}00096             \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aae9cee6fcb377e726d6d27aa4310fc55}{onValueChanged}}.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}});}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00097}00097         \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00098}\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a8eddd33ad2fdb41e207233b7f0f9f746}{00098}}         \textcolor{keyword}{public} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_a8eddd33ad2fdb41e207233b7f0f9f746}{Count}} => \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_aef0bf4fab38b31350364d96f955b60fc}{List}}.Count;}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00099}00099     \}}
+\DoxyCodeLine{\Hypertarget{_reactive_list_8cs_source_l00100}00100 \}}
+
+\end{DoxyCode}

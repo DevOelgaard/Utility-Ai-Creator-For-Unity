@@ -1,0 +1,96 @@
+\hypertarget{_u_t___consideration_8cs_source}{}\doxysection{UT\+\_\+\+Consideration.\+cs}
+\label{_u_t___consideration_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/Considerations/UT\_Consideration.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/Considerations/UT\_Consideration.cs}}
+\mbox{\hyperlink{_u_t___consideration_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00001}00001 \textcolor{keyword}{using }System.Collections;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00003}00003 \textcolor{keyword}{using }NUnit.Framework;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00004}00004 \textcolor{keyword}{using }NSubstitute;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00005}00005 \textcolor{keyword}{using }UnityEngine.TestTools;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00006}00006 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00007}00007 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00008}00008 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx}{UniRx}};}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00009}00009 \textcolor{keyword}{using }System.ComponentModel;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00010}00010 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_mocks}{Mocks}};}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00012}\mbox{\hyperlink{namespace_unit_tests}{00012}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_unit_tests_1_1_models_1_1_considerations}{UnitTests.Models.Considerations}}}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00013}00013 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00014}00014     [TestFixture]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00015}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration}{00015}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration}{UT\_Consideration}}}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00016}00016     \{}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00017}00017         \textcolor{keyword}{private} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___u_t}{Stub\_Consideration\_UT}} uut;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00019}00019         [\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_a8a4875da2fcc5e12e9f60abf9a5ae6ef}{SetUp}}]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00020}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_a8a4875da2fcc5e12e9f60abf9a5ae6ef}{00020}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_a8a4875da2fcc5e12e9f60abf9a5ae6ef}{SetUp}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00021}00021         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00022}00022             uut = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___u_t}{Stub\_Consideration\_UT}}(0.5f, \textcolor{keyword}{new} List<Parameter>());}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00023}00023             uut.MinFloat.Value = 0f;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00024}00024             uut.MaxFloat.Value = 1f;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00025}00025         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00027}00027         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00028}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_aa4f7dca2f37594da92dd2a987ab8fb64}{00028}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_aa4f7dca2f37594da92dd2a987ab8fb64}{GetTypeDescription\_NoInput\_ReturnsCorrectString}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00029}00029         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00030}00030             var expected =uut.GetType().\mbox{\hyperlink{class_restore_able_adba8c739ceb77da7560f7eba866d012e}{ToString}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00031}00031             var result = uut.\mbox{\hyperlink{class_consideration_af274c8a3c22513e9329a1a82ea801682}{GetTypeDescription}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00033}00033             Assert.AreEqual(expected, result);}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00034}00034         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00036}00036         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00037}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_a24fe33a2353246ac088c6b9a80ddf385}{00037}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_a24fe33a2353246ac088c6b9a80ddf385}{BaseScoreChanged\_NewBaseScoreCalculated\_PuplishesEventOneTime}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00038}00038         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00039}00039             var timesPuplished = 0;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00040}00040             var sub = uut}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00041}00041                 .\mbox{\hyperlink{class_consideration_a52833f132b9e2109fff3aa4f14b83410}{BaseScoreChanged}}}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00042}00042                 .Subscribe(\_ => timesPuplished++);}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00044}00044             uut.\mbox{\hyperlink{class_consideration_a848494d3aa3f2e09435fda13e8be1624}{CalculateScore}}(\textcolor{keywordflow}{default});}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00046}00046             sub.Dispose();}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00047}00047             Assert.AreEqual(1, timesPuplished);}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00048}00048         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00050}00050         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00051}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_ab0b21bdea6adeb988fd5d22738129071}{00051}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_ab0b21bdea6adeb988fd5d22738129071}{NormalizedScoreChanged\_NewNormalizedScoreCalculated\_PuplishesEventOneTime}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00052}00052         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00053}00053             var timesPuplished = 0;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00054}00054             var sub = uut}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00055}00055                 .\mbox{\hyperlink{class_consideration_a76f5e123d0167499e5bdb174ef74baa4}{NormalizedScoreChanged}}}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00056}00056                 .Subscribe(\_ => timesPuplished++);}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00058}00058             uut.\mbox{\hyperlink{class_consideration_a848494d3aa3f2e09435fda13e8be1624}{CalculateScore}}(\textcolor{keywordflow}{default});}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00060}00060             sub.Dispose();}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00061}00061             Assert.AreEqual(1, timesPuplished);}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00062}00062         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00063}00063         }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00064}00064         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00065}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_a233c36dc1d55a1f3374ae4bfa698e2d2}{00065}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_a233c36dc1d55a1f3374ae4bfa698e2d2}{Clone\_NewObject\_ReturnsClone}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00066}00066         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00067}00067             var result = uut.Clone();}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00068}00068             }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00069}00069             Assert.AreEqual(uut.\mbox{\hyperlink{class_ai_object_model_a8e121beeb65ae729387702b132bbe6ec}{Name}},result.Name);}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00070}00070             Assert.AreEqual(uut.\mbox{\hyperlink{class_ai_object_model_adab42d538c709b620941c13f27c0ee0b}{Description}},result.Description);}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00071}00071         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00073}00073         [TestCase(-\/1, 0)]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00074}00074         [TestCase(0, 0)]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00075}00075         [TestCase(0.1f, 0.1f)]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00076}00076         [TestCase(0.5f, 0.5f)]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00077}00077         [TestCase(0.9f, 0.9f)]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00078}00078         [TestCase(1f, 1f)]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00079}00079         [TestCase(1.1f, 1f)]}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00080}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_a5e1550b7c8f1c4f2a24f6544b93d3383}{00080}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___consideration_a5e1550b7c8f1c4f2a24f6544b93d3383}{CalculateScore\_EdgeCasesAroundMinMax\_ReturnsExpected}}(\textcolor{keywordtype}{float} baseScore, \textcolor{keywordtype}{float} expected)}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00081}00081         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00083}00083             uut.ReturnValue = baseScore;}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00085}00085             var result = uut.\mbox{\hyperlink{class_consideration_a848494d3aa3f2e09435fda13e8be1624}{CalculateScore}}(\textcolor{keywordflow}{default});}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00087}00087             Assert.AreEqual((\textcolor{keywordtype}{float}) Math.Round(expected, 2), (\textcolor{keywordtype}{float}) Math.Round(result, 2));}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00088}00088         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00089}00089     \}}
+\DoxyCodeLine{\Hypertarget{_u_t___consideration_8cs_source_l00090}00090 \}}
+
+\end{DoxyCode}

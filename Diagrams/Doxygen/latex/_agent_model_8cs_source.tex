@@ -1,0 +1,37 @@
+\hypertarget{_agent_model_8cs_source}{}\doxysection{Agent\+Model.\+cs}
+\label{_agent_model_8cs_source}\index{Runtime/Models/Agent/AgentModel.cs@{Runtime/Models/Agent/AgentModel.cs}}
+\mbox{\hyperlink{_agent_model_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00006}00006 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx}{UniRx}};}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00009}00009 [Serializable]}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00010}\mbox{\hyperlink{class_agent_model}{00010}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_agent_model}{AgentModel}}}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00011}00011 \{}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00012}00012     \textcolor{keyword}{private} \textcolor{keywordtype}{string} name;}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00013}\mbox{\hyperlink{class_agent_model_a258a4055a791a18d8e6b579c49f55312}{00013}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_agent_model_a258a4055a791a18d8e6b579c49f55312}{Name}} \{}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00014}00014         \textcolor{keyword}{get} => name; }
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00015}00015         \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00016}00016         \{}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00017}00017             name = value;}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00018}00018             onNameChanged.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(name);}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00019}00019         \}}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00020}00020     \}}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00022}\mbox{\hyperlink{class_agent_model_aa21f248641556e46b13f7da8a5fb9bc8}{00022}}     \textcolor{keyword}{public} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_agent_model_aa21f248641556e46b13f7da8a5fb9bc8}{AutoTick}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00023}\mbox{\hyperlink{class_agent_model_a6890545f845ef5645ac7aff1ad38242b}{00023}}     \textcolor{keyword}{public} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_agent_model_a6890545f845ef5645ac7aff1ad38242b}{MsBetweenTicks}} = 0;}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00024}\mbox{\hyperlink{class_agent_model_ae91ca34f520739ac2643f2695ec40808}{00024}}     \textcolor{keyword}{public} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_agent_model_ae91ca34f520739ac2643f2695ec40808}{FramesBetweenTicks}} = 0;}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00025}00025     \textcolor{keyword}{internal} \textcolor{keywordtype}{float} LastTickTime = 0f;}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00026}00026     \textcolor{keyword}{internal} \textcolor{keywordtype}{int} LastTickFrame = 0;}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00028}\mbox{\hyperlink{class_agent_model_a6915fb1a5ab8e1b188cbaca52217047c}{00028}}     \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<string>}} \mbox{\hyperlink{class_agent_model_a6915fb1a5ab8e1b188cbaca52217047c}{OnNameChanged}} => onNameChanged;}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00029}00029     \textcolor{keyword}{private} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<string>}} onNameChanged = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<string>}} ();}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00030}\mbox{\hyperlink{class_agent_model_ad1a8ae02c6610c594947ef9ce32bbe9c}{00030}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_tick_meta_data}{TickMetaData}} \mbox{\hyperlink{class_agent_model_ad1a8ae02c6610c594947ef9ce32bbe9c}{LastTickMetaData}};}
+\DoxyCodeLine{\Hypertarget{_agent_model_8cs_source_l00031}00031 \}}
+
+\end{DoxyCode}

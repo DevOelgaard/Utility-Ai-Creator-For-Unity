@@ -1,0 +1,203 @@
+\hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger}{}\doxysection{Uni\+Rx.\+Diagnostics.\+Logger Class Reference}
+\label{class_uni_rx_1_1_diagnostics_1_1_logger}\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_a5c6f3981d6e41e544620cfd6c3596a44}{Logger}} (string logger\+Name)
+\item 
+virtual void \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_ab04903d84b5d87c3524c2f52596c253b}{Debug}} (object message, Unity\+Engine.\+Object context=null)
+\begin{DoxyCompactList}\small\item\em Output Log\+Type.\+Log but only enables is\+Debug\+Build\end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_a84fe57ba30862a355dad62f31550f361}{Debug\+Format}} (string format, params object\mbox{[}$\,$\mbox{]} args)
+\begin{DoxyCompactList}\small\item\em Output Log\+Type.\+Log but only enables is\+Debug\+Build\end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_a97e0d4b4d3bbeb69e1012ee8899dcc38}{Log}} (object message, Unity\+Engine.\+Object context=null)
+\item 
+virtual void \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_a6f281288257d9a996fdf26fa40526d8c}{Log\+Format}} (string format, params object\mbox{[}$\,$\mbox{]} args)
+\item 
+virtual void \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_a4c316b6d03795eef385840ece20f5a00}{Warning}} (object message, Unity\+Engine.\+Object context=null)
+\item 
+virtual void \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_a0a0b324770a04188539572f5b08fc7d1}{Warning\+Format}} (string format, params object\mbox{[}$\,$\mbox{]} args)
+\item 
+virtual void \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_a628ae8ed7663c9c073e4e952030246b8}{Error}} (object message, Unity\+Engine.\+Object context=null)
+\item 
+virtual void \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_a4bd0e41541783675443824229acf0493}{Error\+Format}} (string format, params object\mbox{[}$\,$\mbox{]} args)
+\item 
+virtual void \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_a60398a32122f93852730059052f79490}{Exception}} (Exception exception, Unity\+Engine.\+Object context=null)
+\item 
+virtual void \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_afa878188f2d7a6457443d72ace68de1a}{Raw}} (\mbox{\hyperlink{struct_uni_rx_1_1_diagnostics_1_1_log_entry}{Log\+Entry}} log\+Entry)
+\begin{DoxyCompactList}\small\item\em Publish raw \mbox{\hyperlink{struct_uni_rx_1_1_diagnostics_1_1_log_entry}{Log\+Entry}}.\end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+readonly Action$<$ \mbox{\hyperlink{struct_uni_rx_1_1_diagnostics_1_1_log_entry}{Log\+Entry}} $>$ \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_ab025e191416deb986de429af01b6dba1}{log\+Publisher}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_uni_rx_1_1_diagnostics_1_1_logger_a82f224147080c7c79728d7af7c2381fa}{Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00008}{8}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_a5c6f3981d6e41e544620cfd6c3596a44}\label{class_uni_rx_1_1_diagnostics_1_1_logger_a5c6f3981d6e41e544620cfd6c3596a44}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!Logger@{Logger}}
+\index{Logger@{Logger}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{Logger()}{Logger()}}
+{\footnotesize\ttfamily Uni\+Rx.\+Diagnostics.\+Logger.\+Logger (\begin{DoxyParamCaption}\item[{string}]{logger\+Name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00016}{16}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_ab04903d84b5d87c3524c2f52596c253b}\label{class_uni_rx_1_1_diagnostics_1_1_logger_ab04903d84b5d87c3524c2f52596c253b}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!Debug@{Debug}}
+\index{Debug@{Debug}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{Debug()}{Debug()}}
+{\footnotesize\ttfamily virtual void Uni\+Rx.\+Diagnostics.\+Logger.\+Debug (\begin{DoxyParamCaption}\item[{object}]{message,  }\item[{Unity\+Engine.\+Object}]{context = {\ttfamily null} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Output Log\+Type.\+Log but only enables is\+Debug\+Build
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00023}{23}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_a84fe57ba30862a355dad62f31550f361}\label{class_uni_rx_1_1_diagnostics_1_1_logger_a84fe57ba30862a355dad62f31550f361}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!DebugFormat@{DebugFormat}}
+\index{DebugFormat@{DebugFormat}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{DebugFormat()}{DebugFormat()}}
+{\footnotesize\ttfamily virtual void Uni\+Rx.\+Diagnostics.\+Logger.\+Debug\+Format (\begin{DoxyParamCaption}\item[{string}]{format,  }\item[{params object\mbox{[}$\,$\mbox{]}}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Output Log\+Type.\+Log but only enables is\+Debug\+Build
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00043}{43}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_a628ae8ed7663c9c073e4e952030246b8}\label{class_uni_rx_1_1_diagnostics_1_1_logger_a628ae8ed7663c9c073e4e952030246b8}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!Error@{Error}}
+\index{Error@{Error}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{Error()}{Error()}}
+{\footnotesize\ttfamily virtual void Uni\+Rx.\+Diagnostics.\+Logger.\+Error (\begin{DoxyParamCaption}\item[{object}]{message,  }\item[{Unity\+Engine.\+Object}]{context = {\ttfamily null} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00102}{102}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_a4bd0e41541783675443824229acf0493}\label{class_uni_rx_1_1_diagnostics_1_1_logger_a4bd0e41541783675443824229acf0493}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!ErrorFormat@{ErrorFormat}}
+\index{ErrorFormat@{ErrorFormat}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{ErrorFormat()}{ErrorFormat()}}
+{\footnotesize\ttfamily virtual void Uni\+Rx.\+Diagnostics.\+Logger.\+Error\+Format (\begin{DoxyParamCaption}\item[{string}]{format,  }\item[{params object\mbox{[}$\,$\mbox{]}}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00112}{112}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_a60398a32122f93852730059052f79490}\label{class_uni_rx_1_1_diagnostics_1_1_logger_a60398a32122f93852730059052f79490}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!Exception@{Exception}}
+\index{Exception@{Exception}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{Exception()}{Exception()}}
+{\footnotesize\ttfamily virtual void Uni\+Rx.\+Diagnostics.\+Logger.\+Exception (\begin{DoxyParamCaption}\item[{Exception}]{exception,  }\item[{Unity\+Engine.\+Object}]{context = {\ttfamily null} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00122}{122}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_a97e0d4b4d3bbeb69e1012ee8899dcc38}\label{class_uni_rx_1_1_diagnostics_1_1_logger_a97e0d4b4d3bbeb69e1012ee8899dcc38}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!Log@{Log}}
+\index{Log@{Log}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{Log()}{Log()}}
+{\footnotesize\ttfamily virtual void Uni\+Rx.\+Diagnostics.\+Logger.\+Log (\begin{DoxyParamCaption}\item[{object}]{message,  }\item[{Unity\+Engine.\+Object}]{context = {\ttfamily null} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00062}{62}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_a6f281288257d9a996fdf26fa40526d8c}\label{class_uni_rx_1_1_diagnostics_1_1_logger_a6f281288257d9a996fdf26fa40526d8c}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!LogFormat@{LogFormat}}
+\index{LogFormat@{LogFormat}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{LogFormat()}{LogFormat()}}
+{\footnotesize\ttfamily virtual void Uni\+Rx.\+Diagnostics.\+Logger.\+Log\+Format (\begin{DoxyParamCaption}\item[{string}]{format,  }\item[{params object\mbox{[}$\,$\mbox{]}}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00072}{72}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_afa878188f2d7a6457443d72ace68de1a}\label{class_uni_rx_1_1_diagnostics_1_1_logger_afa878188f2d7a6457443d72ace68de1a}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!Raw@{Raw}}
+\index{Raw@{Raw}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{Raw()}{Raw()}}
+{\footnotesize\ttfamily virtual void Uni\+Rx.\+Diagnostics.\+Logger.\+Raw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_uni_rx_1_1_diagnostics_1_1_log_entry}{Log\+Entry}}}]{log\+Entry }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Publish raw \mbox{\hyperlink{struct_uni_rx_1_1_diagnostics_1_1_log_entry}{Log\+Entry}}.
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00134}{134}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_a4c316b6d03795eef385840ece20f5a00}\label{class_uni_rx_1_1_diagnostics_1_1_logger_a4c316b6d03795eef385840ece20f5a00}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!Warning@{Warning}}
+\index{Warning@{Warning}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{Warning()}{Warning()}}
+{\footnotesize\ttfamily virtual void Uni\+Rx.\+Diagnostics.\+Logger.\+Warning (\begin{DoxyParamCaption}\item[{object}]{message,  }\item[{Unity\+Engine.\+Object}]{context = {\ttfamily null} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00082}{82}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_a0a0b324770a04188539572f5b08fc7d1}\label{class_uni_rx_1_1_diagnostics_1_1_logger_a0a0b324770a04188539572f5b08fc7d1}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!WarningFormat@{WarningFormat}}
+\index{WarningFormat@{WarningFormat}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{WarningFormat()}{WarningFormat()}}
+{\footnotesize\ttfamily virtual void Uni\+Rx.\+Diagnostics.\+Logger.\+Warning\+Format (\begin{DoxyParamCaption}\item[{string}]{format,  }\item[{params object\mbox{[}$\,$\mbox{]}}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00092}{92}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_ab025e191416deb986de429af01b6dba1}\label{class_uni_rx_1_1_diagnostics_1_1_logger_ab025e191416deb986de429af01b6dba1}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!logPublisher@{logPublisher}}
+\index{logPublisher@{logPublisher}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{logPublisher}{logPublisher}}
+{\footnotesize\ttfamily readonly Action$<$\mbox{\hyperlink{struct_uni_rx_1_1_diagnostics_1_1_log_entry}{Log\+Entry}}$>$ Uni\+Rx.\+Diagnostics.\+Logger.\+log\+Publisher\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_diagnostics_1_1_logger_a82f224147080c7c79728d7af7c2381fa}\label{class_uni_rx_1_1_diagnostics_1_1_logger_a82f224147080c7c79728d7af7c2381fa}} 
+\index{UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}!Name@{Name}}
+\index{Name@{Name}!UniRx.Diagnostics.Logger@{UniRx.Diagnostics.Logger}}
+\doxysubsubsection{\texorpdfstring{Name}{Name}}
+{\footnotesize\ttfamily string Uni\+Rx.\+Diagnostics.\+Logger.\+Name\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_logger_8cs_source_l00013}{13}} of file \mbox{\hyperlink{_logger_8cs_source}{Logger.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Unity\+Engine\+Bridge/\+Diagnostics/\mbox{\hyperlink{_logger_8cs}{Logger.\+cs}}\end{DoxyCompactItemize}

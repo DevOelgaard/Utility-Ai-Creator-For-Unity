@@ -1,0 +1,140 @@
+\hypertarget{interface_uni_rx_1_1_i_observer}{}\doxysection{Uni\+Rx.\+IObserver\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Interface Template Reference}
+\label{interface_uni_rx_1_1_i_observer}\index{UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}}
+
+
+Provides a mechanism for receiving push-\/based notifications and returning a response.  
+
+
+Inheritance diagram for Uni\+Rx.\+IObserver\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=0.820313cm]{interface_uni_rx_1_1_i_observer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+TResult \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{On\+Next}} (TValue value)
+\begin{DoxyCompactList}\small\item\em Notifies the observer of a new element in the sequence. \end{DoxyCompactList}\item 
+TResult \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{On\+Error}} (Exception exception)
+\begin{DoxyCompactList}\small\item\em Notifies the observer that an exception has occurred. \end{DoxyCompactList}\item 
+TResult \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{On\+Completed}} ()
+\begin{DoxyCompactList}\small\item\em Notifies the observer of the end of the sequence. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a07a75513d3381d9ec5d1dfcc27cac070}{On\+Completed}} ()
+\item 
+void \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_aba8b6f6babe7e5eadbc4dff758e925b1}{On\+Error}} (Exception error)
+\item 
+void \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a79a1f5d172c3764f94517cd901c4f8b2}{On\+Next}} (T value)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides a mechanism for receiving push-\/based notifications and returning a response. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em TValue} & The type of the elements received by the observer. This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived. For more information about covariance and contravariance, see Covariance and Contravariance in Generics. \\
+\hline
+{\em TResult} & The type of the result returned from the observer\textquotesingle{}s notification handlers. This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived. For more information about covariance and contravariance, see Covariance and Contravariance in Generics. \\
+\hline
+\end{DoxyTemplParams}
+
+
+Definition at line \mbox{\hyperlink{_i_observer_8cs_source_l00009}{9}} of file \mbox{\hyperlink{_i_observer_8cs_source}{IObserver.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}\label{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}} 
+\index{UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}!OnCompleted@{OnCompleted}}
+\index{OnCompleted@{OnCompleted}!UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnCompleted()}{OnCompleted()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily TResult \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{Uni\+Rx.\+IObserver}}$<$ T $>$.On\+Completed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Notifies the observer of the end of the sequence. 
+
+\begin{DoxyReturn}{Returns}
+Result returned upon observation of the sequence completion.
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_list_observer_af91af0bf35f02f27e046cfb2b97a2795}{Uni\+Rx.\+Internal\+Util.\+List\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_empty_observer_a63831d3ebf8109e45b0302ca0dc19812}{Uni\+Rx.\+Internal\+Util.\+Empty\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer_a6d54a75f5c5e1edd00931139079d4d19}{Uni\+Rx.\+Internal\+Util.\+Throw\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_disposed_observer_a36f75fe10028cd0f22bb3ff8a1572ac2}{Uni\+Rx.\+Internal\+Util.\+Disposed\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_async_subject_a36c25ea71fb3da07c2ff63f8f1f71e9c}{Uni\+Rx.\+Async\+Subject$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a8465b3b79d2768d3e9ee3c4f534e7950}{Uni\+Rx.\+Behavior\+Subject$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_replay_subject_afdf3f7478c5f9954a2e7ce2bcc3d85a0}{Uni\+Rx.\+Replay\+Subject$<$ T $>$}}, and \mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{Uni\+Rx.\+Subject$<$ T $>$}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_observer_a07a75513d3381d9ec5d1dfcc27cac070}\label{interface_uni_rx_1_1_i_observer_a07a75513d3381d9ec5d1dfcc27cac070}} 
+\index{UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}!OnCompleted@{OnCompleted}}
+\index{OnCompleted@{OnCompleted}!UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnCompleted()}{OnCompleted()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{Uni\+Rx.\+IObserver}}$<$ T $>$.On\+Completed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_list_observer_af91af0bf35f02f27e046cfb2b97a2795}{Uni\+Rx.\+Internal\+Util.\+List\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_empty_observer_a63831d3ebf8109e45b0302ca0dc19812}{Uni\+Rx.\+Internal\+Util.\+Empty\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer_a6d54a75f5c5e1edd00931139079d4d19}{Uni\+Rx.\+Internal\+Util.\+Throw\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_disposed_observer_a36f75fe10028cd0f22bb3ff8a1572ac2}{Uni\+Rx.\+Internal\+Util.\+Disposed\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_async_subject_a36c25ea71fb3da07c2ff63f8f1f71e9c}{Uni\+Rx.\+Async\+Subject$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a8465b3b79d2768d3e9ee3c4f534e7950}{Uni\+Rx.\+Behavior\+Subject$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_replay_subject_afdf3f7478c5f9954a2e7ce2bcc3d85a0}{Uni\+Rx.\+Replay\+Subject$<$ T $>$}}, and \mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{Uni\+Rx.\+Subject$<$ T $>$}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_observer_aba8b6f6babe7e5eadbc4dff758e925b1}\label{interface_uni_rx_1_1_i_observer_aba8b6f6babe7e5eadbc4dff758e925b1}} 
+\index{UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}!OnError@{OnError}}
+\index{OnError@{OnError}!UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnError()}{OnError()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{Uni\+Rx.\+IObserver}}$<$ T $>$.On\+Error (\begin{DoxyParamCaption}\item[{Exception}]{error }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_list_observer_a1640a4d2d3b266f7b05887f2bcc6a10a}{Uni\+Rx.\+Internal\+Util.\+List\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_empty_observer_a5519150d89ce5c99dc39070090aab691}{Uni\+Rx.\+Internal\+Util.\+Empty\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer_ac092043b3fa9d3f8a05cce4f9a42be0f}{Uni\+Rx.\+Internal\+Util.\+Throw\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_disposed_observer_aeff4e382750f223f4b8e2ae04962e97e}{Uni\+Rx.\+Internal\+Util.\+Disposed\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_async_subject_abcf6f11cddd6f203cbfa1b8855c1ccc6}{Uni\+Rx.\+Async\+Subject$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a873fcf26ac91b147d407e7d7a984f3ed}{Uni\+Rx.\+Behavior\+Subject$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_replay_subject_a9aadc4a06fdd9e12749834aec7d00ca6}{Uni\+Rx.\+Replay\+Subject$<$ T $>$}}, and \mbox{\hyperlink{class_uni_rx_1_1_subject_ac5f6ccb732c2ff408edbcc9cfc5aab64}{Uni\+Rx.\+Subject$<$ T $>$}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}\label{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}} 
+\index{UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}!OnError@{OnError}}
+\index{OnError@{OnError}!UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnError()}{OnError()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily TResult \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{Uni\+Rx.\+IObserver}}$<$ T $>$.On\+Error (\begin{DoxyParamCaption}\item[{Exception}]{exception }\end{DoxyParamCaption})}
+
+
+
+Notifies the observer that an exception has occurred. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em exception} & The exception that occurred.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result returned upon observation of an error.
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_list_observer_a1640a4d2d3b266f7b05887f2bcc6a10a}{Uni\+Rx.\+Internal\+Util.\+List\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_empty_observer_a5519150d89ce5c99dc39070090aab691}{Uni\+Rx.\+Internal\+Util.\+Empty\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer_ac092043b3fa9d3f8a05cce4f9a42be0f}{Uni\+Rx.\+Internal\+Util.\+Throw\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_disposed_observer_aeff4e382750f223f4b8e2ae04962e97e}{Uni\+Rx.\+Internal\+Util.\+Disposed\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_async_subject_abcf6f11cddd6f203cbfa1b8855c1ccc6}{Uni\+Rx.\+Async\+Subject$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a873fcf26ac91b147d407e7d7a984f3ed}{Uni\+Rx.\+Behavior\+Subject$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_replay_subject_a9aadc4a06fdd9e12749834aec7d00ca6}{Uni\+Rx.\+Replay\+Subject$<$ T $>$}}, and \mbox{\hyperlink{class_uni_rx_1_1_subject_ac5f6ccb732c2ff408edbcc9cfc5aab64}{Uni\+Rx.\+Subject$<$ T $>$}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_observer_a79a1f5d172c3764f94517cd901c4f8b2}\label{interface_uni_rx_1_1_i_observer_a79a1f5d172c3764f94517cd901c4f8b2}} 
+\index{UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}!OnNext@{OnNext}}
+\index{OnNext@{OnNext}!UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnNext()}{OnNext()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{Uni\+Rx.\+IObserver}}$<$ T $>$.On\+Next (\begin{DoxyParamCaption}\item[{T}]{value }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_list_observer_a81ceaaad17d4e87ac4f78ea8c6000725}{Uni\+Rx.\+Internal\+Util.\+List\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_empty_observer_aa79067596b574f55591bc6aa81132e95}{Uni\+Rx.\+Internal\+Util.\+Empty\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer_a9e57743d4cfbeb6e0369a6ae9a6eee08}{Uni\+Rx.\+Internal\+Util.\+Throw\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_disposed_observer_aac53abfae3c310b6a14b1a26632fe74e}{Uni\+Rx.\+Internal\+Util.\+Disposed\+Observer$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_async_subject_a14c86d27b60c3cca08cf38917ad1d5e1}{Uni\+Rx.\+Async\+Subject$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a1c651c8720c964d0f5c06ea3e61917a3}{Uni\+Rx.\+Behavior\+Subject$<$ T $>$}}, \mbox{\hyperlink{class_uni_rx_1_1_replay_subject_a6be0378751b7bcc17f540c2371bf850d}{Uni\+Rx.\+Replay\+Subject$<$ T $>$}}, and \mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{Uni\+Rx.\+Subject$<$ T $>$}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}\label{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}} 
+\index{UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}!OnNext@{OnNext}}
+\index{OnNext@{OnNext}!UniRx.IObserver$<$ T $>$@{UniRx.IObserver$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnNext()}{OnNext()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily TResult \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{Uni\+Rx.\+IObserver}}$<$ T $>$.On\+Next (\begin{DoxyParamCaption}\item[{TValue}]{value }\end{DoxyParamCaption})}
+
+
+
+Notifies the observer of a new element in the sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The new element in the sequence.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result returned upon observation of a new element.
+\end{DoxyReturn}
+
+
+The documentation for this interface was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\mbox{\hyperlink{_notification_8cs}{Notification.\+cs}}\item 
+Editor/\+Uni\+Rx/\+Scripts/\+System/\mbox{\hyperlink{_i_observer_8cs}{IObserver.\+cs}}\end{DoxyCompactItemize}

@@ -1,0 +1,51 @@
+\hypertarget{_runtime_inspector_8cs_source}{}\doxysection{Runtime\+Inspector.\+cs}
+\label{_runtime_inspector_8cs_source}\index{Editor/UI/EditorWindows/RuntimeInspector/RuntimeInspector.cs@{Editor/UI/EditorWindows/RuntimeInspector/RuntimeInspector.cs}}
+\mbox{\hyperlink{_runtime_inspector_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00006}00006 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_extension}{UniRxExtension}};}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00007}00007 \textcolor{keyword}{using }UnityEditor.UIElements;}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00009}00009 \textcolor{keyword}{internal} \textcolor{keyword}{class }RunTimeInspector : SplitViewWindowDropDownSelection<IAgent>}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00011}00011     \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{void} Init()}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00012}00012     \{}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00013}00013         \textcolor{comment}{// UasTemplateService.Instance.LoadCurrentProject(true);}}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00014}00014         var debugMenu = \textcolor{keyword}{new} ToolbarMenu();}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00015}00015         debugMenu.text = \textcolor{stringliteral}{"{}Debug"{}};}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00017}00017         debugMenu.menu.AppendAction(\textcolor{stringliteral}{"{}Timer"{}}, \_ =>}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00018}00018         \{}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00019}00019             TimerService.Instance.DebugLogTime();}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00020}00020         \});}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00022}00022         debugMenu.menu.AppendAction(\textcolor{stringliteral}{"{}Reset Timer"{}}, \_ =>}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00023}00023         \{}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00024}00024             TimerService.Instance.Reset();}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00025}00025         \});}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00027}00027         ToolbarTop.Add(debugMenu);}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00028}00028     \}}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00031}00031     \textcolor{keyword}{protected} \textcolor{keyword}{override} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list}{ReactiveList<IAgent>}} GetLeftPanelElements(\textcolor{keywordtype}{string} identifier)}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00032}00032     \{}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00033}00033         \textcolor{keywordflow}{return} AgentManager.Instance.GetAgentsByIdentifier(identifier);}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00034}00034     \}}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00036}00036     \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{string} GetNameFromElement(\mbox{\hyperlink{interface_i_agent}{IAgent}} element)}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00037}00037     \{}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00038}00038         \textcolor{keywordflow}{return} element.\mbox{\hyperlink{interface_i_agent_a802d25682d915eea53c871c6a96ae452}{Model}}.\mbox{\hyperlink{class_agent_model_a258a4055a791a18d8e6b579c49f55312}{Name}};}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00039}00039     \}}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00041}00041     \textcolor{keyword}{protected} \textcolor{keyword}{override} RightPanelComponent<IAgent> GetRightPanelComponent()}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00042}00042     \{}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00043}00043         \textcolor{keywordflow}{return} \textcolor{keyword}{new} AgentViewModel();}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00044}00044     \}}
+\DoxyCodeLine{\Hypertarget{_runtime_inspector_8cs_source_l00045}00045 \}}
+
+\end{DoxyCode}

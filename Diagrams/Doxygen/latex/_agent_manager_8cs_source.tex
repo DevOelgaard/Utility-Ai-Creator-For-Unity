@@ -1,0 +1,74 @@
+\hypertarget{_agent_manager_8cs_source}{}\doxysection{Agent\+Manager.\+cs}
+\label{_agent_manager_8cs_source}\index{Runtime/Services/AgentManager.cs@{Runtime/Services/AgentManager.cs}}
+\mbox{\hyperlink{_agent_manager_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00001}00001 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00002}00002 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_extension}{UniRxExtension}};}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00003}00003 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00004}00004 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx}{UniRx}};}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00005}00005 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00007}00007 \textcolor{keyword}{internal} \textcolor{keyword}{class }AgentManager}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00009}00009     \textcolor{keyword}{private} \textcolor{keyword}{static} AgentManager \_instance;}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00010}00010     \textcolor{keyword}{internal} AgentManagerModel Model \{ \textcolor{keyword}{get}; \} = \textcolor{keyword}{new} AgentManagerModel();}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00011}00011     \textcolor{keyword}{internal} List<string> AgentIdentifiers => Model.AgentIdentifiers;}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00013}00013     \textcolor{keyword}{internal} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<bool>}} AgentIdentifiersUpdated => agentIdentifiersUpdated;}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00014}00014     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<bool>}} agentIdentifiersUpdated = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<bool>}}();}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00016}00016     \textcolor{keyword}{internal} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<IAgent>}} AgentsUpdated => agentsUpdated;}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00017}00017     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<IAgent>}} agentsUpdated = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<IAgent>}}();}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00018}00018     \textcolor{keyword}{private} AgentManager()}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00019}00019     \{}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00020}00020         \textcolor{comment}{//AiTicker.Instance.Start();}}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00021}00021     \}}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00023}00023     \textcolor{keyword}{internal} \textcolor{keyword}{static} AgentManager Instance \{ }
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00024}00024         \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} \_instance ??= \textcolor{keyword}{new} AgentManager(); \} }
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00025}00025     \}}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00027}00027     \textcolor{keyword}{internal} \textcolor{keywordtype}{void} Reset()}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00028}00028     \{}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00029}00029         \_instance = \textcolor{keyword}{new} AgentManager();}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00030}00030     \}}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00032}00032     \textcolor{keyword}{internal} \textcolor{keywordtype}{void} Register(\mbox{\hyperlink{interface_i_agent}{IAgent}} agent)}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00033}00033     \{}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00034}00034         var identifier = agent.\mbox{\hyperlink{interface_i_agent_ad686a6ff51d0885ce6b6b741b80cbd72}{TypeIdentifier}};}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00035}00035         \textcolor{keywordflow}{if} (!Model.AgentsByIdentifier.ContainsKey(identifier))}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00036}00036         \{}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00037}00037             Model.AgentsByIdentifier.Add(identifier, \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list}{ReactiveList<IAgent>}}());}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00038}00038             AgentIdentifiers.Add(identifier);}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00039}00039             agentIdentifiersUpdated.OnNext(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00040}00040         \}}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00042}00042         Model.AgentsByIdentifier[identifier].Add(agent);}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00043}00043         Model.Agents.Add(agent);}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00044}00044         agentsUpdated.OnNext(agent);}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00045}00045     \}}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00047}00047     \textcolor{keyword}{internal} \textcolor{keywordtype}{void} Unregister(\mbox{\hyperlink{interface_i_agent}{IAgent}} agent)}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00048}00048     \{}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00049}00049         var identifier = agent.\mbox{\hyperlink{interface_i_agent_ad686a6ff51d0885ce6b6b741b80cbd72}{TypeIdentifier}};}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00050}00050         \textcolor{keywordflow}{if} (Model.AgentsByIdentifier.ContainsKey(identifier))}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00051}00051         \{}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00052}00052             Model.AgentsByIdentifier.Remove(identifier);}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00053}00053         \}}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00054}00054         Model.Agents.Remove(agent);}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00055}00055         agentsUpdated.OnNext(agent);}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00056}00056     \}}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00058}00058     \textcolor{keyword}{internal} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list}{ReactiveList<IAgent>}} GetAgentsByIdentifier(\textcolor{keywordtype}{string} identifier)}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00059}00059     \{}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00060}00060         \textcolor{keywordflow}{if} (!Model.AgentsByIdentifier.ContainsKey(identifier))}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00061}00061         \{}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00062}00062             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list}{ReactiveList<IAgent>}}();}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00063}00063         \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00064}00064         \{}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00065}00065             \textcolor{keywordflow}{return} Model.AgentsByIdentifier[identifier];}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00066}00066         \}}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00067}00067     \}}
+\DoxyCodeLine{\Hypertarget{_agent_manager_8cs_source_l00068}00068 \}}
+
+\end{DoxyCode}

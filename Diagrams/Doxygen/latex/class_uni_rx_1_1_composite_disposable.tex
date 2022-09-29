@@ -1,0 +1,346 @@
+\hypertarget{class_uni_rx_1_1_composite_disposable}{}\doxysection{Uni\+Rx.\+Composite\+Disposable Class Reference}
+\label{class_uni_rx_1_1_composite_disposable}\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+Inheritance diagram for Uni\+Rx.\+Composite\+Disposable\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_uni_rx_1_1_composite_disposable}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_a76f0ff6b7cd43892734d44785e27250d}{Composite\+Disposable}} ()
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the T\+:\+System.\+Reactive.\+Disposables.\+Composite\+Disposable class with no disposables contained by it initially. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_a441ec3c888cd1cd7885a89491f7ea901}{Composite\+Disposable}} (int capacity)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the T\+:\+System.\+Reactive.\+Disposables.\+Composite\+Disposable class with the specified number of disposables. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_ad1b7aad76dc7567213d24596003e58d5}{Composite\+Disposable}} (params IDisposable\mbox{[}$\,$\mbox{]} disposables)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the T\+:\+System.\+Reactive.\+Disposables.\+Composite\+Disposable class from a group of disposables. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_a251cfd7c74d2e7f0f28e48e79b3eae76}{Composite\+Disposable}} (IEnumerable$<$ IDisposable $>$ disposables)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the T\+:\+System.\+Reactive.\+Disposables.\+Composite\+Disposable class from a group of disposables. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_a5212f3ba6c7bcd863268b5e2b5344279}{Add}} (IDisposable item)
+\begin{DoxyCompactList}\small\item\em Adds a disposable to the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}} or disposes the disposable if the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}} is disposed. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_a7ef95ff563709cb73635d336f2142d7a}{Remove}} (IDisposable item)
+\begin{DoxyCompactList}\small\item\em Removes and disposes the first occurrence of a disposable from the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_aa235da262f29c46d0aeeb318d4cab269}{Dispose}} ()
+\begin{DoxyCompactList}\small\item\em Disposes all disposables in the group and removes them from the group. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_a18c693e7d25101e7a0371e7aa87ed405}{Clear}} ()
+\begin{DoxyCompactList}\small\item\em Removes and disposes all disposables from the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}}, but does not dispose the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_a4b4a19878ce6f19e95beb0b495147720}{Contains}} (IDisposable item)
+\begin{DoxyCompactList}\small\item\em Determines whether the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}} contains a specific disposable. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_a8a536ba4dfe99fd258d3d118bbd72297}{Copy\+To}} (IDisposable\mbox{[}$\,$\mbox{]} array, int array\+Index)
+\begin{DoxyCompactList}\small\item\em Copies the disposables contained in the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}} to an array, starting at a particular array index. \end{DoxyCompactList}\item 
+IEnumerator$<$ IDisposable $>$ \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_a8f467e8c1a68ec913f64e485f1fcbb62}{Get\+Enumerator}} ()
+\begin{DoxyCompactList}\small\item\em Returns an enumerator that iterates through the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_a3a6807b26d71cfc224b44f3f8ad3b299}{Count}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the number of disposables contained in the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_ac7df1f97b7995071df92fbcf672c7151}{Is\+Read\+Only}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Always returns false. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable_af9badac5593fa8dbaaa739474ed2edd5}{Is\+Disposed}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a value that indicates whether the object is disposed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00010}{10}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_a76f0ff6b7cd43892734d44785e27250d}\label{class_uni_rx_1_1_composite_disposable_a76f0ff6b7cd43892734d44785e27250d}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!CompositeDisposable@{CompositeDisposable}}
+\index{CompositeDisposable@{CompositeDisposable}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{CompositeDisposable()}{CompositeDisposable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Uni\+Rx.\+Composite\+Disposable.\+Composite\+Disposable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes a new instance of the T\+:\+System.\+Reactive.\+Disposables.\+Composite\+Disposable class with no disposables contained by it initially. 
+
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00022}{22}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_a441ec3c888cd1cd7885a89491f7ea901}\label{class_uni_rx_1_1_composite_disposable_a441ec3c888cd1cd7885a89491f7ea901}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!CompositeDisposable@{CompositeDisposable}}
+\index{CompositeDisposable@{CompositeDisposable}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{CompositeDisposable()}{CompositeDisposable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Uni\+Rx.\+Composite\+Disposable.\+Composite\+Disposable (\begin{DoxyParamCaption}\item[{int}]{capacity }\end{DoxyParamCaption})}
+
+
+
+Initializes a new instance of the T\+:\+System.\+Reactive.\+Disposables.\+Composite\+Disposable class with the specified number of disposables. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em capacity} & The number of disposables that the new \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}} can initially store.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Out\+Of\+Range\+Exception} & {\itshape capacity}  is less than zero.\\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00032}{32}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_ad1b7aad76dc7567213d24596003e58d5}\label{class_uni_rx_1_1_composite_disposable_ad1b7aad76dc7567213d24596003e58d5}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!CompositeDisposable@{CompositeDisposable}}
+\index{CompositeDisposable@{CompositeDisposable}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{CompositeDisposable()}{CompositeDisposable()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Uni\+Rx.\+Composite\+Disposable.\+Composite\+Disposable (\begin{DoxyParamCaption}\item[{params IDisposable\mbox{[}$\,$\mbox{]}}]{disposables }\end{DoxyParamCaption})}
+
+
+
+Initializes a new instance of the T\+:\+System.\+Reactive.\+Disposables.\+Composite\+Disposable class from a group of disposables. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disposables} & Disposables that will be disposed together.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Null\+Exception} & {\itshape disposables}  is null.\\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00045}{45}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_a251cfd7c74d2e7f0f28e48e79b3eae76}\label{class_uni_rx_1_1_composite_disposable_a251cfd7c74d2e7f0f28e48e79b3eae76}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!CompositeDisposable@{CompositeDisposable}}
+\index{CompositeDisposable@{CompositeDisposable}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{CompositeDisposable()}{CompositeDisposable()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Uni\+Rx.\+Composite\+Disposable.\+Composite\+Disposable (\begin{DoxyParamCaption}\item[{IEnumerable$<$ IDisposable $>$}]{disposables }\end{DoxyParamCaption})}
+
+
+
+Initializes a new instance of the T\+:\+System.\+Reactive.\+Disposables.\+Composite\+Disposable class from a group of disposables. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disposables} & Disposables that will be disposed together.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Null\+Exception} & {\itshape disposables}  is null.\\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00059}{59}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_a5212f3ba6c7bcd863268b5e2b5344279}\label{class_uni_rx_1_1_composite_disposable_a5212f3ba6c7bcd863268b5e2b5344279}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!Add@{Add}}
+\index{Add@{Add}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Add()}{Add()}}
+{\footnotesize\ttfamily void Uni\+Rx.\+Composite\+Disposable.\+Add (\begin{DoxyParamCaption}\item[{IDisposable}]{item }\end{DoxyParamCaption})}
+
+
+
+Adds a disposable to the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}} or disposes the disposable if the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}} is disposed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Disposable to add.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Null\+Exception} & {\itshape item}  is null.\\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00084}{84}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_a18c693e7d25101e7a0371e7aa87ed405}\label{class_uni_rx_1_1_composite_disposable_a18c693e7d25101e7a0371e7aa87ed405}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!Clear@{Clear}}
+\index{Clear@{Clear}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Clear()}{Clear()}}
+{\footnotesize\ttfamily void Uni\+Rx.\+Composite\+Disposable.\+Clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Removes and disposes all disposables from the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}}, but does not dispose the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}}. 
+
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00181}{181}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_a4b4a19878ce6f19e95beb0b495147720}\label{class_uni_rx_1_1_composite_disposable_a4b4a19878ce6f19e95beb0b495147720}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!Contains@{Contains}}
+\index{Contains@{Contains}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Contains()}{Contains()}}
+{\footnotesize\ttfamily bool Uni\+Rx.\+Composite\+Disposable.\+Contains (\begin{DoxyParamCaption}\item[{IDisposable}]{item }\end{DoxyParamCaption})}
+
+
+
+Determines whether the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}} contains a specific disposable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Disposable to search for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the disposable was found; otherwise, false.
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Null\+Exception} & {\itshape item}  is null.\\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00202}{202}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_a8a536ba4dfe99fd258d3d118bbd72297}\label{class_uni_rx_1_1_composite_disposable_a8a536ba4dfe99fd258d3d118bbd72297}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!CopyTo@{CopyTo}}
+\index{CopyTo@{CopyTo}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{CopyTo()}{CopyTo()}}
+{\footnotesize\ttfamily void Uni\+Rx.\+Composite\+Disposable.\+Copy\+To (\begin{DoxyParamCaption}\item[{IDisposable\mbox{[}$\,$\mbox{]}}]{array,  }\item[{int}]{array\+Index }\end{DoxyParamCaption})}
+
+
+
+Copies the disposables contained in the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}} to an array, starting at a particular array index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em array} & Array to copy the contained disposables to.\\
+\hline
+{\em array\+Index} & Target index at which to copy the first disposable of the group.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Null\+Exception} & {\itshape array}  is null.\\
+\hline
+{\em Argument\+Out\+Of\+Range\+Exception} & {\itshape array\+Index}  is less than zero. -\/or -\/ {\itshape array\+Index}  is larger than or equal to the array length.\\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00220}{220}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_aa235da262f29c46d0aeeb318d4cab269}\label{class_uni_rx_1_1_composite_disposable_aa235da262f29c46d0aeeb318d4cab269}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
+{\footnotesize\ttfamily void Uni\+Rx.\+Composite\+Disposable.\+Dispose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disposes all disposables in the group and removes them from the group. 
+
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00156}{156}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_a8f467e8c1a68ec913f64e485f1fcbb62}\label{class_uni_rx_1_1_composite_disposable_a8f467e8c1a68ec913f64e485f1fcbb62}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!GetEnumerator@{GetEnumerator}}
+\index{GetEnumerator@{GetEnumerator}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{GetEnumerator()}{GetEnumerator()}}
+{\footnotesize\ttfamily IEnumerator$<$ IDisposable $>$ Uni\+Rx.\+Composite\+Disposable.\+Get\+Enumerator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns an enumerator that iterates through the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}}. 
+
+\begin{DoxyReturn}{Returns}
+An enumerator to iterate over the disposables.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00251}{251}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_a7ef95ff563709cb73635d336f2142d7a}\label{class_uni_rx_1_1_composite_disposable_a7ef95ff563709cb73635d336f2142d7a}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!Remove@{Remove}}
+\index{Remove@{Remove}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Remove()}{Remove()}}
+{\footnotesize\ttfamily bool Uni\+Rx.\+Composite\+Disposable.\+Remove (\begin{DoxyParamCaption}\item[{IDisposable}]{item }\end{DoxyParamCaption})}
+
+
+
+Removes and disposes the first occurrence of a disposable from the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Disposable to remove.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if found; false otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Null\+Exception} & {\itshape item}  is null.\\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00109}{109}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_a3a6807b26d71cfc224b44f3f8ad3b299}\label{class_uni_rx_1_1_composite_disposable_a3a6807b26d71cfc224b44f3f8ad3b299}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!Count@{Count}}
+\index{Count@{Count}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Count}{Count}}
+{\footnotesize\ttfamily int Uni\+Rx.\+Composite\+Disposable.\+Count\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets the number of disposables contained in the \mbox{\hyperlink{class_uni_rx_1_1_composite_disposable}{Composite\+Disposable}}. 
+
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00071}{71}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_af9badac5593fa8dbaaa739474ed2edd5}\label{class_uni_rx_1_1_composite_disposable_af9badac5593fa8dbaaa739474ed2edd5}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!IsDisposed@{IsDisposed}}
+\index{IsDisposed@{IsDisposed}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{IsDisposed}{IsDisposed}}
+{\footnotesize\ttfamily bool Uni\+Rx.\+Composite\+Disposable.\+Is\+Disposed\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets a value that indicates whether the object is disposed. 
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable_aefb0dc0bc3db77afdf28a4853db5eef3}{Uni\+Rx.\+ICancelable}}.
+
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00278}{278}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_composite_disposable_ac7df1f97b7995071df92fbcf672c7151}\label{class_uni_rx_1_1_composite_disposable_ac7df1f97b7995071df92fbcf672c7151}} 
+\index{UniRx.CompositeDisposable@{UniRx.CompositeDisposable}!IsReadOnly@{IsReadOnly}}
+\index{IsReadOnly@{IsReadOnly}!UniRx.CompositeDisposable@{UniRx.CompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{IsReadOnly}{IsReadOnly}}
+{\footnotesize\ttfamily bool Uni\+Rx.\+Composite\+Disposable.\+Is\+Read\+Only\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Always returns false. 
+
+
+
+Definition at line \mbox{\hyperlink{_composite_disposable_8cs_source_l00242}{242}} of file \mbox{\hyperlink{_composite_disposable_8cs_source}{Composite\+Disposable.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Disposables/\mbox{\hyperlink{_composite_disposable_8cs}{Composite\+Disposable.\+cs}}\end{DoxyCompactItemize}

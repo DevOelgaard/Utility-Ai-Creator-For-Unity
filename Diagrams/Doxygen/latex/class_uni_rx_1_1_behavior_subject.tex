@@ -1,0 +1,182 @@
+\hypertarget{class_uni_rx_1_1_behavior_subject}{}\doxysection{Uni\+Rx.\+Behavior\+Subject\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_uni_rx_1_1_behavior_subject}\index{UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}}
+Inheritance diagram for Uni\+Rx.\+Behavior\+Subject\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.314554cm]{class_uni_rx_1_1_behavior_subject}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a832d762a5f3cd24ec78edb45bf18d80a}{Behavior\+Subject}} (T default\+Value)
+\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a8465b3b79d2768d3e9ee3c4f534e7950}{On\+Completed}} ()
+\begin{DoxyCompactList}\small\item\em Notifies the observer of the end of the sequence. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a873fcf26ac91b147d407e7d7a984f3ed}{On\+Error}} (Exception error)
+\begin{DoxyCompactList}\small\item\em Notifies the observer that an exception has occurred. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a1c651c8720c964d0f5c06ea3e61917a3}{On\+Next}} (T value)
+\item 
+IDisposable \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a5945f17aabbc46142ce2ac8e414b6703}{Subscribe}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$ observer)
+\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_aebbef0d04f12365151e1345e9bab4701}{Dispose}} ()
+\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a5a7f22fdc95e7ee43af03520f01c15c0}{Is\+Required\+Subscribe\+On\+Current\+Thread}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+T \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_aad86eace5bfe93204124359dfada5692}{Value}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject_a4f5740fc2fdb59db81ddb5dd50cf3f65}{Has\+Observers}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_behavior_subject_8cs_source_l00006}{6}} of file \mbox{\hyperlink{_behavior_subject_8cs_source}{Behavior\+Subject.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_behavior_subject_a832d762a5f3cd24ec78edb45bf18d80a}\label{class_uni_rx_1_1_behavior_subject_a832d762a5f3cd24ec78edb45bf18d80a}} 
+\index{UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}!BehaviorSubject@{BehaviorSubject}}
+\index{BehaviorSubject@{BehaviorSubject}!UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{BehaviorSubject()}{BehaviorSubject()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject}{Uni\+Rx.\+Behavior\+Subject}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_behavior_subject}{Behavior\+Subject}} (\begin{DoxyParamCaption}\item[{T}]{default\+Value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_behavior_subject_8cs_source_l00016}{16}} of file \mbox{\hyperlink{_behavior_subject_8cs_source}{Behavior\+Subject.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_behavior_subject_aebbef0d04f12365151e1345e9bab4701}\label{class_uni_rx_1_1_behavior_subject_aebbef0d04f12365151e1345e9bab4701}} 
+\index{UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject}{Uni\+Rx.\+Behavior\+Subject}}$<$ T $>$.Dispose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_behavior_subject_8cs_source_l00145}{145}} of file \mbox{\hyperlink{_behavior_subject_8cs_source}{Behavior\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_behavior_subject_a5a7f22fdc95e7ee43af03520f01c15c0}\label{class_uni_rx_1_1_behavior_subject_a5a7f22fdc95e7ee43af03520f01c15c0}} 
+\index{UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}!IsRequiredSubscribeOnCurrentThread@{IsRequiredSubscribeOnCurrentThread}}
+\index{IsRequiredSubscribeOnCurrentThread@{IsRequiredSubscribeOnCurrentThread}!UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{IsRequiredSubscribeOnCurrentThread()}{IsRequiredSubscribeOnCurrentThread()}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject}{Uni\+Rx.\+Behavior\+Subject}}$<$ T $>$.Is\+Required\+Subscribe\+On\+Current\+Thread (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_optimized_observable_a8a2544c49f3e465df5b8ec4f71c9e699}{Uni\+Rx.\+IOptimized\+Observable$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_behavior_subject_8cs_source_l00161}{161}} of file \mbox{\hyperlink{_behavior_subject_8cs_source}{Behavior\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_behavior_subject_a8465b3b79d2768d3e9ee3c4f534e7950}\label{class_uni_rx_1_1_behavior_subject_a8465b3b79d2768d3e9ee3c4f534e7950}} 
+\index{UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}!OnCompleted@{OnCompleted}}
+\index{OnCompleted@{OnCompleted}!UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnCompleted()}{OnCompleted()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject}{Uni\+Rx.\+Behavior\+Subject}}$<$ T $>$.On\+Completed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Notifies the observer of the end of the sequence. 
+
+\begin{DoxyReturn}{Returns}
+Result returned upon observation of the sequence completion.
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_behavior_subject_8cs_source_l00039}{39}} of file \mbox{\hyperlink{_behavior_subject_8cs_source}{Behavior\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_behavior_subject_a873fcf26ac91b147d407e7d7a984f3ed}\label{class_uni_rx_1_1_behavior_subject_a873fcf26ac91b147d407e7d7a984f3ed}} 
+\index{UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}!OnError@{OnError}}
+\index{OnError@{OnError}!UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnError()}{OnError()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject}{Uni\+Rx.\+Behavior\+Subject}}$<$ T $>$.On\+Error (\begin{DoxyParamCaption}\item[{Exception}]{exception }\end{DoxyParamCaption})}
+
+
+
+Notifies the observer that an exception has occurred. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em exception} & The exception that occurred.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result returned upon observation of an error.
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_behavior_subject_8cs_source_l00055}{55}} of file \mbox{\hyperlink{_behavior_subject_8cs_source}{Behavior\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_behavior_subject_a1c651c8720c964d0f5c06ea3e61917a3}\label{class_uni_rx_1_1_behavior_subject_a1c651c8720c964d0f5c06ea3e61917a3}} 
+\index{UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}!OnNext@{OnNext}}
+\index{OnNext@{OnNext}!UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnNext()}{OnNext()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject}{Uni\+Rx.\+Behavior\+Subject}}$<$ T $>$.On\+Next (\begin{DoxyParamCaption}\item[{T}]{value }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a79a1f5d172c3764f94517cd901c4f8b2}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_behavior_subject_8cs_source_l00074}{74}} of file \mbox{\hyperlink{_behavior_subject_8cs_source}{Behavior\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_behavior_subject_a5945f17aabbc46142ce2ac8e414b6703}\label{class_uni_rx_1_1_behavior_subject_a5945f17aabbc46142ce2ac8e414b6703}} 
+\index{UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}!Subscribe@{Subscribe}}
+\index{Subscribe@{Subscribe}!UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Subscribe()}{Subscribe()}}
+{\footnotesize\ttfamily IDisposable \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject}{Uni\+Rx.\+Behavior\+Subject}}$<$ T $>$.Subscribe (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$}]{observer }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observable_a81a2566f451cf1ddc8de265d019d1b88}{Uni\+Rx.\+IObservable$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_behavior_subject_8cs_source_l00088}{88}} of file \mbox{\hyperlink{_behavior_subject_8cs_source}{Behavior\+Subject.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_behavior_subject_a4f5740fc2fdb59db81ddb5dd50cf3f65}\label{class_uni_rx_1_1_behavior_subject_a4f5740fc2fdb59db81ddb5dd50cf3f65}} 
+\index{UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}!HasObservers@{HasObservers}}
+\index{HasObservers@{HasObservers}!UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{HasObservers}{HasObservers}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject}{Uni\+Rx.\+Behavior\+Subject}}$<$ T $>$.Has\+Observers\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_behavior_subject_8cs_source_l00031}{31}} of file \mbox{\hyperlink{_behavior_subject_8cs_source}{Behavior\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_behavior_subject_aad86eace5bfe93204124359dfada5692}\label{class_uni_rx_1_1_behavior_subject_aad86eace5bfe93204124359dfada5692}} 
+\index{UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}!Value@{Value}}
+\index{Value@{Value}!UniRx.BehaviorSubject$<$ T $>$@{UniRx.BehaviorSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Value}{Value}}
+{\footnotesize\ttfamily T \mbox{\hyperlink{class_uni_rx_1_1_behavior_subject}{Uni\+Rx.\+Behavior\+Subject}}$<$ T $>$.Value\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_behavior_subject_8cs_source_l00021}{21}} of file \mbox{\hyperlink{_behavior_subject_8cs_source}{Behavior\+Subject.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Subjects/\mbox{\hyperlink{_behavior_subject_8cs}{Behavior\+Subject.\+cs}}\end{DoxyCompactItemize}

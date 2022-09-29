@@ -1,0 +1,51 @@
+\hypertarget{_observable_animator_trigger_8cs_source}{}\doxysection{Observable\+Animator\+Trigger.\+cs}
+\label{_observable_animator_trigger_8cs_source}\index{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableAnimatorTrigger.cs@{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableAnimatorTrigger.cs}}
+\mbox{\hyperlink{_observable_animator_trigger_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}; \textcolor{comment}{// require keep for Windows Universal App}}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00002}00002 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00004}\mbox{\hyperlink{namespace_uni_rx_1_1_triggers}{00004}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_triggers}{UniRx.Triggers}}}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00006}00006     [DisallowMultipleComponent]}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00007}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_animator_trigger}{00007}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_animator_trigger}{ObservableAnimatorTrigger}} : \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_base}{ObservableTriggerBase}}}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00009}00009         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<int>}} onAnimatorIK;}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00012}00012         \textcolor{keywordtype}{void} OnAnimatorIK(\textcolor{keywordtype}{int} layerIndex)}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00013}00013         \{}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00014}00014             \textcolor{keywordflow}{if} (onAnimatorIK != \textcolor{keyword}{null}) onAnimatorIK.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(layerIndex);}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00015}00015         \}}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00018}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_animator_trigger_ae22e58fdfed74f8a2ce2e9da61e76647}{00018}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<int>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_animator_trigger_ae22e58fdfed74f8a2ce2e9da61e76647}{OnAnimatorIKAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00019}00019         \{}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00020}00020             \textcolor{keywordflow}{return} onAnimatorIK ?? (onAnimatorIK = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<int>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00021}00021         \}}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00023}00023         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}} onAnimatorMove;}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00026}00026         \textcolor{keywordtype}{void} OnAnimatorMove()}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00027}00027         \{}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00028}00028             \textcolor{keywordflow}{if} (onAnimatorMove != \textcolor{keyword}{null}) onAnimatorMove.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}}.\mbox{\hyperlink{struct_uni_rx_1_1_unit_a16a477eee98338be4ffd171335f492fe}{Default}});}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00029}00029         \}}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00032}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_animator_trigger_ae473a402a345e57eb38cfabf55827ed9}{00032}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_animator_trigger_ae473a402a345e57eb38cfabf55827ed9}{OnAnimatorMoveAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00033}00033         \{}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00034}00034             \textcolor{keywordflow}{return} onAnimatorMove ?? (onAnimatorMove = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00035}00035         \}}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00037}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_animator_trigger_a339188d401eed545bc651c40b03cea84}{00037}}         \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_animator_trigger_a339188d401eed545bc651c40b03cea84}{RaiseOnCompletedOnDestroy}}()}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00038}00038         \{}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00039}00039             \textcolor{keywordflow}{if} (onAnimatorIK != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00040}00040             \{}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00041}00041                 onAnimatorIK.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00042}00042             \}}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00043}00043             \textcolor{keywordflow}{if} (onAnimatorMove != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00044}00044             \{}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00045}00045                 onAnimatorMove.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00046}00046             \}}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00047}00047         \}}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00048}00048     \}}
+\DoxyCodeLine{\Hypertarget{_observable_animator_trigger_8cs_source_l00049}00049 \}}
+
+\end{DoxyCode}

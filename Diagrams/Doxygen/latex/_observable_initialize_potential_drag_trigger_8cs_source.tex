@@ -1,0 +1,42 @@
+\hypertarget{_observable_initialize_potential_drag_trigger_8cs_source}{}\doxysection{Observable\+Initialize\+Potential\+Drag\+Trigger.\+cs}
+\label{_observable_initialize_potential_drag_trigger_8cs_source}\index{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableInitializePotentialDragTrigger.cs@{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableInitializePotentialDragTrigger.cs}}
+\mbox{\hyperlink{_observable_initialize_potential_drag_trigger_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00001}00001 \textcolor{comment}{// for uGUI(from 4.6)}}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00002}00002 \textcolor{preprocessor}{\#if !(UNITY\_4\_0 || UNITY\_4\_1 || UNITY\_4\_2 || UNITY\_4\_3 || UNITY\_4\_4 || UNITY\_4\_5)}}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00004}00004 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}; \textcolor{comment}{// require keep for Windows Universal App}}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00005}00005 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00006}00006 \textcolor{keyword}{using }UnityEngine.EventSystems;}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00008}00008 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_triggers}{UniRx.Triggers}}}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00010}00010     [DisallowMultipleComponent]}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00011}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_initialize_potential_drag_trigger}{00011}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_initialize_potential_drag_trigger}{ObservableInitializePotentialDragTrigger}} : \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_base}{ObservableTriggerBase}}, IEventSystemHandler, IInitializePotentialDragHandler}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00012}00012     \{}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00013}00013         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<PointerEventData>}} onInitializePotentialDrag;}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00015}00015         \textcolor{keywordtype}{void} IInitializePotentialDragHandler.OnInitializePotentialDrag(PointerEventData eventData)}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00016}00016         \{}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00017}00017             \textcolor{keywordflow}{if} (onInitializePotentialDrag != \textcolor{keyword}{null}) onInitializePotentialDrag.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(eventData);}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00020}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_initialize_potential_drag_trigger_ab4f4ecc3e77e61350a1e9b09f51ab90e}{00020}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<PointerEventData>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_initialize_potential_drag_trigger_ab4f4ecc3e77e61350a1e9b09f51ab90e}{OnInitializePotentialDragAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00021}00021         \{}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00022}00022             \textcolor{keywordflow}{return} onInitializePotentialDrag ?? (onInitializePotentialDrag = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<PointerEventData>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00023}00023         \}}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00025}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_initialize_potential_drag_trigger_a01044a3b59c4f573b73ca7c820582e6d}{00025}}         \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_initialize_potential_drag_trigger_a01044a3b59c4f573b73ca7c820582e6d}{RaiseOnCompletedOnDestroy}}()}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00026}00026         \{}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00027}00027             \textcolor{keywordflow}{if} (onInitializePotentialDrag != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00028}00028             \{}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00029}00029                 onInitializePotentialDrag.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00030}00030             \}}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00031}00031         \}}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00032}00032     \}}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00033}00033 \}}
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_observable_initialize_potential_drag_trigger_8cs_source_l00036}00036 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

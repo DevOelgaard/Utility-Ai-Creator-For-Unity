@@ -1,0 +1,144 @@
+\hypertarget{interface_uni_rx_1_1_i_read_only_reactive_dictionary}{}\doxysection{Uni\+Rx.\+IRead\+Only\+Reactive\+Dictionary\texorpdfstring{$<$}{<} TKey, TValue \texorpdfstring{$>$}{>} Interface Template Reference}
+\label{interface_uni_rx_1_1_i_read_only_reactive_dictionary}\index{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}}
+Inheritance diagram for Uni\+Rx.\+IRead\+Only\+Reactive\+Dictionary\texorpdfstring{$<$}{<} TKey, TValue \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{interface_uni_rx_1_1_i_read_only_reactive_dictionary}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a815b8cbb19de536eb246419c77d88af0}{Contains\+Key}} (TKey key)
+\item 
+bool \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary_aaf14b105c222fcbcef9ddd0d591e6b5c}{Try\+Get\+Value}} (TKey key, out TValue value)
+\item 
+\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_dictionary_add_event}{Dictionary\+Add\+Event}}$<$ TKey, TValue $>$ $>$ \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary_aa552a916d5ed5d822f17fccb082d6015}{Observe\+Add}} ()
+\item 
+\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ int $>$ \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a03b35b637f5757d8a4cb27291f902d5d}{Observe\+Count\+Changed}} (bool notify\+Current\+Count=false)
+\item 
+\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_dictionary_remove_event}{Dictionary\+Remove\+Event}}$<$ TKey, TValue $>$ $>$ \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a2d47a3f1e3f633cbc0f5ba834ad49973}{Observe\+Remove}} ()
+\item 
+\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_dictionary_replace_event}{Dictionary\+Replace\+Event}}$<$ TKey, TValue $>$ $>$ \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a9a0342eb8cdfdc0c8d8e5ff311bb3697}{Observe\+Replace}} ()
+\item 
+\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}} $>$ \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a182000f64e7725517cdb1ec66c251d27}{Observe\+Reset}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a89d1346559d8cd583e53c801eae8519b}{Count}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+TValue \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a773ba0e52e4094fb077be46c03b691c6}{this\mbox{[}\+TKey index\mbox{]}}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_reactive_dictionary_8cs_source_l00095}{95}} of file \mbox{\hyperlink{_reactive_dictionary_8cs_source}{Reactive\+Dictionary.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a815b8cbb19de536eb246419c77d88af0}\label{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a815b8cbb19de536eb246419c77d88af0}} 
+\index{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}!ContainsKey@{ContainsKey}}
+\index{ContainsKey@{ContainsKey}!UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{ContainsKey()}{ContainsKey()}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary}{Uni\+Rx.\+IRead\+Only\+Reactive\+Dictionary}}$<$ TKey, TValue $>$.Contains\+Key (\begin{DoxyParamCaption}\item[{TKey}]{key }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_reactive_dictionary_ae386ddf5524f238851a07c7a46ceb9de}{Uni\+Rx.\+Reactive\+Dictionary$<$ TKey, TValue $>$}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_read_only_reactive_dictionary_aa552a916d5ed5d822f17fccb082d6015}\label{interface_uni_rx_1_1_i_read_only_reactive_dictionary_aa552a916d5ed5d822f17fccb082d6015}} 
+\index{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}!ObserveAdd@{ObserveAdd}}
+\index{ObserveAdd@{ObserveAdd}!UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{ObserveAdd()}{ObserveAdd()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_dictionary_add_event}{Dictionary\+Add\+Event}}$<$ TKey, TValue $>$ $>$ \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary}{Uni\+Rx.\+IRead\+Only\+Reactive\+Dictionary}}$<$ TKey, TValue $>$.Observe\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_reactive_dictionary_a8db6cf20401d209820d815047e4cf245}{Uni\+Rx.\+Reactive\+Dictionary$<$ TKey, TValue $>$}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a03b35b637f5757d8a4cb27291f902d5d}\label{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a03b35b637f5757d8a4cb27291f902d5d}} 
+\index{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}!ObserveCountChanged@{ObserveCountChanged}}
+\index{ObserveCountChanged@{ObserveCountChanged}!UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{ObserveCountChanged()}{ObserveCountChanged()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ int $>$ \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary}{Uni\+Rx.\+IRead\+Only\+Reactive\+Dictionary}}$<$ TKey, TValue $>$.Observe\+Count\+Changed (\begin{DoxyParamCaption}\item[{bool}]{notify\+Current\+Count = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_reactive_dictionary_a8f242c106392f1373b8c89c6fe2a95a4}{Uni\+Rx.\+Reactive\+Dictionary$<$ TKey, TValue $>$}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a2d47a3f1e3f633cbc0f5ba834ad49973}\label{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a2d47a3f1e3f633cbc0f5ba834ad49973}} 
+\index{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}!ObserveRemove@{ObserveRemove}}
+\index{ObserveRemove@{ObserveRemove}!UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{ObserveRemove()}{ObserveRemove()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_dictionary_remove_event}{Dictionary\+Remove\+Event}}$<$ TKey, TValue $>$ $>$ \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary}{Uni\+Rx.\+IRead\+Only\+Reactive\+Dictionary}}$<$ TKey, TValue $>$.Observe\+Remove (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_reactive_dictionary_a261992e00c076b70dd29e7e78126b765}{Uni\+Rx.\+Reactive\+Dictionary$<$ TKey, TValue $>$}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a9a0342eb8cdfdc0c8d8e5ff311bb3697}\label{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a9a0342eb8cdfdc0c8d8e5ff311bb3697}} 
+\index{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}!ObserveReplace@{ObserveReplace}}
+\index{ObserveReplace@{ObserveReplace}!UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{ObserveReplace()}{ObserveReplace()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_dictionary_replace_event}{Dictionary\+Replace\+Event}}$<$ TKey, TValue $>$ $>$ \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary}{Uni\+Rx.\+IRead\+Only\+Reactive\+Dictionary}}$<$ TKey, TValue $>$.Observe\+Replace (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_reactive_dictionary_aeb548c40e6b843ac1db9d92b4cb2d6a4}{Uni\+Rx.\+Reactive\+Dictionary$<$ TKey, TValue $>$}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a182000f64e7725517cdb1ec66c251d27}\label{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a182000f64e7725517cdb1ec66c251d27}} 
+\index{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}!ObserveReset@{ObserveReset}}
+\index{ObserveReset@{ObserveReset}!UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{ObserveReset()}{ObserveReset()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ \mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}} $>$ \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary}{Uni\+Rx.\+IRead\+Only\+Reactive\+Dictionary}}$<$ TKey, TValue $>$.Observe\+Reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_reactive_dictionary_ad8869f1d937c6ea1f5b4cfe07ef49a9c}{Uni\+Rx.\+Reactive\+Dictionary$<$ TKey, TValue $>$}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_read_only_reactive_dictionary_aaf14b105c222fcbcef9ddd0d591e6b5c}\label{interface_uni_rx_1_1_i_read_only_reactive_dictionary_aaf14b105c222fcbcef9ddd0d591e6b5c}} 
+\index{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}!TryGetValue@{TryGetValue}}
+\index{TryGetValue@{TryGetValue}!UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{TryGetValue()}{TryGetValue()}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary}{Uni\+Rx.\+IRead\+Only\+Reactive\+Dictionary}}$<$ TKey, TValue $>$.Try\+Get\+Value (\begin{DoxyParamCaption}\item[{TKey}]{key,  }\item[{out TValue}]{value }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_reactive_dictionary_a7966f2bb052276d42258145cdeea6f6f}{Uni\+Rx.\+Reactive\+Dictionary$<$ TKey, TValue $>$}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a89d1346559d8cd583e53c801eae8519b}\label{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a89d1346559d8cd583e53c801eae8519b}} 
+\index{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}!Count@{Count}}
+\index{Count@{Count}!UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{Count}{Count}}
+{\footnotesize\ttfamily int \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary}{Uni\+Rx.\+IRead\+Only\+Reactive\+Dictionary}}$<$ TKey, TValue $>$.Count\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_uni_rx_1_1_reactive_dictionary_a52a21f6e94a8f6c0edde2390738b88dd}{Uni\+Rx.\+Reactive\+Dictionary$<$ TKey, TValue $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_dictionary_8cs_source_l00097}{97}} of file \mbox{\hyperlink{_reactive_dictionary_8cs_source}{Reactive\+Dictionary.\+cs}}.
+
+\mbox{\Hypertarget{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a773ba0e52e4094fb077be46c03b691c6}\label{interface_uni_rx_1_1_i_read_only_reactive_dictionary_a773ba0e52e4094fb077be46c03b691c6}} 
+\index{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}!this\mbox{[}TKey index\mbox{]}@{this[TKey index]}}
+\index{this\mbox{[}TKey index\mbox{]}@{this[TKey index]}!UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$@{UniRx.IReadOnlyReactiveDictionary$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{this[TKey index]}{this[TKey index]}}
+{\footnotesize\ttfamily TValue \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_dictionary}{Uni\+Rx.\+IRead\+Only\+Reactive\+Dictionary}}$<$ TKey, TValue $>$.this\mbox{[}TKey index\mbox{]}\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_reactive_dictionary_8cs_source_l00098}{98}} of file \mbox{\hyperlink{_reactive_dictionary_8cs_source}{Reactive\+Dictionary.\+cs}}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Unity\+Engine\+Bridge/\mbox{\hyperlink{_reactive_dictionary_8cs}{Reactive\+Dictionary.\+cs}}\end{DoxyCompactItemize}

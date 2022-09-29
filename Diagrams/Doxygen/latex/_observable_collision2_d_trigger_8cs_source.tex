@@ -1,0 +1,67 @@
+\hypertarget{_observable_collision2_d_trigger_8cs_source}{}\doxysection{Observable\+Collision2\+DTrigger.\+cs}
+\label{_observable_collision2_d_trigger_8cs_source}\index{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableCollision2DTrigger.cs@{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableCollision2DTrigger.cs}}
+\mbox{\hyperlink{_observable_collision2_d_trigger_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}; \textcolor{comment}{// require keep for Windows Universal App}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00002}00002 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00004}00004 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_triggers}{UniRx.Triggers}}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00006}00006     [DisallowMultipleComponent]}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00007}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_collision2_d_trigger}{00007}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_collision2_d_trigger}{ObservableCollision2DTrigger}} : \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_base}{ObservableTriggerBase}}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00009}00009         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collision2D>}} onCollisionEnter2D;}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00012}00012          \textcolor{keywordtype}{void} OnCollisionEnter2D(Collision2D coll)}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00013}00013         \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00014}00014             \textcolor{keywordflow}{if} (onCollisionEnter2D != \textcolor{keyword}{null}) onCollisionEnter2D.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(coll);}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00015}00015         \}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00018}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_collision2_d_trigger_aa5fbf384ca0695da58e1ce24b8aafacc}{00018}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Collision2D>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_collision2_d_trigger_aa5fbf384ca0695da58e1ce24b8aafacc}{OnCollisionEnter2DAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00019}00019         \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00020}00020             \textcolor{keywordflow}{return} onCollisionEnter2D ?? (onCollisionEnter2D = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collision2D>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00021}00021         \}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00023}00023         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collision2D>}} onCollisionExit2D;}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00026}00026          \textcolor{keywordtype}{void} OnCollisionExit2D(Collision2D coll)}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00027}00027         \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00028}00028             \textcolor{keywordflow}{if} (onCollisionExit2D != \textcolor{keyword}{null}) onCollisionExit2D.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(coll);}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00029}00029         \}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00032}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_collision2_d_trigger_a1343b60a1ba9db79339bfc283faa0c70}{00032}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Collision2D>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_collision2_d_trigger_a1343b60a1ba9db79339bfc283faa0c70}{OnCollisionExit2DAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00033}00033         \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00034}00034             \textcolor{keywordflow}{return} onCollisionExit2D ?? (onCollisionExit2D = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collision2D>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00035}00035         \}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00037}00037         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collision2D>}} onCollisionStay2D;}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00040}00040          \textcolor{keywordtype}{void} OnCollisionStay2D(Collision2D coll)}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00041}00041         \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00042}00042             \textcolor{keywordflow}{if} (onCollisionStay2D != \textcolor{keyword}{null}) onCollisionStay2D.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(coll);}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00043}00043         \}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00046}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_collision2_d_trigger_a2ee40209a84f2ec0cdee86088d5a37f2}{00046}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Collision2D>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_collision2_d_trigger_a2ee40209a84f2ec0cdee86088d5a37f2}{OnCollisionStay2DAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00047}00047         \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00048}00048             \textcolor{keywordflow}{return} onCollisionStay2D ?? (onCollisionStay2D = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collision2D>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00049}00049         \}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00051}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_collision2_d_trigger_a40c70f20587a0d7cee421f202f892ad5}{00051}}         \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_collision2_d_trigger_a40c70f20587a0d7cee421f202f892ad5}{RaiseOnCompletedOnDestroy}}()}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00052}00052         \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00053}00053             \textcolor{keywordflow}{if} (onCollisionEnter2D != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00054}00054             \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00055}00055                 onCollisionEnter2D.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00056}00056             \}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00057}00057             \textcolor{keywordflow}{if} (onCollisionExit2D != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00058}00058             \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00059}00059                 onCollisionExit2D.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00060}00060             \}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00061}00061             \textcolor{keywordflow}{if} (onCollisionStay2D != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00062}00062             \{}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00063}00063                 onCollisionStay2D.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00064}00064             \}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00065}00065         \}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00066}00066     \}}
+\DoxyCodeLine{\Hypertarget{_observable_collision2_d_trigger_8cs_source_l00067}00067 \}}
+
+\end{DoxyCode}

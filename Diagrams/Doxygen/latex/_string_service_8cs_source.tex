@@ -1,0 +1,37 @@
+\hypertarget{_string_service_8cs_source}{}\doxysection{String\+Service.\+cs}
+\label{_string_service_8cs_source}\index{Runtime/Services/StringService.cs@{Runtime/Services/StringService.cs}}
+\mbox{\hyperlink{_string_service_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00007}00007 \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keyword}{class }StringService}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00009}00009     \textcolor{comment}{//https://www.codegrepper.com/code-\/examples/csharp/insert+space+between+upper+case+c\%23}}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00010}00010     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} SpaceBetweenUpperCase(\textcolor{keywordtype}{string} text)}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00011}00011     \{}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00012}00012         StringBuilder newText = \textcolor{keyword}{new} StringBuilder(text.Length * 2);}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00013}00013         newText.Append(text[0]);}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00014}00014         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < text.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00015}00015         \{}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00016}00016             \textcolor{keywordflow}{if} (\textcolor{keywordtype}{char}.IsUpper(text[i]))}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00017}00017                 \textcolor{keywordflow}{if} ((text[i -\/ 1] != \textcolor{charliteral}{' '} \&\& !\textcolor{keywordtype}{char}.IsUpper(text[i -\/ 1]) \&\& (\textcolor{keywordtype}{char}.IsLetter(text[i-\/1]) || \textcolor{keywordtype}{char}.IsDigit(text[i-\/1]))) ||}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00018}00018                     (\textcolor{keywordtype}{char}.IsUpper(text[i -\/ 1]) \&\& i < text.Length -\/ 1 \&\& !\textcolor{keywordtype}{char}.IsUpper(text[i + 1])))}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00019}00019                     newText.Append(\textcolor{charliteral}{' '});}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00020}00020             }
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00021}00021             newText.Append(text[i]);}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00022}00022         \}}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00023}00023         \textcolor{keywordflow}{return} newText.ToString();}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00024}00024     \}}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00026}00026     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{string} RemoveWhiteSpaces(\textcolor{keywordtype}{string} text)}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00027}00027     \{}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00028}00028         var textNoWhiteSpaces = text.Replace(\textcolor{stringliteral}{"{} "{}}, String.Empty);}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00029}00029         \textcolor{keywordflow}{return} textNoWhiteSpaces;}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00030}00030     \}}
+\DoxyCodeLine{\Hypertarget{_string_service_8cs_source_l00031}00031 \}}
+
+\end{DoxyCode}

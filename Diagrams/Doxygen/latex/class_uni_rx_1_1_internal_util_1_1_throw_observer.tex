@@ -1,0 +1,111 @@
+\hypertarget{class_uni_rx_1_1_internal_util_1_1_throw_observer}{}\doxysection{Uni\+Rx.\+Internal\+Util.\+Throw\+Observer\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_uni_rx_1_1_internal_util_1_1_throw_observer}\index{UniRx.InternalUtil.ThrowObserver$<$ T $>$@{UniRx.InternalUtil.ThrowObserver$<$ T $>$}}
+Inheritance diagram for Uni\+Rx.\+Internal\+Util.\+Throw\+Observer\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_uni_rx_1_1_internal_util_1_1_throw_observer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer_a6d54a75f5c5e1edd00931139079d4d19}{On\+Completed}} ()
+\begin{DoxyCompactList}\small\item\em Notifies the observer of the end of the sequence. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer_ac092043b3fa9d3f8a05cce4f9a42be0f}{On\+Error}} (Exception error)
+\begin{DoxyCompactList}\small\item\em Notifies the observer that an exception has occurred. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer_a9e57743d4cfbeb6e0369a6ae9a6eee08}{On\+Next}} (T value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static readonly \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer}{Throw\+Observer}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer_a2bc5beba285d85b70f9a92b419dab681}{Instance}} = new \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer}{Throw\+Observer}}$<$T$>$()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_list_observer_8cs_source_l00087}{87}} of file \mbox{\hyperlink{_list_observer_8cs_source}{List\+Observer.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_internal_util_1_1_throw_observer_a6d54a75f5c5e1edd00931139079d4d19}\label{class_uni_rx_1_1_internal_util_1_1_throw_observer_a6d54a75f5c5e1edd00931139079d4d19}} 
+\index{UniRx.InternalUtil.ThrowObserver$<$ T $>$@{UniRx.InternalUtil.ThrowObserver$<$ T $>$}!OnCompleted@{OnCompleted}}
+\index{OnCompleted@{OnCompleted}!UniRx.InternalUtil.ThrowObserver$<$ T $>$@{UniRx.InternalUtil.ThrowObserver$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnCompleted()}{OnCompleted()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer}{Uni\+Rx.\+Internal\+Util.\+Throw\+Observer}}$<$ T $>$.On\+Completed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Notifies the observer of the end of the sequence. 
+
+\begin{DoxyReturn}{Returns}
+Result returned upon observation of the sequence completion.
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_list_observer_8cs_source_l00096}{96}} of file \mbox{\hyperlink{_list_observer_8cs_source}{List\+Observer.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_internal_util_1_1_throw_observer_ac092043b3fa9d3f8a05cce4f9a42be0f}\label{class_uni_rx_1_1_internal_util_1_1_throw_observer_ac092043b3fa9d3f8a05cce4f9a42be0f}} 
+\index{UniRx.InternalUtil.ThrowObserver$<$ T $>$@{UniRx.InternalUtil.ThrowObserver$<$ T $>$}!OnError@{OnError}}
+\index{OnError@{OnError}!UniRx.InternalUtil.ThrowObserver$<$ T $>$@{UniRx.InternalUtil.ThrowObserver$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnError()}{OnError()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer}{Uni\+Rx.\+Internal\+Util.\+Throw\+Observer}}$<$ T $>$.On\+Error (\begin{DoxyParamCaption}\item[{Exception}]{exception }\end{DoxyParamCaption})}
+
+
+
+Notifies the observer that an exception has occurred. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em exception} & The exception that occurred.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result returned upon observation of an error.
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_list_observer_8cs_source_l00100}{100}} of file \mbox{\hyperlink{_list_observer_8cs_source}{List\+Observer.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_internal_util_1_1_throw_observer_a9e57743d4cfbeb6e0369a6ae9a6eee08}\label{class_uni_rx_1_1_internal_util_1_1_throw_observer_a9e57743d4cfbeb6e0369a6ae9a6eee08}} 
+\index{UniRx.InternalUtil.ThrowObserver$<$ T $>$@{UniRx.InternalUtil.ThrowObserver$<$ T $>$}!OnNext@{OnNext}}
+\index{OnNext@{OnNext}!UniRx.InternalUtil.ThrowObserver$<$ T $>$@{UniRx.InternalUtil.ThrowObserver$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnNext()}{OnNext()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer}{Uni\+Rx.\+Internal\+Util.\+Throw\+Observer}}$<$ T $>$.On\+Next (\begin{DoxyParamCaption}\item[{T}]{value }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a79a1f5d172c3764f94517cd901c4f8b2}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_list_observer_8cs_source_l00105}{105}} of file \mbox{\hyperlink{_list_observer_8cs_source}{List\+Observer.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_internal_util_1_1_throw_observer_a2bc5beba285d85b70f9a92b419dab681}\label{class_uni_rx_1_1_internal_util_1_1_throw_observer_a2bc5beba285d85b70f9a92b419dab681}} 
+\index{UniRx.InternalUtil.ThrowObserver$<$ T $>$@{UniRx.InternalUtil.ThrowObserver$<$ T $>$}!Instance@{Instance}}
+\index{Instance@{Instance}!UniRx.InternalUtil.ThrowObserver$<$ T $>$@{UniRx.InternalUtil.ThrowObserver$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Instance}{Instance}}
+{\footnotesize\ttfamily readonly \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer}{Throw\+Observer}}$<$T$>$ \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer}{Uni\+Rx.\+Internal\+Util.\+Throw\+Observer}}$<$ T $>$.Instance = new \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_throw_observer}{Throw\+Observer}}$<$T$>$()\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_list_observer_8cs_source_l00089}{89}} of file \mbox{\hyperlink{_list_observer_8cs_source}{List\+Observer.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Internal\+Util/\mbox{\hyperlink{_list_observer_8cs}{List\+Observer.\+cs}}\end{DoxyCompactItemize}

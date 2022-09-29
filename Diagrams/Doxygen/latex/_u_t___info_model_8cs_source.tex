@@ -1,0 +1,36 @@
+\hypertarget{_u_t___info_model_8cs_source}{}\doxysection{UT\+\_\+\+Info\+Model.\+cs}
+\label{_u_t___info_model_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/UT\_InfoModel.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/UT\_InfoModel.cs}}
+\mbox{\hyperlink{_u_t___info_model_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00001}00001 \textcolor{keyword}{using }NUnit.Framework;}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_unit_tests_1_1_models}{UnitTests.Models}}}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00005}00005     [TestFixture]}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00006}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_u_t___info_model}{00006}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_u_t___info_model}{UT\_InfoModel}}}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00007}00007     }
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00009}00009         \textcolor{keyword}{private} InfoModel uut;}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00011}00011         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00012}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_u_t___info_model_a619bf04dd09f5caed4d9f2a1faefee56}{00012}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_u_t___info_model_a619bf04dd09f5caed4d9f2a1faefee56}{Construct\_SetInfo\_ReturnsCorrectInfo}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00013}00013         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00014}00014             var expected = \textcolor{stringliteral}{"{}Some Info"{}};}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00015}00015             uut = \textcolor{keyword}{new} InfoModel(expected);}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00016}00016             }
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00017}00017             Assert.AreEqual(expected,uut.Info);}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00019}00019         }
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00020}00020         }
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00021}00021         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00022}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_u_t___info_model_a6b9540932fc731c12e49a2e9106ddf66}{00022}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_u_t___info_model_a6b9540932fc731c12e49a2e9106ddf66}{Construct\_SetInfoType\_ReturnsCorrectType}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00023}00023         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00024}00024             var expected = \textcolor{stringliteral}{"{}Some Info"{}};}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00025}00025             uut = \textcolor{keyword}{new} InfoModel(expected,InfoTypes.Warning);}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00026}00026             }
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00027}00027             Assert.AreEqual(InfoTypes.Warning,uut.InfoType);}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00028}00028         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00029}00029     \}}
+\DoxyCodeLine{\Hypertarget{_u_t___info_model_8cs_source_l00030}00030 \}}
+
+\end{DoxyCode}

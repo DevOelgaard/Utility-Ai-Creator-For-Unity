@@ -1,0 +1,48 @@
+digraph "UniRx.Triggers.ObservableEventTrigger"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="UniRx.Triggers.Observable\lEventTrigger",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ObservableTriggerBase",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_triggers_1_1_observable_trigger_base.html",tooltip=" "];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="MonoBehaviour",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node4 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="IEventSystemHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node5 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="IPointerEnterHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node6 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="IPointerExitHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node7 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="IPointerDownHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node8 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="IPointerUpHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node9 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="IPointerClickHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node10 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="IBeginDragHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node11 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="IInitializePotentialDrag\lHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node12 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="IDragHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node13 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="IEndDragHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node14 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="IDropHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node15 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="IScrollHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node16 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="IUpdateSelectedHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node17 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="ISelectHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node18 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="IDeselectHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node19 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="IMoveHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node20 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="ISubmitHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+  Node21 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="ICancelHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",tooltip=" "];
+}

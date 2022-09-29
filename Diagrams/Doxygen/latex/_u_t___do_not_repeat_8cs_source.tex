@@ -1,0 +1,107 @@
+\hypertarget{_u_t___do_not_repeat_8cs_source}{}\doxysection{UT\+\_\+\+Do\+Not\+Repeat.\+cs}
+\label{_u_t___do_not_repeat_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/Considerations/UT\_DoNotRepeat.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Models/Considerations/UT\_DoNotRepeat.cs}}
+\mbox{\hyperlink{_u_t___do_not_repeat_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_mocks}{Mocks}};}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00002}00002 \textcolor{keyword}{using }NUnit.Framework;}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00004}00004 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_unit_tests_1_1_models_1_1_considerations}{UnitTests.Models.Considerations}}}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00006}00006     [TestFixture]}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00007}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat}{00007}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat}{UT\_DoNotRepeat}}}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00009}00009         \textcolor{keyword}{private} DoNotRepeat uut;}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00010}00010         \textcolor{keyword}{private} \mbox{\hyperlink{class_ai_context}{AiContext}} mock\_AiContext;}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00012}00012         [\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_a526424f5d059e3b0feff3cc890765789}{SetUp}}]}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00013}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_a526424f5d059e3b0feff3cc890765789}{00013}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_a526424f5d059e3b0feff3cc890765789}{SetUp}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00014}00014         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00015}00015             mock\_AiContext = \textcolor{keyword}{new} \mbox{\hyperlink{class_ai_context}{AiContext}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00016}00016             uut = \textcolor{keyword}{new} DoNotRepeat();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00017}00017             uut.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00020}00020         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00021}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_abeea7c0a91c3c6d5d7d3d66e3ddf216f}{00021}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_abeea7c0a91c3c6d5d7d3d66e3ddf216f}{CalculateScore\_FirstTimeRunTypeNotToRepeatDecision\_ReturnsOne}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00022}00022         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00023}00023             var parent = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00024}00024             parent.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00025}00025             mock\_AiContext.LastSelectedBucket = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00026}00026             mock\_AiContext.CurrentEvaluatedBucket = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00027}00027             mock\_AiContext.LastSelectedDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00028}00028             mock\_AiContext.CurrentEvaluatedDecision = parent;}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00029}00029             parent.Considerations.Add(uut);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00030}00030             parent.ForceUpdateInfo();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00032}00032             var result = uut.CalculateScore(mock\_AiContext);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00033}00033             }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00034}00034             Assert.AreEqual(1,result);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00035}00035         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00036}00036         }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00037}00037         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00038}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_ac2315dd960fe308499baa1dad99a462e}{00038}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_ac2315dd960fe308499baa1dad99a462e}{CalculateScore\_MultipleTimesRunDoTypeNotToRepeatDecision\_ReturnsZero}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00039}00039         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00040}00040             var parent = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00041}00041             parent.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00042}00042             mock\_AiContext.LastSelectedBucket = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00043}00043             mock\_AiContext.CurrentEvaluatedBucket = mock\_AiContext.\mbox{\hyperlink{class_ai_context_ac3328cff8fd138eda6fa48b2436f7243}{LastSelectedBucket}};}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00044}00044             mock\_AiContext.LastSelectedDecision = parent;}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00045}00045             mock\_AiContext.CurrentEvaluatedDecision = parent;}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00046}00046             parent.\mbox{\hyperlink{class_utility_container_a563c944958375c4c9fc455b7652b90e9}{Considerations}}.\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_name_safe_a5c70c08ff4aed09979cefb3d2d3d9bc7}{Add}}(uut);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00047}00047             parent.ForceUpdateInfo();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00049}00049             var result = uut.CalculateScore(mock\_AiContext);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00050}00050             }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00051}00051             Assert.AreEqual(0,result);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00052}00052         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00053}00053         }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00054}00054         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00055}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_a10a6dd70850d9f6d9760c307015f15c9}{00055}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_a10a6dd70850d9f6d9760c307015f15c9}{CalculateScore\_FirstTimeRunTypeNotToRepeatBucket\_ReturnsOne}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00056}00056         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00057}00057             var parent = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00058}00058             parent.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00059}00059             mock\_AiContext.LastSelectedBucket = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00060}00060             mock\_AiContext.CurrentEvaluatedBucket = parent;}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00061}00061             mock\_AiContext.LastSelectedDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00062}00062             mock\_AiContext.CurrentEvaluatedDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00063}00063             parent.Considerations.Add(uut);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00064}00064             parent.ForceUpdateInfo();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00066}00066             var result = uut.CalculateScore(mock\_AiContext);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00067}00067             }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00068}00068             Assert.AreEqual(1,result);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00069}00069         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00070}00070         }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00071}00071         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00072}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_a2d216c2e9706ca56a0c3f8b50a3b95b4}{00072}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_a2d216c2e9706ca56a0c3f8b50a3b95b4}{CalculateScore\_MultipleTimesRunDoTypeNotToRepeatBucket\_ReturnsZero}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00073}00073         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00074}00074             var parent = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00075}00075             parent.Initialize();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00076}00076             mock\_AiContext.LastSelectedBucket = parent;}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00077}00077             mock\_AiContext.CurrentEvaluatedBucket = parent;}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00078}00078             mock\_AiContext.LastSelectedDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00079}00079             mock\_AiContext.CurrentEvaluatedDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00080}00080             parent.Considerations.Add(uut);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00081}00081             parent.ForceUpdateInfo();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00083}00083             var result = uut.CalculateScore(mock\_AiContext);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00084}00084             }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00085}00085             Assert.AreEqual(0,result);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00086}00086         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00087}00087         }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00088}00088         [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00089}\mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_aa4d2ae7ebed6cca8ca41a46f0bcade3e}{00089}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_models_1_1_considerations_1_1_u_t___do_not_repeat_aa4d2ae7ebed6cca8ca41a46f0bcade3e}{CalculateScore\_NoParent\_ReturnsOne}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00090}00090         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00091}00091             mock\_AiContext.LastSelectedBucket = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00092}00092             mock\_AiContext.CurrentEvaluatedBucket = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___bucket}{Mock\_Bucket}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00093}00093             mock\_AiContext.LastSelectedDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00094}00094             mock\_AiContext.CurrentEvaluatedDecision = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___decision}{Mock\_Decision}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00096}00096             var result = uut.CalculateScore(mock\_AiContext);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00097}00097             }
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00098}00098             Assert.AreEqual(1,result);}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00099}00099         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00100}00100     \}}
+\DoxyCodeLine{\Hypertarget{_u_t___do_not_repeat_8cs_source_l00101}00101 \}}
+
+\end{DoxyCode}

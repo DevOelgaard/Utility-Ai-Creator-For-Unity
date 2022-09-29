@@ -1,0 +1,78 @@
+\hypertarget{_ascyn_lock_8cs_source}{}\doxysection{Ascyn\+Lock.\+cs}
+\label{_ascyn_lock_8cs_source}\index{Editor/UniRx/Scripts/InternalUtil/AscynLock.cs@{Editor/UniRx/Scripts/InternalUtil/AscynLock.cs}}
+\mbox{\hyperlink{_ascyn_lock_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00001}00001 \textcolor{comment}{// this code is borrowed from RxOfficial(rx.codeplex.com) and modified}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00003}00003 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00006}\mbox{\hyperlink{namespace_uni_rx_1_1_internal_util}{00006}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_internal_util}{UniRx.InternalUtil}}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00011}00011     \textcolor{keyword}{internal} sealed \textcolor{keyword}{class }AsyncLock : IDisposable}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00012}00012     \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00013}00013         \textcolor{keyword}{private} readonly Queue<Action> queue = \textcolor{keyword}{new} Queue<Action>();}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00014}00014         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} isAcquired = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00015}00015         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} hasFaulted = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00024}00024         \textcolor{keyword}{public} \textcolor{keywordtype}{void} Wait(Action action)}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00025}00025         \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00026}00026             \textcolor{keywordflow}{if} (action == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00027}00027                 \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}action"{}});}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00029}00029             var isOwner = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00030}00030             lock (queue)}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00031}00031             \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00032}00032                 \textcolor{keywordflow}{if} (!hasFaulted)}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00033}00033                 \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00034}00034                     queue.Enqueue(action);}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00035}00035                     isOwner = !isAcquired;}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00036}00036                     isAcquired = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00037}00037                 \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00038}00038             \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00040}00040             \textcolor{keywordflow}{if} (isOwner)}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00041}00041             \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00042}00042                 \textcolor{keywordflow}{while} (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00043}00043                 \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00044}00044                     var work = \textcolor{keywordflow}{default}(Action);}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00045}00045                     lock (queue)}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00046}00046                     \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00047}00047                         \textcolor{keywordflow}{if} (queue.Count > 0)}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00048}00048                             work = queue.Dequeue();}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00049}00049                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00050}00050                         \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00051}00051                             isAcquired = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00052}00052                             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00053}00053                         \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00054}00054                     \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00056}00056                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00057}00057                     \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00058}00058                         work();}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00059}00059                     \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00060}00060                     \textcolor{keywordflow}{catch}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00061}00061                     \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00062}00062                         lock (queue)}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00063}00063                         \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00064}00064                             queue.Clear();}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00065}00065                             hasFaulted = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00066}00066                         \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00067}00067                         \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00068}00068                     \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00069}00069                 \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00070}00070             \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00071}00071         \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00076}00076         \textcolor{keyword}{public} \textcolor{keywordtype}{void} Dispose()}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00077}00077         \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00078}00078             lock (queue)}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00079}00079             \{}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00080}00080                 queue.Clear();}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00081}00081                 hasFaulted = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00082}00082             \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00083}00083         \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00084}00084     \}}
+\DoxyCodeLine{\Hypertarget{_ascyn_lock_8cs_source_l00085}00085 \}}
+
+\end{DoxyCode}

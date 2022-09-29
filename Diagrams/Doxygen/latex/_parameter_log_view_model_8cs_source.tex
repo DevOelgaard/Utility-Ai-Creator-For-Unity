@@ -1,0 +1,41 @@
+\hypertarget{_parameter_log_view_model_8cs_source}{}\doxysection{Parameter\+Log\+View\+Model.\+cs}
+\label{_parameter_log_view_model_8cs_source}\index{Editor/UI/Components/Logger/Components/ParameterLog/ParameterLogViewModel.cs@{Editor/UI/Components/Logger/Components/ParameterLog/ParameterLogViewModel.cs}}
+\mbox{\hyperlink{_parameter_log_view_model_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00006}00006 \textcolor{keyword}{using }UnityEngine.UIElements;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00007}00007 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx}{UniRx}};}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00008}00008 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00009}00009 \textcolor{keyword}{using }UnityEditor.UIElements;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00011}00011 \textcolor{keyword}{internal} \textcolor{keyword}{class }ParameterLogViewModel : LogComponent}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00013}00013     \textcolor{keyword}{private} readonly Label parameterLabel;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00014}00014     \textcolor{keyword}{private} ParameterLog parameter; }
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00015}00015     \textcolor{keyword}{public} ParameterLogViewModel()}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00016}00016     \{}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00017}00017         var root = AssetService.GetTemplateContainer(GetType().FullName);}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00018}00018         Add(root);}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00020}00020         parameterLabel = root.Q<Label>(\textcolor{stringliteral}{"{}Identifier-\/Label"{}});}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00021}00021     \}}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00023}00023     \textcolor{keyword}{internal} \textcolor{keyword}{override} \textcolor{keywordtype}{string} GetUiName()}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00024}00024     \{}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00025}00025         \textcolor{keywordflow}{return} parameter.Name;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00026}00026     \}}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00028}00028     \textcolor{keyword}{internal} \textcolor{keyword}{override} \textcolor{keywordtype}{void} UpdateUi(ILogModel element)}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00029}00029     \{}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00030}00030         parameter = element as ParameterLog;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00031}00031         this.style.display = DisplayStyle.Flex;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00032}00032         \textcolor{comment}{//this.style.opacity = 1;}}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00033}00033         parameterLabel.text = parameter.Name + \textcolor{stringliteral}{"{}: "{}} + parameter.Value;}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00034}00034     \}}
+\DoxyCodeLine{\Hypertarget{_parameter_log_view_model_8cs_source_l00035}00035 \}}
+
+\end{DoxyCode}

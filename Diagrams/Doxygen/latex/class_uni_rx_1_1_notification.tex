@@ -1,0 +1,448 @@
+\hypertarget{class_uni_rx_1_1_notification}{}\doxysection{Uni\+Rx.\+Notification\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_uni_rx_1_1_notification}\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+
+
+Represents a notification to an observer.  
+
+
+Inheritance diagram for Uni\+Rx.\+Notification\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_uni_rx_1_1_notification}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class {\bfseries On\+Completed\+Notification}
+\begin{DoxyCompactList}\small\item\em Represents an On\+Completed notification to an observer. \end{DoxyCompactList}\item 
+class {\bfseries On\+Error\+Notification}
+\begin{DoxyCompactList}\small\item\em Represents an On\+Error notification to an observer. \end{DoxyCompactList}\item 
+class {\bfseries On\+Next\+Notification}
+\begin{DoxyCompactList}\small\item\em Represents an On\+Next notification to an observer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+abstract bool \mbox{\hyperlink{class_uni_rx_1_1_notification_a619390bf6d8d03cc7c96f115db2de742}{Equals}} (\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$ other)
+\begin{DoxyCompactList}\small\item\em Determines whether the current \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} object has the same observer message payload as a specified \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} value. \end{DoxyCompactList}\item 
+override bool \mbox{\hyperlink{class_uni_rx_1_1_notification_a052d6ed13c4938de9e82891348b54adc}{Equals}} (object obj)
+\begin{DoxyCompactList}\small\item\em Determines whether the specified System.\+Object is equal to the current \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>}. \end{DoxyCompactList}\item 
+abstract void \mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{Accept}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$ observer)
+\begin{DoxyCompactList}\small\item\em Invokes the observer\textquotesingle{}s method corresponding to the notification. \end{DoxyCompactList}\item 
+abstract TResult \mbox{\hyperlink{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}{Accept$<$ TResult $>$}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T, TResult $>$ observer)
+\begin{DoxyCompactList}\small\item\em Invokes the observer\textquotesingle{}s method corresponding to the notification and returns the produced result. \end{DoxyCompactList}\item 
+abstract void \mbox{\hyperlink{class_uni_rx_1_1_notification_af57901ad7e220202360398e98e69e5c8}{Accept}} (Action$<$ T $>$ on\+Next, Action$<$ \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} $>$ on\+Error, Action on\+Completed)
+\begin{DoxyCompactList}\small\item\em Invokes the delegate corresponding to the notification. \end{DoxyCompactList}\item 
+abstract TResult \mbox{\hyperlink{class_uni_rx_1_1_notification_ad85631c0243bd0b984540635b7b16a4a}{Accept$<$ TResult $>$}} (Func$<$ T, TResult $>$ on\+Next, Func$<$ \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}}, TResult $>$ on\+Error, Func$<$ TResult $>$ on\+Completed)
+\begin{DoxyCompactList}\small\item\em Invokes the delegate corresponding to the notification and returns the produced result. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_notification_ae686585cc1dcfe98032ae059bca249d3}{To\+Observable}} ()
+\begin{DoxyCompactList}\small\item\em Returns an observable sequence with a single notification, using the immediate scheduler. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_notification_a08fb27e4df291d10394d5849703664db}{To\+Observable}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} scheduler)
+\begin{DoxyCompactList}\small\item\em Returns an observable sequence with a single notification. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_uni_rx_1_1_notification_a1fae6632a03ad03421e11c6dfed57471}{operator==}} (\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$ left, \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$ right)
+\begin{DoxyCompactList}\small\item\em Determines whether the two specified \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects have the same observer message payload. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_uni_rx_1_1_notification_a30868ca61a7c17d85b879728d040a50c}{operator!=}} (\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$ left, \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$ right)
+\begin{DoxyCompactList}\small\item\em Determines whether the two specified \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects have a different observer message payload. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_notification_abedefc57c1617d39522f7f28960788b4}{Create\+On\+Next$<$ T $>$}} (T value)
+\begin{DoxyCompactList}\small\item\em Creates an object that represents an On\+Next notification to an observer. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_notification_aa9397eb1d6367457d4c4b180a9d554e4}{Create\+On\+Error$<$ T $>$}} (\mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} error)
+\begin{DoxyCompactList}\small\item\em Creates an object that represents an On\+Error notification to an observer. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_notification_a6a2323d868bd16baa08cb2b056a40622}{Create\+On\+Completed$<$ T $>$}} ()
+\begin{DoxyCompactList}\small\item\em Creates an object that represents an On\+Completed notification to an observer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+abstract T \mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Returns the value of an On\+Next notification or throws an exception. \end{DoxyCompactList}\item 
+abstract bool \mbox{\hyperlink{class_uni_rx_1_1_notification_a9ef2a3f0ae5ab51969c0c9ec320d212a}{Has\+Value}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Returns a value that indicates whether the notification has a value. \end{DoxyCompactList}\item 
+abstract Exception \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Returns the exception of an On\+Error notification or returns null. \end{DoxyCompactList}\item 
+abstract \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{Notification\+Kind}} \mbox{\hyperlink{class_uni_rx_1_1_notification_a4ebef660705cd808e54aff0ea5624535}{Kind}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the kind of notification that is represented. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a notification to an observer. 
+
+Provides a set of static methods for constructing notifications. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the elements received by the observer.\\
+\hline
+\end{DoxyTemplParams}
+
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00079}{79}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_af57901ad7e220202360398e98e69e5c8}\label{class_uni_rx_1_1_notification_af57901ad7e220202360398e98e69e5c8}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!Accept@{Accept}}
+\index{Accept@{Accept}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Accept()}{Accept()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily abstract void \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.Accept (\begin{DoxyParamCaption}\item[{Action$<$ T $>$}]{on\+Next,  }\item[{Action$<$ \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} $>$}]{on\+Error,  }\item[{Action}]{on\+Completed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Invokes the delegate corresponding to the notification. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em on\+Next} & Delegate to invoke for an On\+Next notification.\\
+\hline
+{\em on\+Error} & Delegate to invoke for an On\+Error notification.\\
+\hline
+{\em on\+Completed} & Delegate to invoke for an On\+Completed notification.\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}\label{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!Accept@{Accept}}
+\index{Accept@{Accept}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Accept()}{Accept()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily abstract void \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.Accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$}]{observer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Invokes the observer\textquotesingle{}s method corresponding to the notification. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em observer} & Observer to invoke the notification on.\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_ad85631c0243bd0b984540635b7b16a4a}\label{class_uni_rx_1_1_notification_ad85631c0243bd0b984540635b7b16a4a}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!Accept$<$ TResult $>$@{Accept$<$ TResult $>$}}
+\index{Accept$<$ TResult $>$@{Accept$<$ TResult $>$}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Accept$<$ TResult $>$()}{Accept< TResult >()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily abstract TResult \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{Accept}}$<$ TResult $>$ (\begin{DoxyParamCaption}\item[{Func$<$ T, TResult $>$}]{on\+Next,  }\item[{Func$<$ \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}}, TResult $>$}]{on\+Error,  }\item[{Func$<$ TResult $>$}]{on\+Completed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Invokes the delegate corresponding to the notification and returns the produced result. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em TResult} & The type of the result returned from the notification handler delegates.\\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em on\+Next} & Delegate to invoke for an On\+Next notification.\\
+\hline
+{\em on\+Error} & Delegate to invoke for an On\+Error notification.\\
+\hline
+{\em on\+Completed} & Delegate to invoke for an On\+Completed notification.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result produced by the observation.
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}\label{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!Accept$<$ TResult $>$@{Accept$<$ TResult $>$}}
+\index{Accept$<$ TResult $>$@{Accept$<$ TResult $>$}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Accept$<$ TResult $>$()}{Accept< TResult >()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily abstract TResult \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{Accept}}$<$ TResult $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T, TResult $>$}]{observer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Invokes the observer\textquotesingle{}s method corresponding to the notification and returns the produced result. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em TResult} & The type of the result returned from the observer\textquotesingle{}s notification handlers.\\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em observer} & Observer to invoke the notification on.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result produced by the observation.
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_a6a2323d868bd16baa08cb2b056a40622}\label{class_uni_rx_1_1_notification_a6a2323d868bd16baa08cb2b056a40622}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!CreateOnCompleted$<$ T $>$@{CreateOnCompleted$<$ T $>$}}
+\index{CreateOnCompleted$<$ T $>$@{CreateOnCompleted$<$ T $>$}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CreateOnCompleted$<$ T $>$()}{CreateOnCompleted< T >()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.Create\+On\+Completed$<$ T $>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates an object that represents an On\+Completed notification to an observer. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the elements received by the observer. Upon dematerialization of the notifications into an observable sequence, this type is used as the element type for the sequence.\\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+The On\+Completed notification.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00670}{670}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_aa9397eb1d6367457d4c4b180a9d554e4}\label{class_uni_rx_1_1_notification_aa9397eb1d6367457d4c4b180a9d554e4}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!CreateOnError$<$ T $>$@{CreateOnError$<$ T $>$}}
+\index{CreateOnError$<$ T $>$@{CreateOnError$<$ T $>$}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CreateOnError$<$ T $>$()}{CreateOnError< T >()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.Create\+On\+Error$<$ T $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}}}]{error }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates an object that represents an On\+Error notification to an observer. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the elements received by the observer. Upon dematerialization of the notifications into an observable sequence, this type is used as the element type for the sequence.\\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em error} & The exception contained in the notification.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The On\+Error notification containing the exception.
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Null\+Exception} & {\itshape error}  is null.\\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00657}{657}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_abedefc57c1617d39522f7f28960788b4}\label{class_uni_rx_1_1_notification_abedefc57c1617d39522f7f28960788b4}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!CreateOnNext$<$ T $>$@{CreateOnNext$<$ T $>$}}
+\index{CreateOnNext$<$ T $>$@{CreateOnNext$<$ T $>$}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CreateOnNext$<$ T $>$()}{CreateOnNext< T >()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.Create\+On\+Next$<$ T $>$ (\begin{DoxyParamCaption}\item[{T}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates an object that represents an On\+Next notification to an observer. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the elements received by the observer. Upon dematerialization of the notifications into an observable sequence, this type is used as the element type for the sequence.\\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value contained in the notification.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The On\+Next notification containing the value.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00645}{645}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_a619390bf6d8d03cc7c96f115db2de742}\label{class_uni_rx_1_1_notification_a619390bf6d8d03cc7c96f115db2de742}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!Equals@{Equals}}
+\index{Equals@{Equals}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Equals()}{Equals()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily abstract bool \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.Equals (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Determines whether the current \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} object has the same observer message payload as a specified \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & An object to compare to the current \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} object.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if both \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects have the same observer message payload; otherwise, false.
+\end{DoxyReturn}
+
+
+Equality of \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects is based on the equality of the observer message payload they represent, including the notification Kind and the Value or Exception (if any). This means two \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects can be equal even though they don\textquotesingle{}t represent the same observer method call, but have the same Kind and have equal parameters passed to the observer method. In case one wants to determine whether two \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects represent the same observer method call, use Object.\+Reference\+Equals identity equality instead. \mbox{\Hypertarget{class_uni_rx_1_1_notification_a052d6ed13c4938de9e82891348b54adc}\label{class_uni_rx_1_1_notification_a052d6ed13c4938de9e82891348b54adc}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!Equals@{Equals}}
+\index{Equals@{Equals}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Equals()}{Equals()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily override bool \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.Equals (\begin{DoxyParamCaption}\item[{object}]{obj }\end{DoxyParamCaption})}
+
+
+
+Determines whether the specified System.\+Object is equal to the current \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The System.\+Object to compare with the current \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the specified System.\+Object is equal to the current \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>}; otherwise, false.
+\end{DoxyReturn}
+
+
+Equality of \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects is based on the equality of the observer message payload they represent, including the notification Kind and the Value or Exception (if any). This means two \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects can be equal even though they don\textquotesingle{}t represent the same observer method call, but have the same Kind and have equal parameters passed to the observer method. In case one wants to determine whether two \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects represent the same observer method call, use Object.\+Reference\+Equals identity equality instead. 
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00569}{569}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_a30868ca61a7c17d85b879728d040a50c}\label{class_uni_rx_1_1_notification_a30868ca61a7c17d85b879728d040a50c}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily static bool \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.operator!= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$}]{left,  }\item[{\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$}]{right }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Determines whether the two specified \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects have a different observer message payload. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The first \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} to compare, or null.\\
+\hline
+{\em right} & The second \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} to compare, or null.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the first \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} value has a different observer message payload as the second \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} value; otherwise, false.
+\end{DoxyReturn}
+
+
+Equality of \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects is based on the equality of the observer message payload they represent, including the notification Kind and the Value or Exception (if any). This means two \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects can be equal even though they don\textquotesingle{}t represent the same observer method call, but have the same Kind and have equal parameters passed to the observer method. In case one wants to determine whether two \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects represent a different observer method call, use Object.\+Reference\+Equals identity equality instead. 
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00554}{554}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_a1fae6632a03ad03421e11c6dfed57471}\label{class_uni_rx_1_1_notification_a1fae6632a03ad03421e11c6dfed57471}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!operator==@{operator==}}
+\index{operator==@{operator==}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily static bool \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.operator== (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$}]{left,  }\item[{\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}$<$ T $>$}]{right }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Determines whether the two specified \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects have the same observer message payload. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The first \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} to compare, or null.\\
+\hline
+{\em right} & The second \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} to compare, or null.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the first \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} value has the same observer message payload as the second \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} value; otherwise, false.
+\end{DoxyReturn}
+
+
+Equality of \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects is based on the equality of the observer message payload they represent, including the notification Kind and the Value or Exception (if any). This means two \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects can be equal even though they don\textquotesingle{}t represent the same observer method call, but have the same Kind and have equal parameters passed to the observer method. In case one wants to determine whether two \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}\texorpdfstring{$<$}{<}T\texorpdfstring{$>$}{>} objects represent the same observer method call, use Object.\+Reference\+Equals identity equality instead. 
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00532}{532}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_ae686585cc1dcfe98032ae059bca249d3}\label{class_uni_rx_1_1_notification_ae686585cc1dcfe98032ae059bca249d3}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!ToObservable@{ToObservable}}
+\index{ToObservable@{ToObservable}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ToObservable()}{ToObservable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.To\+Observable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns an observable sequence with a single notification, using the immediate scheduler. 
+
+\begin{DoxyReturn}{Returns}
+The observable sequence that surfaces the behavior of the notification upon subscription.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00610}{610}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_a08fb27e4df291d10394d5849703664db}\label{class_uni_rx_1_1_notification_a08fb27e4df291d10394d5849703664db}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!ToObservable@{ToObservable}}
+\index{ToObservable@{ToObservable}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ToObservable()}{ToObservable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}$<$ T $>$ \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.To\+Observable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}}}]{scheduler }\end{DoxyParamCaption})}
+
+
+
+Returns an observable sequence with a single notification. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scheduler} & Scheduler to send out the notification calls on.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The observable sequence that surfaces the behavior of the notification upon subscription.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00620}{620}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}\label{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!Exception@{Exception}}
+\index{Exception@{Exception}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Exception}{Exception}}
+{\footnotesize\ttfamily abstract Exception \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.Exception\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Returns the exception of an On\+Error notification or returns null. 
+
+
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00107}{107}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_a9ef2a3f0ae5ab51969c0c9ec320d212a}\label{class_uni_rx_1_1_notification_a9ef2a3f0ae5ab51969c0c9ec320d212a}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!HasValue@{HasValue}}
+\index{HasValue@{HasValue}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{HasValue}{HasValue}}
+{\footnotesize\ttfamily abstract bool \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.Has\+Value\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Returns a value that indicates whether the notification has a value. 
+
+
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00099}{99}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_a4ebef660705cd808e54aff0ea5624535}\label{class_uni_rx_1_1_notification_a4ebef660705cd808e54aff0ea5624535}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!Kind@{Kind}}
+\index{Kind@{Kind}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Kind}{Kind}}
+{\footnotesize\ttfamily abstract \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{Notification\+Kind}} \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.Kind\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets the kind of notification that is represented. 
+
+
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00115}{115}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}\label{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}} 
+\index{UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}!Value@{Value}}
+\index{Value@{Value}!UniRx.Notification$<$ T $>$@{UniRx.Notification$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Value}{Value}}
+{\footnotesize\ttfamily abstract T \mbox{\hyperlink{class_uni_rx_1_1_notification}{Uni\+Rx.\+Notification}}$<$ T $>$.Value\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Returns the value of an On\+Next notification or throws an exception. 
+
+
+
+Definition at line \mbox{\hyperlink{_notification_8cs_source_l00091}{91}} of file \mbox{\hyperlink{_notification_8cs_source}{Notification.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\mbox{\hyperlink{_notification_8cs}{Notification.\+cs}}\end{DoxyCompactItemize}

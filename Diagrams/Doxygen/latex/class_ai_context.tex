@@ -1,0 +1,275 @@
+\hypertarget{class_ai_context}{}\doxysection{Ai\+Context Class Reference}
+\label{class_ai_context}\index{AiContext@{AiContext}}
+Inheritance diagram for Ai\+Context\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_ai_context}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_ai_context_a9d90df8e0c92549d66cf0c4ec9602f0c}{Ai\+Context}} ()
+\item 
+T \mbox{\hyperlink{class_ai_context_a35d36531b65730b76bc4f0eedc64a141}{Get\+Context$<$ T $>$}} (object key, \mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} requester=null)
+\begin{DoxyCompactList}\small\item\em Get context created by the requester or any of its parents. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ai_context_a59c66dae7878d8b55f5fa8fdc3c32ae0}{Set\+Context}} (object key, object value, \mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} owner=null)
+\begin{DoxyCompactList}\small\item\em Sets context data destructively. Data is available to the owner and all of its children. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ai_context_a9de0a993b3a2ad112214163bf384700c}{Remove\+Context}} (object key, \mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} owner=null)
+\begin{DoxyCompactList}\small\item\em Removes context data at the given key. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{interface_i_agent}{IAgent}} \mbox{\hyperlink{class_ai_context_a2cf4c3460a10366643505d8e733cacf0}{Agent}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+\mbox{\hyperlink{interface_i_utility_scorer}{IUtility\+Scorer}} \mbox{\hyperlink{class_ai_context_af19293caf76845cdb99519a803bd9ed0}{Utility\+Scorer}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+List$<$ \mbox{\hyperlink{class_agent_action}{Agent\+Action}} $>$ \mbox{\hyperlink{class_ai_context_a82e66d06351bd3e43cdf363cd7e350d4}{Last\+Actions}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+\mbox{\hyperlink{class_decision}{Decision}} \mbox{\hyperlink{class_ai_context_a3382e9ec945eeb6c3772c6fb4e3c034c}{Last\+Selected\+Decision}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em If called from an \mbox{\hyperlink{class_agent_action}{Agent\+Action}} this will be the object selected this tick. If called from another Ai\+Object this will be the object selected last tick. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_decision}{Decision}} \mbox{\hyperlink{class_ai_context_ab54e4096cd1b7cee4e52e2538cd1a1bd}{Current\+Evaluated\+Decision}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+\mbox{\hyperlink{class_bucket}{Bucket}} \mbox{\hyperlink{class_ai_context_ac3328cff8fd138eda6fa48b2436f7243}{Last\+Selected\+Bucket}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em If called from an \mbox{\hyperlink{class_agent_action}{Agent\+Action}} this will be the object selected this tick. If called from another Ai\+Object this will be the object selected last tick. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_bucket}{Bucket}} \mbox{\hyperlink{class_ai_context_a102fb2575b5b800cf497f929f2a24cbc}{Current\+Evaluated\+Bucket}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+\mbox{\hyperlink{class_tick_meta_data}{Tick\+Meta\+Data}} \mbox{\hyperlink{class_ai_context_a5d4109b359435fd561e83067c9c6a6eb}{Tick\+Meta\+Data}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00008}{8}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_ai_context_a9d90df8e0c92549d66cf0c4ec9602f0c}\label{class_ai_context_a9d90df8e0c92549d66cf0c4ec9602f0c}} 
+\index{AiContext@{AiContext}!AiContext@{AiContext}}
+\index{AiContext@{AiContext}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{AiContext()}{AiContext()}}
+{\footnotesize\ttfamily Ai\+Context.\+Ai\+Context (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00038}{38}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_ai_context_a35d36531b65730b76bc4f0eedc64a141}\label{class_ai_context_a35d36531b65730b76bc4f0eedc64a141}} 
+\index{AiContext@{AiContext}!GetContext$<$ T $>$@{GetContext$<$ T $>$}}
+\index{GetContext$<$ T $>$@{GetContext$<$ T $>$}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{GetContext$<$ T $>$()}{GetContext< T >()}}
+{\footnotesize\ttfamily T Ai\+Context.\+Get\+Context$<$ T $>$ (\begin{DoxyParamCaption}\item[{object}]{key,  }\item[{\mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}}}]{requester = {\ttfamily null} }\end{DoxyParamCaption})}
+
+
+
+Get context created by the requester or any of its parents. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key to the data stored in the context.\\
+\hline
+{\em requester} & The requester of the data. If null there is only checked for global context.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_i_ai_context_ab7b62593119801714aba1556d542baee}{IAi\+Context}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00052}{52}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+\mbox{\Hypertarget{class_ai_context_a9de0a993b3a2ad112214163bf384700c}\label{class_ai_context_a9de0a993b3a2ad112214163bf384700c}} 
+\index{AiContext@{AiContext}!RemoveContext@{RemoveContext}}
+\index{RemoveContext@{RemoveContext}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{RemoveContext()}{RemoveContext()}}
+{\footnotesize\ttfamily void Ai\+Context.\+Remove\+Context (\begin{DoxyParamCaption}\item[{object}]{key,  }\item[{\mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}}}]{owner = {\ttfamily null} }\end{DoxyParamCaption})}
+
+
+
+Removes context data at the given key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key to identify the data.\\
+\hline
+{\em owner} & The owner of the data. If null the data removed from global context\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_i_ai_context_a84e545c7087fab1952c3fae281ab4372}{IAi\+Context}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00113}{113}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+\mbox{\Hypertarget{class_ai_context_a59c66dae7878d8b55f5fa8fdc3c32ae0}\label{class_ai_context_a59c66dae7878d8b55f5fa8fdc3c32ae0}} 
+\index{AiContext@{AiContext}!SetContext@{SetContext}}
+\index{SetContext@{SetContext}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{SetContext()}{SetContext()}}
+{\footnotesize\ttfamily void Ai\+Context.\+Set\+Context (\begin{DoxyParamCaption}\item[{object}]{key,  }\item[{object}]{value,  }\item[{\mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}}}]{owner = {\ttfamily null} }\end{DoxyParamCaption})}
+
+
+
+Sets context data destructively. Data is available to the owner and all of its children. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key for retrieving data\\
+\hline
+{\em value} & The data to store\\
+\hline
+{\em owner} & The owner of the data. If null the data is stored locally\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_i_ai_context_ad7323d1b0dfe9fb59e3cba97a04233d3}{IAi\+Context}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00094}{94}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_ai_context_a2cf4c3460a10366643505d8e733cacf0}\label{class_ai_context_a2cf4c3460a10366643505d8e733cacf0}} 
+\index{AiContext@{AiContext}!Agent@{Agent}}
+\index{Agent@{Agent}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{Agent}{Agent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_i_agent}{IAgent}} Ai\+Context.\+Agent\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Implements \mbox{\hyperlink{interface_i_ai_context_ac58278c7d08095d457dba8547cbb6661}{IAi\+Context}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00010}{10}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+\mbox{\Hypertarget{class_ai_context_a102fb2575b5b800cf497f929f2a24cbc}\label{class_ai_context_a102fb2575b5b800cf497f929f2a24cbc}} 
+\index{AiContext@{AiContext}!CurrentEvaluatedBucket@{CurrentEvaluatedBucket}}
+\index{CurrentEvaluatedBucket@{CurrentEvaluatedBucket}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{CurrentEvaluatedBucket}{CurrentEvaluatedBucket}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_bucket}{Bucket}} Ai\+Context.\+Current\+Evaluated\+Bucket\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Implements \mbox{\hyperlink{interface_i_ai_context_a0b64c6e90ee2d78579963d499e26a374}{IAi\+Context}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00027}{27}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+\mbox{\Hypertarget{class_ai_context_ab54e4096cd1b7cee4e52e2538cd1a1bd}\label{class_ai_context_ab54e4096cd1b7cee4e52e2538cd1a1bd}} 
+\index{AiContext@{AiContext}!CurrentEvaluatedDecision@{CurrentEvaluatedDecision}}
+\index{CurrentEvaluatedDecision@{CurrentEvaluatedDecision}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{CurrentEvaluatedDecision}{CurrentEvaluatedDecision}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_decision}{Decision}} Ai\+Context.\+Current\+Evaluated\+Decision\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Implements \mbox{\hyperlink{interface_i_ai_context_a662363a271838e61956ffaf8173f435c}{IAi\+Context}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00020}{20}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+\mbox{\Hypertarget{class_ai_context_a82e66d06351bd3e43cdf363cd7e350d4}\label{class_ai_context_a82e66d06351bd3e43cdf363cd7e350d4}} 
+\index{AiContext@{AiContext}!LastActions@{LastActions}}
+\index{LastActions@{LastActions}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{LastActions}{LastActions}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{class_agent_action}{Agent\+Action}}$>$ Ai\+Context.\+Last\+Actions\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Implements \mbox{\hyperlink{interface_i_ai_context_a2a4f887affc5c615c636d6a2464a9f47}{IAi\+Context}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00013}{13}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+\mbox{\Hypertarget{class_ai_context_ac3328cff8fd138eda6fa48b2436f7243}\label{class_ai_context_ac3328cff8fd138eda6fa48b2436f7243}} 
+\index{AiContext@{AiContext}!LastSelectedBucket@{LastSelectedBucket}}
+\index{LastSelectedBucket@{LastSelectedBucket}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{LastSelectedBucket}{LastSelectedBucket}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_bucket}{Bucket}} Ai\+Context.\+Last\+Selected\+Bucket\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+If called from an \mbox{\hyperlink{class_agent_action}{Agent\+Action}} this will be the object selected this tick. If called from another Ai\+Object this will be the object selected last tick. 
+
+public \mbox{\hyperlink{class_bucket}{Bucket}} Last\+Selected\+Bucket \{ get; internal set; \} 
+
+Implements \mbox{\hyperlink{interface_i_ai_context_a8b18a251d1773d3af3634a088424bb47}{IAi\+Context}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00026}{26}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+\mbox{\Hypertarget{class_ai_context_a3382e9ec945eeb6c3772c6fb4e3c034c}\label{class_ai_context_a3382e9ec945eeb6c3772c6fb4e3c034c}} 
+\index{AiContext@{AiContext}!LastSelectedDecision@{LastSelectedDecision}}
+\index{LastSelectedDecision@{LastSelectedDecision}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{LastSelectedDecision}{LastSelectedDecision}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_decision}{Decision}} Ai\+Context.\+Last\+Selected\+Decision\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+If called from an \mbox{\hyperlink{class_agent_action}{Agent\+Action}} this will be the object selected this tick. If called from another Ai\+Object this will be the object selected last tick. 
+
+
+
+Implements \mbox{\hyperlink{interface_i_ai_context_a2eee610b9d671302d50b65e8b861d531}{IAi\+Context}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00018}{18}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+\mbox{\Hypertarget{class_ai_context_a5d4109b359435fd561e83067c9c6a6eb}\label{class_ai_context_a5d4109b359435fd561e83067c9c6a6eb}} 
+\index{AiContext@{AiContext}!TickMetaData@{TickMetaData}}
+\index{TickMetaData@{TickMetaData}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{TickMetaData}{TickMetaData}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_tick_meta_data}{Tick\+Meta\+Data}} Ai\+Context.\+Tick\+Meta\+Data\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Implements \mbox{\hyperlink{interface_i_ai_context_adfc535cc7b26ace8ce624ceb1d405bbd}{IAi\+Context}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00030}{30}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+\mbox{\Hypertarget{class_ai_context_af19293caf76845cdb99519a803bd9ed0}\label{class_ai_context_af19293caf76845cdb99519a803bd9ed0}} 
+\index{AiContext@{AiContext}!UtilityScorer@{UtilityScorer}}
+\index{UtilityScorer@{UtilityScorer}!AiContext@{AiContext}}
+\doxysubsubsection{\texorpdfstring{UtilityScorer}{UtilityScorer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{interface_i_utility_scorer}{IUtility\+Scorer}} Ai\+Context.\+Utility\+Scorer\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Implements \mbox{\hyperlink{interface_i_ai_context_af49269d24147a2a39bda93ff297a791c}{IAi\+Context}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ai_context_8cs_source_l00012}{12}} of file \mbox{\hyperlink{_ai_context_8cs_source}{Ai\+Context.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Runtime/\+Models/\+Ai\+Context/\mbox{\hyperlink{_ai_context_8cs}{Ai\+Context.\+cs}}\end{DoxyCompactItemize}

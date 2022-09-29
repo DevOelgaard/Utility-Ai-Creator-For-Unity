@@ -1,0 +1,83 @@
+\hypertarget{_sample12___reactive_property_8cs_source}{}\doxysection{Sample12\+\_\+\+Reactive\+Property.\+cs}
+\label{_sample12___reactive_property_8cs_source}\index{Editor/UniRx/Examples/Sample12\_ReactiveProperty.cs@{Editor/UniRx/Examples/Sample12\_ReactiveProperty.cs}}
+\mbox{\hyperlink{_sample12___reactive_property_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00001}00001 \textcolor{comment}{// for uGUI(from 4.6)}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00002}00002 \textcolor{preprocessor}{\#if !(UNITY\_4\_0 || UNITY\_4\_1 || UNITY\_4\_2 || UNITY\_4\_3 || UNITY\_4\_4 || UNITY\_4\_5)}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00004}00004 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00005}00005 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00006}00006 \textcolor{keyword}{using }UnityEngine.UI;}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00008}00008 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_examples}{UniRx.Examples}}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00010}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property}{00010}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property}{Sample12\_ReactiveProperty}} : MonoBehaviour}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00011}00011     \{}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00012}00012         \textcolor{comment}{// Open Sample12Scene. Set from canvas}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00013}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a3dce3253c260ae20746baee239db9abb}{00013}}         \textcolor{keyword}{public} Button \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a3dce3253c260ae20746baee239db9abb}{MyButton}};}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00014}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a68aab35696df6169f125162bc9ec3db4}{00014}}         \textcolor{keyword}{public} Toggle \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a68aab35696df6169f125162bc9ec3db4}{MyToggle}};}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00015}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a87fee3c60a7ac80a088a0cfb3a8df365}{00015}}         \textcolor{keyword}{public} InputField \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a87fee3c60a7ac80a088a0cfb3a8df365}{MyInput}};}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00016}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a95d7a473e6e7d1d151272a77b9a6362e}{00016}}         \textcolor{keyword}{public} Text \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a95d7a473e6e7d1d151272a77b9a6362e}{MyText}};}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00017}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_ac794300ae9ac61de1487d6305d845224}{00017}}         \textcolor{keyword}{public} Slider \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_ac794300ae9ac61de1487d6305d845224}{MySlider}};}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00019}00019         \textcolor{comment}{// You can monitor/modifie in inspector by SpecializedReactiveProperty}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00020}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a39b86eb03789440b889bc787c6536bf7}{00020}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_uni_rx_1_1_int_reactive_property}{IntReactiveProperty}} \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a39b86eb03789440b889bc787c6536bf7}{IntRxProp}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_int_reactive_property}{IntReactiveProperty}}();}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00022}00022         readonly \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy}{Enemy}} enemy = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy}{Enemy}}(1000);}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00024}00024         \textcolor{keywordtype}{void} Start()}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00025}00025         \{}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00026}00026             \textcolor{comment}{// UnityEvent as Observable}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00027}00027             \textcolor{comment}{// (shortcut, MyButton.OnClickAsObservable())}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00028}00028             \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a3dce3253c260ae20746baee239db9abb}{MyButton}}.onClick.AsObservable().Subscribe(\_ => enemy.CurrentHp.Value -\/= 99);}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00030}00030             \textcolor{comment}{// Toggle, Input etc as Observable(OnValueChangedAsObservable is helper for provide isOn value on subscribe)}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00031}00031             \textcolor{comment}{// SubscribeToInteractable is UniRx.UI Extension Method, same as .interactable = x)}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00032}00032             \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a68aab35696df6169f125162bc9ec3db4}{MyToggle}}.OnValueChangedAsObservable().SubscribeToInteractable(\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a3dce3253c260ae20746baee239db9abb}{MyButton}});}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00034}00034             \textcolor{comment}{// input shows delay after 1 second}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00035}00035 \textcolor{preprocessor}{\#if !(UNITY\_4\_6 || UNITY\_4\_7 || UNITY\_5\_0 || UNITY\_5\_1 || UNITY\_5\_2)}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00036}00036             \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a87fee3c60a7ac80a088a0cfb3a8df365}{MyInput}}.OnValueChangedAsObservable()}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00037}00037 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00038}00038             \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a87fee3c60a7ac80a088a0cfb3a8df365}{MyInput}}.OnValueChangeAsObservable()}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00039}00039 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00040}00040                 .Where(x => x != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00041}00041                 .Delay(TimeSpan.FromSeconds(1))}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00042}00042                 .SubscribeToText(\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a95d7a473e6e7d1d151272a77b9a6362e}{MyText}}); \textcolor{comment}{// SubscribeToText is UniRx.UI Extension Method}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00044}00044             \textcolor{comment}{// converting for human visibility}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00045}00045             \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_ac794300ae9ac61de1487d6305d845224}{MySlider}}.OnValueChangedAsObservable()}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00046}00046                 .SubscribeToText(\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a95d7a473e6e7d1d151272a77b9a6362e}{MyText}}, x => Math.Round(x, 2).ToString());}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00048}00048             \textcolor{comment}{// from RxProp, CurrentHp changing(Button Click) is observable}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00049}00049             enemy.CurrentHp.SubscribeToText(\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a95d7a473e6e7d1d151272a77b9a6362e}{MyText}});}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00050}00050             enemy.IsDead.Where(isDead => isDead == \textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00051}00051                 .Subscribe(\_ =>}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00052}00052                 \{}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00053}00053                     MyToggle.interactable = MyButton.interactable = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00054}00054                 \});}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00056}00056             \textcolor{comment}{// initial text:)}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00057}00057             \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a39b86eb03789440b889bc787c6536bf7}{IntRxProp}}.SubscribeToText(\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample12___reactive_property_a95d7a473e6e7d1d151272a77b9a6362e}{MyText}});}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00058}00058         \}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00059}00059     \}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00061}00061     \textcolor{comment}{// Reactive Notification Model}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00062}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy}{00062}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy}{Enemy}}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00063}00063     \{}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00064}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy_a838eac2647632df6f22cf3a4a19e148a}{00064}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_reactive_property}{IReactiveProperty<long>}} \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy_a838eac2647632df6f22cf3a4a19e148a}{CurrentHp}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00066}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy_a6b041e45b63f4226a0e868c8a140f41e}{00066}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_read_only_reactive_property}{IReadOnlyReactiveProperty<bool>}} \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy_a6b041e45b63f4226a0e868c8a140f41e}{IsDead}} \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00068}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy_aaa7d79130ef2bf1d16954be9f2b928b9}{00068}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy_aaa7d79130ef2bf1d16954be9f2b928b9}{Enemy}}(\textcolor{keywordtype}{int} initialHp)}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00069}00069         \{}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00070}00070             \textcolor{comment}{// Declarative Property}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00071}00071             \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy_a838eac2647632df6f22cf3a4a19e148a}{CurrentHp}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_reactive_property}{ReactiveProperty<long>}}(initialHp);}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00072}00072             \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy_a6b041e45b63f4226a0e868c8a140f41e}{IsDead}} = \mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_enemy_a838eac2647632df6f22cf3a4a19e148a}{CurrentHp}}.Select(x => x <= 0).ToReactiveProperty();}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00073}00073         \}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00074}00074     \}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00075}00075 \}}
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{_sample12___reactive_property_8cs_source_l00077}00077 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

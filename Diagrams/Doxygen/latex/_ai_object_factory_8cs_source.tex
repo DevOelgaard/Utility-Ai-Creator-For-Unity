@@ -1,0 +1,38 @@
+\hypertarget{_ai_object_factory_8cs_source}{}\doxysection{Ai\+Object\+Factory.\+cs}
+\label{_ai_object_factory_8cs_source}\index{Runtime/Services/AiObjectFactory.cs@{Runtime/Services/AiObjectFactory.cs}}
+\mbox{\hyperlink{_ai_object_factory_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Runtime.Serialization.Formatters.Binary;}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00006}00006 \textcolor{keyword}{internal} \textcolor{keyword}{class }AiObjectFactory}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00008}00008     \textcolor{keyword}{private} \textcolor{keyword}{static} AiObjectFactory \_instance;}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00009}00009     \textcolor{keyword}{public} \textcolor{keyword}{static} AiObjectFactory Instance}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00010}00010     \{}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00011}00011         \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} \_instance ??= \textcolor{keyword}{new} AiObjectFactory(); \}}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00012}00012     \}}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00014}00014     \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{object} CreateInstance(Type t, \textcolor{keywordtype}{bool} nonPublic = \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00015}00015     \{}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00016}00016         DebugService.Log(\textcolor{stringliteral}{"{}Creating instance of type: "{}} + t, nameof(AiObjectFactory));}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00017}00017         var newObject = t == typeof(\mbox{\hyperlink{class_parameter}{Parameter}}) ? }
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00018}00018             \textcolor{keyword}{new} \mbox{\hyperlink{class_parameter}{Parameter}}() : }
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00019}00019             Activator.CreateInstance(t);}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00021}00021         \textcolor{keywordflow}{if} (newObject.GetType().GetInterface(nameof(IInitializeAble)) != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00022}00022         \{}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00023}00023             DebugService.Log(\textcolor{stringliteral}{"{}Initializing: "{}} + t, nameof(AiObjectFactory));}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00024}00024             var cast = newObject as IInitializeAble;}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00025}00025             cast?.Initialize();}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00026}00026             \textcolor{keywordflow}{return} cast;}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00027}00027         \}}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00028}00028         }
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00029}00029         \textcolor{keywordflow}{return} newObject;}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00030}00030     \}}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00031}00031 \}}
+\DoxyCodeLine{\Hypertarget{_ai_object_factory_8cs_source_l00032}00032 }
+
+\end{DoxyCode}

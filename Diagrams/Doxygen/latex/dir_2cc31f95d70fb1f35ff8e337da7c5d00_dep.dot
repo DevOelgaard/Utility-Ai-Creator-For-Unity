@@ -1,0 +1,17 @@
+digraph "Services/Scorers"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_d69fddb65e10ed1e1aad5b4f2a8c0135 {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", style="filled,dashed,", label="Services", fontname="Helvetica", fontsize="10", URL="dir_d69fddb65e10ed1e1aad5b4f2a8c0135.html"]
+  subgraph clusterdir_2cc31f95d70fb1f35ff8e337da7c5d00 {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", style="filled,bold,", label="", fontname="Helvetica", fontsize="10", URL="dir_2cc31f95d70fb1f35ff8e337da7c5d00.html"]
+    dir_2cc31f95d70fb1f35ff8e337da7c5d00 [shape=plaintext, label="Scorers"];
+  dir_a58b62da8219a9d780d34c4a0750a16f [shape=box, label="DecisionScoreEvaluator", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_a58b62da8219a9d780d34c4a0750a16f.html"];
+  dir_3e436a8faeba1ba35526f0d2c571f6e1 [shape=box, label="UtilityContainerSelector", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_3e436a8faeba1ba35526f0d2c571f6e1.html"];
+  dir_1fabb9ceba2cb131ab69051fc052ce22 [shape=box, label="UtilityScorer", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_1fabb9ceba2cb131ab69051fc052ce22.html"];
+  }
+  }
+}

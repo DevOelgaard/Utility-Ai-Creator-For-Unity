@@ -1,0 +1,11 @@
+digraph "Editor/UI/Components/Logger/Components/AgentActionLog"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_d899b16968b82f1505455141eb0c65da {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", style="filled,dashed,", label="Components", fontname="Helvetica", fontsize="10", URL="dir_d899b16968b82f1505455141eb0c65da.html"]
+  dir_2dd27ee8d3003153776bb3dd9035668e [shape=box, label="AgentActionLog", style="filled,bold,", fillcolor="#edf0f7", color="grey25", URL="dir_2dd27ee8d3003153776bb3dd9035668e.html"];
+  }
+}

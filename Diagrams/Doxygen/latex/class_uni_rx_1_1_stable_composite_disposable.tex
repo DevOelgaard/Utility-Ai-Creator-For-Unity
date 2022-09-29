@@ -1,0 +1,228 @@
+\hypertarget{class_uni_rx_1_1_stable_composite_disposable}{}\doxysection{Uni\+Rx.\+Stable\+Composite\+Disposable Class Reference}
+\label{class_uni_rx_1_1_stable_composite_disposable}\index{UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}}
+
+
+Represents a group of disposable resources that are disposed together.  
+
+
+Inheritance diagram for Uni\+Rx.\+Stable\+Composite\+Disposable\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_uni_rx_1_1_stable_composite_disposable}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+abstract void \mbox{\hyperlink{class_uni_rx_1_1_stable_composite_disposable_a5c6637b89acc7593a407bce73c1fd6de}{Dispose}} ()
+\begin{DoxyCompactList}\small\item\em Disposes all disposables in the group. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} \mbox{\hyperlink{class_uni_rx_1_1_stable_composite_disposable_a353390b37902da117a7df7109e107cba}{Create}} (IDisposable disposable1, IDisposable disposable2)
+\begin{DoxyCompactList}\small\item\em Creates a new group containing two disposable resources that are disposed together. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} \mbox{\hyperlink{class_uni_rx_1_1_stable_composite_disposable_a851831b3a16d914f532d5887f83c07c8}{Create}} (IDisposable disposable1, IDisposable disposable2, IDisposable disposable3)
+\begin{DoxyCompactList}\small\item\em Creates a new group containing three disposable resources that are disposed together. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} \mbox{\hyperlink{class_uni_rx_1_1_stable_composite_disposable_ace85a1af8bd054b04fa8ddd3d62e38b5}{Create}} (IDisposable disposable1, IDisposable disposable2, IDisposable disposable3, IDisposable disposable4)
+\begin{DoxyCompactList}\small\item\em Creates a new group containing four disposable resources that are disposed together. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} \mbox{\hyperlink{class_uni_rx_1_1_stable_composite_disposable_a9368d49920e0db2249db19d9370dcf81}{Create}} (params IDisposable\mbox{[}$\,$\mbox{]} disposables)
+\begin{DoxyCompactList}\small\item\em Creates a new group of disposable resources that are disposed together. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} \mbox{\hyperlink{class_uni_rx_1_1_stable_composite_disposable_af5be838f93fea0f4e23874402b1bde98}{Create\+Unsafe}} (IDisposable\mbox{[}$\,$\mbox{]} disposables)
+\begin{DoxyCompactList}\small\item\em Creates a new group of disposable resources that are disposed together. Array is not copied, it\textquotesingle{}s unsafe but optimized. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} \mbox{\hyperlink{class_uni_rx_1_1_stable_composite_disposable_a5ca3ea1ea38df36ad32ae442d205b178}{Create}} (IEnumerable$<$ IDisposable $>$ disposables)
+\begin{DoxyCompactList}\small\item\em Creates a new group of disposable resources that are disposed together. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+abstract bool \mbox{\hyperlink{class_uni_rx_1_1_stable_composite_disposable_a723fcd5b90d8ff42b647dc53d28ae90c}{Is\+Disposed}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets a value that indicates whether the object is disposed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a group of disposable resources that are disposed together. 
+
+Definition at line \mbox{\hyperlink{_stable_composite_disposable_8cs_source_l00010}{10}} of file \mbox{\hyperlink{_stable_composite_disposable_8cs_source}{Stable\+Composite\+Disposable.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_stable_composite_disposable_a353390b37902da117a7df7109e107cba}\label{class_uni_rx_1_1_stable_composite_disposable_a353390b37902da117a7df7109e107cba}} 
+\index{UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}!Create@{Create}}
+\index{Create@{Create}!UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} Uni\+Rx.\+Stable\+Composite\+Disposable.\+Create (\begin{DoxyParamCaption}\item[{IDisposable}]{disposable1,  }\item[{IDisposable}]{disposable2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a new group containing two disposable resources that are disposed together. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disposable1} & The first disposable resoruce to add to the group.\\
+\hline
+{\em disposable2} & The second disposable resoruce to add to the group.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Group of disposable resources that are disposed together.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_stable_composite_disposable_8cs_source_l00018}{18}} of file \mbox{\hyperlink{_stable_composite_disposable_8cs_source}{Stable\+Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_stable_composite_disposable_a851831b3a16d914f532d5887f83c07c8}\label{class_uni_rx_1_1_stable_composite_disposable_a851831b3a16d914f532d5887f83c07c8}} 
+\index{UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}!Create@{Create}}
+\index{Create@{Create}!UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} Uni\+Rx.\+Stable\+Composite\+Disposable.\+Create (\begin{DoxyParamCaption}\item[{IDisposable}]{disposable1,  }\item[{IDisposable}]{disposable2,  }\item[{IDisposable}]{disposable3 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a new group containing three disposable resources that are disposed together. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disposable1} & The first disposable resoruce to add to the group.\\
+\hline
+{\em disposable2} & The second disposable resoruce to add to the group.\\
+\hline
+{\em disposable3} & The third disposable resoruce to add to the group.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Group of disposable resources that are disposed together.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_stable_composite_disposable_8cs_source_l00033}{33}} of file \mbox{\hyperlink{_stable_composite_disposable_8cs_source}{Stable\+Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_stable_composite_disposable_ace85a1af8bd054b04fa8ddd3d62e38b5}\label{class_uni_rx_1_1_stable_composite_disposable_ace85a1af8bd054b04fa8ddd3d62e38b5}} 
+\index{UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}!Create@{Create}}
+\index{Create@{Create}!UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} Uni\+Rx.\+Stable\+Composite\+Disposable.\+Create (\begin{DoxyParamCaption}\item[{IDisposable}]{disposable1,  }\item[{IDisposable}]{disposable2,  }\item[{IDisposable}]{disposable3,  }\item[{IDisposable}]{disposable4 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a new group containing four disposable resources that are disposed together. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disposable1} & The first disposable resoruce to add to the group.\\
+\hline
+{\em disposable2} & The second disposable resoruce to add to the group.\\
+\hline
+{\em disposable3} & The three disposable resoruce to add to the group.\\
+\hline
+{\em disposable4} & The four disposable resoruce to add to the group.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Group of disposable resources that are disposed together.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_stable_composite_disposable_8cs_source_l00050}{50}} of file \mbox{\hyperlink{_stable_composite_disposable_8cs_source}{Stable\+Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_stable_composite_disposable_a5ca3ea1ea38df36ad32ae442d205b178}\label{class_uni_rx_1_1_stable_composite_disposable_a5ca3ea1ea38df36ad32ae442d205b178}} 
+\index{UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}!Create@{Create}}
+\index{Create@{Create}!UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} Uni\+Rx.\+Stable\+Composite\+Disposable.\+Create (\begin{DoxyParamCaption}\item[{IEnumerable$<$ IDisposable $>$}]{disposables }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a new group of disposable resources that are disposed together. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disposables} & Disposable resources to add to the group.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Group of disposable resources that are disposed together.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_stable_composite_disposable_8cs_source_l00087}{87}} of file \mbox{\hyperlink{_stable_composite_disposable_8cs_source}{Stable\+Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_stable_composite_disposable_a9368d49920e0db2249db19d9370dcf81}\label{class_uni_rx_1_1_stable_composite_disposable_a9368d49920e0db2249db19d9370dcf81}} 
+\index{UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}!Create@{Create}}
+\index{Create@{Create}!UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Create()}{Create()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} Uni\+Rx.\+Stable\+Composite\+Disposable.\+Create (\begin{DoxyParamCaption}\item[{params IDisposable\mbox{[}$\,$\mbox{]}}]{disposables }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a new group of disposable resources that are disposed together. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disposables} & Disposable resources to add to the group.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Group of disposable resources that are disposed together.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_stable_composite_disposable_8cs_source_l00065}{65}} of file \mbox{\hyperlink{_stable_composite_disposable_8cs_source}{Stable\+Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_stable_composite_disposable_af5be838f93fea0f4e23874402b1bde98}\label{class_uni_rx_1_1_stable_composite_disposable_af5be838f93fea0f4e23874402b1bde98}} 
+\index{UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}!CreateUnsafe@{CreateUnsafe}}
+\index{CreateUnsafe@{CreateUnsafe}!UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{CreateUnsafe()}{CreateUnsafe()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable}{ICancelable}} Uni\+Rx.\+Stable\+Composite\+Disposable.\+Create\+Unsafe (\begin{DoxyParamCaption}\item[{IDisposable\mbox{[}$\,$\mbox{]}}]{disposables }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a new group of disposable resources that are disposed together. Array is not copied, it\textquotesingle{}s unsafe but optimized. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disposables} & Disposable resources to add to the group.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Group of disposable resources that are disposed together.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_stable_composite_disposable_8cs_source_l00077}{77}} of file \mbox{\hyperlink{_stable_composite_disposable_8cs_source}{Stable\+Composite\+Disposable.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_stable_composite_disposable_a5c6637b89acc7593a407bce73c1fd6de}\label{class_uni_rx_1_1_stable_composite_disposable_a5c6637b89acc7593a407bce73c1fd6de}} 
+\index{UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
+{\footnotesize\ttfamily abstract void Uni\+Rx.\+Stable\+Composite\+Disposable.\+Dispose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Disposes all disposables in the group. 
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_stable_composite_disposable_a723fcd5b90d8ff42b647dc53d28ae90c}\label{class_uni_rx_1_1_stable_composite_disposable_a723fcd5b90d8ff42b647dc53d28ae90c}} 
+\index{UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}!IsDisposed@{IsDisposed}}
+\index{IsDisposed@{IsDisposed}!UniRx.StableCompositeDisposable@{UniRx.StableCompositeDisposable}}
+\doxysubsubsection{\texorpdfstring{IsDisposed}{IsDisposed}}
+{\footnotesize\ttfamily abstract bool Uni\+Rx.\+Stable\+Composite\+Disposable.\+Is\+Disposed\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Gets a value that indicates whether the object is disposed. 
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_cancelable_aefb0dc0bc3db77afdf28a4853db5eef3}{Uni\+Rx.\+ICancelable}}.
+
+
+
+Definition at line \mbox{\hyperlink{_stable_composite_disposable_8cs_source_l00102}{102}} of file \mbox{\hyperlink{_stable_composite_disposable_8cs_source}{Stable\+Composite\+Disposable.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Disposables/\mbox{\hyperlink{_stable_composite_disposable_8cs}{Stable\+Composite\+Disposable.\+cs}}\end{DoxyCompactItemize}

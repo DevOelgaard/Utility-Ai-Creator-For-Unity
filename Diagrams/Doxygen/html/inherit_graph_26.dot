@@ -1,0 +1,8 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="IntegrationTests.Persistence.\lIT_02JsonPersisterPersistenceApi\lResponseCurve",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_integration_tests_1_1_persistence_1_1_i_t__02_json_persister_persistence_api_response_curve.html",tooltip=" "];
+}

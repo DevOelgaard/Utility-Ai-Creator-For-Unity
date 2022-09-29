@@ -1,0 +1,30 @@
+\hypertarget{_sample02___observable_triggers_8cs_source}{}\doxysection{Sample02\+\_\+\+Observable\+Triggers.\+cs}
+\label{_sample02___observable_triggers_8cs_source}\index{Editor/UniRx/Examples/Sample02\_ObservableTriggers.cs@{Editor/UniRx/Examples/Sample02\_ObservableTriggers.cs}}
+\mbox{\hyperlink{_sample02___observable_triggers_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00001}00001 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00002}00002 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_1_1_triggers}{UniRx.Triggers}}; \textcolor{comment}{// Triggers Namepsace}}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00003}00003 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00005}00005 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_examples}{UniRx.Examples}}}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00006}00006 \{}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00007}\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample02___observable_triggers}{00007}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_examples_1_1_sample02___observable_triggers}{Sample02\_ObservableTriggers}} : MonoBehaviour}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00009}00009         \textcolor{keywordtype}{void} Start()}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00010}00010         \{}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00011}00011             \textcolor{comment}{// Get the plain object}}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00012}00012             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00014}00014             \textcolor{comment}{// Add ObservableXxxTrigger for handle MonoBehaviour's event as Observable}}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00015}00015             cube.AddComponent<\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_update_trigger}{ObservableUpdateTrigger}}>()}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00016}00016                 .UpdateAsObservable()}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00017}00017                 .SampleFrame(30)}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00018}00018                 .Subscribe(x => \mbox{\hyperlink{_ai_view_model_8cs_a828eaed3a7fec21688af492b377d63ed}{Debug}}.Log(\textcolor{stringliteral}{"{}cube"{}}), () => \mbox{\hyperlink{_ai_view_model_8cs_a828eaed3a7fec21688af492b377d63ed}{Debug}}.Log(\textcolor{stringliteral}{"{}destroy"{}}));}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00020}00020             \textcolor{comment}{// destroy after 3 second:)}}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00021}00021             GameObject.Destroy(cube, 3f);}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00022}00022         \}}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00023}00023     \}}
+\DoxyCodeLine{\Hypertarget{_sample02___observable_triggers_8cs_source_l00024}00024 \}}
+
+\end{DoxyCode}

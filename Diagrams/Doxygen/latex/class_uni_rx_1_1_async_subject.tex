@@ -1,0 +1,179 @@
+\hypertarget{class_uni_rx_1_1_async_subject}{}\doxysection{Uni\+Rx.\+Async\+Subject\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_uni_rx_1_1_async_subject}\index{UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}}
+Inheritance diagram for Uni\+Rx.\+Async\+Subject\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.126760cm]{class_uni_rx_1_1_async_subject}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_async_subject_a36c25ea71fb3da07c2ff63f8f1f71e9c}{On\+Completed}} ()
+\begin{DoxyCompactList}\small\item\em Notifies the observer of the end of the sequence. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_async_subject_abcf6f11cddd6f203cbfa1b8855c1ccc6}{On\+Error}} (Exception error)
+\begin{DoxyCompactList}\small\item\em Notifies the observer that an exception has occurred. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_async_subject_a14c86d27b60c3cca08cf38917ad1d5e1}{On\+Next}} (T value)
+\item 
+IDisposable \mbox{\hyperlink{class_uni_rx_1_1_async_subject_a41689a0a8fa46e600a912bcdddb3cbaf}{Subscribe}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$ observer)
+\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_async_subject_ab8cc05aaf8010e43b72b535f1a3e7ff7}{Dispose}} ()
+\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_async_subject_a39eda116af7ed6e5c50ea2069d0d5010}{Is\+Required\+Subscribe\+On\+Current\+Thread}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+T \mbox{\hyperlink{class_uni_rx_1_1_async_subject_a3f249bf50cfc82077271dc5b1788a376}{Value}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_async_subject_a141015a5e417a58dc9aad55dceb14fb7}{Has\+Observers}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_async_subject_aece1dd72a199aff4ccb8b6c6cb823c3b}{Is\+Completed}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_async_subject_8cs_source_l00012}{12}} of file \mbox{\hyperlink{_async_subject_8cs_source}{Async\+Subject.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_async_subject_ab8cc05aaf8010e43b72b535f1a3e7ff7}\label{class_uni_rx_1_1_async_subject_ab8cc05aaf8010e43b72b535f1a3e7ff7}} 
+\index{UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_async_subject}{Uni\+Rx.\+Async\+Subject}}$<$ T $>$.Dispose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_async_subject_8cs_source_l00162}{162}} of file \mbox{\hyperlink{_async_subject_8cs_source}{Async\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_async_subject_a39eda116af7ed6e5c50ea2069d0d5010}\label{class_uni_rx_1_1_async_subject_a39eda116af7ed6e5c50ea2069d0d5010}} 
+\index{UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}!IsRequiredSubscribeOnCurrentThread@{IsRequiredSubscribeOnCurrentThread}}
+\index{IsRequiredSubscribeOnCurrentThread@{IsRequiredSubscribeOnCurrentThread}!UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{IsRequiredSubscribeOnCurrentThread()}{IsRequiredSubscribeOnCurrentThread()}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{class_uni_rx_1_1_async_subject}{Uni\+Rx.\+Async\+Subject}}$<$ T $>$.Is\+Required\+Subscribe\+On\+Current\+Thread (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_optimized_observable_a8a2544c49f3e465df5b8ec4f71c9e699}{Uni\+Rx.\+IOptimized\+Observable$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_async_subject_8cs_source_l00178}{178}} of file \mbox{\hyperlink{_async_subject_8cs_source}{Async\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_async_subject_a36c25ea71fb3da07c2ff63f8f1f71e9c}\label{class_uni_rx_1_1_async_subject_a36c25ea71fb3da07c2ff63f8f1f71e9c}} 
+\index{UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}!OnCompleted@{OnCompleted}}
+\index{OnCompleted@{OnCompleted}!UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnCompleted()}{OnCompleted()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_async_subject}{Uni\+Rx.\+Async\+Subject}}$<$ T $>$.On\+Completed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Notifies the observer of the end of the sequence. 
+
+\begin{DoxyReturn}{Returns}
+Result returned upon observation of the sequence completion.
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_async_subject_8cs_source_l00047}{47}} of file \mbox{\hyperlink{_async_subject_8cs_source}{Async\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_async_subject_abcf6f11cddd6f203cbfa1b8855c1ccc6}\label{class_uni_rx_1_1_async_subject_abcf6f11cddd6f203cbfa1b8855c1ccc6}} 
+\index{UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}!OnError@{OnError}}
+\index{OnError@{OnError}!UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnError()}{OnError()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_async_subject}{Uni\+Rx.\+Async\+Subject}}$<$ T $>$.On\+Error (\begin{DoxyParamCaption}\item[{Exception}]{exception }\end{DoxyParamCaption})}
+
+
+
+Notifies the observer that an exception has occurred. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em exception} & The exception that occurred.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result returned upon observation of an error.
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_async_subject_8cs_source_l00075}{75}} of file \mbox{\hyperlink{_async_subject_8cs_source}{Async\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_async_subject_a14c86d27b60c3cca08cf38917ad1d5e1}\label{class_uni_rx_1_1_async_subject_a14c86d27b60c3cca08cf38917ad1d5e1}} 
+\index{UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}!OnNext@{OnNext}}
+\index{OnNext@{OnNext}!UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnNext()}{OnNext()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_async_subject}{Uni\+Rx.\+Async\+Subject}}$<$ T $>$.On\+Next (\begin{DoxyParamCaption}\item[{T}]{value }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a79a1f5d172c3764f94517cd901c4f8b2}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_async_subject_8cs_source_l00094}{94}} of file \mbox{\hyperlink{_async_subject_8cs_source}{Async\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_async_subject_a41689a0a8fa46e600a912bcdddb3cbaf}\label{class_uni_rx_1_1_async_subject_a41689a0a8fa46e600a912bcdddb3cbaf}} 
+\index{UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}!Subscribe@{Subscribe}}
+\index{Subscribe@{Subscribe}!UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Subscribe()}{Subscribe()}}
+{\footnotesize\ttfamily IDisposable \mbox{\hyperlink{class_uni_rx_1_1_async_subject}{Uni\+Rx.\+Async\+Subject}}$<$ T $>$.Subscribe (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$}]{observer }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observable_a81a2566f451cf1ddc8de265d019d1b88}{Uni\+Rx.\+IObservable$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_async_subject_8cs_source_l00106}{106}} of file \mbox{\hyperlink{_async_subject_8cs_source}{Async\+Subject.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_async_subject_a141015a5e417a58dc9aad55dceb14fb7}\label{class_uni_rx_1_1_async_subject_a141015a5e417a58dc9aad55dceb14fb7}} 
+\index{UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}!HasObservers@{HasObservers}}
+\index{HasObservers@{HasObservers}!UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{HasObservers}{HasObservers}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{class_uni_rx_1_1_async_subject}{Uni\+Rx.\+Async\+Subject}}$<$ T $>$.Has\+Observers\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_async_subject_8cs_source_l00037}{37}} of file \mbox{\hyperlink{_async_subject_8cs_source}{Async\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_async_subject_aece1dd72a199aff4ccb8b6c6cb823c3b}\label{class_uni_rx_1_1_async_subject_aece1dd72a199aff4ccb8b6c6cb823c3b}} 
+\index{UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}!IsCompleted@{IsCompleted}}
+\index{IsCompleted@{IsCompleted}!UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{IsCompleted}{IsCompleted}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{class_uni_rx_1_1_async_subject}{Uni\+Rx.\+Async\+Subject}}$<$ T $>$.Is\+Completed\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_async_subject_8cs_source_l00045}{45}} of file \mbox{\hyperlink{_async_subject_8cs_source}{Async\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_async_subject_a3f249bf50cfc82077271dc5b1788a376}\label{class_uni_rx_1_1_async_subject_a3f249bf50cfc82077271dc5b1788a376}} 
+\index{UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}!Value@{Value}}
+\index{Value@{Value}!UniRx.AsyncSubject$<$ T $>$@{UniRx.AsyncSubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Value}{Value}}
+{\footnotesize\ttfamily T \mbox{\hyperlink{class_uni_rx_1_1_async_subject}{Uni\+Rx.\+Async\+Subject}}$<$ T $>$.Value\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_async_subject_8cs_source_l00026}{26}} of file \mbox{\hyperlink{_async_subject_8cs_source}{Async\+Subject.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Subjects/\mbox{\hyperlink{_async_subject_8cs}{Async\+Subject.\+cs}}\end{DoxyCompactItemize}

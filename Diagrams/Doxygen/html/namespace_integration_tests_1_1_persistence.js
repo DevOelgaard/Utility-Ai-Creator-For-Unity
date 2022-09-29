@@ -1,0 +1,7 @@
+var namespace_integration_tests_1_1_persistence =
+[
+    [ "IT_01JsonPersisterPersistenceApiAgentAction", "class_integration_tests_1_1_persistence_1_1_i_t__01_json_persister_persistence_api_agent_action.html", "class_integration_tests_1_1_persistence_1_1_i_t__01_json_persister_persistence_api_agent_action" ],
+    [ "IT_02JsonPersisterPersistenceApiResponseCurve", "class_integration_tests_1_1_persistence_1_1_i_t__02_json_persister_persistence_api_response_curve.html", "class_integration_tests_1_1_persistence_1_1_i_t__02_json_persister_persistence_api_response_curve" ],
+    [ "IT_03JsonPersisterPersistenceApiConsideration", "class_integration_tests_1_1_persistence_1_1_i_t__03_json_persister_persistence_api_consideration.html", "class_integration_tests_1_1_persistence_1_1_i_t__03_json_persister_persistence_api_consideration" ],
+    [ "IT_04JsonPersisterPersistenceApiDecision", "class_integration_tests_1_1_persistence_1_1_i_t__04_json_persister_persistence_api_decision.html", "class_integration_tests_1_1_persistence_1_1_i_t__04_json_persister_persistence_api_decision" ]
+];

@@ -1,0 +1,67 @@
+\hypertarget{_immutable_list_8cs_source}{}\doxysection{Immutable\+List.\+cs}
+\label{_immutable_list_8cs_source}\index{Editor/UniRx/Scripts/InternalUtil/ImmutableList.cs@{Editor/UniRx/Scripts/InternalUtil/ImmutableList.cs}}
+\mbox{\hyperlink{_immutable_list_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_internal_util}{UniRx.InternalUtil}}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00005}00005     \textcolor{comment}{// ImmutableList is sometimes useful, use for public.}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00006}\mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list}{00006}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list}{ImmutableList}}<T>}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00007}00007     \{}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00008}\mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_a89515949c04881bbb718b6bba0a8dfaf}{00008}}         \textcolor{keyword}{public} \textcolor{keyword}{static} readonly \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list}{ImmutableList<T>}} \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_a89515949c04881bbb718b6bba0a8dfaf}{Empty}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list}{ImmutableList<T>}}();}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00010}00010         readonly T[] data;}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00012}\mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_ade519b4b7af647933d15361cd86aa12a}{00012}}         \textcolor{keyword}{public} T[] \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_ade519b4b7af647933d15361cd86aa12a}{Data}}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00013}00013         \{}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00014}00014             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} data; \}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00015}00015         \}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00017}00017         \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list}{ImmutableList}}()}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00018}00018         \{}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00019}00019             data = \textcolor{keyword}{new} T[0];}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00020}00020         \}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00022}\mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_ac360418a03d5332c8145b6ff62ba8835}{00022}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_ac360418a03d5332c8145b6ff62ba8835}{ImmutableList}}(T[] data)}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00023}00023         \{}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00024}00024             this.data = data;}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00025}00025         \}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00027}\mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_ab67cacfafa52c0ce3c34d646852c70a0}{00027}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list}{ImmutableList<T>}} \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_ab67cacfafa52c0ce3c34d646852c70a0}{Add}}(T value)}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00028}00028         \{}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00029}00029             var newData = \textcolor{keyword}{new} T[data.Length + 1];}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00030}00030             Array.Copy(data, newData, data.Length);}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00031}00031             newData[data.Length] = value;}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00032}00032             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list}{ImmutableList<T>}}(newData);}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00033}00033         \}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00035}\mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_a9eca8a47286600a3ea33ae403feb2045}{00035}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list}{ImmutableList<T>}} \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_a9eca8a47286600a3ea33ae403feb2045}{Remove}}(T value)}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00036}00036         \{}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00037}00037             var i = \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_aa29baaa1657b5f8f92bc9ceb5add38d3}{IndexOf}}(value);}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00038}00038             \textcolor{keywordflow}{if} (i < 0) \textcolor{keywordflow}{return} \textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00040}00040             var length = data.Length;}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00041}00041             \textcolor{keywordflow}{if} (length == 1) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_a89515949c04881bbb718b6bba0a8dfaf}{Empty}};}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00043}00043             var newData = \textcolor{keyword}{new} T[length -\/ 1];}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00045}00045             Array.Copy(data, 0, newData, 0, i);}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00046}00046             Array.Copy(data, i + 1, newData, i, length -\/ i -\/ 1);}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00048}00048             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list}{ImmutableList<T>}}(newData);}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00049}00049         \}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00051}\mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_aa29baaa1657b5f8f92bc9ceb5add38d3}{00051}}         \textcolor{keyword}{public} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_uni_rx_1_1_internal_util_1_1_immutable_list_aa29baaa1657b5f8f92bc9ceb5add38d3}{IndexOf}}(T value)}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00052}00052         \{}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00053}00053             \textcolor{keywordflow}{for} (var i = 0; i < data.Length; ++i)}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00054}00054             \{}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00055}00055                 \textcolor{comment}{// ImmutableList only use for IObserver(no worry for boxed)}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00056}00056                 \textcolor{keywordflow}{if} (\textcolor{keywordtype}{object}.Equals(data[i], value)) \textcolor{keywordflow}{return} i;}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00057}00057             \}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00058}00058             \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00059}00059         \}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00060}00060     \}}
+\DoxyCodeLine{\Hypertarget{_immutable_list_8cs_source_l00061}00061 \}}
+
+\end{DoxyCode}

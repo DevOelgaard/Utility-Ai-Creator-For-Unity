@@ -1,0 +1,75 @@
+\hypertarget{_observable_transform_changed_trigger_8cs_source}{}\doxysection{Observable\+Transform\+Changed\+Trigger.\+cs}
+\label{_observable_transform_changed_trigger_8cs_source}\index{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableTransformChangedTrigger.cs@{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableTransformChangedTrigger.cs}}
+\mbox{\hyperlink{_observable_transform_changed_trigger_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00001}00001 \textcolor{comment}{// after uGUI(from 4.6)}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00002}00002 \textcolor{preprocessor}{\#if !(UNITY\_4\_0 || UNITY\_4\_1 || UNITY\_4\_2 || UNITY\_4\_3 || UNITY\_4\_4 || UNITY\_4\_5)}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00004}00004 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00005}00005 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00007}00007 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_triggers}{UniRx.Triggers}}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00009}00009     [DisallowMultipleComponent]}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00010}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_transform_changed_trigger}{00010}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_transform_changed_trigger}{ObservableTransformChangedTrigger}} : \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_base}{ObservableTriggerBase}}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00011}00011     \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00012}00012         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}} onBeforeTransformParentChanged;}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00014}00014         \textcolor{comment}{// Callback sent to the graphic before a Transform parent change occurs}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00015}00015         \textcolor{keywordtype}{void} OnBeforeTransformParentChanged()}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00016}00016         \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00017}00017             \textcolor{keywordflow}{if} (onBeforeTransformParentChanged != \textcolor{keyword}{null}) onBeforeTransformParentChanged.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}}.\mbox{\hyperlink{struct_uni_rx_1_1_unit_a16a477eee98338be4ffd171335f492fe}{Default}});}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00021}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_transform_changed_trigger_a4a49af2f34c5475e4045824e7d5a8de8}{00021}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_transform_changed_trigger_a4a49af2f34c5475e4045824e7d5a8de8}{OnBeforeTransformParentChangedAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00022}00022         \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00023}00023             \textcolor{keywordflow}{return} onBeforeTransformParentChanged ?? (onBeforeTransformParentChanged = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00024}00024         \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00026}00026         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}} onTransformParentChanged;}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00028}00028         \textcolor{comment}{// This function is called when the parent property of the transform of the GameObject has changed}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00029}00029         \textcolor{keywordtype}{void} OnTransformParentChanged()}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00030}00030         \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00031}00031             \textcolor{keywordflow}{if} (onTransformParentChanged != \textcolor{keyword}{null}) onTransformParentChanged.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}}.\mbox{\hyperlink{struct_uni_rx_1_1_unit_a16a477eee98338be4ffd171335f492fe}{Default}});}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00032}00032         \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00035}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_transform_changed_trigger_acf69a4f9adda77b87a0a15fe65e66089}{00035}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_transform_changed_trigger_acf69a4f9adda77b87a0a15fe65e66089}{OnTransformParentChangedAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00036}00036         \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00037}00037             \textcolor{keywordflow}{return} onTransformParentChanged ?? (onTransformParentChanged = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00038}00038         \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00040}00040         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}} onTransformChildrenChanged;}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00042}00042         \textcolor{comment}{// This function is called when the list of children of the transform of the GameObject has changed}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00043}00043         \textcolor{keywordtype}{void} OnTransformChildrenChanged()}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00044}00044         \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00045}00045             \textcolor{keywordflow}{if} (onTransformChildrenChanged != \textcolor{keyword}{null}) onTransformChildrenChanged.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(\mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}}.\mbox{\hyperlink{struct_uni_rx_1_1_unit_a16a477eee98338be4ffd171335f492fe}{Default}});}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00046}00046         \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00049}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_transform_changed_trigger_ab14a3c56ede847f6c793f2a538c39f07}{00049}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_transform_changed_trigger_ab14a3c56ede847f6c793f2a538c39f07}{OnTransformChildrenChangedAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00050}00050         \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00051}00051             \textcolor{keywordflow}{return} onTransformChildrenChanged ?? (onTransformChildrenChanged = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Unit>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00052}00052         \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00054}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_transform_changed_trigger_a189e81d0d652055e08867ac983b9f1e1}{00054}}         \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_transform_changed_trigger_a189e81d0d652055e08867ac983b9f1e1}{RaiseOnCompletedOnDestroy}}()}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00055}00055         \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00056}00056             \textcolor{keywordflow}{if} (onBeforeTransformParentChanged != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00057}00057             \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00058}00058                 onBeforeTransformParentChanged.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00059}00059             \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00060}00060             \textcolor{keywordflow}{if} (onTransformParentChanged != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00061}00061             \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00062}00062                 onTransformParentChanged.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00063}00063             \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00064}00064             \textcolor{keywordflow}{if} (onTransformChildrenChanged != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00065}00065             \{}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00066}00066                 onTransformChildrenChanged.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00067}00067             \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00068}00068         \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00069}00069     \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00070}00070 \}}
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{_observable_transform_changed_trigger_8cs_source_l00072}00072 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

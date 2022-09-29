@@ -1,0 +1,146 @@
+\hypertarget{_line_chart_component_old_8cs_source}{}\doxysection{Line\+Chart\+Component\+Old.\+cs}
+\label{_line_chart_component_old_8cs_source}\index{Editor/UI/Components/LineChart/LineChartComponentOld.cs@{Editor/UI/Components/LineChart/LineChartComponentOld.cs}}
+\mbox{\hyperlink{_line_chart_component_old_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00001}00001 \textcolor{keyword}{using }System.Collections;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00003}00003 \textcolor{keyword}{using }UnityEditor;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00004}00004 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00005}00005 \textcolor{keyword}{using }UnityEngine.UIElements;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00007}\mbox{\hyperlink{class_line_chart_component_old}{00007}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_line_chart_component_old}{LineChartComponentOld}} : IMGUIContainer}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00009}\mbox{\hyperlink{class_line_chart_component_old_aa41a61c6db4a8253020fd91ec5f6b942}{00009}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_line_chart_component_old_aa41a61c6db4a8253020fd91ec5f6b942}{LineChartComponentOld}}()}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00010}00010     \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00011}00011         this.style.flexGrow = 1;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00012}00012         this.style.minHeight = 200;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00013}00013         this.style.minWidth = 400;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00016}00016         var minX = 0f;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00017}00017         var maxX = 10f;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00018}00018         var minY = 0f;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00019}00019         var maxY = 1f;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00021}00021         var steps = 10f;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00022}00022         var stepSize = maxX / steps;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00023}00023         var pointList = \textcolor{keyword}{new} List<Vector3>();}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00024}00024         \textcolor{keywordflow}{for} (var i = 0; i <= steps; i++)}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00025}00025         \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00026}00026             pointList.Add(GetPoints(i*stepSize,minX,maxX));}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00027}00027         \}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00030}00030         onGUIHandler = () =>}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00031}00031         \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00032}00032             var marginBottom = 25;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00033}00033             var marginTop = 25;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00034}00034             var marginLeft = 50;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00035}00035             var marginRight = 50;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00036}00036             var textMarginBottom = 5;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00037}00037             var textMarginLeft = 25;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00038}00038             var textAdjustmentY = 12;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00039}00039             var graphHeight = this.resolvedStyle.height -\/ marginTop -\/ marginBottom;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00040}00040             var graphWidth = this.resolvedStyle.width -\/ marginLeft -\/ marginRight;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00042}00042             var origon = \textcolor{keyword}{new} Vector3(marginLeft, graphHeight, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00043}00043             var endX = \textcolor{keyword}{new} Vector3(graphWidth, graphHeight, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00044}00044             var endY = \textcolor{keyword}{new} Vector3(origon.x,  marginTop, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00046}00046             var labelsX = \textcolor{keyword}{new} List<ChartLabel>();}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00047}00047             var labelsY = \textcolor{keyword}{new} List<ChartLabel>();}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00050}00050             var numberOfPointsX = 10;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00051}00051             \textcolor{keywordtype}{float} xValueStepSize = maxX / numberOfPointsX;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00052}00052             var xStepSize = (graphWidth -\/ marginRight) / numberOfPointsX;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00054}00054             \textcolor{keywordflow}{for}(var i = minX; i <= numberOfPointsX; i++)}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00055}00055             \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00056}00056                 var pos = \textcolor{keyword}{new} Vector3(origon.x + i * xStepSize, origon.y, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00057}00057                 var labelPosition = \textcolor{keyword}{new} Vector3(pos.x, pos.y + textMarginBottom, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00058}00058                 var label = \textcolor{keyword}{new} ChartLabel(labelPosition, (i * xValueStepSize).ToString());}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00059}00059                 labelsX.Add(label);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00060}00060                 label.Draw();}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00061}00061                 var linePositionStart = \textcolor{keyword}{new} Vector3(pos.x, pos.y, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00062}00062                 var linePositionEnd = \textcolor{keyword}{new} Vector3(pos.x, endY.y, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00063}00063                 Handles.DrawLine(linePositionStart, linePositionEnd);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00064}00064             \}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00067}00067             var numberOfPointsY = 10;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00068}00068             \textcolor{keywordtype}{float} yValueStepSize = maxY / numberOfPointsY;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00069}00069             var yStepSize = (graphHeight -\/ marginTop) / numberOfPointsX;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00071}00071             \textcolor{keywordflow}{for}(var i = minY; i <= numberOfPointsY; i++)}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00072}00072             \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00073}00073                 var pos = \textcolor{keyword}{new} Vector3(origon.x-\/textMarginLeft,origon.y-\/i*yStepSize, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00074}00074                 var labelPosition = \textcolor{keyword}{new} Vector3(pos.x, pos.y + textMarginBottom -\/ textAdjustmentY, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00075}00075                 var label = \textcolor{keyword}{new} ChartLabel(labelPosition, (i * yValueStepSize).ToString());}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00076}00076                 labelsY.Add(label);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00077}00077                 label.Draw();}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00078}00078                 var linePositionStart = \textcolor{keyword}{new} Vector3(origon.x, pos.y, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00079}00079                 var linePositionEnd = \textcolor{keyword}{new} Vector3(endX.x, pos.y, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00080}00080                 Handles.DrawLine(linePositionStart, linePositionEnd);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00081}00081             \}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00083}00083             \textcolor{comment}{//Handles.DrawLines(pointList.ToArray());}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00085}00085             \textcolor{keywordflow}{for} (var i = 1; i < pointList.Count; i++)}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00086}00086             \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00087}00087                 var p1 = \textcolor{keyword}{new} Vector3(origon.x + graphWidth * pointList[i -\/ 1].x, origon.y  -\/ graphHeight * pointList[i -\/ 1].y, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00088}00088                 var p2 = \textcolor{keyword}{new} Vector3(origon.x + graphWidth * pointList[i].x, origon.y -\/ graphHeight * pointList[i].y, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00089}00089                 Handles.DrawLine(p1,p2);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00090}00090             \}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00091}00091         \};}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00093}00093         }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00094}00094     \}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00096}00096     \textcolor{keyword}{private} Vector3 GetPoints(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} min, \textcolor{keywordtype}{float} max)}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00097}00097     \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00098}00098         var xNormalized = (x -\/ min) / max;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00099}00099         var y =  1 * xNormalized + 0;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00100}00100         \textcolor{keywordflow}{return} \textcolor{keyword}{new} Vector3(xNormalized, y,0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00101}00101     \}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00103}00103     \textcolor{keyword}{private} \textcolor{keyword}{class }ChartLabel}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00104}00104     \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00105}00105         \textcolor{keyword}{public} readonly Vector3 Position;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00106}00106         \textcolor{keyword}{public} readonly \textcolor{keywordtype}{string} Text;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00107}00107         \textcolor{keyword}{private} readonly Vector3 adjusterX = \textcolor{keyword}{new} Vector3(5, 0, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00108}00108         \textcolor{keyword}{private} readonly Vector3 adjusterY = \textcolor{keyword}{new} Vector3(0, 15, 0);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00110}00110         \textcolor{keyword}{public} ChartLabel(Vector3 position, \textcolor{keywordtype}{string} text)}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00111}00111         \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00112}00112             Position = position;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00113}00113             Text = text;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00114}00114         \}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00116}00116         \textcolor{keyword}{public} \textcolor{keywordtype}{void} Draw(\textcolor{keywordtype}{bool} isXAxis = \textcolor{keyword}{false}, \textcolor{keywordtype}{bool} isYAxis = \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00117}00117         \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00118}00118             var p = Position;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00119}00119             \textcolor{keywordflow}{if} (isXAxis)}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00120}00120             \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00121}00121                 p += adjusterX;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00122}00122             \}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00123}00123             \textcolor{keywordflow}{if} (isYAxis)}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00124}00124             \{}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00125}00125                 p -\/= adjusterY;}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00126}00126             \}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00127}00127             Handles.Label(p, Text);}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00128}00128         \}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00130}00130         \textcolor{comment}{//public void DrawHorizontalLine(float length)}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00131}00131         \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00132}00132         \textcolor{comment}{//    Handles.DrawLine(Position, new Vector3(Position.x + length, Position.y, 0));}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00133}00133         \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00134}00134 }
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00135}00135         \textcolor{comment}{//public void DrawVerticalLine(,float length)}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00136}00136         \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00137}00137         \textcolor{comment}{//    Handles.DrawLine(Position, new Vector3(Position.x, Position.y -\/ length, 0));}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00138}00138         \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00139}00139     \}}
+\DoxyCodeLine{\Hypertarget{_line_chart_component_old_8cs_source_l00140}00140 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,44 @@
+\hypertarget{_demo___all_states_8cs_source}{}\doxysection{Demo\+\_\+\+All\+States.\+cs}
+\label{_demo___all_states_8cs_source}\index{Runtime/Demo/AgentActions/Demo\_AllStates.cs@{Runtime/Demo/AgentActions/Demo\_AllStates.cs}}
+\mbox{\hyperlink{_demo___all_states_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00001}00001 \textcolor{comment}{// using System;}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00002}00002 \textcolor{comment}{// using System.Collections.Generic;}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00003}00003 \textcolor{comment}{// using System.Linq;}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00004}00004 \textcolor{comment}{// using System.Text;}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00005}00005 \textcolor{comment}{// using System.Threading.Tasks;}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00006}00006 \textcolor{comment}{// using UnityEngine;}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00007}00007 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00008}00008 \textcolor{comment}{// internal class Demo\_AllStates : AgentAction}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00009}00009 \textcolor{comment}{// \{}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00010}00010 \textcolor{comment}{//     public Demo\_AllStates() : base()}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00011}00011 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00012}00012 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00013}00013 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00014}00014 \textcolor{comment}{//     protected override List<Parameter> GetParameters()}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00015}00015 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00016}00016 \textcolor{comment}{//         return new List<Parameter>()}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00017}00017 \textcolor{comment}{//         \{}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00018}00018 \textcolor{comment}{//             new Parameter("{}OnStart"{}, "{}OnStart"{}),}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00019}00019 \textcolor{comment}{//             new Parameter("{}OnGoing"{}, "{}OnGoing"{}),}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00020}00020 \textcolor{comment}{//             new Parameter("{}OnEnd"{}, "{}OnEnd"{}),}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00021}00021 \textcolor{comment}{//         \};}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00022}00022 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00023}00023 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00024}00024 \textcolor{comment}{//     public override void OnStart(AiContext context)}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00025}00025 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00026}00026 \textcolor{comment}{//         Debug.Log(Parameters[0].Value);}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00027}00027 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00028}00028 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00029}00029 \textcolor{comment}{//     public override void OnGoing(AiContext context)}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00030}00030 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00031}00031 \textcolor{comment}{//         Debug.Log(Parameters[1].Value);}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00032}00032 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00033}00033 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00034}00034 \textcolor{comment}{//     public override void OnEnd(AiContext context)}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00035}00035 \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00036}00036 \textcolor{comment}{//         Debug.Log(Parameters[2].Value);}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00037}00037 \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_demo___all_states_8cs_source_l00038}00038 \textcolor{comment}{// \}}}
+
+\end{DoxyCode}

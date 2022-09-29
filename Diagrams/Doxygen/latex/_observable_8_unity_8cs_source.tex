@@ -1,0 +1,1092 @@
+\hypertarget{_observable_8_unity_8cs_source}{}\doxysection{Observable.\+Unity.\+cs}
+\label{_observable_8_unity_8cs_source}\index{Editor/UniRx/Scripts/UnityEngineBridge/Observable.Unity.cs@{Editor/UniRx/Scripts/UnityEngineBridge/Observable.Unity.cs}}
+\mbox{\hyperlink{_observable_8_unity_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00001}00001 \textcolor{preprocessor}{\#if !(UNITY\_4\_0 || UNITY\_4\_1 || UNITY\_4\_2 || UNITY\_4\_3 || UNITY\_4\_4 || UNITY\_4\_5 || UNITY\_4\_6 || UNITY\_5\_0 || UNITY\_5\_1 || UNITY\_5\_2)}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00002}\mbox{\hyperlink{_observable_8_unity_8cs_a00f7acdd47eb4e208dede7bdbfc35da4}{00002}} \textcolor{preprocessor}{\#define SupportCustomYieldInstruction}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00003}00003 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00005}00005 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Collections;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00008}00008 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_1_1_internal_util}{UniRx.InternalUtil}};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00009}00009 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_1_1_triggers}{UniRx.Triggers}};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00010}00010 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00011}00011 \textcolor{keyword}{using }System.Threading;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00013}00013 \textcolor{preprocessor}{\#if !UniRxLibrary}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00014}\mbox{\hyperlink{_observable_8_unity_8cs_a37da8193ab9ab390cb568a69f6bd6c27}{00014}} \textcolor{keyword}{using }\mbox{\hyperlink{_observable_8_unity_8cs_a37da8193ab9ab390cb568a69f6bd6c27}{SchedulerUnity}} = \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{class_uni_rx_1_1_scheduler}{Scheduler}};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00015}00015 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00017}00017 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx}{UniRx}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00018}00018 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00019}\mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{00019}}     \textcolor{keyword}{public} \textcolor{keyword}{enum} \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00020}00020     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00021}00021         \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207bea06933067aafd48425d67bcb01bba5cb6}{Update}},}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00022}00022         \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207bea9c1ca4069e206318b33ef896d3dd204e}{FixedUpdate}},}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00023}00023         \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207beabec48f8a60537f06aa241b89f125c7f6}{EndOfFrame}},}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00024}00024     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00026}\mbox{\hyperlink{namespace_uni_rx_a649896744a0ca3966dce98d6ca5e1c63}{00026}}     \textcolor{keyword}{public} \textcolor{keyword}{enum} \mbox{\hyperlink{namespace_uni_rx_a649896744a0ca3966dce98d6ca5e1c63}{MainThreadDispatchType}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00027}00027     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00029}00029         \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207bea06933067aafd48425d67bcb01bba5cb6}{Update}},}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00030}00030         \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207bea9c1ca4069e206318b33ef896d3dd204e}{FixedUpdate}},}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00031}00031         \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207beabec48f8a60537f06aa241b89f125c7f6}{EndOfFrame}},}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00032}00032         \mbox{\hyperlink{namespace_uni_rx_a649896744a0ca3966dce98d6ca5e1c63a784ab3d281ee8c03a1c8f761742bdb90}{GameObjectUpdate}},}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00033}00033         \mbox{\hyperlink{namespace_uni_rx_a649896744a0ca3966dce98d6ca5e1c63a2609005edfde618c70f2140bb3e9b7c2}{LateUpdate}},}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00034}00034     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00036}00036     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{class }FrameCountTypeExtensions}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00037}00037     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00038}00038         \textcolor{keyword}{public} \textcolor{keyword}{static} YieldInstruction GetYieldInstruction(\textcolor{keyword}{this} \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00039}00039         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00040}00040             \textcolor{keywordflow}{switch} (frameCountType)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00041}00041             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00042}00042                 \textcolor{keywordflow}{case} \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.FixedUpdate:}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00043}00043                     \textcolor{keywordflow}{return} YieldInstructionCache.WaitForFixedUpdate;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00044}00044                 \textcolor{keywordflow}{case} \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.EndOfFrame:}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00045}00045                     \textcolor{keywordflow}{return} YieldInstructionCache.WaitForEndOfFrame;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00046}00046                 \textcolor{keywordflow}{case} \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update:}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00047}00047                 \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00048}00048                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00049}00049             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00050}00050         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00051}00051     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00053}00053     \textcolor{keyword}{internal} \textcolor{keyword}{interface }ICustomYieldInstructionErrorHandler}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00054}00054     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00055}00055         \textcolor{keywordtype}{bool} HasError \{ \textcolor{keyword}{get}; \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00056}00056         Exception Error \{ \textcolor{keyword}{get}; \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00057}00057         \textcolor{keywordtype}{bool} IsReThrowOnError \{ \textcolor{keyword}{get}; \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00058}00058         \textcolor{keywordtype}{void} ForceDisableRethrowOnError();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00059}00059         \textcolor{keywordtype}{void} ForceEnableRethrowOnError();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00060}00060     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00062}\mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{00062}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction}}<T> : IEnumerator<T>, ICustomYieldInstructionErrorHandler}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00063}00063     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00064}00064         readonly IDisposable subscription;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00065}00065         readonly \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00066}00066         \textcolor{keywordtype}{bool} reThrowOnError;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00067}00067         T current;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00068}00068         T result;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00069}00069         \textcolor{keywordtype}{bool} moveNext;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00070}00070         \textcolor{keywordtype}{bool} hasResult;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00071}00071         Exception error;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00073}\mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a6bc667df9e00f85ebb1e4c660d341ee3}{00073}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a6bc667df9e00f85ebb1e4c660d341ee3}{ObservableYieldInstruction}}(\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{bool} reThrowOnError, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00074}00074         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00075}00075             this.moveNext = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00076}00076             this.reThrowOnError = reThrowOnError;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00077}00077             this.cancel = cancel;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00078}00078             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00079}00079             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00080}00080                 this.subscription = source.\mbox{\hyperlink{interface_uni_rx_1_1_i_observable_a81a2566f451cf1ddc8de265d019d1b88}{Subscribe}}(\textcolor{keyword}{new} ToYieldInstruction(\textcolor{keyword}{this}));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00081}00081             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00082}00082             \textcolor{keywordflow}{catch}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00083}00083             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00084}00084                 moveNext = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00085}00085                 \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00086}00086             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00087}00087         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00089}\mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a8b5f3144c10879982a8f8a4d1a741238}{00089}}         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a8b5f3144c10879982a8f8a4d1a741238}{HasError}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00090}00090         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00091}00091             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} error != \textcolor{keyword}{null}; \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00092}00092         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00094}\mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_afc4c73804436cc86b2074e56f5f567ec}{00094}}         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_afc4c73804436cc86b2074e56f5f567ec}{HasResult}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00095}00095         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00096}00096             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} hasResult; \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00097}00097         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00099}\mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a08a46b7fa2cd9b46c576b0063782eb53}{00099}}         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a08a46b7fa2cd9b46c576b0063782eb53}{IsCanceled}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00100}00100         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00101}00101             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00102}00102             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00103}00103                 \textcolor{keywordflow}{if} (hasResult) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00104}00104                 \textcolor{keywordflow}{if} (error != \textcolor{keyword}{null}) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00105}00105                 \textcolor{keywordflow}{return} cancel.IsCancellationRequested;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00106}00106             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00107}00107         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00112}\mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a92493874516b92fa57e01836fab3732b}{00112}}         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a92493874516b92fa57e01836fab3732b}{IsDone}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00113}00113         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00114}00114             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00115}00115             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00116}00116                 \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_afc4c73804436cc86b2074e56f5f567ec}{HasResult}} || \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a8b5f3144c10879982a8f8a4d1a741238}{HasError}} || (cancel.IsCancellationRequested);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00117}00117             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00118}00118         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00119}00119 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00120}\mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a20eb2f81741af379386efdb8b4595228}{00120}}         \textcolor{keyword}{public} T \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a20eb2f81741af379386efdb8b4595228}{Result}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00121}00121         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00122}00122             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} result; \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00123}00123         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00124}00124 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00125}00125         T IEnumerator<T>.Current}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00126}00126         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00127}00127             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00128}00128             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00129}00129                 \textcolor{keywordflow}{return} current;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00130}00130             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00131}00131         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00132}00132 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00133}00133         \textcolor{keywordtype}{object} IEnumerator.Current}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00134}00134         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00135}00135             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00136}00136             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00137}00137                 \textcolor{keywordflow}{return} current;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00138}00138             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00139}00139         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00140}00140 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00141}\mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_ab460cdfd9b82a1cff7c06df91d1252d1}{00141}}         \textcolor{keyword}{public} Exception \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_ab460cdfd9b82a1cff7c06df91d1252d1}{Error}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00142}00142         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00143}00143             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00144}00144             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00145}00145                 \textcolor{keywordflow}{return} error;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00146}00146             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00147}00147         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00149}00149         \textcolor{keywordtype}{bool} IEnumerator.MoveNext()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00150}00150         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00151}00151             \textcolor{keywordflow}{if} (!moveNext)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00152}00152             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00153}00153                 \textcolor{keywordflow}{if} (reThrowOnError \&\& \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_a8b5f3144c10879982a8f8a4d1a741238}{HasError}})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00154}00154                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00155}00155                     \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_ab460cdfd9b82a1cff7c06df91d1252d1}{Error}}.Throw();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00156}00156                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00157}00157 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00158}00158                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00159}00159             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00160}00160 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00161}00161             \textcolor{keywordflow}{if} (cancel.IsCancellationRequested)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00162}00162             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00163}00163                 subscription.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00164}00164                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00165}00165             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00167}00167             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00168}00168         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00169}00169 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00170}00170         \textcolor{keywordtype}{bool} ICustomYieldInstructionErrorHandler.IsReThrowOnError}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00171}00171         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00172}00172             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} reThrowOnError; \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00173}00173         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00174}00174 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00175}00175         \textcolor{keywordtype}{void} ICustomYieldInstructionErrorHandler.ForceDisableRethrowOnError()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00176}00176         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00177}00177             this.reThrowOnError = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00178}00178         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00179}00179 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00180}00180         \textcolor{keywordtype}{void} ICustomYieldInstructionErrorHandler.ForceEnableRethrowOnError()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00181}00181         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00182}00182             this.reThrowOnError = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00183}00183         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00184}00184 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00185}\mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_afe4b37eea4adfa5dba35b670ff619748}{00185}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction_afe4b37eea4adfa5dba35b670ff619748}{Dispose}}()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00186}00186         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00187}00187             subscription.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00188}00188         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00189}00189 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00190}00190         \textcolor{keywordtype}{void} IEnumerator.Reset()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00191}00191         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00192}00192             \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00193}00193         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00194}00194 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00195}00195         \textcolor{keyword}{class }ToYieldInstruction : \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}<T>}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00196}00196         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00197}00197             readonly \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<T>}} parent;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00198}00198 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00199}00199             \textcolor{keyword}{public} ToYieldInstruction(\mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<T>}} parent)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00200}00200             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00201}00201                 this.parent = parent;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00202}00202             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00203}00203 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00204}00204             \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(T value)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00205}00205             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00206}00206                 parent.current = value;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00207}00207             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00208}00208 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00209}00209             \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83a44cdeb54c6f2aebad54611201c26d6f0}{OnError}}(Exception error)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00210}00210             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00211}00211                 parent.moveNext = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00212}00212                 parent.error = error;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00213}00213             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00214}00214 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00215}00215             \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83ad3f2303a2d7ea4ac7945de6d166d9c73}{OnCompleted}}()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00216}00216             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00217}00217                 parent.moveNext = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00218}00218                 parent.hasResult = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00219}00219                 parent.result = parent.current;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00220}00220             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00221}00221         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00222}00222     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00223}00223 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00224}00224 \textcolor{preprocessor}{\#if UniRxLibrary}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00225}00225     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{partial class }\mbox{\hyperlink{_async_operation_extensions_8cs_af08064cc44970a356b0dff2deebd7b21}{ObservableUnity}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00226}00226 \#else}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00227}00227     public static partial class \mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00228}00228 \#endif}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00229}00229     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00230}00230         readonly \textcolor{keyword}{static} HashSet<Type> YieldInstructionTypes = \textcolor{keyword}{new} HashSet<Type>}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00231}00231         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00232}00232 \textcolor{preprocessor}{            \#if UNITY\_2018\_3\_OR\_NEWER}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00233}00233 \textcolor{preprocessor}{\#pragma warning disable CS0618}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00234}00234 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00235}00235             typeof(WWW),}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00236}00236 \textcolor{preprocessor}{            \#if UNITY\_2018\_3\_OR\_NEWER}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00237}00237 \textcolor{preprocessor}{\#pragma warning restore CS0618}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00238}00238 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00239}00239             typeof(WaitForEndOfFrame),}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00240}00240             typeof(WaitForFixedUpdate),}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00241}00241             typeof(WaitForSeconds),}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00242}00242             typeof(AsyncOperation),}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00243}00243             typeof(Coroutine)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00244}00244         \};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00245}00245 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00246}00246 \textcolor{preprocessor}{\#if SupportCustomYieldInstruction}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00247}00247 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00248}00248         \textcolor{keyword}{class }EveryAfterUpdateInvoker : IEnumerator}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00249}00249         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00250}00250             \textcolor{keywordtype}{long} count = -\/1;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00251}00251             readonly \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<long>}} observer;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00252}00252             readonly \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancellationToken;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00253}00253 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00254}00254             \textcolor{keyword}{public} EveryAfterUpdateInvoker(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<long>}} observer, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancellationToken)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00255}00255             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00256}00256                 this.observer = observer;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00257}00257                 this.cancellationToken = cancellationToken;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00258}00258             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00259}00259 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00260}00260             \textcolor{keyword}{public} \textcolor{keywordtype}{bool} MoveNext()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00261}00261             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00262}00262                 \textcolor{keywordflow}{if} (!cancellationToken.IsCancellationRequested)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00263}00263                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00264}00264                     \textcolor{keywordflow}{if} (count != -\/1) \textcolor{comment}{// ignore first/immediate invoke}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00265}00265                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00266}00266                         observer.OnNext(count++);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00267}00267                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00268}00268                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00269}00269                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00270}00270                         count++;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00271}00271                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00272}00272                     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00273}00273                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00274}00274                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00275}00275                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00276}00276                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00277}00277                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00278}00278             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00279}00279 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00280}00280             \textcolor{keyword}{public} \textcolor{keywordtype}{object} Current}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00281}00281             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00282}00282                 \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00283}00283                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00284}00284                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00285}00285                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00286}00286             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00287}00287 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00288}00288             \textcolor{keyword}{public} \textcolor{keywordtype}{void} Reset()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00289}00289             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00290}00290                 \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00291}00291             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00292}00292         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00293}00293 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00294}00294 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00295}00295 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00296}00296 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00297}00297 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00299}\mbox{\hyperlink{class_uni_rx_1_1_observable_ab54d9e1cad595ff282f82176f97383f1}{00299}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ab54d9e1cad595ff282f82176f97383f1}{FromCoroutine}}(Func<IEnumerator> coroutine, \textcolor{keywordtype}{bool} publishEveryYield = \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00300}00300         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00301}00301             \textcolor{keywordflow}{return} FromCoroutine<Unit>((observer, cancellationToken) => WrapEnumerator(coroutine(), observer, cancellationToken, publishEveryYield));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00302}00302         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00303}00303 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00305}\mbox{\hyperlink{class_uni_rx_1_1_observable_aa985bb8c6f25e2c05b94eb7e355af16a}{00305}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_aa985bb8c6f25e2c05b94eb7e355af16a}{FromCoroutine}}(Func<CancellationToken, IEnumerator> coroutine, \textcolor{keywordtype}{bool} publishEveryYield = \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00306}00306         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00307}00307             \textcolor{keywordflow}{return} FromCoroutine<Unit>((observer, cancellationToken) => WrapEnumerator(coroutine(cancellationToken), observer, cancellationToken, publishEveryYield));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00308}00308         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00309}00309 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00315}\mbox{\hyperlink{class_uni_rx_1_1_observable_acdbc2e41bc85420c9320e62d7caa97dc}{00315}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_acdbc2e41bc85420c9320e62d7caa97dc}{FromMicroCoroutine}}(Func<IEnumerator> coroutine, \textcolor{keywordtype}{bool} publishEveryYield = \textcolor{keyword}{false}, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00316}00316         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00317}00317             \textcolor{keywordflow}{return} FromMicroCoroutine<Unit>((observer, cancellationToken) => WrapEnumerator(coroutine(), observer, cancellationToken, publishEveryYield), frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00318}00318         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00319}00319 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00325}\mbox{\hyperlink{class_uni_rx_1_1_observable_a1817769f215416eb0680f99073962005}{00325}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a1817769f215416eb0680f99073962005}{FromMicroCoroutine}}(Func<CancellationToken, IEnumerator> coroutine, \textcolor{keywordtype}{bool} publishEveryYield = \textcolor{keyword}{false}, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00326}00326         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00327}00327             \textcolor{keywordflow}{return} FromMicroCoroutine<Unit>((observer, cancellationToken) => WrapEnumerator(coroutine(cancellationToken), observer, cancellationToken, publishEveryYield), frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00328}00328         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00329}00329 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00330}00330         \textcolor{keyword}{static} IEnumerator WrapEnumerator(IEnumerator enumerator, \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<Unit>}} observer, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancellationToken, \textcolor{keywordtype}{bool} publishEveryYield)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00331}00331         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00332}00332             var hasNext = \textcolor{keywordflow}{default}(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00333}00333             var raisedError = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00334}00334             \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00335}00335             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00336}00336                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00337}00337                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00338}00338                     hasNext = enumerator.MoveNext();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00339}00339                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00340}00340                 \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00341}00341                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00342}00342                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00343}00343                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00344}00344                         raisedError = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00345}00345                         observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(ex);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00346}00346                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00347}00347                     \textcolor{keywordflow}{finally}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00348}00348                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00349}00349                         var d = enumerator as IDisposable;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00350}00350                         \textcolor{keywordflow}{if} (d != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00351}00351                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00352}00352                             d.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00353}00353                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00354}00354                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00355}00355                     yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00356}00356                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00357}00357                 \textcolor{keywordflow}{if} (hasNext \&\& publishEveryYield)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00358}00358                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00359}00359                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00360}00360                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00361}00361                         observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(\mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}}.\mbox{\hyperlink{struct_uni_rx_1_1_unit_a16a477eee98338be4ffd171335f492fe}{Default}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00362}00362                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00363}00363                     \textcolor{keywordflow}{catch}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00364}00364                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00365}00365                         var d = enumerator as IDisposable;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00366}00366                         \textcolor{keywordflow}{if} (d != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00367}00367                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00368}00368                             d.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00369}00369                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00370}00370                         \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00371}00371                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00372}00372                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00373}00373                 \textcolor{keywordflow}{if} (hasNext)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00374}00374                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00375}00375 \textcolor{preprocessor}{\#if SupportCustomYieldInstruction}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00376}00376                     var current = enumerator.Current;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00377}00377                     var customHandler = current as ICustomYieldInstructionErrorHandler;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00378}00378                     \textcolor{keywordflow}{if} (customHandler != \textcolor{keyword}{null} \&\& customHandler.IsReThrowOnError)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00379}00379                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00380}00380                         \textcolor{comment}{// If throws exception in Custom YieldInsrtuction, can't handle parent coroutine.}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00381}00381                         \textcolor{comment}{// It is C\# limitation.}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00382}00382                         \textcolor{comment}{// so store error info and retrieve from parent.}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00383}00383                         customHandler.ForceDisableRethrowOnError();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00384}00384                         yield \textcolor{keywordflow}{return} current;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00385}00385                         customHandler.ForceEnableRethrowOnError();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00386}00386 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00387}00387                         \textcolor{keywordflow}{if} (customHandler.HasError)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00388}00388                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00389}00389                             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00390}00390                             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00391}00391                                 raisedError = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00392}00392                                 observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(customHandler.Error);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00393}00393                             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00394}00394                             \textcolor{keywordflow}{finally}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00395}00395                             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00396}00396                                 var d = enumerator as IDisposable;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00397}00397                                 \textcolor{keywordflow}{if} (d != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00398}00398                                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00399}00399                                     d.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00400}00400                                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00401}00401                             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00402}00402                             yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00403}00403                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00404}00404                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00405}00405                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00406}00406                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00407}00407                         yield \textcolor{keywordflow}{return} enumerator.Current; \textcolor{comment}{// yield inner YieldInstruction}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00408}00408                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00409}00409 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00410}00410                     yield \textcolor{keywordflow}{return} enumerator.Current; \textcolor{comment}{// yield inner YieldInstruction}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00411}00411 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00412}00412                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00413}00413             \} \textcolor{keywordflow}{while} (hasNext \&\& !cancellationToken.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00414}00414 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00415}00415             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00416}00416             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00417}00417                 \textcolor{keywordflow}{if} (!raisedError \&\& !cancellationToken.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00418}00418                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00419}00419                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(\mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}}.\mbox{\hyperlink{struct_uni_rx_1_1_unit_a16a477eee98338be4ffd171335f492fe}{Default}}); \textcolor{comment}{// last one}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00420}00420                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00421}00421                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00422}00422             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00423}00423             \textcolor{keywordflow}{finally}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00424}00424             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00425}00425                 var d = enumerator as IDisposable;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00426}00426                 \textcolor{keywordflow}{if} (d != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00427}00427                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00428}00428                     d.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00429}00429                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00430}00430             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00431}00431         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00432}00432 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00434}\mbox{\hyperlink{class_uni_rx_1_1_observable_a51b87fdfa77f6d7f083ca50b9454e8c2}{00434}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} FromCoroutineValue<T>(Func<IEnumerator> coroutine, \textcolor{keywordtype}{bool} nullAsNextUpdate = \textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00435}00435         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00436}00436             \textcolor{keywordflow}{return} FromCoroutine<T>((observer, cancellationToken) => WrapEnumeratorYieldValue<T>(coroutine(), observer, cancellationToken, nullAsNextUpdate));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00437}00437         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00438}00438 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00440}\mbox{\hyperlink{class_uni_rx_1_1_observable_a660267ce099ed2e7e849e610444393f7}{00440}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} FromCoroutineValue<T>(Func<CancellationToken, IEnumerator> coroutine, \textcolor{keywordtype}{bool} nullAsNextUpdate = \textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00441}00441         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00442}00442             \textcolor{keywordflow}{return} FromCoroutine<T>((observer, cancellationToken) => WrapEnumeratorYieldValue<T>(coroutine(cancellationToken), observer, cancellationToken, nullAsNextUpdate));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00443}00443         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00444}00444 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00445}00445         \textcolor{keyword}{static} IEnumerator WrapEnumeratorYieldValue<T>(IEnumerator enumerator, \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T>}} observer, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancellationToken, \textcolor{keywordtype}{bool} nullAsNextUpdate)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00446}00446         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00447}00447             var hasNext = \textcolor{keywordflow}{default}(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00448}00448             var current = \textcolor{keywordflow}{default}(\textcolor{keywordtype}{object});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00449}00449             var raisedError = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00450}00450             \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00451}00451             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00452}00452                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00453}00453                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00454}00454                     hasNext = enumerator.MoveNext();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00455}00455                     \textcolor{keywordflow}{if} (hasNext) current = enumerator.Current;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00456}00456                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00457}00457                 \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00458}00458                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00459}00459                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00460}00460                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00461}00461                         raisedError = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00462}00462                         observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(ex);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00463}00463                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00464}00464                     \textcolor{keywordflow}{finally}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00465}00465                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00466}00466                         var d = enumerator as IDisposable;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00467}00467                         \textcolor{keywordflow}{if} (d != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00468}00468                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00469}00469                             d.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00470}00470                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00471}00471                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00472}00472                     yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00473}00473                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00474}00474 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00475}00475                 \textcolor{keywordflow}{if} (hasNext)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00476}00476                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00477}00477                     \textcolor{keywordflow}{if} (current != \textcolor{keyword}{null} \&\& YieldInstructionTypes.Contains(current.GetType()))}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00478}00478                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00479}00479                         yield \textcolor{keywordflow}{return} current;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00480}00480                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00481}00481 \textcolor{preprocessor}{\#if SupportCustomYieldInstruction}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00482}00482                     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (current is IEnumerator)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00483}00483                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00484}00484                         var customHandler = current as ICustomYieldInstructionErrorHandler;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00485}00485                         \textcolor{keywordflow}{if} (customHandler != \textcolor{keyword}{null} \&\& customHandler.IsReThrowOnError)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00486}00486                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00487}00487                             \textcolor{comment}{// If throws exception in Custom YieldInsrtuction, can't handle parent coroutine.}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00488}00488                             \textcolor{comment}{// It is C\# limitation.}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00489}00489                             \textcolor{comment}{// so store error info and retrieve from parent.}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00490}00490                             customHandler.ForceDisableRethrowOnError();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00491}00491                             yield \textcolor{keywordflow}{return} current;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00492}00492                             customHandler.ForceEnableRethrowOnError();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00493}00493 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00494}00494                             \textcolor{keywordflow}{if} (customHandler.HasError)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00495}00495                             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00496}00496                                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00497}00497                                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00498}00498                                     raisedError = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00499}00499                                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(customHandler.Error);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00500}00500                                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00501}00501                                 \textcolor{keywordflow}{finally}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00502}00502                                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00503}00503                                     var d = enumerator as IDisposable;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00504}00504                                     \textcolor{keywordflow}{if} (d != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00505}00505                                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00506}00506                                         d.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00507}00507                                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00508}00508                                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00509}00509                                 yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00510}00510                             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00511}00511                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00512}00512                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00513}00513                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00514}00514                             yield \textcolor{keywordflow}{return} current;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00515}00515                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00516}00516                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00517}00517 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00518}00518                     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (current == \textcolor{keyword}{null} \&\& nullAsNextUpdate)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00519}00519                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00520}00520                         yield \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00521}00521                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00522}00522                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00523}00523                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00524}00524                         \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00525}00525                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00526}00526                             observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}((T)current);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00527}00527                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00528}00528                         \textcolor{keywordflow}{catch}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00529}00529                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00530}00530                             var d = enumerator as IDisposable;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00531}00531                             \textcolor{keywordflow}{if} (d != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00532}00532                             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00533}00533                                 d.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00534}00534                             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00535}00535                             \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00536}00536                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00537}00537                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00538}00538                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00539}00539             \} \textcolor{keywordflow}{while} (hasNext \&\& !cancellationToken.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00540}00540 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00541}00541             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00542}00542             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00543}00543                 \textcolor{keywordflow}{if} (!raisedError \&\& !cancellationToken.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00544}00544                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00545}00545                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00546}00546                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00547}00547             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00548}00548             \textcolor{keywordflow}{finally}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00549}00549             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00550}00550                 var d = enumerator as IDisposable;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00551}00551                 \textcolor{keywordflow}{if} (d != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00552}00552                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00553}00553                     d.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00554}00554                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00555}00555             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00556}00556         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00557}00557 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00558}\mbox{\hyperlink{class_uni_rx_1_1_observable_a4b0b181f656a1287df2d6d08b5423b20}{00558}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} FromCoroutine<T>(Func<\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T>}}, IEnumerator> coroutine)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00559}00559         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00560}00560             \textcolor{keywordflow}{return} FromCoroutine<T>((observer, cancellationToken) => WrapToCancellableEnumerator(coroutine(observer), observer, cancellationToken));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00561}00561         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00562}00562 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00567}\mbox{\hyperlink{class_uni_rx_1_1_observable_ac0e6c53a1d038369a17391593923567d}{00567}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} FromMicroCoroutine<T>(Func<\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T>}}, IEnumerator> coroutine, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00568}00568         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00569}00569             \textcolor{keywordflow}{return} FromMicroCoroutine<T>((observer, cancellationToken) => WrapToCancellableEnumerator(coroutine(observer), observer, cancellationToken), frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00570}00570         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00571}00571 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00572}00572         \textcolor{keyword}{static} IEnumerator WrapToCancellableEnumerator<T>(IEnumerator enumerator, \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T>}} observer, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancellationToken)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00573}00573         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00574}00574             var hasNext = \textcolor{keywordflow}{default}(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00575}00575             \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00576}00576             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00577}00577                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00578}00578                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00579}00579                     hasNext = enumerator.MoveNext();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00580}00580                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00581}00581                 \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00582}00582                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00583}00583                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00584}00584                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00585}00585                         observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(ex);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00586}00586                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00587}00587                     \textcolor{keywordflow}{finally}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00588}00588                     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00589}00589                         var d = enumerator as IDisposable;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00590}00590                         \textcolor{keywordflow}{if} (d != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00591}00591                         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00592}00592                             d.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00593}00593                         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00594}00594                     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00595}00595                     yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00596}00596                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00597}00597 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00598}00598                 yield \textcolor{keywordflow}{return} enumerator.Current; \textcolor{comment}{// yield inner YieldInstruction}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00599}00599             \} \textcolor{keywordflow}{while} (hasNext \&\& !cancellationToken.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00600}00600 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00601}00601             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00602}00602                 var d = enumerator as IDisposable;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00603}00603                 \textcolor{keywordflow}{if} (d != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00604}00604                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00605}00605                     d.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00606}00606                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00607}00607             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00608}00608         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00609}00609 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00610}\mbox{\hyperlink{class_uni_rx_1_1_observable_ab0cf2a082c5f903ac8dec23efe948cf3}{00610}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} FromCoroutine<T>(Func<\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T>}}, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}, IEnumerator> coroutine)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00611}00611         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00612}00612             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_from_coroutine_observable}{FromCoroutineObservable}}<T>(coroutine);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00613}00613         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00614}00614 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00619}\mbox{\hyperlink{class_uni_rx_1_1_observable_a27029d08d0a1b1d6ccfc89f45d87628d}{00619}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} FromMicroCoroutine<T>(Func<\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T>}}, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}, IEnumerator> coroutine, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00620}00620         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00621}00621             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_from_micro_coroutine_observable}{FromMicroCoroutineObservable}}<T>(coroutine, frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00622}00622         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00623}00623 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00624}\mbox{\hyperlink{class_uni_rx_1_1_observable_ae373537c5dc3c555c2a499cb8f2d1f67}{00624}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} SelectMany<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, IEnumerator coroutine, \textcolor{keywordtype}{bool} publishEveryYield = \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00625}00625         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00626}00626             \textcolor{keywordflow}{return} source.SelectMany(FromCoroutine(() => coroutine, publishEveryYield));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00627}00627         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00628}00628 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00629}\mbox{\hyperlink{class_uni_rx_1_1_observable_ae1dc7015038ae8477708e8846515dbb5}{00629}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} SelectMany<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Func<IEnumerator> selector, \textcolor{keywordtype}{bool} publishEveryYield = \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00630}00630         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00631}00631             \textcolor{keywordflow}{return} source.SelectMany(FromCoroutine(() => selector(), publishEveryYield));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00632}00632         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00633}00633 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00637}\mbox{\hyperlink{class_uni_rx_1_1_observable_a815a5aa272ea315221ccad46fb05d247}{00637}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} SelectMany<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Func<T, IEnumerator> selector)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00638}00638         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00639}00639             \textcolor{keywordflow}{return} source.SelectMany(x => FromCoroutine(() => selector(x), \textcolor{keyword}{false}));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00640}00640         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00641}00641 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00642}\mbox{\hyperlink{class_uni_rx_1_1_observable_a196ef9a05ad5b595631490fe1f3431d7}{00642}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a196ef9a05ad5b595631490fe1f3431d7}{ToObservable}}(\textcolor{keyword}{this} IEnumerator coroutine, \textcolor{keywordtype}{bool} publishEveryYield = \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00643}00643         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00644}00644             \textcolor{keywordflow}{return} FromCoroutine<Unit>((observer, cancellationToken) => WrapEnumerator(coroutine, observer, cancellationToken, publishEveryYield));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00645}00645         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00646}00646 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00647}00647 \textcolor{preprocessor}{\#if SupportCustomYieldInstruction}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00648}00648 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00649}\mbox{\hyperlink{class_uni_rx_1_1_observable_a9dbb25741837e1bb3bb62ed4f4d27706}{00649}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a9dbb25741837e1bb3bb62ed4f4d27706}{ToYieldInstruction}}(\textcolor{keyword}{this} IEnumerator coroutine)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00650}00650         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00651}00651             \textcolor{keywordflow}{return} ToObservable(coroutine, \textcolor{keyword}{false}).ToYieldInstruction();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00652}00652         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00653}00653 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00654}\mbox{\hyperlink{class_uni_rx_1_1_observable_a0ebff383d4ade4affd7d25bdb534cc42}{00654}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a0ebff383d4ade4affd7d25bdb534cc42}{ToYieldInstruction}}(\textcolor{keyword}{this} IEnumerator coroutine, \textcolor{keywordtype}{bool} throwOnError)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00655}00655         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00656}00656             \textcolor{keywordflow}{return} ToObservable(coroutine, \textcolor{keyword}{false}).ToYieldInstruction(throwOnError);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00657}00657         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00658}00658 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00659}\mbox{\hyperlink{class_uni_rx_1_1_observable_adf32efa2eaea4210db2df1107b766fb0}{00659}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_adf32efa2eaea4210db2df1107b766fb0}{ToYieldInstruction}}(\textcolor{keyword}{this} IEnumerator coroutine, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancellationToken)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00660}00660         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00661}00661             \textcolor{keywordflow}{return} ToObservable(coroutine, \textcolor{keyword}{false}).ToYieldInstruction(cancellationToken);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00662}00662         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00663}00663 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00664}\mbox{\hyperlink{class_uni_rx_1_1_observable_ac120e3199c8b0606885bac79bb210f42}{00664}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ac120e3199c8b0606885bac79bb210f42}{ToYieldInstruction}}(\textcolor{keyword}{this} IEnumerator coroutine, \textcolor{keywordtype}{bool} throwOnError, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancellationToken)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00665}00665         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00666}00666             \textcolor{keywordflow}{return} ToObservable(coroutine, \textcolor{keyword}{false}).ToYieldInstruction(throwOnError, cancellationToken);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00667}00667         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00668}00668 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00669}00669 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00670}00670 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00671}00671         \textcolor{comment}{// variation of FromCoroutine}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00672}00672 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00676}\mbox{\hyperlink{class_uni_rx_1_1_observable_aa9d5cf9a2258b13c09fb754cf7082092}{00676}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<long>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_aa9d5cf9a2258b13c09fb754cf7082092}{EveryUpdate}}()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00677}00677         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00678}00678             \textcolor{keywordflow}{return} FromMicroCoroutine<long>((observer, cancellationToken) => EveryCycleCore(observer, cancellationToken), \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00679}00679         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00680}00680 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00681}\mbox{\hyperlink{class_uni_rx_1_1_observable_a233f6d6a4885f26019ed86d0fe9b70b7}{00681}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<long>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a233f6d6a4885f26019ed86d0fe9b70b7}{EveryFixedUpdate}}()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00682}00682         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00683}00683             \textcolor{keywordflow}{return} FromMicroCoroutine<long>((observer, cancellationToken) => EveryCycleCore(observer, cancellationToken), \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.FixedUpdate);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00684}00684         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00685}00685 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00686}\mbox{\hyperlink{class_uni_rx_1_1_observable_ae9f7682551adb1a10c0e9b88b7f6175a}{00686}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<long>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ae9f7682551adb1a10c0e9b88b7f6175a}{EveryEndOfFrame}}()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00687}00687         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00688}00688             \textcolor{keywordflow}{return} FromMicroCoroutine<long>((observer, cancellationToken) => EveryCycleCore(observer, cancellationToken), \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.EndOfFrame);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00689}00689         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00690}00690 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00691}00691         \textcolor{keyword}{static} IEnumerator EveryCycleCore(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<long>}} observer, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancellationToken)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00692}00692         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00693}00693             \textcolor{keywordflow}{if} (cancellationToken.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}}) yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00694}00694             var count = 0L;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00695}00695             \textcolor{keywordflow}{while} (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00696}00696             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00697}00697                 yield \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00698}00698                 \textcolor{keywordflow}{if} (cancellationToken.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}}) yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00699}00699 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00700}00700                 observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(count++);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00701}00701             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00702}00702         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00703}00703 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00707}\mbox{\hyperlink{class_uni_rx_1_1_observable_a1806641e4c59ca9b01cb8887a7492f99}{00707}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<long>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a1806641e4c59ca9b01cb8887a7492f99}{EveryGameObjectUpdate}}()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00708}00708         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00709}00709             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher}{MainThreadDispatcher}}.\mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a2405b6a876ab698a0246251ca1cddc5c}{UpdateAsObservable}}().Scan(-\/1L, (x, y) => x + 1);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00710}00710         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00711}00711 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00715}\mbox{\hyperlink{class_uni_rx_1_1_observable_ae281571709b7e7a33a090160900591b3}{00715}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<long>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ae281571709b7e7a33a090160900591b3}{EveryLateUpdate}}()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00716}00716         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00717}00717             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher}{MainThreadDispatcher}}.\mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_acc9ae909505ad7df4a4fb2727170dbee}{LateUpdateAsObservable}}().Scan(-\/1L, (x, y) => x + 1);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00718}00718         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00719}00719 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00720}00720 \textcolor{preprocessor}{\#if SupportCustomYieldInstruction}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00721}00721 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00725}00725         [Obsolete]}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00726}\mbox{\hyperlink{class_uni_rx_1_1_observable_a8600f59556faa177a234fb864061416f}{00726}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<long>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a8600f59556faa177a234fb864061416f}{EveryAfterUpdate}}()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00727}00727         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00728}00728             \textcolor{keywordflow}{return} FromCoroutine<long>((observer, cancellationToken) => \textcolor{keyword}{new} EveryAfterUpdateInvoker(observer, cancellationToken));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00729}00729         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00730}00730 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00731}00731 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00732}00732 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00733}00733 \textcolor{preprocessor}{        \#region Observable.Time Frame Extensions}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00734}00734 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00735}00735         \textcolor{comment}{// Interval, Timer, Delay, Sample, Throttle, Timeout}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00736}00736 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00737}\mbox{\hyperlink{class_uni_rx_1_1_observable_a2ed8a8bcba6a12c77e704299fc1fe7f0}{00737}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a2ed8a8bcba6a12c77e704299fc1fe7f0}{NextFrame}}(\mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00738}00738         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00739}00739             \textcolor{keywordflow}{return} FromMicroCoroutine<Unit>((observer, cancellation) => NextFrameCore(observer, cancellation), frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00740}00740         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00741}00741 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00742}00742         \textcolor{keyword}{static} IEnumerator NextFrameCore(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<Unit>}} observer, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancellation)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00743}00743         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00744}00744             yield \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00745}00745 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00746}00746             \textcolor{keywordflow}{if} (!cancellation.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00747}00747             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00748}00748                 observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(\mbox{\hyperlink{struct_uni_rx_1_1_unit}{Unit}}.\mbox{\hyperlink{struct_uni_rx_1_1_unit_a16a477eee98338be4ffd171335f492fe}{Default}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00749}00749                 observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00750}00750             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00751}00751         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00752}00752 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00753}\mbox{\hyperlink{class_uni_rx_1_1_observable_a906cc5e176c74ea6531f5001a43eeb0d}{00753}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<long>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a906cc5e176c74ea6531f5001a43eeb0d}{IntervalFrame}}(\textcolor{keywordtype}{int} intervalFrameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00754}00754         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00755}00755             \textcolor{keywordflow}{return} TimerFrame(intervalFrameCount, intervalFrameCount, frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00756}00756         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00757}00757 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00758}\mbox{\hyperlink{class_uni_rx_1_1_observable_a7393bd78833573fd288267da20e8fae1}{00758}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<long>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a7393bd78833573fd288267da20e8fae1}{TimerFrame}}(\textcolor{keywordtype}{int} dueTimeFrameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00759}00759         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00760}00760             \textcolor{keywordflow}{return} FromMicroCoroutine<long>((observer, cancellation) => TimerFrameCore(observer, dueTimeFrameCount, cancellation), frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00761}00761         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00762}00762 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00763}\mbox{\hyperlink{class_uni_rx_1_1_observable_a8227310697c99375fdb22e0c689bcb2b}{00763}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<long>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a8227310697c99375fdb22e0c689bcb2b}{TimerFrame}}(\textcolor{keywordtype}{int} dueTimeFrameCount, \textcolor{keywordtype}{int} periodFrameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00764}00764         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00765}00765             \textcolor{keywordflow}{return} FromMicroCoroutine<long>((observer, cancellation) => TimerFrameCore(observer, dueTimeFrameCount, periodFrameCount, cancellation), frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00766}00766         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00767}00767 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00768}00768         \textcolor{keyword}{static} IEnumerator TimerFrameCore(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<long>}} observer, \textcolor{keywordtype}{int} dueTimeFrameCount, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00769}00769         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00770}00770             \textcolor{comment}{// normalize}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00771}00771             \textcolor{keywordflow}{if} (dueTimeFrameCount <= 0) dueTimeFrameCount = 0;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00772}00772 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00773}00773             var currentFrame = 0;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00774}00774 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00775}00775             \textcolor{comment}{// initial phase}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00776}00776             \textcolor{keywordflow}{while} (!cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00777}00777             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00778}00778                 \textcolor{keywordflow}{if} (currentFrame++ == dueTimeFrameCount)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00779}00779                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00780}00780                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(0);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00781}00781                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00782}00782                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00783}00783                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00784}00784                 yield \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00785}00785             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00786}00786         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00787}00787 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00788}00788         \textcolor{keyword}{static} IEnumerator TimerFrameCore(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<long>}} observer, \textcolor{keywordtype}{int} dueTimeFrameCount, \textcolor{keywordtype}{int} periodFrameCount, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00789}00789         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00790}00790             \textcolor{comment}{// normalize}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00791}00791             \textcolor{keywordflow}{if} (dueTimeFrameCount <= 0) dueTimeFrameCount = 0;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00792}00792             \textcolor{keywordflow}{if} (periodFrameCount <= 0) periodFrameCount = 1;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00793}00793 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00794}00794             var sendCount = 0L;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00795}00795             var currentFrame = 0;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00796}00796 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00797}00797             \textcolor{comment}{// initial phase}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00798}00798             \textcolor{keywordflow}{while} (!cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00799}00799             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00800}00800                 \textcolor{keywordflow}{if} (currentFrame++ == dueTimeFrameCount)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00801}00801                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00802}00802                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(sendCount++);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00803}00803                     currentFrame = -\/1;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00804}00804                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00805}00805                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00806}00806                 yield \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00807}00807             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00808}00808 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00809}00809             \textcolor{comment}{// period phase}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00810}00810             \textcolor{keywordflow}{while} (!cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00811}00811             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00812}00812                 \textcolor{keywordflow}{if} (++currentFrame == periodFrameCount)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00813}00813                 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00814}00814                     observer.\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(sendCount++);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00815}00815                     currentFrame = 0;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00816}00816                 \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00817}00817                 yield \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00818}00818             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00819}00819         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00820}00820 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00821}\mbox{\hyperlink{class_uni_rx_1_1_observable_a41d5dcee2d4fdf8968f3859cdb08de7c}{00821}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} DelayFrame<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{int} frameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00822}00822         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00823}00823             \textcolor{keywordflow}{if} (frameCount < 0) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentOutOfRangeException(\textcolor{stringliteral}{"{}frameCount"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00824}00824             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_delay_frame_observable}{DelayFrameObservable}}<T>(source, frameCount, frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00825}00825         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00826}00826 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00827}\mbox{\hyperlink{class_uni_rx_1_1_observable_a21e2d776997f4138312a5c010dda4591}{00827}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} Sample<T, T2>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T2>}} sampler)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00828}00828         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00829}00829             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_sample_observable}{SampleObservable}}<T, T2>(source, sampler);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00830}00830         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00831}00831 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00832}\mbox{\hyperlink{class_uni_rx_1_1_observable_aa990b8157a515e57121954b110eb50ba}{00832}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} SampleFrame<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{int} frameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00833}00833         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00834}00834             \textcolor{keywordflow}{if} (frameCount < 0) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentOutOfRangeException(\textcolor{stringliteral}{"{}frameCount"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00835}00835             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_sample_frame_observable}{SampleFrameObservable}}<T>(source, frameCount, frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00836}00836         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00837}00837 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00838}\mbox{\hyperlink{class_uni_rx_1_1_observable_a352e2b297fd573ee024d0834c2995537}{00838}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} ThrottleFrame<TSource>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source, \textcolor{keywordtype}{int} frameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00839}00839         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00840}00840             \textcolor{keywordflow}{if} (frameCount < 0) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentOutOfRangeException(\textcolor{stringliteral}{"{}frameCount"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00841}00841             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_throttle_frame_observable}{ThrottleFrameObservable}}<TSource>(source, frameCount, frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00842}00842         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00843}00843 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00844}\mbox{\hyperlink{class_uni_rx_1_1_observable_a5275a7a57a37000e175f7859a93a2fed}{00844}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} ThrottleFirstFrame<TSource>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source, \textcolor{keywordtype}{int} frameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00845}00845         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00846}00846             \textcolor{keywordflow}{if} (frameCount < 0) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentOutOfRangeException(\textcolor{stringliteral}{"{}frameCount"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00847}00847             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_throttle_first_frame_observable}{ThrottleFirstFrameObservable}}<TSource>(source, frameCount, frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00848}00848         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00849}00849 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00850}\mbox{\hyperlink{class_uni_rx_1_1_observable_a4c2f74e37fd1bd97e34df5f2173ea2df}{00850}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} TimeoutFrame<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{int} frameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00851}00851         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00852}00852             \textcolor{keywordflow}{if} (frameCount < 0) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentOutOfRangeException(\textcolor{stringliteral}{"{}frameCount"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00853}00853             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_timeout_frame_observable}{TimeoutFrameObservable}}<T>(source, frameCount, frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00854}00854         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00855}00855 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00856}\mbox{\hyperlink{class_uni_rx_1_1_observable_a522d94fe2d6b9c5e88031cccb369c368}{00856}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} DelayFrameSubscription<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{int} frameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType = \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.Update)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00857}00857         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00858}00858             \textcolor{keywordflow}{if} (frameCount < 0) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentOutOfRangeException(\textcolor{stringliteral}{"{}frameCount"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00859}00859             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_delay_frame_subscription_observable}{DelayFrameSubscriptionObservable}}<T>(source, frameCount, frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00860}00860         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00861}00861 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00862}00862 \textcolor{preprocessor}{        \#endregion}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00863}00863 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00864}00864 \textcolor{preprocessor}{\#if SupportCustomYieldInstruction}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00865}00865 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00871}\mbox{\hyperlink{class_uni_rx_1_1_observable_a7c9395913ba7e296bd886cd1901402c3}{00871}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<T>}} ToYieldInstruction<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00872}00872         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00873}00873             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<T>}}(source, \textcolor{keyword}{true}, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_a689e10571e92542feb1c744098b30425}{None}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00874}00874         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00875}00875 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00881}\mbox{\hyperlink{class_uni_rx_1_1_observable_ac6b54a33ea4a0543fb2bb22da9a5923d}{00881}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<T>}} ToYieldInstruction<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00882}00882         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00883}00883             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<T>}}(source, \textcolor{keyword}{true}, cancel);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00884}00884         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00885}00885 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00891}\mbox{\hyperlink{class_uni_rx_1_1_observable_a2b0e1a4e696535f54f3dfe19863e450b}{00891}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<T>}} ToYieldInstruction<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{bool} throwOnError)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00892}00892         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00893}00893             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<T>}}(source, throwOnError, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_a689e10571e92542feb1c744098b30425}{None}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00894}00894         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00895}00895 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00901}\mbox{\hyperlink{class_uni_rx_1_1_observable_a1c2f52466752d5f60f2027b9665ad12f}{00901}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<T>}} ToYieldInstruction<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{bool} throwOnError, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00902}00902         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00903}00903             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<T>}}(source, throwOnError, cancel);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00904}00904         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00905}00905 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00906}00906 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00907}00907 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00909}\mbox{\hyperlink{class_uni_rx_1_1_observable_a0faa1f897c65bdd99efaa367c0506cc1}{00909}}         \textcolor{keyword}{public} \textcolor{keyword}{static} IEnumerator ToAwaitableEnumerator<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel = \textcolor{keywordflow}{default}(\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}))}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00910}00910         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00911}00911             \textcolor{keywordflow}{return} ToAwaitableEnumerator<T>(source, Stubs<T>.Ignore, Stubs.Throw, cancel);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00912}00912         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00913}00913 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00915}\mbox{\hyperlink{class_uni_rx_1_1_observable_a914144b68097ec4523c0c2e4241115c9}{00915}}         \textcolor{keyword}{public} \textcolor{keyword}{static} IEnumerator ToAwaitableEnumerator<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<T> onResult, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel = \textcolor{keywordflow}{default}(\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}))}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00916}00916         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00917}00917             \textcolor{keywordflow}{return} ToAwaitableEnumerator<T>(source, onResult, Stubs.Throw, cancel);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00918}00918         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00919}00919 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00921}\mbox{\hyperlink{class_uni_rx_1_1_observable_a4be4630874324d9c4153415e67b3579a}{00921}}         \textcolor{keyword}{public} \textcolor{keyword}{static} IEnumerator ToAwaitableEnumerator<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<Exception> onError, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel = \textcolor{keywordflow}{default}(\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}))}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00922}00922         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00923}00923             \textcolor{keywordflow}{return} ToAwaitableEnumerator<T>(source, Stubs<T>.Ignore, onError, cancel);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00924}00924         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00925}00925 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00927}\mbox{\hyperlink{class_uni_rx_1_1_observable_adc961b6aa94565a04f1d7d6a446ecde2}{00927}}         \textcolor{keyword}{public} \textcolor{keyword}{static} IEnumerator ToAwaitableEnumerator<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<T> onResult, Action<Exception> onError, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel = \textcolor{keywordflow}{default}(\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}))}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00928}00928         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00929}00929             var enumerator = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_observable_yield_instruction}{ObservableYieldInstruction<T>}}(source, \textcolor{keyword}{false}, cancel);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00930}00930             var e = (IEnumerator<T>)enumerator;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00931}00931             \textcolor{keywordflow}{while} (e.MoveNext() \&\& !cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00932}00932             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00933}00933                 yield \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00934}00934             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00935}00935 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00936}00936             \textcolor{keywordflow}{if} (cancel.\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token_ab077ae12d944a575a82e1fa23015ee1e}{IsCancellationRequested}})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00937}00937             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00938}00938                 enumerator.Dispose();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00939}00939                 yield \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00940}00940             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00941}00941 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00942}00942             \textcolor{keywordflow}{if} (enumerator.HasResult)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00943}00943             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00944}00944                 onResult(enumerator.Result);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00945}00945             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00946}00946             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (enumerator.HasError)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00947}00947             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00948}00948                 onError(enumerator.Error);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00949}00949             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00950}00950         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00951}00951 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00953}\mbox{\hyperlink{class_uni_rx_1_1_observable_acb1b005c164165dcdd25bb2c79014d97}{00953}}         \textcolor{keyword}{public} \textcolor{keyword}{static} Coroutine StartAsCoroutine<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel = \textcolor{keywordflow}{default}(\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}))}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00954}00954         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00955}00955             \textcolor{keywordflow}{return} StartAsCoroutine<T>(source, Stubs<T>.Ignore, Stubs.Throw, cancel);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00956}00956         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00957}00957 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00959}\mbox{\hyperlink{class_uni_rx_1_1_observable_a36555eab96f65c57f5507442f4684aad}{00959}}         \textcolor{keyword}{public} \textcolor{keyword}{static} Coroutine StartAsCoroutine<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<T> onResult, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel = \textcolor{keywordflow}{default}(\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}))}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00960}00960         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00961}00961             \textcolor{keywordflow}{return} StartAsCoroutine<T>(source, onResult, Stubs.Throw, cancel);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00962}00962         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00963}00963 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00965}\mbox{\hyperlink{class_uni_rx_1_1_observable_a09b4c64fafc23282038a65ebb0030527}{00965}}         \textcolor{keyword}{public} \textcolor{keyword}{static} Coroutine StartAsCoroutine<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<Exception> onError, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel = \textcolor{keywordflow}{default}(\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}))}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00966}00966         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00967}00967             \textcolor{keywordflow}{return} StartAsCoroutine<T>(source, Stubs<T>.Ignore, onError, cancel);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00968}00968         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00969}00969 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00971}\mbox{\hyperlink{class_uni_rx_1_1_observable_a5b34ebc1c4ddfe2f4421233f8bca4989}{00971}}         \textcolor{keyword}{public} \textcolor{keyword}{static} Coroutine StartAsCoroutine<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<T> onResult, Action<Exception> onError, \mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}} cancel = \textcolor{keywordflow}{default}(\mbox{\hyperlink{struct_uni_rx_1_1_cancellation_token}{CancellationToken}}))}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00972}00972         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00973}00973             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher}{MainThreadDispatcher}}.\mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a0d6388bc9eb6cb93ff3b9af42e864216}{StartCoroutine}}(source.ToAwaitableEnumerator(onResult, onError, cancel));}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00974}00974         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00975}00975 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00976}\mbox{\hyperlink{class_uni_rx_1_1_observable_abd38df46854505c951b97a6f2719518c}{00976}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} ObserveOnMainThread<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00977}00977         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00978}00978             \textcolor{keywordflow}{return} source.ObserveOn(\mbox{\hyperlink{_observable_8_unity_8cs_a37da8193ab9ab390cb568a69f6bd6c27}{SchedulerUnity}}.MainThread);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00979}00979         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00980}00980 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00981}\mbox{\hyperlink{class_uni_rx_1_1_observable_ab0d69b77dc36ebfdc859b7ad00dd2244}{00981}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} ObserveOnMainThread<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \mbox{\hyperlink{namespace_uni_rx_a649896744a0ca3966dce98d6ca5e1c63}{MainThreadDispatchType}} dispatchType)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00982}00982         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00983}00983             \textcolor{keywordflow}{switch} (dispatchType)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00984}00984             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00985}00985                 \textcolor{keywordflow}{case} \mbox{\hyperlink{namespace_uni_rx_a649896744a0ca3966dce98d6ca5e1c63}{MainThreadDispatchType}}.Update:}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00986}00986                     \textcolor{keywordflow}{return} source.ObserveOnMainThread(); \textcolor{comment}{// faster path}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00987}00987 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00988}00988                 \textcolor{comment}{// others, bit slower}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00989}00989 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00990}00990                 \textcolor{keywordflow}{case} \mbox{\hyperlink{namespace_uni_rx_a649896744a0ca3966dce98d6ca5e1c63}{MainThreadDispatchType}}.FixedUpdate:}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00991}00991                     \textcolor{keywordflow}{return} source.SelectMany(\_ => EveryFixedUpdate().Take(1), (x, \_) => x);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00992}00992                 \textcolor{keywordflow}{case} \mbox{\hyperlink{namespace_uni_rx_a649896744a0ca3966dce98d6ca5e1c63}{MainThreadDispatchType}}.EndOfFrame:}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00993}00993                     \textcolor{keywordflow}{return} source.SelectMany(\_ => EveryEndOfFrame().Take(1), (x, \_) => x);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00994}00994                 \textcolor{keywordflow}{case} \mbox{\hyperlink{namespace_uni_rx_a649896744a0ca3966dce98d6ca5e1c63}{MainThreadDispatchType}}.GameObjectUpdate:}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00995}00995                     \textcolor{keywordflow}{return} source.SelectMany(\_ => \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher}{MainThreadDispatcher}}.\mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a2405b6a876ab698a0246251ca1cddc5c}{UpdateAsObservable}}().Take(1), (x, \_) => x);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00996}00996                 \textcolor{keywordflow}{case} \mbox{\hyperlink{namespace_uni_rx_a649896744a0ca3966dce98d6ca5e1c63}{MainThreadDispatchType}}.LateUpdate:}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00997}00997                     \textcolor{keywordflow}{return} source.SelectMany(\_ => \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher}{MainThreadDispatcher}}.\mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_acc9ae909505ad7df4a4fb2727170dbee}{LateUpdateAsObservable}}().Take(1), (x, \_) => x);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00998}00998                 \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l00999}00999                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentException(\textcolor{stringliteral}{"{}type is invalid"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01000}01000             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01001}01001         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01002}01002 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01003}\mbox{\hyperlink{class_uni_rx_1_1_observable_a5f5ccfc37571bb5ee6aa11b3cf641af4}{01003}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} SubscribeOnMainThread<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01004}01004         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01005}01005             \textcolor{keywordflow}{return} source.SubscribeOn(\mbox{\hyperlink{_observable_8_unity_8cs_a37da8193ab9ab390cb568a69f6bd6c27}{SchedulerUnity}}.MainThread);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01006}01006         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01007}01007 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01008}01008         \textcolor{comment}{// I can't avoid Unity 5.3's uNET weaver bug, pending...}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01009}01009 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01010}01010         \textcolor{comment}{//public static IObservable<T> SubscribeOnMainThread<T>(this IObservable<T> source, MainThreadDispatchType dispatchType)}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01011}01011         \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01012}01012         \textcolor{comment}{//    switch (dispatchType)}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01013}01013         \textcolor{comment}{//    \{}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01014}01014         \textcolor{comment}{//        case MainThreadDispatchType.Update:}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01015}01015         \textcolor{comment}{//            return source.SubscribeOnMainThread(); // faster path}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01016}01016 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01017}01017         \textcolor{comment}{//        // others, bit slower}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01018}01018 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01019}01019         \textcolor{comment}{//        case MainThreadDispatchType.FixedUpdate:}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01020}01020         \textcolor{comment}{//            return new UniRx.Operators.SubscribeOnMainThreadObservable<T>(source, EveryFixedUpdate().Take(1));}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01021}01021         \textcolor{comment}{//        case MainThreadDispatchType.EndOfFrame:}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01022}01022         \textcolor{comment}{//            return new UniRx.Operators.SubscribeOnMainThreadObservable<T>(source, EveryEndOfFrame().Take(1));}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01023}01023         \textcolor{comment}{//        case MainThreadDispatchType.GameObjectUpdate:}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01024}01024         \textcolor{comment}{//            return new UniRx.Operators.SubscribeOnMainThreadObservable<T>(source, MainThreadDispatcher.UpdateAsObservable().Select(\_ => 0L).Take(1));}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01025}01025         \textcolor{comment}{//        case MainThreadDispatchType.LateUpdate:}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01026}01026         \textcolor{comment}{//            return new UniRx.Operators.SubscribeOnMainThreadObservable<T>(source, MainThreadDispatcher.LateUpdateAsObservable().Select(\_ => 0L).Take(1));}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01027}01027         \textcolor{comment}{//        case MainThreadDispatchType.AfterUpdate:}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01028}01028         \textcolor{comment}{//            return new UniRx.Operators.SubscribeOnMainThreadObservable<T>(source, EveryAfterUpdate().Take(1));}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01029}01029         \textcolor{comment}{//        default:}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01030}01030         \textcolor{comment}{//            throw new ArgumentException("{}type is invalid"{});}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01031}01031         \textcolor{comment}{//    \}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01032}01032         \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01033}01033 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01034}\mbox{\hyperlink{class_uni_rx_1_1_observable_a41f49ad0fd497957ee42e7f0328dc28d}{01034}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<bool>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a41f49ad0fd497957ee42e7f0328dc28d}{EveryApplicationPause}}()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01035}01035         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01036}01036             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher}{MainThreadDispatcher}}.\mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a868ace83e12c70389f97616736327795}{OnApplicationPauseAsObservable}}().AsObservable();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01037}01037         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01038}01038 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01039}\mbox{\hyperlink{class_uni_rx_1_1_observable_a4b447c8a11e84883d461a72c2958f4e0}{01039}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<bool>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a4b447c8a11e84883d461a72c2958f4e0}{EveryApplicationFocus}}()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01040}01040         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01041}01041             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher}{MainThreadDispatcher}}.\mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_aef4bbfdc42e185dd3311c2b23ddc76f4}{OnApplicationFocusAsObservable}}().AsObservable();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01042}01042         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01043}01043 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01045}\mbox{\hyperlink{class_uni_rx_1_1_observable_aafd6467a22fecc5cc6b650eb3ac01e36}{01045}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_aafd6467a22fecc5cc6b650eb3ac01e36}{OnceApplicationQuit}}()}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01046}01046         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01047}01047             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher}{MainThreadDispatcher}}.\mbox{\hyperlink{class_uni_rx_1_1_main_thread_dispatcher_a765503f16387160a34eb5a981ee6b77f}{OnApplicationQuitAsObservable}}().Take(1);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01048}01048         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01049}01049 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01050}\mbox{\hyperlink{class_uni_rx_1_1_observable_a3863db80770afcc2216ab705e639e6d6}{01050}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} TakeUntilDestroy<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Component target)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01051}01051         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01052}01052             \textcolor{keywordflow}{return} source.TakeUntil(target.OnDestroyAsObservable());}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01053}01053         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01054}01054 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01055}\mbox{\hyperlink{class_uni_rx_1_1_observable_a305be1cc172516bd32285af495476766}{01055}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} TakeUntilDestroy<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, GameObject target)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01056}01056         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01057}01057             \textcolor{keywordflow}{return} source.TakeUntil(target.OnDestroyAsObservable());}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01058}01058         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01059}01059 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01060}\mbox{\hyperlink{class_uni_rx_1_1_observable_aae87a77a695ae25fb221b61f211271d4}{01060}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} TakeUntilDisable<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Component target)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01061}01061         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01062}01062             \textcolor{keywordflow}{return} source.TakeUntil(target.OnDisableAsObservable());}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01063}01063         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01064}01064 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01065}\mbox{\hyperlink{class_uni_rx_1_1_observable_ab0603e1d7ebfa2d9b82579af4e9fba72}{01065}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} TakeUntilDisable<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, GameObject target)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01066}01066         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01067}01067             \textcolor{keywordflow}{return} source.TakeUntil(target.OnDisableAsObservable());}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01068}01068         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01069}01069 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01070}\mbox{\hyperlink{class_uni_rx_1_1_observable_a9b8fc8f6f867f384ff5547b365ed5fe9}{01070}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} RepeatUntilDestroy<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, GameObject target)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01071}01071         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01072}01072             \textcolor{keywordflow}{return} RepeatUntilCore(RepeatInfinite(source), target.OnDestroyAsObservable(), target);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01073}01073         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01074}01074 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01075}\mbox{\hyperlink{class_uni_rx_1_1_observable_aa822070d56e934d93d8ccec5b232df2e}{01075}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} RepeatUntilDestroy<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Component target)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01076}01076         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01077}01077             \textcolor{keywordflow}{return} RepeatUntilCore(RepeatInfinite(source), target.OnDestroyAsObservable(), (target != \textcolor{keyword}{null}) ? target.gameObject : \textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01078}01078         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01079}01079 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01080}\mbox{\hyperlink{class_uni_rx_1_1_observable_a40542ac335e5445550af3b8fc68a4d7e}{01080}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} RepeatUntilDisable<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, GameObject target)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01081}01081         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01082}01082             \textcolor{keywordflow}{return} RepeatUntilCore(RepeatInfinite(source), target.OnDisableAsObservable(), target);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01083}01083         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01084}01084 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01085}\mbox{\hyperlink{class_uni_rx_1_1_observable_a0e7fab6feb480ca23c5d677ca6ad0199}{01085}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} RepeatUntilDisable<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Component target)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01086}01086         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01087}01087             \textcolor{keywordflow}{return} RepeatUntilCore(RepeatInfinite(source), target.OnDisableAsObservable(), (target != \textcolor{keyword}{null}) ? target.gameObject : \textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01088}01088         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01089}01089 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01090}01090         \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} RepeatUntilCore<T>(\textcolor{keyword}{this} IEnumerable<\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}}> sources, \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} trigger, GameObject lifeTimeChecker)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01091}01091         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01092}01092             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_repeat_until_observable}{RepeatUntilObservable}}<T>(sources, trigger, lifeTimeChecker);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01093}01093         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01094}01094 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01095}\mbox{\hyperlink{class_uni_rx_1_1_observable_a5a1f545768613f3f209a68a0c1b93113}{01095}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}<\mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{struct_uni_rx_1_1_frame_interval}{FrameInterval}}<T>> \mbox{\hyperlink{struct_uni_rx_1_1_frame_interval}{FrameInterval<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01096}01096         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01097}01097             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_frame_interval_observable}{FrameIntervalObservable}}<T>(source);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01098}01098         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01099}01099 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01100}\mbox{\hyperlink{class_uni_rx_1_1_observable_a0476e3a6bed9c45fce18abe18113cd0d}{01100}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}<\mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{struct_uni_rx_1_1_time_interval}{TimeInterval}}<T>> FrameTimeInterval<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{bool} ignoreTimeScale = \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01101}01101         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01102}01102             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_frame_time_interval_observable}{FrameTimeIntervalObservable}}<T>(source, ignoreTimeScale);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01103}01103         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01104}01104 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01108}\mbox{\hyperlink{class_uni_rx_1_1_observable_a9c63bb2a6be46681406c3c9b12891e13}{01108}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<IList<T>}}> BatchFrame<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01109}01109         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01110}01110             \textcolor{comment}{// if use default argument, comiler errors ambiguous(Unity's limitation)}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01111}01111             \textcolor{keywordflow}{return} BatchFrame<T>(source, 0, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.EndOfFrame);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01112}01112         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01113}01113 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01117}\mbox{\hyperlink{class_uni_rx_1_1_observable_a9dc566b16e79402699c42aa076fbc196}{01117}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<IList<T>}}> BatchFrame<T>(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \textcolor{keywordtype}{int} frameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01118}01118         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01119}01119             \textcolor{keywordflow}{if} (frameCount < 0) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentException(\textcolor{stringliteral}{"{}frameCount must be >= 0, frameCount:"{}} + frameCount);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01120}01120             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_batch_frame_observable}{BatchFrameObservable}}<T>(source, frameCount, frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01121}01121         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01122}01122 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01126}\mbox{\hyperlink{class_uni_rx_1_1_observable_afece19992ebf152a1741c15566f7858e}{01126}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_afece19992ebf152a1741c15566f7858e}{BatchFrame}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01127}01127         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01128}01128             \textcolor{keywordflow}{return} BatchFrame(source, 0, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}}.EndOfFrame);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01129}01129         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01130}01130 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01134}\mbox{\hyperlink{class_uni_rx_1_1_observable_a650f3d595b58511069d4cfd52c8c8297}{01134}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a650f3d595b58511069d4cfd52c8c8297}{BatchFrame}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} source, \textcolor{keywordtype}{int} frameCount, \mbox{\hyperlink{namespace_uni_rx_a60dff5c883a2030d449b53a74e6207be}{FrameCountType}} frameCountType)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01135}01135         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01136}01136             \textcolor{keywordflow}{if} (frameCount < 0) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentException(\textcolor{stringliteral}{"{}frameCount must be >= 0, frameCount:"{}} + frameCount);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01137}01137             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_batch_frame_observable}{BatchFrameObservable}}(source, frameCount, frameCountType);}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01138}01138         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01139}01139 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01140}01140 \textcolor{preprocessor}{\#if UniRxLibrary}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01141}01141 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01142}01142         \textcolor{keyword}{static} IEnumerable<IObservable<T>> RepeatInfinite<T>(\mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01143}01143         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01144}01144             \textcolor{keywordflow}{while} (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01145}01145             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01146}01146                 yield \textcolor{keywordflow}{return} source;}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01147}01147             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01148}01148         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01149}01149 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01150}01150         \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keyword}{class }Stubs}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01151}01151         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01152}01152             \textcolor{keyword}{public} \textcolor{keyword}{static} readonly Action Nop = () => \{ \};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01153}01153             \textcolor{keyword}{public} \textcolor{keyword}{static} readonly Action<Exception> Throw = ex => \{ ex.Throw(); \};}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01154}01154 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01155}01155             \textcolor{comment}{// Stubs<T>.Ignore can't avoid iOS AOT problem.}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01156}01156             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} Ignore<T>(T t)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01157}01157             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01158}01158             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01159}01159 }
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01160}01160             \textcolor{comment}{// marker for CatchIgnore and Catch avoid iOS AOT problem.}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01161}01161             \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} CatchIgnore<TSource>(Exception ex)}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01162}01162             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01163}01163                 \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}}.Empty<TSource>();}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01164}01164             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01165}01165         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01166}01166 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01167}01167     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8_unity_8cs_source_l01168}01168 \}}
+
+\end{DoxyCode}

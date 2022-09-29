@@ -1,0 +1,4 @@
+var _i_t__02_json_persister_persistence_api_response_curve_8cs =
+[
+    [ "IntegrationTests.Persistence.IT_02JsonPersisterPersistenceApiResponseCurve", "class_integration_tests_1_1_persistence_1_1_i_t__02_json_persister_persistence_api_response_curve.html", "class_integration_tests_1_1_persistence_1_1_i_t__02_json_persister_persistence_api_response_curve" ]
+];

@@ -1,0 +1,50 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="UniRx.EventPattern\l\< object, TEventArgs \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_event_pattern.html",tooltip=" "];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="UniRx.EventPattern\l\< TSender, TEventArgs \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_event_pattern.html",tooltip="Represents a .NET event invocation consisting of the weakly typed object that raised the event and th..."];
+  Node16 [label="IComparable",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node16 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="UniRx.Tuple\< T1, T2,\l T3, T4, T5, T6, T7,\l TRest \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_tuple.html",tooltip=" "];
+  Node2 [label="IEquatable",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="UniRx.CollectionAddEvent\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_collection_add_event.html",tooltip=" "];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="UniRx.CollectionMoveEvent\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_collection_move_event.html",tooltip=" "];
+  Node2 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="UniRx.CollectionRemoveEvent\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_collection_remove_event.html",tooltip=" "];
+  Node2 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="UniRx.CollectionReplaceEvent\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_collection_replace_event.html",tooltip=" "];
+  Node2 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="UniRx.DictionaryAddEvent\l\< TKey, TValue \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_dictionary_add_event.html",tooltip=" "];
+  Node2 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="UniRx.DictionaryRemoveEvent\l\< TKey, TValue \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_dictionary_remove_event.html",tooltip=" "];
+  Node2 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="UniRx.DictionaryReplaceEvent\l\< TKey, TValue \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_dictionary_replace_event.html",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="UniRx.FrameInterval\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_frame_interval.html",tooltip="Represents a value associated with time interval information. The time interval can represent the tim..."];
+  Node2 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="UniRx.Notification\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_uni_rx_1_1_notification.html",tooltip="Represents a notification to an observer."];
+  Node2 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="UniRx.Pair\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_pair.html",tooltip=" "];
+  Node2 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="UniRx.TimeInterval\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_time_interval.html",tooltip="Represents a value associated with time interval information. The time interval can represent the tim..."];
+  Node2 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="UniRx.Timestamped\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_timestamped.html",tooltip="Represents value with a timestamp on it. The timestamp typically represents the time the value was re..."];
+  Node2 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node20 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="UniRx.Unit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_uni_rx_1_1_unit.html",tooltip=" "];
+  Node21 [label="UniRx.IEventPattern\l\< TSender, TEventArgs \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_uni_rx_1_1_i_event_pattern.html",tooltip="Represents a .NET event invocation consisting of the strongly typed object that raised the event and ..."];
+  Node21 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="UniRx.IStructuralComparable",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_uni_rx_1_1_i_structural_comparable.html",tooltip=" "];
+  Node17 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="UniRx.IStructuralEquatable",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_uni_rx_1_1_i_structural_equatable.html",tooltip=" "];
+  Node18 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="UniRx.ITuple",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_uni_rx_1_1_i_tuple.html",tooltip=" "];
+  Node19 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,46 @@
+\hypertarget{_stub___consideration___i_t_8cs_source}{}\doxysection{Stub\+\_\+\+Consideration\+\_\+\+IT.\+cs}
+\label{_stub___consideration___i_t_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/Mocks/Stub\_Consideration\_IT.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/Mocks/Stub\_Consideration\_IT.cs}}
+\mbox{\hyperlink{_stub___consideration___i_t_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00007}00007 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_mocks}{Mocks}}}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00009}\mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t}{00009}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t}{Stub\_Consideration\_IT}} : \mbox{\hyperlink{class_consideration}{Consideration}}}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00010}00010     \{}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00011}\mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t_a5488d74f17622ba97fc0f72fbb10b33c}{00011}}         \textcolor{keyword}{public} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t_a5488d74f17622ba97fc0f72fbb10b33c}{ReturnValue}};}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00013}\mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t_a869c2fdcda1d2e54fba488441322a673}{00013}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t_a869c2fdcda1d2e54fba488441322a673}{Stub\_Consideration\_IT}}(\textcolor{keywordtype}{float} returnValue, List<Parameter> parameters, \textcolor{keywordtype}{float} min = 0f, \textcolor{keywordtype}{float} max = 1f)}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00014}00014         \{}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00015}00015             \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t_a5488d74f17622ba97fc0f72fbb10b33c}{ReturnValue}} = returnValue;}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00016}00016             \textcolor{keywordflow}{foreach} (var parameter \textcolor{keywordflow}{in} parameters)}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00017}00017             \{}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00018}00018                 \mbox{\hyperlink{class_ai_object_model_a2cc03859661f7d737aa07e4678decd9c}{AddParameter}}(parameter);}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00019}00019             \}}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00020}00020             \mbox{\hyperlink{class_consideration_ac28f7a421a8dd2370c8a37ab855a5d43}{CurrentResponseCurve}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___response_curve___i_t}{Mock\_ResponseCurve\_IT}}(\textcolor{stringliteral}{"{}Mock"{}});}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00021}00021             MinFloat.Value = min;}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00022}00022             MaxFloat.Value = max;}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00023}00023         \}}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00025}\mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t_a9d9c63dc4b226d6dcb43e96875ae8f12}{00025}}         \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t_a9d9c63dc4b226d6dcb43e96875ae8f12}{CalculateBaseScore}}(\mbox{\hyperlink{interface_i_ai_context}{IAiContext}} context)}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00026}00026         \{}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00027}00027             var result = \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t_a5488d74f17622ba97fc0f72fbb10b33c}{ReturnValue}};}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00028}00028             \textcolor{keywordflow}{foreach}(var param \textcolor{keywordflow}{in} \mbox{\hyperlink{class_ai_object_model_af34254ba7b70532194c366c06a257439}{Parameters}})}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00029}00029             \{}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00030}00030                 result += Convert.ToSingle(param.Value);}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00031}00031             \}}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00032}00032             \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00033}00033         \}}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00035}\mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t_a580923af31a012b586267785a39fd3f0}{00035}}         \textcolor{keyword}{protected} \textcolor{keyword}{override} List<Parameter> \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t_a580923af31a012b586267785a39fd3f0}{GetParameters}}()}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00036}00036         \{}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00037}00037             \textcolor{keywordflow}{return} \textcolor{keyword}{new} List<Parameter>();}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00038}00038         \}}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00039}00039     \}}
+\DoxyCodeLine{\Hypertarget{_stub___consideration___i_t_8cs_source_l00040}00040 \}}
+
+\end{DoxyCode}

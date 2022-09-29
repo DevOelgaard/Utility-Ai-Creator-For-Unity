@@ -1,0 +1,126 @@
+\hypertarget{_pair_wise_8cs_source}{}\doxysection{Pair\+Wise.\+cs}
+\label{_pair_wise_8cs_source}\index{Editor/UniRx/Scripts/Operators/PairWise.cs@{Editor/UniRx/Scripts/Operators/PairWise.cs}}
+\mbox{\hyperlink{_pair_wise_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{UniRx.Operators}}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00005}00005     \textcolor{keyword}{internal} \textcolor{keyword}{class }PairwiseObservable<T, TR> : OperatorObservableBase<TR>}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00006}00006     \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00007}00007         readonly IObservable<T> source;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00008}00008         readonly Func<T, T, TR> selector;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00010}00010         \textcolor{keyword}{public} PairwiseObservable(IObservable<T> source, Func<T, T, TR> selector)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00011}00011             : base(source.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observable_base_ab17811b6e91cb3ebec907b35eca6fbc7}{IsRequiredSubscribeOnCurrentThread}}())}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00012}00012         \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00013}00013             this.source = source;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00014}00014             this.selector = selector;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00015}00015         \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00017}00017         \textcolor{keyword}{protected} \textcolor{keyword}{override} IDisposable \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observable_base_a6d57a5066f5fb2b0e928f7c0f893e5db}{SubscribeCore}}(IObserver<TR> observer, IDisposable cancel)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00018}00018         \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00019}00019             \textcolor{keywordflow}{return} source.Subscribe(\textcolor{keyword}{new} Pairwise(\textcolor{keyword}{this}, observer, cancel));}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00020}00020         \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00022}00022         \textcolor{keyword}{class }Pairwise : OperatorObserverBase<T, TR>}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00023}00023         \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00024}00024             readonly PairwiseObservable<T, TR> parent;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00025}00025             T prev = \textcolor{keywordflow}{default}(T);}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00026}00026             \textcolor{keywordtype}{bool} isFirst = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00028}00028             \textcolor{keyword}{public} Pairwise(PairwiseObservable<T, TR> parent, IObserver<TR> observer, IDisposable cancel)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00029}00029                 : base(observer, cancel)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00030}00030             \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00031}00031                 this.parent = parent;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00032}00032             \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00034}00034             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a400001c0136d7539f7395398c51846c8}{OnNext}}(T value)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00035}00035             \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00036}00036                 \textcolor{keywordflow}{if} (isFirst)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00037}00037                 \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00038}00038                     isFirst = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00039}00039                     prev = value;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00040}00040                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00041}00041                 \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00043}00043                 TR v;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00044}00044                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00045}00045                 \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00046}00046                     v = parent.selector(prev, value);}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00047}00047                     prev = value;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00048}00048                 \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00049}00049                 \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00050}00050                 \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00051}00051                     \textcolor{keywordflow}{try} \{ observer.OnError(ex); \} \textcolor{keywordflow}{finally} \{ \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}(); \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00052}00052                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00053}00053                 \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00055}00055                 observer.OnNext(v);}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00056}00056             \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00058}00058             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83a44cdeb54c6f2aebad54611201c26d6f0}{OnError}}(Exception error)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00059}00059             \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00060}00060                 \textcolor{keywordflow}{try} \{ observer.OnError(error); \} \textcolor{keywordflow}{finally} \{ \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}(); \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00061}00061             \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00063}00063             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83ad3f2303a2d7ea4ac7945de6d166d9c73}{OnCompleted}}()}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00064}00064             \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00065}00065                 \textcolor{keywordflow}{try} \{ observer.OnCompleted(); \} \textcolor{keywordflow}{finally} \{ \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}(); \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00066}00066             \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00067}00067         \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00068}00068     \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00070}00070     \textcolor{keyword}{internal} \textcolor{keyword}{class }PairwiseObservable<T> : OperatorObservableBase<Pair<T>>}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00071}00071     \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00072}00072         readonly IObservable<T> source;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00074}00074         \textcolor{keyword}{public} PairwiseObservable(IObservable<T> source)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00075}00075             : base(source.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observable_base_ab17811b6e91cb3ebec907b35eca6fbc7}{IsRequiredSubscribeOnCurrentThread}}())}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00076}00076         \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00077}00077             this.source = source;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00078}00078         \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00080}00080         \textcolor{keyword}{protected} \textcolor{keyword}{override} IDisposable \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observable_base_a6d57a5066f5fb2b0e928f7c0f893e5db}{SubscribeCore}}(IObserver<Pair<T>> observer, IDisposable cancel)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00081}00081         \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00082}00082             \textcolor{keywordflow}{return} source.Subscribe(\textcolor{keyword}{new} Pairwise(observer, cancel));}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00083}00083         \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00085}00085         \textcolor{keyword}{class }Pairwise : OperatorObserverBase<T, Pair<T>>}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00086}00086         \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00087}00087             T prev = \textcolor{keywordflow}{default}(T);}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00088}00088             \textcolor{keywordtype}{bool} isFirst = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00090}00090             \textcolor{keyword}{public} Pairwise(IObserver<Pair<T>> observer, IDisposable cancel)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00091}00091                 : base(observer, cancel)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00092}00092             \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00093}00093             \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00095}00095             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a400001c0136d7539f7395398c51846c8}{OnNext}}(T value)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00096}00096             \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00097}00097                 \textcolor{keywordflow}{if} (isFirst)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00098}00098                 \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00099}00099                     isFirst = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00100}00100                     prev = value;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00101}00101                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00102}00102                 \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00104}00104                 var pair = \textcolor{keyword}{new} Pair<T>(prev, value);}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00105}00105                 prev = value;}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00106}00106                 observer.OnNext(pair);}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00107}00107             \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00109}00109             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83a44cdeb54c6f2aebad54611201c26d6f0}{OnError}}(Exception error)}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00110}00110             \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00111}00111                 \textcolor{keywordflow}{try} \{ observer.OnError(error); \} \textcolor{keywordflow}{finally} \{ \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}(); \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00112}00112             \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00113}00113 }
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00114}00114             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83ad3f2303a2d7ea4ac7945de6d166d9c73}{OnCompleted}}()}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00115}00115             \{}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00116}00116                 \textcolor{keywordflow}{try} \{ observer.OnCompleted(); \} \textcolor{keywordflow}{finally} \{ \mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_operator_observer_base_a497f517da37764485e866384c6bd5ac2}{Dispose}}(); \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00117}00117             \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00118}00118         \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00119}00119     \}}
+\DoxyCodeLine{\Hypertarget{_pair_wise_8cs_source_l00120}00120 \}}
+
+\end{DoxyCode}

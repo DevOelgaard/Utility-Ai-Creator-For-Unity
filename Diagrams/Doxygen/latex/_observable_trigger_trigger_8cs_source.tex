@@ -1,0 +1,67 @@
+\hypertarget{_observable_trigger_trigger_8cs_source}{}\doxysection{Observable\+Trigger\+Trigger.\+cs}
+\label{_observable_trigger_trigger_8cs_source}\index{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableTriggerTrigger.cs@{Editor/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableTriggerTrigger.cs}}
+\mbox{\hyperlink{_observable_trigger_trigger_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}}; \textcolor{comment}{// require keep for Windows Universal App}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00002}00002 \textcolor{keyword}{using }UnityEngine;}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00004}00004 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx_1_1_triggers}{UniRx.Triggers}}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00006}00006     [DisallowMultipleComponent]}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00007}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_trigger}{00007}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_trigger}{ObservableTriggerTrigger}} : \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_base}{ObservableTriggerBase}}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00009}00009         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collider>}} onTriggerEnter;}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00012}00012         \textcolor{keywordtype}{void} OnTriggerEnter(Collider other)}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00013}00013         \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00014}00014             \textcolor{keywordflow}{if} (onTriggerEnter != \textcolor{keyword}{null}) onTriggerEnter.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(other);}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00015}00015         \}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00018}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_trigger_a6b317959f3f18a56033d8b5f24d122d6}{00018}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Collider>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_trigger_a6b317959f3f18a56033d8b5f24d122d6}{OnTriggerEnterAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00019}00019         \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00020}00020             \textcolor{keywordflow}{return} onTriggerEnter ?? (onTriggerEnter = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collider>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00021}00021         \}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00023}00023         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collider>}} onTriggerExit;}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00026}00026         \textcolor{keywordtype}{void} OnTriggerExit(Collider other)}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00027}00027         \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00028}00028             \textcolor{keywordflow}{if} (onTriggerExit != \textcolor{keyword}{null}) onTriggerExit.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(other);}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00029}00029         \}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00032}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_trigger_a008ded1828a1a471f39c685ab9c393db}{00032}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Collider>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_trigger_a008ded1828a1a471f39c685ab9c393db}{OnTriggerExitAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00033}00033         \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00034}00034             \textcolor{keywordflow}{return} onTriggerExit ?? (onTriggerExit = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collider>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00035}00035         \}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00037}00037         \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collider>}} onTriggerStay;}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00040}00040         \textcolor{keywordtype}{void} OnTriggerStay(Collider other)}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00041}00041         \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00042}00042             \textcolor{keywordflow}{if} (onTriggerStay != \textcolor{keyword}{null}) onTriggerStay.\mbox{\hyperlink{class_uni_rx_1_1_subject_a4cbbe5730f3c9ea08287be64c1b7d008}{OnNext}}(other);}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00043}00043         \}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00046}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_trigger_adabfdfd1b15422b913fd7e691bc65697}{00046}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Collider>}} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_trigger_adabfdfd1b15422b913fd7e691bc65697}{OnTriggerStayAsObservable}}()}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00047}00047         \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00048}00048             \textcolor{keywordflow}{return} onTriggerStay ?? (onTriggerStay = \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_subject}{Subject<Collider>}}());}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00049}00049         \}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00050}00050         }
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00051}\mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_trigger_ad5412fc0733ad89750b0ba27b49724d5}{00051}}         \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_triggers_1_1_observable_trigger_trigger_ad5412fc0733ad89750b0ba27b49724d5}{RaiseOnCompletedOnDestroy}}()}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00052}00052         \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00053}00053             \textcolor{keywordflow}{if} (onTriggerEnter != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00054}00054             \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00055}00055                 onTriggerEnter.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00056}00056             \}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00057}00057             \textcolor{keywordflow}{if} (onTriggerExit != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00058}00058             \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00059}00059                 onTriggerExit.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00060}00060             \}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00061}00061             \textcolor{keywordflow}{if} (onTriggerStay != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00062}00062             \{}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00063}00063                 onTriggerStay.\mbox{\hyperlink{class_uni_rx_1_1_subject_aa7f5882c6ca29baa101d92981b94812b}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00064}00064             \}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00065}00065         \}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00066}00066     \}}
+\DoxyCodeLine{\Hypertarget{_observable_trigger_trigger_8cs_source_l00067}00067 \}}
+
+\end{DoxyCode}

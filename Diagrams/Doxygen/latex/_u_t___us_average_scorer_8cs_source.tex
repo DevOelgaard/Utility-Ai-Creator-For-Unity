@@ -1,0 +1,78 @@
+\hypertarget{_u_t___us_average_scorer_8cs_source}{}\doxysection{UT\+\_\+\+Us\+Average\+Scorer.\+cs}
+\label{_u_t___us_average_scorer_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Scorers/UtilityScorer/UT\_UsAverageScorer.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/UnitTests/Scorers/UtilityScorer/UT\_UsAverageScorer.cs}}
+\mbox{\hyperlink{_u_t___us_average_scorer_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00001}00001 \textcolor{keyword}{using }System.Collections;}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00003}00003 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_mocks}{Mocks}};}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00004}00004 \textcolor{keyword}{using }NUnit.Framework;}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00005}00005 \textcolor{keyword}{using }NSubstitute;}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00008}\mbox{\hyperlink{namespace_unit_tests_1_1_scorers_1_1_utility_scorers}{00008}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_unit_tests_1_1_scorers_1_1_utility_scorers}{UnitTests.Scorers.UtilityScorers}}}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00010}00010         [TestFixture]}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00011}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_utility_scorers_1_1_u_t___us_average_scorer}{00011}}         \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_utility_scorers_1_1_u_t___us_average_scorer}{UT\_UsAverageScorer}}}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00012}00012         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00013}00013                 \textcolor{keyword}{private} \mbox{\hyperlink{interface_i_utility_scorer}{IUtilityScorer}} uut;}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00014}00014                 \textcolor{keyword}{private} \mbox{\hyperlink{interface_i_ai_context}{IAiContext}} mockAiContext;}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00016}00016                 \textcolor{keyword}{private} List<Consideration> mockConsiderations;}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00018}00018                 [\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_utility_scorers_1_1_u_t___us_average_scorer_ad7a6363e59429edb9d5327f60e833485}{SetUp}}]}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00019}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_utility_scorers_1_1_u_t___us_average_scorer_ad7a6363e59429edb9d5327f60e833485}{00019}}                 \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_utility_scorers_1_1_u_t___us_average_scorer_ad7a6363e59429edb9d5327f60e833485}{SetUp}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00020}00020                 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00021}00021                         uut = \textcolor{keyword}{new} \mbox{\hyperlink{class_us_average_scorer}{UsAverageScorer}}();}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00022}00022                         mockAiContext = Substitute.For<\mbox{\hyperlink{interface_i_ai_context}{IAiContext}}>();}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00023}00023                         mockConsiderations = \textcolor{keyword}{new} List<Consideration>()}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00024}00024                         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00025}00025                                 \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___consideration_simple}{Mock\_ConsiderationSimple}}(),}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00026}00026                                 \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___consideration_simple}{Mock\_ConsiderationSimple}}(),}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00027}00027                                 \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___consideration_simple}{Mock\_ConsiderationSimple}}(),}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00028}00028                                 \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___consideration_simple}{Mock\_ConsiderationSimple}}(),}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00029}00029                                 \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_mock___consideration_simple}{Mock\_ConsiderationSimple}}(),}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00030}00030                         \};}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00031}00031                 \}}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00033}00033                 [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00034}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_utility_scorers_1_1_u_t___us_average_scorer_aa33a6f391d76581ac7533cbf355eb12f}{00034}}                 \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_utility_scorers_1_1_u_t___us_average_scorer_aa33a6f391d76581ac7533cbf355eb12f}{CalculateUtility\_NoConsiderations\_ReturnsZero}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00035}00035                 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00036}00036                         var considerationsZeroElements = \textcolor{keyword}{new} List<Consideration>();}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00038}00038                         var result = uut.\mbox{\hyperlink{interface_i_utility_scorer_a33c65c32670160269d079ae0da71a032}{CalculateUtility}}(considerationsZeroElements, mockAiContext);}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00040}00040                         Assert.AreEqual(0, result);}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00041}00041                 \}}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00043}00043                 [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00044}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_utility_scorers_1_1_u_t___us_average_scorer_a2b3e34536589987db922e1de0b8e172d}{00044}}                 \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_utility_scorers_1_1_u_t___us_average_scorer_a2b3e34536589987db922e1de0b8e172d}{CalculateUtility\_AllConsiderationsAreModifiers\_ReturnOne}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00045}00045                 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00047}00047                         \textcolor{keywordflow}{foreach} (var consideration \textcolor{keywordflow}{in} mockConsiderations)}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00048}00048                         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00049}00049                                 var cast = consideration as \mbox{\hyperlink{class_mocks_1_1_mock___consideration_simple}{Mock\_ConsiderationSimple}};}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00050}00050                                 cast.\mbox{\hyperlink{class_mocks_1_1_mock___consideration_simple_a4019fb3a5122228a7501a81d78d597bb}{SetIsModifier}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00051}00051                         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00053}00053                         var result = uut.\mbox{\hyperlink{interface_i_utility_scorer_a33c65c32670160269d079ae0da71a032}{CalculateUtility}}(mockConsiderations, mockAiContext);}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00054}00054                         Assert.AreEqual(1, result);}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00055}00055                 \}}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00057}00057                 [Test]}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00058}\mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_utility_scorers_1_1_u_t___us_average_scorer_a94412d4dee74f4de49cfe900679fea28}{00058}}                 \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_unit_tests_1_1_scorers_1_1_utility_scorers_1_1_u_t___us_average_scorer_a94412d4dee74f4de49cfe900679fea28}{CalculateUtility\_AllConsiderationsScoreOne\_ReturnOne}}()}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00059}00059                 \{}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00061}00061                         \textcolor{keywordflow}{foreach} (var consideration \textcolor{keywordflow}{in} mockConsiderations)}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00062}00062                         \{}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00063}00063                                 var cast = consideration as \mbox{\hyperlink{class_mocks_1_1_mock___consideration_simple}{Mock\_ConsiderationSimple}};}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00064}00064                                 cast.\mbox{\hyperlink{class_mocks_1_1_mock___consideration_simple_a4019fb3a5122228a7501a81d78d597bb}{SetIsModifier}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00065}00065                                 cast.ReturnValue = 1;}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00066}00066                         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00068}00068                         var result = uut.\mbox{\hyperlink{interface_i_utility_scorer_a33c65c32670160269d079ae0da71a032}{CalculateUtility}}(mockConsiderations, mockAiContext);}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00069}00069                         Assert.AreEqual(1, result);}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00070}00070                 \}}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00071}00071         \}}
+\DoxyCodeLine{\Hypertarget{_u_t___us_average_scorer_8cs_source_l00072}00072 \}}
+
+\end{DoxyCode}

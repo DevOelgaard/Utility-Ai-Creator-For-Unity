@@ -1,0 +1,224 @@
+\hypertarget{class_uni_rx_1_1_replay_subject}{}\doxysection{Uni\+Rx.\+Replay\+Subject\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_uni_rx_1_1_replay_subject}\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+Inheritance diagram for Uni\+Rx.\+Replay\+Subject\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.126760cm]{class_uni_rx_1_1_replay_subject}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_replay_subject_a3d43385a38d5199f674128d7142b0dbb}{Replay\+Subject}} ()
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_replay_subject_a9124d796779dbb0590557e07d81a3be3}{Replay\+Subject}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} scheduler)
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_replay_subject_aadf3e33b50c941d55f640a013d7e4465}{Replay\+Subject}} (int buffer\+Size)
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_replay_subject_a76eb802d5beb1f0bcc04b07cbde368aa}{Replay\+Subject}} (int buffer\+Size, \mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} scheduler)
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_replay_subject_abc6b6e406e0fcb1d6123c69b8231e88b}{Replay\+Subject}} (Time\+Span window)
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_replay_subject_abb97b36b1348be1374ab5d63b51dc36f}{Replay\+Subject}} (Time\+Span window, \mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} scheduler)
+\item 
+\mbox{\hyperlink{class_uni_rx_1_1_replay_subject_ace22453f6698ae2ef0f63588f482c54f}{Replay\+Subject}} (int buffer\+Size, Time\+Span window, \mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} scheduler)
+\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_replay_subject_afdf3f7478c5f9954a2e7ce2bcc3d85a0}{On\+Completed}} ()
+\begin{DoxyCompactList}\small\item\em Notifies the observer of the end of the sequence. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_replay_subject_a9aadc4a06fdd9e12749834aec7d00ca6}{On\+Error}} (Exception error)
+\begin{DoxyCompactList}\small\item\em Notifies the observer that an exception has occurred. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_replay_subject_a6be0378751b7bcc17f540c2371bf850d}{On\+Next}} (T value)
+\item 
+IDisposable \mbox{\hyperlink{class_uni_rx_1_1_replay_subject_aa6ecf493d014b9a2788ff68f272433f2}{Subscribe}} (\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$ observer)
+\item 
+void \mbox{\hyperlink{class_uni_rx_1_1_replay_subject_a47175a34a8819ca929b55785c7fcebc3}{Dispose}} ()
+\item 
+bool \mbox{\hyperlink{class_uni_rx_1_1_replay_subject_a52e025bf509105999177ea46fb418ecb}{Is\+Required\+Subscribe\+On\+Current\+Thread}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00007}{7}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_a3d43385a38d5199f674128d7142b0dbb}\label{class_uni_rx_1_1_replay_subject_a3d43385a38d5199f674128d7142b0dbb}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!ReplaySubject@{ReplaySubject}}
+\index{ReplaySubject@{ReplaySubject}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReplaySubject()}{ReplaySubject()}\hspace{0.1cm}{\footnotesize\ttfamily [1/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Replay\+Subject}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00023}{23}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_a9124d796779dbb0590557e07d81a3be3}\label{class_uni_rx_1_1_replay_subject_a9124d796779dbb0590557e07d81a3be3}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!ReplaySubject@{ReplaySubject}}
+\index{ReplaySubject@{ReplaySubject}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReplaySubject()}{ReplaySubject()}\hspace{0.1cm}{\footnotesize\ttfamily [2/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Replay\+Subject}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}}}]{scheduler }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00028}{28}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_aadf3e33b50c941d55f640a013d7e4465}\label{class_uni_rx_1_1_replay_subject_aadf3e33b50c941d55f640a013d7e4465}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!ReplaySubject@{ReplaySubject}}
+\index{ReplaySubject@{ReplaySubject}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReplaySubject()}{ReplaySubject()}\hspace{0.1cm}{\footnotesize\ttfamily [3/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Replay\+Subject}} (\begin{DoxyParamCaption}\item[{int}]{buffer\+Size }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00033}{33}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_a76eb802d5beb1f0bcc04b07cbde368aa}\label{class_uni_rx_1_1_replay_subject_a76eb802d5beb1f0bcc04b07cbde368aa}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!ReplaySubject@{ReplaySubject}}
+\index{ReplaySubject@{ReplaySubject}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReplaySubject()}{ReplaySubject()}\hspace{0.1cm}{\footnotesize\ttfamily [4/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Replay\+Subject}} (\begin{DoxyParamCaption}\item[{int}]{buffer\+Size,  }\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}}}]{scheduler }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00038}{38}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_abc6b6e406e0fcb1d6123c69b8231e88b}\label{class_uni_rx_1_1_replay_subject_abc6b6e406e0fcb1d6123c69b8231e88b}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!ReplaySubject@{ReplaySubject}}
+\index{ReplaySubject@{ReplaySubject}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReplaySubject()}{ReplaySubject()}\hspace{0.1cm}{\footnotesize\ttfamily [5/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Replay\+Subject}} (\begin{DoxyParamCaption}\item[{Time\+Span}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00043}{43}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_abb97b36b1348be1374ab5d63b51dc36f}\label{class_uni_rx_1_1_replay_subject_abb97b36b1348be1374ab5d63b51dc36f}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!ReplaySubject@{ReplaySubject}}
+\index{ReplaySubject@{ReplaySubject}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReplaySubject()}{ReplaySubject()}\hspace{0.1cm}{\footnotesize\ttfamily [6/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Replay\+Subject}} (\begin{DoxyParamCaption}\item[{Time\+Span}]{window,  }\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}}}]{scheduler }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00048}{48}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_ace22453f6698ae2ef0f63588f482c54f}\label{class_uni_rx_1_1_replay_subject_ace22453f6698ae2ef0f63588f482c54f}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!ReplaySubject@{ReplaySubject}}
+\index{ReplaySubject@{ReplaySubject}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ReplaySubject()}{ReplaySubject()}\hspace{0.1cm}{\footnotesize\ttfamily [7/7]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.\mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Replay\+Subject}} (\begin{DoxyParamCaption}\item[{int}]{buffer\+Size,  }\item[{Time\+Span}]{window,  }\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}}}]{scheduler }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00054}{54}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_a47175a34a8819ca929b55785c7fcebc3}\label{class_uni_rx_1_1_replay_subject_a47175a34a8819ca929b55785c7fcebc3}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Dispose()}{Dispose()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.Dispose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00192}{192}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_a52e025bf509105999177ea46fb418ecb}\label{class_uni_rx_1_1_replay_subject_a52e025bf509105999177ea46fb418ecb}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!IsRequiredSubscribeOnCurrentThread@{IsRequiredSubscribeOnCurrentThread}}
+\index{IsRequiredSubscribeOnCurrentThread@{IsRequiredSubscribeOnCurrentThread}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{IsRequiredSubscribeOnCurrentThread()}{IsRequiredSubscribeOnCurrentThread()}}
+{\footnotesize\ttfamily bool \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.Is\+Required\+Subscribe\+On\+Current\+Thread (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_optimized_observable_a8a2544c49f3e465df5b8ec4f71c9e699}{Uni\+Rx.\+IOptimized\+Observable$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00208}{208}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_afdf3f7478c5f9954a2e7ce2bcc3d85a0}\label{class_uni_rx_1_1_replay_subject_afdf3f7478c5f9954a2e7ce2bcc3d85a0}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!OnCompleted@{OnCompleted}}
+\index{OnCompleted@{OnCompleted}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnCompleted()}{OnCompleted()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.On\+Completed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Notifies the observer of the end of the sequence. 
+
+\begin{DoxyReturn}{Returns}
+Result returned upon observation of the sequence completion.
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00080}{80}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_a9aadc4a06fdd9e12749834aec7d00ca6}\label{class_uni_rx_1_1_replay_subject_a9aadc4a06fdd9e12749834aec7d00ca6}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!OnError@{OnError}}
+\index{OnError@{OnError}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnError()}{OnError()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.On\+Error (\begin{DoxyParamCaption}\item[{Exception}]{exception }\end{DoxyParamCaption})}
+
+
+
+Notifies the observer that an exception has occurred. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em exception} & The exception that occurred.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result returned upon observation of an error.
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00097}{97}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_a6be0378751b7bcc17f540c2371bf850d}\label{class_uni_rx_1_1_replay_subject_a6be0378751b7bcc17f540c2371bf850d}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!OnNext@{OnNext}}
+\index{OnNext@{OnNext}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{OnNext()}{OnNext()}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.On\+Next (\begin{DoxyParamCaption}\item[{T}]{value }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a79a1f5d172c3764f94517cd901c4f8b2}{Uni\+Rx.\+IObserver$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00117}{117}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+\mbox{\Hypertarget{class_uni_rx_1_1_replay_subject_aa6ecf493d014b9a2788ff68f272433f2}\label{class_uni_rx_1_1_replay_subject_aa6ecf493d014b9a2788ff68f272433f2}} 
+\index{UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}!Subscribe@{Subscribe}}
+\index{Subscribe@{Subscribe}!UniRx.ReplaySubject$<$ T $>$@{UniRx.ReplaySubject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Subscribe()}{Subscribe()}}
+{\footnotesize\ttfamily IDisposable \mbox{\hyperlink{class_uni_rx_1_1_replay_subject}{Uni\+Rx.\+Replay\+Subject}}$<$ T $>$.Subscribe (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}$<$ T $>$}]{observer }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_uni_rx_1_1_i_observable_a81a2566f451cf1ddc8de265d019d1b88}{Uni\+Rx.\+IObservable$<$ T $>$}}.
+
+
+
+Definition at line \mbox{\hyperlink{_replay_subject_8cs_source_l00135}{135}} of file \mbox{\hyperlink{_replay_subject_8cs_source}{Replay\+Subject.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Uni\+Rx/\+Scripts/\+Subjects/\mbox{\hyperlink{_replay_subject_8cs}{Replay\+Subject.\+cs}}\end{DoxyCompactItemize}

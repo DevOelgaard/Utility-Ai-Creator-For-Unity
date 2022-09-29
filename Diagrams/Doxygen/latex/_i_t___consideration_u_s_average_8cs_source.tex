@@ -1,0 +1,108 @@
+\hypertarget{_i_t___consideration_u_s_average_8cs_source}{}\doxysection{IT\+\_\+\+Consideration\+USAverage.\+cs}
+\label{_i_t___consideration_u_s_average_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/IntegrationTests/CalculateUtility/IT\_ConsiderationUSAverage.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/IntegrationTests/CalculateUtility/IT\_ConsiderationUSAverage.cs}}
+\mbox{\hyperlink{_i_t___consideration_u_s_average_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00001}00001 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00002}00002 \textcolor{keyword}{using }NUnit.Framework;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00003}00003 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00004}00004 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_mocks}{Mocks}};}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00006}\mbox{\hyperlink{namespace_integration_tests}{00006}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_integration_tests_1_1_calculate_utility}{IntegrationTests.CalculateUtility}}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00008}00008     [TestFixture]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00009}\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average}{00009}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average}{IT\_01ConsiderationUSAverage}}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00010}00010     \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00011}00011         \textcolor{keyword}{private} \mbox{\hyperlink{class_us_average_scorer}{UsAverageScorer}} uut;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00013}00013         [\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_a7bb97707aeddbdde37485b6e87e42723}{SetUp}}]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00014}\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_a7bb97707aeddbdde37485b6e87e42723}{00014}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_a7bb97707aeddbdde37485b6e87e42723}{SetUp}}()}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00015}00015         \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00016}00016             uut = \textcolor{keyword}{new} \mbox{\hyperlink{class_us_average_scorer}{UsAverageScorer}}();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00017}00017         \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00019}00019         [TestCase(1, 1)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00020}00020         [TestCase(0.5f, 15)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00021}00021         [TestCase(0.8f, 15)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00022}00022         [TestCase(0.9f, 15)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00023}\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_a595946fe1122f688cb748733cd90cbad}{00023}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_a595946fe1122f688cb748733cd90cbad}{CalculateUtility\_MultipleSameScores\_ReturnsInput}}(\textcolor{keywordtype}{float} calculatedScore, \textcolor{keywordtype}{int} numberOfConsiderations)}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00024}00024         \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00025}00025             var considerations = CreateUniformConsiderations(numberOfConsiderations, calculatedScore);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00027}00027             var result = uut.\mbox{\hyperlink{class_us_average_scorer_a183656db544322beec4880b79a8a5433}{CalculateUtility}}(considerations, \textcolor{keywordflow}{default});}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00029}00029             Assert.AreEqual(Math.Round(calculatedScore, 2), Math.Round(result, 2));}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00030}00030         \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00034}00034         [Test]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00035}\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_a963c2397152f19cb968e7ac8f2906ad2}{00035}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_a963c2397152f19cb968e7ac8f2906ad2}{CalculateUtility\_OneIsZero\_ReturnsZero}}()}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00036}00036         \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00037}00037             var considerations = CreateUniformConsiderations(10, 0.5f);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00038}00038             var zeroConsideration = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t}{Stub\_Consideration\_IT}}(0, \textcolor{keyword}{new} List<Parameter>());}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00039}00039             zeroConsideration.ReturnValue = 0;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00040}00040             considerations.Add(zeroConsideration);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00042}00042             var result = uut.\mbox{\hyperlink{class_us_average_scorer_a183656db544322beec4880b79a8a5433}{CalculateUtility}}(considerations, \textcolor{keywordflow}{default});}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00044}00044             Assert.AreEqual(0, result);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00045}00045         \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00047}00047         [Test]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00048}\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_a7cec7cc4a6fcd148e5f20143555d38a4}{00048}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_a7cec7cc4a6fcd148e5f20143555d38a4}{CalculateUtility\_ValuesBelovZero\_ReturnsZeroOrLower}}()}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00049}00049         \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00050}00050             var considerations = CreateUniformConsiderations(10, -\/2);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00052}00052             var result = uut.\mbox{\hyperlink{class_us_average_scorer_a183656db544322beec4880b79a8a5433}{CalculateUtility}}(considerations, \textcolor{keywordflow}{default});}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00054}00054             Assert.That(result <= 0);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00055}00055         \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00057}00057         [Test]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00058}\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_a0873f76df50abc4962e6c9ace3098813}{00058}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_a0873f76df50abc4962e6c9ace3098813}{CalculateUtility\_NoConsiderations\_ReturnsZeroOrLower}}()}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00059}00059         \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00060}00060             var considerations = \textcolor{keyword}{new} List<Consideration>();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00062}00062             var result = uut.\mbox{\hyperlink{class_us_average_scorer_a183656db544322beec4880b79a8a5433}{CalculateUtility}}(considerations, \textcolor{keywordflow}{default});}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00064}00064             Assert.That(result <= 0);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00065}00065         \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00067}00067         [TestCase(0.1f, 0.2f, 0.3f, 0.2f)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00068}00068         [TestCase(0.2f, 0.4f, 0.6f, 0.4f)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00069}00069         [TestCase(0.1f, 0.5f, 0.9f, 0.5f)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00070}00070         [TestCase(1f, 0.1f, 0.1f, 0.4f)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00071}\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_aef7c017d8435cf1afaf955e95c8c36dc}{00071}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t__01_consideration_u_s_average_aef7c017d8435cf1afaf955e95c8c36dc}{CalculateUtility\_DifferentInput\_ReturnsExpected}}(\textcolor{keywordtype}{float} a, \textcolor{keywordtype}{float} b, \textcolor{keywordtype}{float} c, \textcolor{keywordtype}{float} expected)}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00072}00072         \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00073}00073             var considerations = \textcolor{keyword}{new} List<Consideration>();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00074}00074             var m1 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t}{Stub\_Consideration\_IT}}(a, \textcolor{keyword}{new} List<Parameter>());}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00075}00075             var m2 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t}{Stub\_Consideration\_IT}}(b, \textcolor{keyword}{new} List<Parameter>());}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00076}00076             var m3 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t}{Stub\_Consideration\_IT}}(c, \textcolor{keyword}{new} List<Parameter>());}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00078}00078             considerations.Add(m1);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00079}00079             considerations.Add(m2);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00080}00080             considerations.Add(m3);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00082}00082             var result = uut.\mbox{\hyperlink{class_us_average_scorer_a183656db544322beec4880b79a8a5433}{CalculateUtility}}(considerations, \textcolor{keywordflow}{default});}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00084}00084             Assert.AreEqual(expected, result);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00085}00085         \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00087}00087         \textcolor{keyword}{private} List<Consideration> CreateUniformConsiderations(\textcolor{keywordtype}{int} numberOfConsiderations, \textcolor{keywordtype}{float} returnValue,}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00088}00088             \textcolor{keywordtype}{float} min = 0f, \textcolor{keywordtype}{float} max = 1f)}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00089}00089         \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00090}00090             var result = \textcolor{keyword}{new} List<Consideration>();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00091}00091             \textcolor{keywordflow}{for} (var i = 0; i < numberOfConsiderations; i++)}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00092}00092             \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00093}00093                 var consideration = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t}{Stub\_Consideration\_IT}}(returnValue, \textcolor{keyword}{new} List<Parameter>());}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00094}00094                 consideration.MinFloat.Value = min;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00095}00095                 consideration.MaxFloat.Value = max;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00096}00096                 result.Add(consideration);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00097}00097             \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00099}00099             \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00100}00100         \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00101}00101     \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_u_s_average_8cs_source_l00102}00102 \}}
+
+\end{DoxyCode}

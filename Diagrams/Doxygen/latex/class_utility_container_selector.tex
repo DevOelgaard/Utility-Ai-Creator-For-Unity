@@ -1,0 +1,203 @@
+\hypertarget{class_utility_container_selector}{}\doxysection{Utility\+Container\+Selector Class Reference}
+\label{class_utility_container_selector}\index{UtilityContainerSelector@{UtilityContainerSelector}}
+Inheritance diagram for Utility\+Container\+Selector\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_utility_container_selector}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_utility_container_selector_a0a4a481eb705ed9c2f4b4c5be3d70803}{Add\+Parameter}} (\mbox{\hyperlink{class_parameter}{Parameter}} param)
+\item 
+abstract \mbox{\hyperlink{class_bucket}{Bucket}} \mbox{\hyperlink{class_utility_container_selector_a7b1818d050304feb5e1d3521764bc528}{Get\+Best\+Utility\+Container}} (List$<$ \mbox{\hyperlink{class_bucket}{Bucket}} $>$ containers, \mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}} context)
+\item 
+abstract \mbox{\hyperlink{class_decision}{Decision}} \mbox{\hyperlink{class_utility_container_selector_a46f4aad6164cfee909a46e4dfc251894}{Get\+Best\+Utility\+Container}} (List$<$ \mbox{\hyperlink{class_decision}{Decision}} $>$ containers, \mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}} context)
+\item 
+abstract string \mbox{\hyperlink{class_utility_container_selector_a2dfcf89b2aeb9853bbd3ae530bdc13ed}{Get\+Description}} ()
+\item 
+abstract string \mbox{\hyperlink{class_utility_container_selector_a75889076feb035ef8d5a2731e3c6e4ce}{Get\+Name}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+readonly \mbox{\hyperlink{class_parameter_container}{Parameter\+Container}} \mbox{\hyperlink{class_utility_container_selector_aedd66221ef2ae1d9d896c74ed37a2c69}{Parameter\+Container}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_utility_container_selector_a6cd0cde573c6aed45e778eba37282996}{Utility\+Container\+Selector}} ()
+\item 
+\mbox{\hyperlink{class_parameter}{Parameter}} \mbox{\hyperlink{class_utility_container_selector_a9663a61b560dea741124e88eed0e26de}{Get\+Parameter}} (string parameter\+Name)
+\item 
+abstract List$<$ \mbox{\hyperlink{class_parameter}{Parameter}} $>$ \mbox{\hyperlink{class_utility_container_selector_ad70f3f8db136620d271d15d1c769e4d4}{Get\+Parameters}} ()
+\item 
+override string \mbox{\hyperlink{class_utility_container_selector_a6a069f85996268974c7c91ec8c952b11}{Get\+File\+Name}} ()
+\item 
+override async Task \mbox{\hyperlink{class_utility_container_selector_aaa6b2717f367e6d9f3bd9f093dbebad6}{Restore\+Internal\+Async}} (\mbox{\hyperlink{class_restore_state}{Restore\+State}} s, bool restore\+Debug=false)
+\item 
+override async Task \mbox{\hyperlink{class_utility_container_selector_ad80265e9f7c5ef03596670ec39dd5b4f}{Internal\+Save\+To\+File}} (string path, \mbox{\hyperlink{interface_i_persister}{IPersister}} persister, \mbox{\hyperlink{class_restore_state}{Restore\+State}} state)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_utility_container_selector_8cs_source_l00008}{8}} of file \mbox{\hyperlink{_utility_container_selector_8cs_source}{Utility\+Container\+Selector.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_utility_container_selector_a6cd0cde573c6aed45e778eba37282996}\label{class_utility_container_selector_a6cd0cde573c6aed45e778eba37282996}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!UtilityContainerSelector@{UtilityContainerSelector}}
+\index{UtilityContainerSelector@{UtilityContainerSelector}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{UtilityContainerSelector()}{UtilityContainerSelector()}}
+{\footnotesize\ttfamily Utility\+Container\+Selector.\+Utility\+Container\+Selector (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_utility_container_selector_8cs_source_l00012}{12}} of file \mbox{\hyperlink{_utility_container_selector_8cs_source}{Utility\+Container\+Selector.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_utility_container_selector_a0a4a481eb705ed9c2f4b4c5be3d70803}\label{class_utility_container_selector_a0a4a481eb705ed9c2f4b4c5be3d70803}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!AddParameter@{AddParameter}}
+\index{AddParameter@{AddParameter}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{AddParameter()}{AddParameter()}}
+{\footnotesize\ttfamily void Utility\+Container\+Selector.\+Add\+Parameter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_parameter}{Parameter}}}]{param }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_utility_container_selector_8cs_source_l00016}{16}} of file \mbox{\hyperlink{_utility_container_selector_8cs_source}{Utility\+Container\+Selector.\+cs}}.
+
+\mbox{\Hypertarget{class_utility_container_selector_a7b1818d050304feb5e1d3521764bc528}\label{class_utility_container_selector_a7b1818d050304feb5e1d3521764bc528}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!GetBestUtilityContainer@{GetBestUtilityContainer}}
+\index{GetBestUtilityContainer@{GetBestUtilityContainer}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{GetBestUtilityContainer()}{GetBestUtilityContainer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily abstract \mbox{\hyperlink{class_bucket}{Bucket}} Utility\+Container\+Selector.\+Get\+Best\+Utility\+Container (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{class_bucket}{Bucket}} $>$}]{containers,  }\item[{\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}}}]{context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_u_c_s_highest_score_a52e9ad1551a5147996765adeb0597c24}{UCSHighest\+Score}}, and \mbox{\hyperlink{class_mocks_1_1_mock___utility_container_selector_ad3f6a87d27dbaa95c1edabc0e2527fd7}{Mocks.\+Mock\+\_\+\+Utility\+Container\+Selector}}.
+
+\mbox{\Hypertarget{class_utility_container_selector_a46f4aad6164cfee909a46e4dfc251894}\label{class_utility_container_selector_a46f4aad6164cfee909a46e4dfc251894}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!GetBestUtilityContainer@{GetBestUtilityContainer}}
+\index{GetBestUtilityContainer@{GetBestUtilityContainer}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{GetBestUtilityContainer()}{GetBestUtilityContainer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily abstract \mbox{\hyperlink{class_decision}{Decision}} Utility\+Container\+Selector.\+Get\+Best\+Utility\+Container (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{class_decision}{Decision}} $>$}]{containers,  }\item[{\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}}}]{context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_mocks_1_1_mock___utility_container_selector_a3a1b427085e5212a8c40f226a780a420}{Mocks.\+Mock\+\_\+\+Utility\+Container\+Selector}}, and \mbox{\hyperlink{class_u_c_s_highest_score_ab99a699d10718feb20fb3bf81c594299}{UCSHighest\+Score}}.
+
+\mbox{\Hypertarget{class_utility_container_selector_a2dfcf89b2aeb9853bbd3ae530bdc13ed}\label{class_utility_container_selector_a2dfcf89b2aeb9853bbd3ae530bdc13ed}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!GetDescription@{GetDescription}}
+\index{GetDescription@{GetDescription}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{GetDescription()}{GetDescription()}}
+{\footnotesize\ttfamily abstract string Utility\+Container\+Selector.\+Get\+Description (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implements \mbox{\hyperlink{interface_i_identifier_a54eb8da3073e7d545c03519dc60b70ec}{IIdentifier}}.
+
+
+
+Implemented in \mbox{\hyperlink{class_u_c_s_highest_score_a7939de3ed0f19fb97593a9a88e128813}{UCSHighest\+Score}}, and \mbox{\hyperlink{class_mocks_1_1_mock___utility_container_selector_aa2849d2d60bc1e0173a6f77e5bf8571e}{Mocks.\+Mock\+\_\+\+Utility\+Container\+Selector}}.
+
+\mbox{\Hypertarget{class_utility_container_selector_a6a069f85996268974c7c91ec8c952b11}\label{class_utility_container_selector_a6a069f85996268974c7c91ec8c952b11}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!GetFileName@{GetFileName}}
+\index{GetFileName@{GetFileName}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{GetFileName()}{GetFileName()}}
+{\footnotesize\ttfamily override string Utility\+Container\+Selector.\+Get\+File\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_restore_able_a393024c90e2fc2024076dd1fa6fc82bb}{Restore\+Able}}.
+
+
+
+Definition at line \mbox{\hyperlink{_utility_container_selector_8cs_source_l00040}{40}} of file \mbox{\hyperlink{_utility_container_selector_8cs_source}{Utility\+Container\+Selector.\+cs}}.
+
+\mbox{\Hypertarget{class_utility_container_selector_a75889076feb035ef8d5a2731e3c6e4ce}\label{class_utility_container_selector_a75889076feb035ef8d5a2731e3c6e4ce}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!GetName@{GetName}}
+\index{GetName@{GetName}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{GetName()}{GetName()}}
+{\footnotesize\ttfamily abstract string Utility\+Container\+Selector.\+Get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implements \mbox{\hyperlink{interface_i_identifier_a8a9c019d04f7a2dccb14a8d8dc5cc05f}{IIdentifier}}.
+
+
+
+Implemented in \mbox{\hyperlink{class_u_c_s_highest_score_a0ab8c7431ee51c51d8f8b559ac171fb1}{UCSHighest\+Score}}, and \mbox{\hyperlink{class_mocks_1_1_mock___utility_container_selector_a663b093f74023dae5181353571ac2304}{Mocks.\+Mock\+\_\+\+Utility\+Container\+Selector}}.
+
+\mbox{\Hypertarget{class_utility_container_selector_a9663a61b560dea741124e88eed0e26de}\label{class_utility_container_selector_a9663a61b560dea741124e88eed0e26de}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!GetParameter@{GetParameter}}
+\index{GetParameter@{GetParameter}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{GetParameter()}{GetParameter()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_parameter}{Parameter}} Utility\+Container\+Selector.\+Get\+Parameter (\begin{DoxyParamCaption}\item[{string}]{parameter\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_utility_container_selector_8cs_source_l00021}{21}} of file \mbox{\hyperlink{_utility_container_selector_8cs_source}{Utility\+Container\+Selector.\+cs}}.
+
+\mbox{\Hypertarget{class_utility_container_selector_ad70f3f8db136620d271d15d1c769e4d4}\label{class_utility_container_selector_ad70f3f8db136620d271d15d1c769e4d4}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!GetParameters@{GetParameters}}
+\index{GetParameters@{GetParameters}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{GetParameters()}{GetParameters()}}
+{\footnotesize\ttfamily abstract List$<$ \mbox{\hyperlink{class_parameter}{Parameter}} $>$ Utility\+Container\+Selector.\+Get\+Parameters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_u_c_s_highest_score_aad1ab7de0af5136bfcbf81a237e5c3da}{UCSHighest\+Score}}, and \mbox{\hyperlink{class_mocks_1_1_mock___utility_container_selector_a2118c105bfd30d22b0f29ee601f90ec5}{Mocks.\+Mock\+\_\+\+Utility\+Container\+Selector}}.
+
+\mbox{\Hypertarget{class_utility_container_selector_ad80265e9f7c5ef03596670ec39dd5b4f}\label{class_utility_container_selector_ad80265e9f7c5ef03596670ec39dd5b4f}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!InternalSaveToFile@{InternalSaveToFile}}
+\index{InternalSaveToFile@{InternalSaveToFile}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{InternalSaveToFile()}{InternalSaveToFile()}}
+{\footnotesize\ttfamily override async Task Utility\+Container\+Selector.\+Internal\+Save\+To\+File (\begin{DoxyParamCaption}\item[{string}]{path,  }\item[{\mbox{\hyperlink{interface_i_persister}{IPersister}}}]{persister,  }\item[{\mbox{\hyperlink{class_restore_state}{Restore\+State}}}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_restore_able_a5689d8b83d65ba48c726f7b71f51de84}{Restore\+Able}}.
+
+
+
+Definition at line \mbox{\hyperlink{_utility_container_selector_8cs_source_l00055}{55}} of file \mbox{\hyperlink{_utility_container_selector_8cs_source}{Utility\+Container\+Selector.\+cs}}.
+
+\mbox{\Hypertarget{class_utility_container_selector_aaa6b2717f367e6d9f3bd9f093dbebad6}\label{class_utility_container_selector_aaa6b2717f367e6d9f3bd9f093dbebad6}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!RestoreInternalAsync@{RestoreInternalAsync}}
+\index{RestoreInternalAsync@{RestoreInternalAsync}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{RestoreInternalAsync()}{RestoreInternalAsync()}}
+{\footnotesize\ttfamily override async Task Utility\+Container\+Selector.\+Restore\+Internal\+Async (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_restore_state}{Restore\+State}}}]{s,  }\item[{bool}]{restore\+Debug = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_restore_able_a4bb68a4eca4fab8e1f04c7bab703b747}{Restore\+Able}}.
+
+
+
+Definition at line \mbox{\hyperlink{_utility_container_selector_8cs_source_l00045}{45}} of file \mbox{\hyperlink{_utility_container_selector_8cs_source}{Utility\+Container\+Selector.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_utility_container_selector_aedd66221ef2ae1d9d896c74ed37a2c69}\label{class_utility_container_selector_aedd66221ef2ae1d9d896c74ed37a2c69}} 
+\index{UtilityContainerSelector@{UtilityContainerSelector}!ParameterContainer@{ParameterContainer}}
+\index{ParameterContainer@{ParameterContainer}!UtilityContainerSelector@{UtilityContainerSelector}}
+\doxysubsubsection{\texorpdfstring{ParameterContainer}{ParameterContainer}}
+{\footnotesize\ttfamily readonly \mbox{\hyperlink{class_parameter_container}{Parameter\+Container}} Utility\+Container\+Selector.\+Parameter\+Container}
+
+
+
+Definition at line \mbox{\hyperlink{_utility_container_selector_8cs_source_l00010}{10}} of file \mbox{\hyperlink{_utility_container_selector_8cs_source}{Utility\+Container\+Selector.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Runtime/\+Services/\+Scorers/\+Utility\+Container\+Selector/\mbox{\hyperlink{_utility_container_selector_8cs}{Utility\+Container\+Selector.\+cs}}\end{DoxyCompactItemize}

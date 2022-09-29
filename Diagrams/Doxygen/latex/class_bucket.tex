@@ -1,0 +1,197 @@
+\hypertarget{class_bucket}{}\doxysection{Bucket Class Reference}
+\label{class_bucket}\index{Bucket@{Bucket}}
+Inheritance diagram for Bucket\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_bucket}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_bucket_aee50046b627111db2e978e83766cec1d}{Bucket}} ()
+\item 
+override void \mbox{\hyperlink{class_bucket_ac302375c6e881ee5873ec35350192ee6}{Set\+Parent}} (\mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} parent, int index\+In\+Parent)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_parameter}{Parameter}} \mbox{\hyperlink{class_bucket_a583db20a61506e3527ccd93453ad7270}{Weight}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override \mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} \mbox{\hyperlink{class_bucket_af5a4d65f2d0dc4d21c9fb5d0d1ea75c5}{Internal\+Clone}} ()
+\item 
+override float \mbox{\hyperlink{class_bucket_a25de3309fb9288be0b35a349c0ae07b2}{Calculate\+Utility}} (\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}} context)
+\item 
+override void \mbox{\hyperlink{class_bucket_a726d6e4fd6098e456c98d1b2aa1bcfec}{Update\+Info}} ()
+\item 
+override async Task \mbox{\hyperlink{class_bucket_af8709210e586397254e08a3e7a72f563}{Restore\+Internal\+Async}} (\mbox{\hyperlink{class_restore_state}{Restore\+State}} s, bool restore\+Debug=false)
+\item 
+override void \mbox{\hyperlink{class_bucket_a9c512f680d98a13c3ef2bf02d255cc83}{Clear\+Subscriptions}} ()
+\item 
+override async Task \mbox{\hyperlink{class_bucket_a07c3dc35a0be4b09f27f5bef1e03c994}{Internal\+Save\+To\+File}} (string path, \mbox{\hyperlink{interface_i_persister}{IPersister}} persister, \mbox{\hyperlink{class_restore_state}{Restore\+State}} state)
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_name_safe}{Reactive\+List\+Name\+Safe}}$<$ \mbox{\hyperlink{class_decision}{Decision}} $>$ \mbox{\hyperlink{class_bucket_a93047f4e08b186952b35ac44c55ed2d3}{Decisions}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_bucket_8cs_source_l00012}{12}} of file \mbox{\hyperlink{_bucket_8cs_source}{Bucket.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_bucket_aee50046b627111db2e978e83766cec1d}\label{class_bucket_aee50046b627111db2e978e83766cec1d}} 
+\index{Bucket@{Bucket}!Bucket@{Bucket}}
+\index{Bucket@{Bucket}!Bucket@{Bucket}}
+\doxysubsubsection{\texorpdfstring{Bucket()}{Bucket()}}
+{\footnotesize\ttfamily Bucket.\+Bucket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_bucket_8cs_source_l00033}{33}} of file \mbox{\hyperlink{_bucket_8cs_source}{Bucket.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_bucket_a25de3309fb9288be0b35a349c0ae07b2}\label{class_bucket_a25de3309fb9288be0b35a349c0ae07b2}} 
+\index{Bucket@{Bucket}!CalculateUtility@{CalculateUtility}}
+\index{CalculateUtility@{CalculateUtility}!Bucket@{Bucket}}
+\doxysubsubsection{\texorpdfstring{CalculateUtility()}{CalculateUtility()}}
+{\footnotesize\ttfamily override float Bucket.\+Calculate\+Utility (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}}}]{context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_utility_container_a74f4cc35108ee40ec3e299e2f81d8730}{Utility\+Container}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{class_mocks_1_1_mock___bucket_afaf100e72b12a70906b2d745dc1057d0}{Mocks.\+Mock\+\_\+\+Bucket}}.
+
+
+
+Definition at line \mbox{\hyperlink{_bucket_8cs_source_l00060}{60}} of file \mbox{\hyperlink{_bucket_8cs_source}{Bucket.\+cs}}.
+
+\mbox{\Hypertarget{class_bucket_a9c512f680d98a13c3ef2bf02d255cc83}\label{class_bucket_a9c512f680d98a13c3ef2bf02d255cc83}} 
+\index{Bucket@{Bucket}!ClearSubscriptions@{ClearSubscriptions}}
+\index{ClearSubscriptions@{ClearSubscriptions}!Bucket@{Bucket}}
+\doxysubsubsection{\texorpdfstring{ClearSubscriptions()}{ClearSubscriptions()}}
+{\footnotesize\ttfamily override void Bucket.\+Clear\+Subscriptions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_utility_container_a56559115473546b0903b6a776df0e130}{Utility\+Container}}.
+
+
+
+Definition at line \mbox{\hyperlink{_bucket_8cs_source_l00157}{157}} of file \mbox{\hyperlink{_bucket_8cs_source}{Bucket.\+cs}}.
+
+\mbox{\Hypertarget{class_bucket_af5a4d65f2d0dc4d21c9fb5d0d1ea75c5}\label{class_bucket_af5a4d65f2d0dc4d21c9fb5d0d1ea75c5}} 
+\index{Bucket@{Bucket}!InternalClone@{InternalClone}}
+\index{InternalClone@{InternalClone}!Bucket@{Bucket}}
+\doxysubsubsection{\texorpdfstring{InternalClone()}{InternalClone()}}
+{\footnotesize\ttfamily override \mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} Bucket.\+Internal\+Clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_ai_object_model_af71d2ef63ca2a5bc7dfdcb65b5f4ecdd}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_bucket_8cs_source_l00042}{42}} of file \mbox{\hyperlink{_bucket_8cs_source}{Bucket.\+cs}}.
+
+\mbox{\Hypertarget{class_bucket_a07c3dc35a0be4b09f27f5bef1e03c994}\label{class_bucket_a07c3dc35a0be4b09f27f5bef1e03c994}} 
+\index{Bucket@{Bucket}!InternalSaveToFile@{InternalSaveToFile}}
+\index{InternalSaveToFile@{InternalSaveToFile}!Bucket@{Bucket}}
+\doxysubsubsection{\texorpdfstring{InternalSaveToFile()}{InternalSaveToFile()}}
+{\footnotesize\ttfamily override async Task Bucket.\+Internal\+Save\+To\+File (\begin{DoxyParamCaption}\item[{string}]{path,  }\item[{\mbox{\hyperlink{interface_i_persister}{IPersister}}}]{persister,  }\item[{\mbox{\hyperlink{class_restore_state}{Restore\+State}}}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_restore_able_a5689d8b83d65ba48c726f7b71f51de84}{Restore\+Able}}.
+
+
+
+Definition at line \mbox{\hyperlink{_bucket_8cs_source_l00163}{163}} of file \mbox{\hyperlink{_bucket_8cs_source}{Bucket.\+cs}}.
+
+\mbox{\Hypertarget{class_bucket_af8709210e586397254e08a3e7a72f563}\label{class_bucket_af8709210e586397254e08a3e7a72f563}} 
+\index{Bucket@{Bucket}!RestoreInternalAsync@{RestoreInternalAsync}}
+\index{RestoreInternalAsync@{RestoreInternalAsync}!Bucket@{Bucket}}
+\doxysubsubsection{\texorpdfstring{RestoreInternalAsync()}{RestoreInternalAsync()}}
+{\footnotesize\ttfamily override async Task Bucket.\+Restore\+Internal\+Async (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_restore_state}{Restore\+State}}}]{s,  }\item[{bool}]{restore\+Debug = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_ai_object_model_a2cd00022a3a7876e7cb5fb4a6449b1cf}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_bucket_8cs_source_l00116}{116}} of file \mbox{\hyperlink{_bucket_8cs_source}{Bucket.\+cs}}.
+
+\mbox{\Hypertarget{class_bucket_ac302375c6e881ee5873ec35350192ee6}\label{class_bucket_ac302375c6e881ee5873ec35350192ee6}} 
+\index{Bucket@{Bucket}!SetParent@{SetParent}}
+\index{SetParent@{SetParent}!Bucket@{Bucket}}
+\doxysubsubsection{\texorpdfstring{SetParent()}{SetParent()}}
+{\footnotesize\ttfamily override void Bucket.\+Set\+Parent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}}}]{parent,  }\item[{int}]{index\+In\+Parent }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_utility_container_a4fdfdf2345c513a1602e5c98128b2709}{Utility\+Container}}.
+
+
+
+Definition at line \mbox{\hyperlink{_bucket_8cs_source_l00077}{77}} of file \mbox{\hyperlink{_bucket_8cs_source}{Bucket.\+cs}}.
+
+\mbox{\Hypertarget{class_bucket_a726d6e4fd6098e456c98d1b2aa1bcfec}\label{class_bucket_a726d6e4fd6098e456c98d1b2aa1bcfec}} 
+\index{Bucket@{Bucket}!UpdateInfo@{UpdateInfo}}
+\index{UpdateInfo@{UpdateInfo}!Bucket@{Bucket}}
+\doxysubsubsection{\texorpdfstring{UpdateInfo()}{UpdateInfo()}}
+{\footnotesize\ttfamily override void Bucket.\+Update\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_utility_container_aa95775725d0fb7120429eaed8341c092}{Utility\+Container}}.
+
+
+
+Definition at line \mbox{\hyperlink{_bucket_8cs_source_l00091}{91}} of file \mbox{\hyperlink{_bucket_8cs_source}{Bucket.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_bucket_a583db20a61506e3527ccd93453ad7270}\label{class_bucket_a583db20a61506e3527ccd93453ad7270}} 
+\index{Bucket@{Bucket}!Weight@{Weight}}
+\index{Weight@{Weight}!Bucket@{Bucket}}
+\doxysubsubsection{\texorpdfstring{Weight}{Weight}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_parameter}{Parameter}} Bucket.\+Weight}
+
+
+
+Definition at line \mbox{\hyperlink{_bucket_8cs_source_l00031}{31}} of file \mbox{\hyperlink{_bucket_8cs_source}{Bucket.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_bucket_a93047f4e08b186952b35ac44c55ed2d3}\label{class_bucket_a93047f4e08b186952b35ac44c55ed2d3}} 
+\index{Bucket@{Bucket}!Decisions@{Decisions}}
+\index{Decisions@{Decisions}!Bucket@{Bucket}}
+\doxysubsubsection{\texorpdfstring{Decisions}{Decisions}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_name_safe}{Reactive\+List\+Name\+Safe}}$<$\mbox{\hyperlink{class_decision}{Decision}}$>$ Bucket.\+Decisions\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Definition at line \mbox{\hyperlink{_bucket_8cs_source_l00016}{16}} of file \mbox{\hyperlink{_bucket_8cs_source}{Bucket.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Runtime/\+Models/\mbox{\hyperlink{_bucket_8cs}{Bucket.\+cs}}\end{DoxyCompactItemize}

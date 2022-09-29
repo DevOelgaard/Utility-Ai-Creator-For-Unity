@@ -1,0 +1,213 @@
+\hypertarget{class_decision}{}\doxysection{Decision Class Reference}
+\label{class_decision}\index{Decision@{Decision}}
+Inheritance diagram for Decision\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_decision}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_decision_a5194626497eaf57fa72dacbdd7c47aca}{Decision}} ()
+\item 
+override void \mbox{\hyperlink{class_decision_a558e506aa8432c3959c59015af8c900b}{Set\+Parent}} (\mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} parent, int index\+In\+Parent)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_tick_meta_data}{Tick\+Meta\+Data}} \mbox{\hyperlink{class_decision_a2490220aff50b2870f47ba65b9eab687}{Last\+Selected\+Tick\+Meta\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override string \mbox{\hyperlink{class_decision_a9e888ed320746ec7413dabb86287e5bc}{Get\+Name\+Format}} (string name)
+\item 
+override \mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} \mbox{\hyperlink{class_decision_ae990371fedf0d4dfd4177629e622ce67}{Internal\+Clone}} ()
+\item 
+override void \mbox{\hyperlink{class_decision_a0775b4a5ec4c5ea99b54dd2e8397d945}{Update\+Info}} ()
+\item 
+override async Task \mbox{\hyperlink{class_decision_a5e73b3734d0df2e8fab53a4a16d3c531}{Restore\+Internal\+Async}} (\mbox{\hyperlink{class_restore_state}{Restore\+State}} s, bool restore\+Debug=false)
+\item 
+override float \mbox{\hyperlink{class_decision_a34c08dca12b9ebc41859a99c094c06a8}{Calculate\+Utility}} (\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}} context)
+\item 
+override void \mbox{\hyperlink{class_decision_ae22f7de8d1122ae171a725b23f85dd14}{Clear\+Subscriptions}} ()
+\item 
+override async Task \mbox{\hyperlink{class_decision_a0115045a1467d542619c76cf7dc1ab31}{Internal\+Save\+To\+File}} (string path, \mbox{\hyperlink{interface_i_persister}{IPersister}} persister, \mbox{\hyperlink{class_restore_state}{Restore\+State}} state)
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_name_safe}{Reactive\+List\+Name\+Safe}}$<$ \mbox{\hyperlink{class_agent_action}{Agent\+Action}} $>$ \mbox{\hyperlink{class_decision_a5e8d56c69a3c2b2441326e397572abfd}{Agent\+Actions}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00008}{8}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_decision_a5194626497eaf57fa72dacbdd7c47aca}\label{class_decision_a5194626497eaf57fa72dacbdd7c47aca}} 
+\index{Decision@{Decision}!Decision@{Decision}}
+\index{Decision@{Decision}!Decision@{Decision}}
+\doxysubsubsection{\texorpdfstring{Decision()}{Decision()}}
+{\footnotesize\ttfamily Decision.\+Decision (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00040}{40}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_decision_a34c08dca12b9ebc41859a99c094c06a8}\label{class_decision_a34c08dca12b9ebc41859a99c094c06a8}} 
+\index{Decision@{Decision}!CalculateUtility@{CalculateUtility}}
+\index{CalculateUtility@{CalculateUtility}!Decision@{Decision}}
+\doxysubsubsection{\texorpdfstring{CalculateUtility()}{CalculateUtility()}}
+{\footnotesize\ttfamily override float Decision.\+Calculate\+Utility (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}}}]{context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_utility_container_a74f4cc35108ee40ec3e299e2f81d8730}{Utility\+Container}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{class_mocks_1_1_mock___decision_aff1c37a5064aaab09002f27f9c5c8263}{Mocks.\+Mock\+\_\+\+Decision}}.
+
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00134}{134}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+\mbox{\Hypertarget{class_decision_ae22f7de8d1122ae171a725b23f85dd14}\label{class_decision_ae22f7de8d1122ae171a725b23f85dd14}} 
+\index{Decision@{Decision}!ClearSubscriptions@{ClearSubscriptions}}
+\index{ClearSubscriptions@{ClearSubscriptions}!Decision@{Decision}}
+\doxysubsubsection{\texorpdfstring{ClearSubscriptions()}{ClearSubscriptions()}}
+{\footnotesize\ttfamily override void Decision.\+Clear\+Subscriptions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_utility_container_a56559115473546b0903b6a776df0e130}{Utility\+Container}}.
+
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00152}{152}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+\mbox{\Hypertarget{class_decision_a9e888ed320746ec7413dabb86287e5bc}\label{class_decision_a9e888ed320746ec7413dabb86287e5bc}} 
+\index{Decision@{Decision}!GetNameFormat@{GetNameFormat}}
+\index{GetNameFormat@{GetNameFormat}!Decision@{Decision}}
+\doxysubsubsection{\texorpdfstring{GetNameFormat()}{GetNameFormat()}}
+{\footnotesize\ttfamily override string Decision.\+Get\+Name\+Format (\begin{DoxyParamCaption}\item[{string}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_ai_object_model_a6676fc6fd32dc452a688638cbb025513}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00035}{35}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+\mbox{\Hypertarget{class_decision_ae990371fedf0d4dfd4177629e622ce67}\label{class_decision_ae990371fedf0d4dfd4177629e622ce67}} 
+\index{Decision@{Decision}!InternalClone@{InternalClone}}
+\index{InternalClone@{InternalClone}!Decision@{Decision}}
+\doxysubsubsection{\texorpdfstring{InternalClone()}{InternalClone()}}
+{\footnotesize\ttfamily override \mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} Decision.\+Internal\+Clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_ai_object_model_af71d2ef63ca2a5bc7dfdcb65b5f4ecdd}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00047}{47}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+\mbox{\Hypertarget{class_decision_a0115045a1467d542619c76cf7dc1ab31}\label{class_decision_a0115045a1467d542619c76cf7dc1ab31}} 
+\index{Decision@{Decision}!InternalSaveToFile@{InternalSaveToFile}}
+\index{InternalSaveToFile@{InternalSaveToFile}!Decision@{Decision}}
+\doxysubsubsection{\texorpdfstring{InternalSaveToFile()}{InternalSaveToFile()}}
+{\footnotesize\ttfamily override async Task Decision.\+Internal\+Save\+To\+File (\begin{DoxyParamCaption}\item[{string}]{path,  }\item[{\mbox{\hyperlink{interface_i_persister}{IPersister}}}]{persister,  }\item[{\mbox{\hyperlink{class_restore_state}{Restore\+State}}}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_restore_able_a5689d8b83d65ba48c726f7b71f51de84}{Restore\+Able}}.
+
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00158}{158}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+\mbox{\Hypertarget{class_decision_a5e73b3734d0df2e8fab53a4a16d3c531}\label{class_decision_a5e73b3734d0df2e8fab53a4a16d3c531}} 
+\index{Decision@{Decision}!RestoreInternalAsync@{RestoreInternalAsync}}
+\index{RestoreInternalAsync@{RestoreInternalAsync}!Decision@{Decision}}
+\doxysubsubsection{\texorpdfstring{RestoreInternalAsync()}{RestoreInternalAsync()}}
+{\footnotesize\ttfamily override async Task Decision.\+Restore\+Internal\+Async (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_restore_state}{Restore\+State}}}]{s,  }\item[{bool}]{restore\+Debug = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_ai_object_model_a2cd00022a3a7876e7cb5fb4a6449b1cf}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00107}{107}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+\mbox{\Hypertarget{class_decision_a558e506aa8432c3959c59015af8c900b}\label{class_decision_a558e506aa8432c3959c59015af8c900b}} 
+\index{Decision@{Decision}!SetParent@{SetParent}}
+\index{SetParent@{SetParent}!Decision@{Decision}}
+\doxysubsubsection{\texorpdfstring{SetParent()}{SetParent()}}
+{\footnotesize\ttfamily override void Decision.\+Set\+Parent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}}}]{parent,  }\item[{int}]{index\+In\+Parent }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_utility_container_a4fdfdf2345c513a1602e5c98128b2709}{Utility\+Container}}.
+
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00065}{65}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+\mbox{\Hypertarget{class_decision_a0775b4a5ec4c5ea99b54dd2e8397d945}\label{class_decision_a0775b4a5ec4c5ea99b54dd2e8397d945}} 
+\index{Decision@{Decision}!UpdateInfo@{UpdateInfo}}
+\index{UpdateInfo@{UpdateInfo}!Decision@{Decision}}
+\doxysubsubsection{\texorpdfstring{UpdateInfo()}{UpdateInfo()}}
+{\footnotesize\ttfamily override void Decision.\+Update\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_utility_container_aa95775725d0fb7120429eaed8341c092}{Utility\+Container}}.
+
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00079}{79}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_decision_a2490220aff50b2870f47ba65b9eab687}\label{class_decision_a2490220aff50b2870f47ba65b9eab687}} 
+\index{Decision@{Decision}!LastSelectedTickMetaData@{LastSelectedTickMetaData}}
+\index{LastSelectedTickMetaData@{LastSelectedTickMetaData}!Decision@{Decision}}
+\doxysubsubsection{\texorpdfstring{LastSelectedTickMetaData}{LastSelectedTickMetaData}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_tick_meta_data}{Tick\+Meta\+Data}} Decision.\+Last\+Selected\+Tick\+Meta\+Data}
+
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00012}{12}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_decision_a5e8d56c69a3c2b2441326e397572abfd}\label{class_decision_a5e8d56c69a3c2b2441326e397572abfd}} 
+\index{Decision@{Decision}!AgentActions@{AgentActions}}
+\index{AgentActions@{AgentActions}!Decision@{Decision}}
+\doxysubsubsection{\texorpdfstring{AgentActions}{AgentActions}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_name_safe}{Reactive\+List\+Name\+Safe}}$<$\mbox{\hyperlink{class_agent_action}{Agent\+Action}}$>$ Decision.\+Agent\+Actions\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Definition at line \mbox{\hyperlink{_decision_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_decision_8cs_source}{Decision.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Runtime/\+Models/\+Decisions/\mbox{\hyperlink{_decision_8cs}{Decision.\+cs}}\end{DoxyCompactItemize}

@@ -1,0 +1,29 @@
+\hypertarget{_response_curve_log_8cs_source}{}\doxysection{Response\+Curve\+Log.\+cs}
+\label{_response_curve_log_8cs_source}\index{Editor/Models/Logger/ResponseCurveLog.cs@{Editor/Models/Logger/ResponseCurveLog.cs}}
+\mbox{\hyperlink{_response_curve_log_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00007}00007 \textcolor{keyword}{internal} \textcolor{keyword}{class }ResponseCurveLog: AiObjectLog}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00009}00009     \textcolor{keyword}{public} List<ResponseFunctionLog> ResponseFunctions;}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00011}00011     \textcolor{keyword}{internal} \textcolor{keyword}{static} ResponseCurveLog GetDebug(\mbox{\hyperlink{class_response_curve}{ResponseCurve}} responseCurve, \textcolor{keywordtype}{int} tick)}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00012}00012     \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00013}00013         var result = \textcolor{keyword}{new} ResponseCurveLog();}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00014}00014         result = SetBasics(result, responseCurve, tick) as ResponseCurveLog;}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00015}00015         result.ResponseFunctions = \textcolor{keyword}{new} List<ResponseFunctionLog>();}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00016}00016         \textcolor{keywordflow}{foreach}(var rF \textcolor{keywordflow}{in} responseCurve.\mbox{\hyperlink{class_response_curve_aabeffab78706fb570fcb46836bf9dae8}{ResponseFunctions}})}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00017}00017         \{}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00018}00018             result.ResponseFunctions.Add(ResponseFunctionLog.GetDebug(rF, tick));}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00019}00019         \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00021}00021         \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00022}00022     \}}
+\DoxyCodeLine{\Hypertarget{_response_curve_log_8cs_source_l00023}00023 \}}
+
+\end{DoxyCode}

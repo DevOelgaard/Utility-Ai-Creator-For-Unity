@@ -1,0 +1,292 @@
+\hypertarget{_observable_8cs_source}{}\doxysection{Observable.\+cs}
+\label{_observable_8cs_source}\index{Editor/UniRx/Scripts/Observable.cs@{Editor/UniRx/Scripts/Observable.cs}}
+\mbox{\hyperlink{_observable_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections;}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Threading;}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00005}00005 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_1_1_internal_util}{UniRx.InternalUtil}};}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00006}00006 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{UniRx.Operators}};}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00008}00008 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx}{UniRx}}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00010}00010     \textcolor{comment}{// Standard Query Operators}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00012}00012     \textcolor{comment}{// onNext implementation guide. enclose otherFunc but onNext is not catch.}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00013}00013     \textcolor{comment}{// try\{ otherFunc(); \} catch \{ onError() \}}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00014}00014     \textcolor{comment}{// onNext();}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00016}00016     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00017}00017     \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00018}00018         \textcolor{keyword}{static} readonly TimeSpan InfiniteTimeSpan = \textcolor{keyword}{new} TimeSpan(0, 0, 0, 0, -\/1); \textcolor{comment}{// from .NET 4.5}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00020}\mbox{\hyperlink{class_uni_rx_1_1_observable_a24a8489a659affff89cd7a888ed7c669}{00020}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TR>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a24a8489a659affff89cd7a888ed7c669}{Select<T, TR>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Func<T, TR> selector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00021}00021         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00022}00022             \textcolor{comment}{// sometimes cause "{}which no ahead of time (AOT) code was generated."{} on IL2CPP...}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00024}00024             \textcolor{comment}{//var select = source as ISelect<T>;}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00025}00025             \textcolor{comment}{//if (select != null)}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00026}00026             \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00027}00027             \textcolor{comment}{//    return select.CombineSelector(selector);}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00028}00028             \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00030}00030             \textcolor{comment}{// optimized path}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00031}00031             var whereObservable = source as \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_where_observable}{WhereObservable}}<T>;}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00032}00032             \textcolor{keywordflow}{if} (whereObservable != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00033}00033             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00034}00034                 \textcolor{keywordflow}{return} whereObservable.CombineSelector<TR>(selector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00035}00035             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00037}00037             \textcolor{keywordflow}{return} \textcolor{keyword}{new} SelectObservable<T, TR>(source, selector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00038}00038         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00040}\mbox{\hyperlink{class_uni_rx_1_1_observable_a93f3ed0a706348b25fcbcf171b5b6e4e}{00040}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TR>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a24a8489a659affff89cd7a888ed7c669}{Select<T, TR>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Func<T, int, TR> selector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00041}00041         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00042}00042             \textcolor{keywordflow}{return} \textcolor{keyword}{new} SelectObservable<T, TR>(source, selector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00043}00043         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00045}\mbox{\hyperlink{class_uni_rx_1_1_observable_af07e337d029b0e8b3ebd06c2289876db}{00045}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_af07e337d029b0e8b3ebd06c2289876db}{Where<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Func<T, bool> predicate)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00046}00046         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00047}00047             \textcolor{comment}{// optimized path}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00048}00048             var whereObservable = source as \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{class_uni_rx_1_1_operators_1_1_where_observable}{WhereObservable}}<T>;}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00049}00049             \textcolor{keywordflow}{if} (whereObservable != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00050}00050             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00051}00051                 \textcolor{keywordflow}{return} whereObservable.CombinePredicate(predicate);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00052}00052             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00054}00054             var selectObservable = source as \mbox{\hyperlink{namespace_uni_rx}{UniRx}}.\mbox{\hyperlink{namespace_uni_rx_1_1_operators}{Operators}}.\mbox{\hyperlink{interface_uni_rx_1_1_operators_1_1_i_select}{ISelect}}<T>;}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00055}00055             \textcolor{keywordflow}{if} (selectObservable != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00056}00056             \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00057}00057                 \textcolor{keywordflow}{return} selectObservable.CombinePredicate(predicate);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00058}00058             \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00060}00060             \textcolor{keywordflow}{return} \textcolor{keyword}{new} WhereObservable<T>(source, predicate);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00061}00061         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00063}\mbox{\hyperlink{class_uni_rx_1_1_observable_af0c7f3b820ba7a22e769733de3cd8ab2}{00063}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_af07e337d029b0e8b3ebd06c2289876db}{Where<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Func<T, int, bool> predicate)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00064}00064         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00065}00065             \textcolor{keywordflow}{return} \textcolor{keyword}{new} WhereObservable<T>(source, predicate);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00066}00066         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00071}\mbox{\hyperlink{class_uni_rx_1_1_observable_afe41d36acfcea74f20f251cd449c5eb6}{00071}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TR>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_afe41d36acfcea74f20f251cd449c5eb6}{ContinueWith<T, TR>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TR>}} other)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00072}00072         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00073}00073             \textcolor{keywordflow}{return} ContinueWith(source, \_ => other);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00074}00074         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00079}\mbox{\hyperlink{class_uni_rx_1_1_observable_a2f740320673ad0e802624ce3d4df3c3c}{00079}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TR>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_afe41d36acfcea74f20f251cd449c5eb6}{ContinueWith<T, TR>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Func<T, \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TR>}}> selector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00080}00080         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00081}00081             \textcolor{keywordflow}{return} \textcolor{keyword}{new} ContinueWithObservable<T, TR>(source, selector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00082}00082         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00084}\mbox{\hyperlink{class_uni_rx_1_1_observable_a547517979c21efc8661a0b359063ca98}{00084}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TR>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a547517979c21efc8661a0b359063ca98}{SelectMany<T, TR>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TR>}} other)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00085}00085         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00086}00086             \textcolor{keywordflow}{return} SelectMany(source, \_ => other);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00087}00087         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00089}\mbox{\hyperlink{class_uni_rx_1_1_observable_ac7e6b7591d8eb55219de94c67a7a3244}{00089}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TR>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a547517979c21efc8661a0b359063ca98}{SelectMany<T, TR>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Func<T, \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TR>}}> selector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00090}00090         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00091}00091             \textcolor{keywordflow}{return} \textcolor{keyword}{new} SelectManyObservable<T, TR>(source, selector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00092}00092         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00094}\mbox{\hyperlink{class_uni_rx_1_1_observable_a9f81da864c96d70644ce1c77e7cc88bf}{00094}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TResult>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a9f81da864c96d70644ce1c77e7cc88bf}{SelectMany<TSource, TResult>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source, Func<TSource, \textcolor{keywordtype}{int}, \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TResult>}}> selector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00095}00095         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00096}00096             \textcolor{keywordflow}{return} \textcolor{keyword}{new} SelectManyObservable<TSource, TResult>(source, selector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00097}00097         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00099}\mbox{\hyperlink{class_uni_rx_1_1_observable_a0317ea1dfc6300a1eac5de0f1aa0f46a}{00099}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TR>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a0317ea1dfc6300a1eac5de0f1aa0f46a}{SelectMany<T, TC, TR>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Func<T, \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TC>}}> collectionSelector, Func<T, TC, TR> resultSelector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00100}00100         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00101}00101             \textcolor{keywordflow}{return} \textcolor{keyword}{new} SelectManyObservable<T, TC, TR>(source, collectionSelector, resultSelector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00102}00102         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00104}\mbox{\hyperlink{class_uni_rx_1_1_observable_ab977d856ccbd498726e7c8236af8cee1}{00104}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TResult>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ab977d856ccbd498726e7c8236af8cee1}{SelectMany<TSource, TCollection, TResult>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source, Func<TSource, \textcolor{keywordtype}{int}, \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TCollection>}}> collectionSelector, Func<TSource, int, TCollection, int, TResult> resultSelector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00105}00105         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00106}00106             \textcolor{keywordflow}{return} \textcolor{keyword}{new} SelectManyObservable<TSource, TCollection, TResult>(source, collectionSelector, resultSelector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00107}00107         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00109}\mbox{\hyperlink{class_uni_rx_1_1_observable_ac9727048cd00b8f306529e5a060a17e2}{00109}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TResult>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a9f81da864c96d70644ce1c77e7cc88bf}{SelectMany<TSource, TResult>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source, Func<TSource, IEnumerable<TResult>> selector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00110}00110         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00111}00111             \textcolor{keywordflow}{return} \textcolor{keyword}{new} SelectManyObservable<TSource, TResult>(source, selector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00112}00112         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00113}00113 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00114}\mbox{\hyperlink{class_uni_rx_1_1_observable_a9a8fd3f49a2ce59fb063ea1c1a3e9cf2}{00114}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TResult>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a9f81da864c96d70644ce1c77e7cc88bf}{SelectMany<TSource, TResult>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source, Func<TSource, \textcolor{keywordtype}{int}, IEnumerable<TResult>> selector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00115}00115         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00116}00116             \textcolor{keywordflow}{return} \textcolor{keyword}{new} SelectManyObservable<TSource, TResult>(source, selector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00117}00117         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00119}\mbox{\hyperlink{class_uni_rx_1_1_observable_a5e1c2c0978e053d87461a4dc1ef1d3d7}{00119}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TResult>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ab977d856ccbd498726e7c8236af8cee1}{SelectMany<TSource, TCollection, TResult>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source, Func<TSource, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00120}00120         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00121}00121             \textcolor{keywordflow}{return} \textcolor{keyword}{new} SelectManyObservable<TSource, TCollection, TResult>(source, collectionSelector, resultSelector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00122}00122         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00123}00123 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00124}\mbox{\hyperlink{class_uni_rx_1_1_observable_a7bbdd8431a2019886c6806941a27481d}{00124}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TResult>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ab977d856ccbd498726e7c8236af8cee1}{SelectMany<TSource, TCollection, TResult>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source, Func<TSource, \textcolor{keywordtype}{int}, IEnumerable<TCollection>> collectionSelector, Func<TSource, int, TCollection, int, TResult> resultSelector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00125}00125         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00126}00126             \textcolor{keywordflow}{return} \textcolor{keyword}{new} SelectManyObservable<TSource, TCollection, TResult>(source, collectionSelector, resultSelector);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00127}00127         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00129}\mbox{\hyperlink{class_uni_rx_1_1_observable_a41d5267a506b3a254445b0b976c706c6}{00129}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T[]>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a41d5267a506b3a254445b0b976c706c6}{ToArray<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00130}00130         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00131}00131             \textcolor{keywordflow}{return} \textcolor{keyword}{new} ToArrayObservable<T>(source);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00132}00132         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00134}\mbox{\hyperlink{class_uni_rx_1_1_observable_aba8a2feb4815400766e5b1e00b4d1a07}{00134}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<IList<T>}}> \mbox{\hyperlink{class_uni_rx_1_1_observable_aba8a2feb4815400766e5b1e00b4d1a07}{ToList<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00135}00135         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00136}00136             \textcolor{keywordflow}{return} \textcolor{keyword}{new} ToListObservable<T>(source);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00137}00137         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00138}00138 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00139}\mbox{\hyperlink{class_uni_rx_1_1_observable_a47651bf0e81486497f4a35f497ac6675}{00139}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a47651bf0e81486497f4a35f497ac6675}{Do<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, \mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T>}} observer)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00140}00140         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00141}00141             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DoObserverObservable<T>(source, observer);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00142}00142         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00144}\mbox{\hyperlink{class_uni_rx_1_1_observable_aeab3840bdc96ab113806367c3badf937}{00144}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a47651bf0e81486497f4a35f497ac6675}{Do<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<T> onNext)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00145}00145         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00146}00146             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DoObservable<T>(source, onNext, Stubs.Throw, Stubs.Nop);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00147}00147         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00149}\mbox{\hyperlink{class_uni_rx_1_1_observable_a7a91469efbcce57e8e486fd8c9e8d6a4}{00149}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a47651bf0e81486497f4a35f497ac6675}{Do<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<T> onNext, Action<Exception> onError)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00150}00150         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00151}00151             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DoObservable<T>(source, onNext, onError, Stubs.Nop);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00152}00152         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00153}00153 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00154}\mbox{\hyperlink{class_uni_rx_1_1_observable_ab8218d812b395eb4c6f97df87b976a29}{00154}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a47651bf0e81486497f4a35f497ac6675}{Do<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<T> onNext, Action onCompleted)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00155}00155         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00156}00156             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DoObservable<T>(source, onNext, Stubs.Throw, onCompleted);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00157}00157         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00158}00158 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00159}\mbox{\hyperlink{class_uni_rx_1_1_observable_a3170b7015b8dad38fdb6ed5afde2d559}{00159}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a47651bf0e81486497f4a35f497ac6675}{Do<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<T> onNext, Action<Exception> onError, Action onCompleted)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00160}00160         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00161}00161             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DoObservable<T>(source, onNext, onError, onCompleted);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00162}00162         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00163}00163 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00164}\mbox{\hyperlink{class_uni_rx_1_1_observable_a875eaec87cefb99765816ab02daa354d}{00164}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a875eaec87cefb99765816ab02daa354d}{DoOnError<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<Exception> onError)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00165}00165         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00166}00166             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DoOnErrorObservable<T>(source, onError);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00167}00167         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00168}00168 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00169}\mbox{\hyperlink{class_uni_rx_1_1_observable_a3c501e3cf6a66358570f74c73c4e7264}{00169}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a3c501e3cf6a66358570f74c73c4e7264}{DoOnCompleted<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action onCompleted)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00170}00170         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00171}00171             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DoOnCompletedObservable<T>(source, onCompleted);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00172}00172         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00173}00173 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00174}\mbox{\hyperlink{class_uni_rx_1_1_observable_a2acc58aa0929de953754780e51ae9fa2}{00174}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a2acc58aa0929de953754780e51ae9fa2}{DoOnTerminate<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action onTerminate)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00175}00175         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00176}00176             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DoOnTerminateObservable<T>(source, onTerminate);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00177}00177         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00178}00178 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00179}\mbox{\hyperlink{class_uni_rx_1_1_observable_a1855ef479186e45084e6c88d85bd3f14}{00179}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a1855ef479186e45084e6c88d85bd3f14}{DoOnSubscribe<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action onSubscribe)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00180}00180         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00181}00181             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DoOnSubscribeObservable<T>(source, onSubscribe);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00182}00182         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00183}00183 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00184}\mbox{\hyperlink{class_uni_rx_1_1_observable_ae9e538b0811f1454818247e8de3ea17d}{00184}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ae9e538b0811f1454818247e8de3ea17d}{DoOnCancel<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action onCancel)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00185}00185         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00186}00186             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DoOnCancelObservable<T>(source, onCancel);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00187}00187         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00189}\mbox{\hyperlink{class_uni_rx_1_1_observable_a6680714d5fb621a2711b4c29beb1bc7b}{00189}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Notification<T>}}> \mbox{\hyperlink{class_uni_rx_1_1_observable_a6680714d5fb621a2711b4c29beb1bc7b}{Materialize<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00190}00190         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00191}00191             \textcolor{keywordflow}{return} \textcolor{keyword}{new} MaterializeObservable<T>(source);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00192}00192         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00193}00193 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00194}\mbox{\hyperlink{class_uni_rx_1_1_observable_a91576a0579448e6bc4e1345e0d5826d3}{00194}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a91576a0579448e6bc4e1345e0d5826d3}{Dematerialize<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable}}<\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}}> source)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00195}00195         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00196}00196             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DematerializeObservable<T>(source);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00197}00197         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00198}00198 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00199}\mbox{\hyperlink{class_uni_rx_1_1_observable_a563022288288a33873ee3165b5cd96b9}{00199}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a563022288288a33873ee3165b5cd96b9}{DefaultIfEmpty<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00200}00200         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00201}00201             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DefaultIfEmptyObservable<T>(source, \textcolor{keywordflow}{default}(T));}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00202}00202         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00203}00203 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00204}\mbox{\hyperlink{class_uni_rx_1_1_observable_a30f512b0ccde2a86de06eae179d5b12d}{00204}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a563022288288a33873ee3165b5cd96b9}{DefaultIfEmpty<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, T defaultValue)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00205}00205         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00206}00206             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DefaultIfEmptyObservable<T>(source, defaultValue);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00207}00207         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00208}00208 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00209}\mbox{\hyperlink{class_uni_rx_1_1_observable_a1208cb811ffc82bc24840e2ba701c534}{00209}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a1208cb811ffc82bc24840e2ba701c534}{Distinct<TSource>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00210}00210         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00211}00211 \textcolor{preprocessor}{\#if !UniRxLibrary}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00212}00212             var comparer = UnityEqualityComparer.GetDefault<TSource>();}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00213}00213 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00214}00214             var comparer = EqualityComparer<TSource>.Default;}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00215}00215 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00216}00216 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00217}00217             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DistinctObservable<TSource>(source, comparer);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00218}00218         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00220}\mbox{\hyperlink{class_uni_rx_1_1_observable_a6f7a7faac61c69bb38e307de7888099a}{00220}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a1208cb811ffc82bc24840e2ba701c534}{Distinct<TSource>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source, IEqualityComparer<TSource> comparer)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00221}00221         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00222}00222             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DistinctObservable<TSource>(source, comparer);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00223}00223         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00224}00224 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00225}\mbox{\hyperlink{class_uni_rx_1_1_observable_acf185dc0a8ebaa7ae6c76afbd9d1b521}{00225}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_acf185dc0a8ebaa7ae6c76afbd9d1b521}{Distinct<TSource, TKey>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source, Func<TSource, TKey> keySelector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00226}00226         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00227}00227 \textcolor{preprocessor}{\#if !UniRxLibrary}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00228}00228             var comparer = UnityEqualityComparer.GetDefault<TKey>();}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00229}00229 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00230}00230             var comparer = EqualityComparer<TKey>.Default;}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00231}00231 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00232}00232 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00233}00233             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DistinctObservable<TSource, TKey>(source, keySelector, comparer);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00234}00234         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00235}00235 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00236}\mbox{\hyperlink{class_uni_rx_1_1_observable_aa861e59fc8bbd02fc41c09fc05579768}{00236}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_acf185dc0a8ebaa7ae6c76afbd9d1b521}{Distinct<TSource, TKey>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<TSource>}} source, Func<TSource, TKey> keySelector, IEqualityComparer<TKey> comparer)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00237}00237         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00238}00238             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DistinctObservable<TSource, TKey>(source, keySelector, comparer);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00239}00239         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00240}00240 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00241}\mbox{\hyperlink{class_uni_rx_1_1_observable_a7e51b581c9d2e32da772248bca3a3a39}{00241}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a7e51b581c9d2e32da772248bca3a3a39}{DistinctUntilChanged<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00242}00242         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00243}00243 \textcolor{preprocessor}{\#if !UniRxLibrary}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00244}00244             var comparer = UnityEqualityComparer.GetDefault<T>();}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00245}00245 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00246}00246             var comparer = EqualityComparer<T>.Default;}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00247}00247 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00248}00248 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00249}00249             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DistinctUntilChangedObservable<T>(source, comparer);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00250}00250         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00251}00251 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00252}\mbox{\hyperlink{class_uni_rx_1_1_observable_a1c894ed1a3882106cb7124a84f530db0}{00252}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a7e51b581c9d2e32da772248bca3a3a39}{DistinctUntilChanged<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, IEqualityComparer<T> comparer)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00253}00253         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00254}00254             \textcolor{keywordflow}{if} (source == \textcolor{keyword}{null}) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}source"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00255}00255 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00256}00256             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DistinctUntilChangedObservable<T>(source, comparer);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00257}00257         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00258}00258 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00259}\mbox{\hyperlink{class_uni_rx_1_1_observable_a293e79cb7fa26b06bc67ccc943c45292}{00259}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a293e79cb7fa26b06bc67ccc943c45292}{DistinctUntilChanged<T, TKey>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Func<T, TKey> keySelector)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00260}00260         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00261}00261 \textcolor{preprocessor}{\#if !UniRxLibrary}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00262}00262             var comparer = UnityEqualityComparer.GetDefault<TKey>();}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00263}00263 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00264}00264             var comparer = EqualityComparer<TKey>.Default;}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00265}00265 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00266}00266 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00267}00267             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DistinctUntilChangedObservable<T, TKey>(source, keySelector, comparer);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00268}00268         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00269}00269 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00270}\mbox{\hyperlink{class_uni_rx_1_1_observable_aed97535b28d62e323cb050bb3b58ee34}{00270}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_a293e79cb7fa26b06bc67ccc943c45292}{DistinctUntilChanged<T, TKey>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Func<T, TKey> keySelector, IEqualityComparer<TKey> comparer)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00271}00271         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00272}00272             \textcolor{keywordflow}{if} (source == \textcolor{keyword}{null}) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}source"{}});}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00273}00273 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00274}00274             \textcolor{keywordflow}{return} \textcolor{keyword}{new} DistinctUntilChangedObservable<T, TKey>(source, keySelector, comparer);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00275}00275         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00276}00276 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00277}\mbox{\hyperlink{class_uni_rx_1_1_observable_ae4a2dd6d0877b4c7c01c6b1c7377740c}{00277}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ae4a2dd6d0877b4c7c01c6b1c7377740c}{IgnoreElements<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00278}00278         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00279}00279             \textcolor{keywordflow}{return} \textcolor{keyword}{new} IgnoreElementsObservable<T>(source);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00280}00280         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00281}00281 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00282}\mbox{\hyperlink{class_uni_rx_1_1_observable_ac2877b1075c83845f5493aa80867963f}{00282}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ac2877b1075c83845f5493aa80867963f}{ForEachAsync<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<T> onNext)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00283}00283         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00284}00284             \textcolor{keywordflow}{return} \textcolor{keyword}{new} ForEachAsyncObservable<T>(source, onNext);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00285}00285         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00286}00286 }
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00287}\mbox{\hyperlink{class_uni_rx_1_1_observable_a03016647050b5d952348c83c72fec1a0}{00287}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<Unit>}} \mbox{\hyperlink{class_uni_rx_1_1_observable_ac2877b1075c83845f5493aa80867963f}{ForEachAsync<T>}}(\textcolor{keyword}{this} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} source, Action<T, int> onNext)}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00288}00288         \{}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00289}00289             \textcolor{keywordflow}{return} \textcolor{keyword}{new} ForEachAsyncObservable<T>(source, onNext);}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00290}00290         \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00291}00291     \}}
+\DoxyCodeLine{\Hypertarget{_observable_8cs_source_l00292}00292 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,86 @@
+\hypertarget{interface_i_persister}{}\doxysection{IPersister Interface Reference}
+\label{interface_i_persister}\index{IPersister@{IPersister}}
+Inheritance diagram for IPersister\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interface_i_persister}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Task \mbox{\hyperlink{interface_i_persister_abef79ec8088500a14f8661dd53fe63a2}{Save\+Object\+Async$<$ T $>$}} (T o, string path)
+\item 
+void \mbox{\hyperlink{interface_i_persister_a720bd9322eddd766083f779b3b1d01bf}{Save\+Object$<$ T $>$}} (T o, string path)
+\item 
+Task$<$ \mbox{\hyperlink{class_object_meta_data}{Object\+Meta\+Data}}$<$ T $>$ $>$ \mbox{\hyperlink{interface_i_persister_a912970107378c3253c605d2cdc8ccb38}{Load\+Object\+Async$<$ T $>$}} (string path)
+\item 
+Task$<$ List$<$ \mbox{\hyperlink{class_object_meta_data}{Object\+Meta\+Data}}$<$ T $>$ $>$ $>$ \mbox{\hyperlink{interface_i_persister_a4149e2a7c1ae8c30df983f3c26dbcd78}{Load\+Objects\+Async$<$ T $>$}} (string folder\+Path, string search\+Pattern)
+\item 
+\mbox{\hyperlink{class_object_meta_data}{Object\+Meta\+Data}}$<$ T $>$ \mbox{\hyperlink{interface_i_persister_ad975a1acf1276489bbc1497e5f89b576}{Load\+Object$<$ T $>$}} (string path)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_i_persister_8cs_source_l00007}{7}} of file \mbox{\hyperlink{_i_persister_8cs_source}{IPersister.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{interface_i_persister_ad975a1acf1276489bbc1497e5f89b576}\label{interface_i_persister_ad975a1acf1276489bbc1497e5f89b576}} 
+\index{IPersister@{IPersister}!LoadObject$<$ T $>$@{LoadObject$<$ T $>$}}
+\index{LoadObject$<$ T $>$@{LoadObject$<$ T $>$}!IPersister@{IPersister}}
+\doxysubsubsection{\texorpdfstring{LoadObject$<$ T $>$()}{LoadObject< T >()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_object_meta_data}{Object\+Meta\+Data}}$<$ T $>$ IPersister.\+Load\+Object$<$ T $>$ (\begin{DoxyParamCaption}\item[{string}]{path }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_mocks_1_1_mock___i_persister_a4952c428c660042a49c1e01e867704ed}{Mocks.\+Mock\+\_\+\+IPersister}}.
+
+\mbox{\Hypertarget{interface_i_persister_a912970107378c3253c605d2cdc8ccb38}\label{interface_i_persister_a912970107378c3253c605d2cdc8ccb38}} 
+\index{IPersister@{IPersister}!LoadObjectAsync$<$ T $>$@{LoadObjectAsync$<$ T $>$}}
+\index{LoadObjectAsync$<$ T $>$@{LoadObjectAsync$<$ T $>$}!IPersister@{IPersister}}
+\doxysubsubsection{\texorpdfstring{LoadObjectAsync$<$ T $>$()}{LoadObjectAsync< T >()}}
+{\footnotesize\ttfamily Task$<$ \mbox{\hyperlink{class_object_meta_data}{Object\+Meta\+Data}}$<$ T $>$ $>$ IPersister.\+Load\+Object\+Async$<$ T $>$ (\begin{DoxyParamCaption}\item[{string}]{path }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_mocks_1_1_mock___i_persister_a8af8a56ffc104a92c4f55cb2d1741dba}{Mocks.\+Mock\+\_\+\+IPersister}}.
+
+\mbox{\Hypertarget{interface_i_persister_a4149e2a7c1ae8c30df983f3c26dbcd78}\label{interface_i_persister_a4149e2a7c1ae8c30df983f3c26dbcd78}} 
+\index{IPersister@{IPersister}!LoadObjectsAsync$<$ T $>$@{LoadObjectsAsync$<$ T $>$}}
+\index{LoadObjectsAsync$<$ T $>$@{LoadObjectsAsync$<$ T $>$}!IPersister@{IPersister}}
+\doxysubsubsection{\texorpdfstring{LoadObjectsAsync$<$ T $>$()}{LoadObjectsAsync< T >()}}
+{\footnotesize\ttfamily Task$<$ List$<$ \mbox{\hyperlink{class_object_meta_data}{Object\+Meta\+Data}}$<$ T $>$ $>$ $>$ IPersister.\+Load\+Objects\+Async$<$ T $>$ (\begin{DoxyParamCaption}\item[{string}]{folder\+Path,  }\item[{string}]{search\+Pattern }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_mocks_1_1_mock___i_persister_abc5a7f741bd1fca828204f6e6405858c}{Mocks.\+Mock\+\_\+\+IPersister}}.
+
+\mbox{\Hypertarget{interface_i_persister_a720bd9322eddd766083f779b3b1d01bf}\label{interface_i_persister_a720bd9322eddd766083f779b3b1d01bf}} 
+\index{IPersister@{IPersister}!SaveObject$<$ T $>$@{SaveObject$<$ T $>$}}
+\index{SaveObject$<$ T $>$@{SaveObject$<$ T $>$}!IPersister@{IPersister}}
+\doxysubsubsection{\texorpdfstring{SaveObject$<$ T $>$()}{SaveObject< T >()}}
+{\footnotesize\ttfamily void IPersister.\+Save\+Object$<$ T $>$ (\begin{DoxyParamCaption}\item[{T}]{o,  }\item[{string}]{path }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_mocks_1_1_mock___i_persister_a72d795b4afea40df0220353869a063c3}{Mocks.\+Mock\+\_\+\+IPersister}}.
+
+\mbox{\Hypertarget{interface_i_persister_abef79ec8088500a14f8661dd53fe63a2}\label{interface_i_persister_abef79ec8088500a14f8661dd53fe63a2}} 
+\index{IPersister@{IPersister}!SaveObjectAsync$<$ T $>$@{SaveObjectAsync$<$ T $>$}}
+\index{SaveObjectAsync$<$ T $>$@{SaveObjectAsync$<$ T $>$}!IPersister@{IPersister}}
+\doxysubsubsection{\texorpdfstring{SaveObjectAsync$<$ T $>$()}{SaveObjectAsync< T >()}}
+{\footnotesize\ttfamily Task IPersister.\+Save\+Object\+Async$<$ T $>$ (\begin{DoxyParamCaption}\item[{T}]{o,  }\item[{string}]{path }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_mocks_1_1_mock___i_persister_afaa459e883cbbbe648a22a9655c24f9b}{Mocks.\+Mock\+\_\+\+IPersister}}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Runtime/\+Services/\+Persistence/\+IPersister/\mbox{\hyperlink{_i_persister_8cs}{IPersister.\+cs}}\end{DoxyCompactItemize}

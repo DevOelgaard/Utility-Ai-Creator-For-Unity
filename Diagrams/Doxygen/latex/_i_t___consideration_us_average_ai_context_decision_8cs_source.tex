@@ -1,0 +1,120 @@
+\hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source}{}\doxysection{IT\+\_\+\+Consideration\+Us\+Average\+Ai\+Context\+Decision.\+cs}
+\label{_i_t___consideration_us_average_ai_context_decision_8cs_source}\index{Tests/Editor/UAS-\/UnitTests-\/Editor/IntegrationTests/CalculateUtility/IT\_ConsiderationUsAverageAiContextDecision.cs@{Tests/Editor/UAS-\/UnitTests-\/Editor/IntegrationTests/CalculateUtility/IT\_ConsiderationUsAverageAiContextDecision.cs}}
+\mbox{\hyperlink{_i_t___consideration_us_average_ai_context_decision_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00001}00001 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00002}00002 \textcolor{keyword}{using }NUnit.Framework;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00003}00003 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00005}00005 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_mocks}{Mocks}};}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00007}00007 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_integration_tests_1_1_calculate_utility}{IntegrationTests.CalculateUtility}}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00009}00009     [TestFixture]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00010}\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision}{00010}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision}{IT\_ConsiderationUsAverageAiContextDecision}}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00011}00011     \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00012}00012         \textcolor{keyword}{private} \mbox{\hyperlink{class_decision}{Decision}} decision;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00013}00013         \textcolor{keyword}{private} \mbox{\hyperlink{class_us_average_scorer}{UsAverageScorer}} uSAverage;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00014}00014         \textcolor{keyword}{private} \mbox{\hyperlink{interface_i_ai_context}{IAiContext}} aIContext;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00015}00015         \textcolor{keyword}{private} \mbox{\hyperlink{class_bucket}{Bucket}} mockBucket;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00018}00018         [\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision_abe2b01db3651f70166838d6dbdccb3a2}{SetUp}}]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00019}\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision_abe2b01db3651f70166838d6dbdccb3a2}{00019}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision_abe2b01db3651f70166838d6dbdccb3a2}{SetUp}}()}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00020}00020         \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00021}00021             decision = \textcolor{keyword}{new} \mbox{\hyperlink{class_decision}{Decision}}();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00022}00022             decision.\mbox{\hyperlink{class_utility_container_a8666e5679d77eeda922a6327d784aa2a}{Initialize}}();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00023}00023             uSAverage = \textcolor{keyword}{new} \mbox{\hyperlink{class_us_average_scorer}{UsAverageScorer}}();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00024}00024             aIContext = \textcolor{keyword}{new} \mbox{\hyperlink{class_ai_context}{AiContext}}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00025}00025             \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00026}00026                 UtilityScorer = uSAverage}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00027}00027             \};}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00028}00028             mockBucket = \textcolor{keyword}{new} \mbox{\hyperlink{class_bucket}{Bucket}}();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00029}00029             mockBucket.\mbox{\hyperlink{class_utility_container_a8666e5679d77eeda922a6327d784aa2a}{Initialize}}();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00030}00030             mockBucket.\mbox{\hyperlink{class_bucket_a93047f4e08b186952b35ac44c55ed2d3}{Decisions}}.\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_name_safe_a5c70c08ff4aed09979cefb3d2d3d9bc7}{Add}}(decision);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00031}00031         \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00033}00033         [TestCase(0, 10)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00034}\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision_a9d4c44dccf5c67c08c9d53858418b7d4}{00034}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision_a9d4c44dccf5c67c08c9d53858418b7d4}{GetUtility\_CorrectValues\_ReturnsExpected}}(\textcolor{keywordtype}{float} calculatedScore, \textcolor{keywordtype}{int} numberOfConsiderations)}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00035}00035         \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00036}00036             var considerations = CreateUniformConsiderations(numberOfConsiderations, calculatedScore);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00038}00038             decision.\mbox{\hyperlink{class_utility_container_a563c944958375c4c9fc455b7652b90e9}{Considerations}}.\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_name_safe_a5c70c08ff4aed09979cefb3d2d3d9bc7}{Add}}(considerations);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00039}00039             \textcolor{keywordflow}{foreach} (var c \textcolor{keywordflow}{in} considerations)}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00040}00040             \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00041}00041                 decision.\mbox{\hyperlink{class_utility_container_a563c944958375c4c9fc455b7652b90e9}{Considerations}}.\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_name_safe_a5c70c08ff4aed09979cefb3d2d3d9bc7}{Add}}(c);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00042}00042             \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00044}00044             var result = decision.GetUtility(aIContext);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00046}00046             Assert.AreEqual(Math.Round(calculatedScore, 2), Math.Round(result, 2));}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00047}00047         \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00049}00049         [TestCase(0, 10, 0, 0)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00050}00050         [TestCase(0.9f, 0.5f, 0.1f, 0.5f)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00051}00051         [TestCase(0.3f, 0.5f, 0.4f, 0.4f)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00052}00052         [TestCase(-\/1, 0.9f, 1, 0)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00053}00053         [TestCase(1, 1, -\/1, 0)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00054}00054         [TestCase(2, 1, -\/1, 0)]}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00055}\mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision_a09a951597a2e817fc89fec8abe715089}{00055}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_integration_tests_1_1_calculate_utility_1_1_i_t___consideration_us_average_ai_context_decision_a09a951597a2e817fc89fec8abe715089}{GetUtility\_MultipleValues\_ReturnsExpected}}(\textcolor{keywordtype}{float} a, \textcolor{keywordtype}{float} b, \textcolor{keywordtype}{float} c, \textcolor{keywordtype}{float} expected)}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00056}00056         \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00057}00057             var c1 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t}{Stub\_Consideration\_IT}}(a, \textcolor{keyword}{new} List<Parameter>());}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00058}00058             var c2 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t}{Stub\_Consideration\_IT}}(b, \textcolor{keyword}{new} List<Parameter>());}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00059}00059             var c3 = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t}{Stub\_Consideration\_IT}}(c, \textcolor{keyword}{new} List<Parameter>());}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00060}00060             c1.Initialize();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00061}00061             c2.Initialize();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00062}00062             c3.Initialize();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00063}00063             decision.\mbox{\hyperlink{class_utility_container_a563c944958375c4c9fc455b7652b90e9}{Considerations}}.\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_name_safe_a5c70c08ff4aed09979cefb3d2d3d9bc7}{Add}}(c1);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00064}00064             decision.\mbox{\hyperlink{class_utility_container_a563c944958375c4c9fc455b7652b90e9}{Considerations}}.\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_name_safe_a5c70c08ff4aed09979cefb3d2d3d9bc7}{Add}}(c2);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00065}00065             decision.\mbox{\hyperlink{class_utility_container_a563c944958375c4c9fc455b7652b90e9}{Considerations}}.\mbox{\hyperlink{class_uni_rx_extension_1_1_reactive_list_name_safe_a5c70c08ff4aed09979cefb3d2d3d9bc7}{Add}}(c3);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00067}00067             var result = decision.GetUtility(aIContext);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00069}00069             Assert.AreEqual(Math.Round(expected, 2), Math.Round(result, 2));}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00070}00070         \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00072}00072         \textcolor{comment}{// [TestCase(1,1,2,0,8,0.5f)]}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00073}00073         \textcolor{comment}{// [TestCase(3,-\/1,1,0,10,0.3f)]}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00074}00074         \textcolor{comment}{// [TestCase(-\/1,-\/2,-\/3,-\/10,0,0.4f)]}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00075}00075         \textcolor{comment}{// [TestCase(30,15,10,20,120,0.35f)]}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00076}00076         \textcolor{comment}{// public void GetUtility\_ConsiderationParameters\_ReturnsExpected( float p1, float p2, float p3, float min, float max, float expected)}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00077}00077         \textcolor{comment}{// \{}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00078}00078         \textcolor{comment}{//     var considerations = CreateUniformConsiderations(5, 0);}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00079}00079         \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00080}00080         \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00081}00081         \textcolor{comment}{//     foreach(var consideration in considerations)}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00082}00082         \textcolor{comment}{//     \{}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00083}00083         \textcolor{comment}{//         consideration.Parameters.Add(new Parameter("{}p1"{},p1));}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00084}00084         \textcolor{comment}{//         consideration.Parameters.Add(new Parameter("{}p2"{},p2));}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00085}00085         \textcolor{comment}{//         consideration.Parameters.Add(new Parameter("{}p3"{},p3));}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00086}00086         \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00087}00087         \textcolor{comment}{//         consideration.MinFloat.Value = min;}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00088}00088         \textcolor{comment}{//         consideration.MaxFloat.Value = max;}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00089}00089         \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00090}00090         \textcolor{comment}{//         decision.Considerations.Add(consideration);}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00091}00091         \textcolor{comment}{//     \}}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00092}00092         \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00093}00093         \textcolor{comment}{//     var result = decision.GetUtility(aIContext);}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00094}00094         \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00095}00095         \textcolor{comment}{//     Assert.AreEqual(Math.Round(expected, 2), Math.Round(result, 2));}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00096}00096         \textcolor{comment}{// \}}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00098}00098         \textcolor{keyword}{private} List<Consideration> CreateUniformConsiderations(\textcolor{keywordtype}{int} numberOfConsiderations, \textcolor{keywordtype}{float} returnValue,}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00099}00099             \textcolor{keywordtype}{float} min = 0f, \textcolor{keywordtype}{float} max = 1f)}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00100}00100         \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00101}00101             var result = \textcolor{keyword}{new} List<Consideration>();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00102}00102             \textcolor{keywordflow}{for} (var i = 0; i < numberOfConsiderations; i++)}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00103}00103             \{}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00104}00104                 var consideration = \textcolor{keyword}{new} \mbox{\hyperlink{class_mocks_1_1_stub___consideration___i_t}{Stub\_Consideration\_IT}}(returnValue, \textcolor{keyword}{new} List<Parameter>());}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00105}00105                 consideration.Initialize();}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00106}00106                 consideration.MinFloat.Value = min;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00107}00107                 consideration.MaxFloat.Value = max;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00108}00108                 result.Add(consideration);}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00109}00109             \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00111}00111             \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00112}00112         \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00113}00113     \}}
+\DoxyCodeLine{\Hypertarget{_i_t___consideration_us_average_ai_context_decision_8cs_source_l00114}00114 \}}
+
+\end{DoxyCode}

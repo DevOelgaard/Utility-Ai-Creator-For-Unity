@@ -1,0 +1,56 @@
+\hypertarget{_debugger_game_paused_inspect_8cs_source}{}\doxysection{Debugger\+Game\+Paused\+Inspect.\+cs}
+\label{_debugger_game_paused_inspect_8cs_source}\index{Editor/UI/Components/Logger/States/GamePausedStates/DebuggerGamePausedInspect.cs@{Editor/UI/Components/Logger/States/GamePausedStates/DebuggerGamePausedInspect.cs}}
+\mbox{\hyperlink{_debugger_game_paused_inspect_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00001}00001 \textcolor{comment}{//using System;}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00002}00002 \textcolor{comment}{//using System.Collections.Generic;}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00003}00003 \textcolor{comment}{//using System.Linq;}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00004}00004 \textcolor{comment}{//using System.Text;}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00005}00005 \textcolor{comment}{//using System.Threading.Tasks;}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00006}00006 \textcolor{comment}{//using UnityEngine.UIElements;}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00008}00008 \textcolor{comment}{//internal class DebuggerGamePausedInspect : GamePausedNestedState}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00009}00009 \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00010}00010 \textcolor{comment}{//    public DebuggerGamePausedInspect(TemplateContainer root, DebuggerComponent debuggerComponent) : base(root, debuggerComponent)}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00011}00011 \textcolor{comment}{//    \{}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00012}00012 \textcolor{comment}{//    \}}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00014}00014 \textcolor{comment}{//    internal override void OnEnter(IAgent agent)}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00015}00015 \textcolor{comment}{//    \{}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00016}00016 \textcolor{comment}{//        base.OnEnter(agent);}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00017}00017 \textcolor{comment}{//        InfoLabelLeft.text = "{}Ai Inspect"{};}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00018}00018 \textcolor{comment}{//        RecordToggle.text = "{}Logs"{};}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00020}00020 \textcolor{comment}{//        BackLeapButton.SetEnabled(true);}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00021}00021 \textcolor{comment}{//        BackStepButton.SetEnabled(true);}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00022}00022 \textcolor{comment}{//        ForwardStepButton.SetEnabled(true);}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00023}00023 \textcolor{comment}{//        ForwardLeapButton.SetEnabled(true);}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00024}00024 \textcolor{comment}{//        TickSlider.SetEnabled(true);}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00025}00025 \textcolor{comment}{//    \}}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00028}00028 \textcolor{comment}{//    internal override void OnExit()}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00029}00029 \textcolor{comment}{//    \{}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00030}00030 \textcolor{comment}{//        base.OnExit();}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00031}00031 \textcolor{comment}{//        RecordToggle.text = "{}"{};}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00033}00033 \textcolor{comment}{//    \}}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00035}00035 \textcolor{comment}{//    internal override void TickChanged(int value)}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00036}00036 \textcolor{comment}{//    \{}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00037}00037 \textcolor{comment}{//        base.TickChanged(value);}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00038}00038 \textcolor{comment}{//        if (value > AiLoggerService.Instance.MaxTick) // Going forward beyond logs}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00039}00039 \textcolor{comment}{//        \{}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00040}00040 \textcolor{comment}{//            throw new NotImplementedException("{}Skip X frames then pause"{});}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00041}00041 \textcolor{comment}{//            // Skip X frames then pause}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00042}00042 \textcolor{comment}{//        \} else // Inspecting logs}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00043}00043 \textcolor{comment}{//        \{}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00044}00044 \textcolor{comment}{//            // Setting false to jump to logs}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00045}00045 \textcolor{comment}{//            RecordToggle.value = true;}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00046}00046 \textcolor{comment}{//        \}}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00047}00047 \textcolor{comment}{//    \}}}
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{_debugger_game_paused_inspect_8cs_source_l00050}00050 \textcolor{comment}{//\}}}
+
+\end{DoxyCode}

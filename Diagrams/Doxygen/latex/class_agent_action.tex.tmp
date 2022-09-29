@@ -1,0 +1,163 @@
+\hypertarget{class_agent_action}{}\doxysection{Agent\+Action Class Reference}
+\label{class_agent_action}\index{AgentAction@{AgentAction}}
+
+
+Inheritance diagram for Agent\+Action\+:
+% FIG 0
+
+
+Collaboration diagram for Agent\+Action\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override string \mbox{\hyperlink{class_agent_action_a60f7a21931d07682f660493421083175}{Get\+Type\+Description}} ()
+\item 
+virtual void \mbox{\hyperlink{class_agent_action_a4232d4c5858716a0440e34c6e1171621}{On\+Start}} (\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}} context)
+\item 
+virtual void \mbox{\hyperlink{class_agent_action_a12b968031c4312694b8db0247764d646}{On\+Going}} (\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}} context)
+\item 
+virtual void \mbox{\hyperlink{class_agent_action_a9274bfa2dfe2789627339f5f16e9dd41}{On\+End}} (\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}} context)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_agent_action_a2652a6f84dd4b8529c37c2331acdfcf1}{Agent\+Action}} ()
+\item 
+override \mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} \mbox{\hyperlink{class_agent_action_afae930fb8f7b9c0aa3f5d4c28a27c869}{Internal\+Clone}} ()
+\item 
+override string \mbox{\hyperlink{class_agent_action_a1cdce541e9cadc96a13cd4d9dc55c854}{Get\+Name\+Format}} (string current\+Name)
+\item 
+override async Task \mbox{\hyperlink{class_agent_action_ac80acd1c990017b90a0985ec69dc7233}{Restore\+Internal\+Async}} (\mbox{\hyperlink{class_restore_state}{Restore\+State}} s, bool restore\+Debug=false)
+\item 
+override async Task \mbox{\hyperlink{class_agent_action_a1dcf2bc09b27e4fc9b63bcd5d3ebfe3c}{Internal\+Save\+To\+File}} (string path, \mbox{\hyperlink{interface_i_persister}{IPersister}} persister, \mbox{\hyperlink{class_restore_state}{Restore\+State}} state)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_agent_action_8cs_source_l00007}{7}} of file \mbox{\hyperlink{_agent_action_8cs_source}{Agent\+Action.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_agent_action_a2652a6f84dd4b8529c37c2331acdfcf1}\label{class_agent_action_a2652a6f84dd4b8529c37c2331acdfcf1}} 
+\index{AgentAction@{AgentAction}!AgentAction@{AgentAction}}
+\index{AgentAction@{AgentAction}!AgentAction@{AgentAction}}
+\doxysubsubsection{\texorpdfstring{AgentAction()}{AgentAction()}}
+{\footnotesize\ttfamily Agent\+Action.\+Agent\+Action (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_agent_action_8cs_source_l00012}{12}} of file \mbox{\hyperlink{_agent_action_8cs_source}{Agent\+Action.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_agent_action_a1cdce541e9cadc96a13cd4d9dc55c854}\label{class_agent_action_a1cdce541e9cadc96a13cd4d9dc55c854}} 
+\index{AgentAction@{AgentAction}!GetNameFormat@{GetNameFormat}}
+\index{GetNameFormat@{GetNameFormat}!AgentAction@{AgentAction}}
+\doxysubsubsection{\texorpdfstring{GetNameFormat()}{GetNameFormat()}}
+{\footnotesize\ttfamily override string Agent\+Action.\+Get\+Name\+Format (\begin{DoxyParamCaption}\item[{string}]{current\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_ai_object_model_a6676fc6fd32dc452a688638cbb025513}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_agent_action_8cs_source_l00031}{31}} of file \mbox{\hyperlink{_agent_action_8cs_source}{Agent\+Action.\+cs}}.
+
+\mbox{\Hypertarget{class_agent_action_a60f7a21931d07682f660493421083175}\label{class_agent_action_a60f7a21931d07682f660493421083175}} 
+\index{AgentAction@{AgentAction}!GetTypeDescription@{GetTypeDescription}}
+\index{GetTypeDescription@{GetTypeDescription}!AgentAction@{AgentAction}}
+\doxysubsubsection{\texorpdfstring{GetTypeDescription()}{GetTypeDescription()}}
+{\footnotesize\ttfamily override string Agent\+Action.\+Get\+Type\+Description (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_restore_able_ae5647afd431bfdec2ac656337464642b}{Restore\+Able}}.
+
+
+
+Definition at line \mbox{\hyperlink{_agent_action_8cs_source_l00017}{17}} of file \mbox{\hyperlink{_agent_action_8cs_source}{Agent\+Action.\+cs}}.
+
+\mbox{\Hypertarget{class_agent_action_afae930fb8f7b9c0aa3f5d4c28a27c869}\label{class_agent_action_afae930fb8f7b9c0aa3f5d4c28a27c869}} 
+\index{AgentAction@{AgentAction}!InternalClone@{InternalClone}}
+\index{InternalClone@{InternalClone}!AgentAction@{AgentAction}}
+\doxysubsubsection{\texorpdfstring{InternalClone()}{InternalClone()}}
+{\footnotesize\ttfamily override \mbox{\hyperlink{class_ai_object_model}{Ai\+Object\+Model}} Agent\+Action.\+Internal\+Clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_ai_object_model_af71d2ef63ca2a5bc7dfdcb65b5f4ecdd}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_agent_action_8cs_source_l00021}{21}} of file \mbox{\hyperlink{_agent_action_8cs_source}{Agent\+Action.\+cs}}.
+
+\mbox{\Hypertarget{class_agent_action_a1dcf2bc09b27e4fc9b63bcd5d3ebfe3c}\label{class_agent_action_a1dcf2bc09b27e4fc9b63bcd5d3ebfe3c}} 
+\index{AgentAction@{AgentAction}!InternalSaveToFile@{InternalSaveToFile}}
+\index{InternalSaveToFile@{InternalSaveToFile}!AgentAction@{AgentAction}}
+\doxysubsubsection{\texorpdfstring{InternalSaveToFile()}{InternalSaveToFile()}}
+{\footnotesize\ttfamily override async Task Agent\+Action.\+Internal\+Save\+To\+File (\begin{DoxyParamCaption}\item[{string}]{path,  }\item[{\mbox{\hyperlink{interface_i_persister}{IPersister}}}]{persister,  }\item[{\mbox{\hyperlink{class_restore_state}{Restore\+State}}}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_restore_able_a5689d8b83d65ba48c726f7b71f51de84}{Restore\+Able}}.
+
+
+
+Definition at line \mbox{\hyperlink{_agent_action_8cs_source_l00049}{49}} of file \mbox{\hyperlink{_agent_action_8cs_source}{Agent\+Action.\+cs}}.
+
+\mbox{\Hypertarget{class_agent_action_a9274bfa2dfe2789627339f5f16e9dd41}\label{class_agent_action_a9274bfa2dfe2789627339f5f16e9dd41}} 
+\index{AgentAction@{AgentAction}!OnEnd@{OnEnd}}
+\index{OnEnd@{OnEnd}!AgentAction@{AgentAction}}
+\doxysubsubsection{\texorpdfstring{OnEnd()}{OnEnd()}}
+{\footnotesize\ttfamily virtual void Agent\+Action.\+On\+End (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}}}]{context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_agent_action_8cs_source_l00029}{29}} of file \mbox{\hyperlink{_agent_action_8cs_source}{Agent\+Action.\+cs}}.
+
+\mbox{\Hypertarget{class_agent_action_a12b968031c4312694b8db0247764d646}\label{class_agent_action_a12b968031c4312694b8db0247764d646}} 
+\index{AgentAction@{AgentAction}!OnGoing@{OnGoing}}
+\index{OnGoing@{OnGoing}!AgentAction@{AgentAction}}
+\doxysubsubsection{\texorpdfstring{OnGoing()}{OnGoing()}}
+{\footnotesize\ttfamily virtual void Agent\+Action.\+On\+Going (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}}}]{context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_agent_action_8cs_source_l00028}{28}} of file \mbox{\hyperlink{_agent_action_8cs_source}{Agent\+Action.\+cs}}.
+
+\mbox{\Hypertarget{class_agent_action_a4232d4c5858716a0440e34c6e1171621}\label{class_agent_action_a4232d4c5858716a0440e34c6e1171621}} 
+\index{AgentAction@{AgentAction}!OnStart@{OnStart}}
+\index{OnStart@{OnStart}!AgentAction@{AgentAction}}
+\doxysubsubsection{\texorpdfstring{OnStart()}{OnStart()}}
+{\footnotesize\ttfamily virtual void Agent\+Action.\+On\+Start (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_i_ai_context}{IAi\+Context}}}]{context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_agent_action_8cs_source_l00027}{27}} of file \mbox{\hyperlink{_agent_action_8cs_source}{Agent\+Action.\+cs}}.
+
+\mbox{\Hypertarget{class_agent_action_ac80acd1c990017b90a0985ec69dc7233}\label{class_agent_action_ac80acd1c990017b90a0985ec69dc7233}} 
+\index{AgentAction@{AgentAction}!RestoreInternalAsync@{RestoreInternalAsync}}
+\index{RestoreInternalAsync@{RestoreInternalAsync}!AgentAction@{AgentAction}}
+\doxysubsubsection{\texorpdfstring{RestoreInternalAsync()}{RestoreInternalAsync()}}
+{\footnotesize\ttfamily override async Task Agent\+Action.\+Restore\+Internal\+Async (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_restore_state}{Restore\+State}}}]{s,  }\item[{bool}]{restore\+Debug = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_ai_object_model_a2cd00022a3a7876e7cb5fb4a6449b1cf}{Ai\+Object\+Model}}.
+
+
+
+Definition at line \mbox{\hyperlink{_agent_action_8cs_source_l00041}{41}} of file \mbox{\hyperlink{_agent_action_8cs_source}{Agent\+Action.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Runtime/\+Models/\+Agent\+Action/\mbox{\hyperlink{_agent_action_8cs}{Agent\+Action.\+cs}}\end{DoxyCompactItemize}

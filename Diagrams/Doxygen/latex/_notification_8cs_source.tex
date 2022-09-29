@@ -1,0 +1,385 @@
+\hypertarget{_notification_8cs_source}{}\doxysection{Notification.\+cs}
+\label{_notification_8cs_source}\index{Editor/UniRx/Scripts/Notification.cs@{Editor/UniRx/Scripts/Notification.cs}}
+\mbox{\hyperlink{_notification_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00001}00001 \textcolor{comment}{// original code from rx.codeplex.com}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00002}00002 \textcolor{comment}{// some modified.}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00004}00004 \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00006}00006 \textcolor{comment}{// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00008}00008 \textcolor{keyword}{using }System.Diagnostics;}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00009}00009 \textcolor{keyword}{using }System.Globalization;}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00010}00010 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00011}00011 \textcolor{keyword}{using }\mbox{\hyperlink{_boolean_notifier_8cs_a81a223a02c34d82b47199f08308847f2}{System}};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00012}00012 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_uni_rx_1_1_internal_util}{UniRx.InternalUtil}};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00014}00014 \textcolor{preprocessor}{\#pragma warning disable 0659}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00015}00015 \textcolor{preprocessor}{\#pragma warning disable 0661}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00017}00017 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_uni_rx}{UniRx}}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00018}00018 \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00030}00030     \textcolor{keyword}{public} \textcolor{keyword}{interface }\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver}}<TValue, TResult>}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00031}00031     \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00037}\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{00037}}         TResult \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_a3b2c2949190d53da6a5b7037dbcb3d14}{OnNext}}(TValue value);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00044}\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{00044}}         TResult \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae0add4fe72ec594c6daad8fb6c69c3bc}{OnError}}(Exception exception);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00050}\mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{00050}}         TResult \mbox{\hyperlink{interface_uni_rx_1_1_i_observer_ae2a2016d4070159942820d863354915d}{OnCompleted}}();}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00051}00051     \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00056}\mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{00056}}     \textcolor{keyword}{public} \textcolor{keyword}{enum} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00057}00057     \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00061}00061         \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83a4356a79cda7b909800e4c89f64e5c0e7}{OnNext}},}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00066}00066         \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83a44cdeb54c6f2aebad54611201c26d6f0}{OnError}},}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00071}00071         \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83ad3f2303a2d7ea4ac7945de6d166d9c73}{OnCompleted}}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00072}00072     \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00078}00078     [Serializable]}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00079}\mbox{\hyperlink{class_uni_rx_1_1_notification}{00079}}     \textcolor{keyword}{public} \textcolor{keyword}{abstract} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}<T> : IEquatable<Notification<T>>}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00080}00080     \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00084}00084         \textcolor{keyword}{protected} \textcolor{keyword}{internal} \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}()}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00085}00085         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00086}00086         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00091}\mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{00091}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} T \mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00092}00092         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00093}00093             \textcolor{keyword}{get};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00094}00094         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00099}\mbox{\hyperlink{class_uni_rx_1_1_notification_a9ef2a3f0ae5ab51969c0c9ec320d212a}{00099}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_notification_a9ef2a3f0ae5ab51969c0c9ec320d212a}{HasValue}}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00100}00100         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00101}00101             \textcolor{keyword}{get};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00102}00102         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00107}\mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{00107}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00108}00108         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00109}00109             \textcolor{keyword}{get};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00110}00110         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00115}\mbox{\hyperlink{class_uni_rx_1_1_notification_a4ebef660705cd808e54aff0ea5624535}{00115}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}} \mbox{\hyperlink{class_uni_rx_1_1_notification_a4ebef660705cd808e54aff0ea5624535}{Kind}}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00116}00116         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00117}00117             \textcolor{keyword}{get};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00118}00118         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00119}00119 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00123}00123         [DebuggerDisplay(\textcolor{stringliteral}{"{}OnNext(\{Value\})"{}})]}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00124}00124         [Serializable]}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00125}00125         \textcolor{keyword}{internal} sealed \textcolor{keyword}{class }OnNextNotification : \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}<T>}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00126}00126         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00127}00127             T value;}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00132}00132             \textcolor{keyword}{public} OnNextNotification(T value)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00133}00133             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00134}00134                 this.value = value;}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00135}00135             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00140}00140             \textcolor{keyword}{public} \textcolor{keyword}{override} T \mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}} \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} value; \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00141}00141 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00145}00145             \textcolor{keyword}{public} \textcolor{keyword}{override} \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{null}; \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00146}00146 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00150}00150             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_notification_a9ef2a3f0ae5ab51969c0c9ec320d212a}{HasValue}} \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00151}00151 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00155}00155             \textcolor{keyword}{public} \textcolor{keyword}{override} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}} \mbox{\hyperlink{class_uni_rx_1_1_notification_a4ebef660705cd808e54aff0ea5624535}{Kind}} \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}}.OnNext; \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00156}00156 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00160}00160             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{int} GetHashCode()}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00161}00161             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00162}00162                 \textcolor{keywordflow}{return} EqualityComparer<T>.Default.GetHashCode(\mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00163}00163             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00164}00164 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00168}00168             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_notification_a619390bf6d8d03cc7c96f115db2de742}{Equals}}(\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}} other)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00169}00169             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00170}00170                 \textcolor{keywordflow}{if} (Object.ReferenceEquals(\textcolor{keyword}{this}, other))}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00171}00171                     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00172}00172                 \textcolor{keywordflow}{if} (Object.ReferenceEquals(other, \textcolor{keyword}{null}))}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00173}00173                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00174}00174                 \textcolor{keywordflow}{if} (other.\mbox{\hyperlink{class_uni_rx_1_1_notification_a4ebef660705cd808e54aff0ea5624535}{Kind}} != \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}}.OnNext)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00175}00175                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00176}00176                 \textcolor{keywordflow}{return} EqualityComparer<T>.Default.Equals(\mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}}, other.\mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00177}00177             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00178}00178 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00182}00182             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{string} ToString()}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00183}00183             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00184}00184                 \textcolor{keywordflow}{return} String.Format(CultureInfo.CurrentCulture, \textcolor{stringliteral}{"{}OnNext(\{0\})"{}}, \mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00185}00185             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00186}00186 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00191}00191             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{Accept}}(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T>}} observer)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00192}00192             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00193}00193                 \textcolor{keywordflow}{if} (observer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00194}00194                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}observer"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00195}00195 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00196}00196                 observer.OnNext(\mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00197}00197             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00198}00198 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00204}00204             \textcolor{keyword}{public} \textcolor{keyword}{override} TResult \mbox{\hyperlink{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}{Accept<TResult>}}(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T, TResult>}} observer)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00205}00205             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00206}00206                 \textcolor{keywordflow}{if} (observer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00207}00207                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}observer"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00208}00208 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00209}00209                 \textcolor{keywordflow}{return} observer.OnNext(\mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00210}00210             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00211}00211 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00218}00218             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{Accept}}(Action<T> onNext, Action<Exception> onError, Action onCompleted)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00219}00219             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00220}00220                 \textcolor{keywordflow}{if} (onNext == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00221}00221                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onNext"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00222}00222                 \textcolor{keywordflow}{if} (onError == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00223}00223                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onError"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00224}00224                 \textcolor{keywordflow}{if} (onCompleted == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00225}00225                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onCompleted"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00226}00226 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00227}00227                 onNext(\mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00228}00228             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00229}00229 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00237}00237             \textcolor{keyword}{public} \textcolor{keyword}{override} TResult \mbox{\hyperlink{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}{Accept<TResult>}}(Func<T, TResult> onNext, Func<Exception, TResult> onError, Func<TResult> onCompleted)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00238}00238             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00239}00239                 \textcolor{keywordflow}{if} (onNext == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00240}00240                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onNext"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00241}00241                 \textcolor{keywordflow}{if} (onError == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00242}00242                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onError"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00243}00243                 \textcolor{keywordflow}{if} (onCompleted == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00244}00244                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onCompleted"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00245}00245 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00246}00246                 \textcolor{keywordflow}{return} onNext(\mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00247}00247             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00248}00248         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00249}00249 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00253}00253 \textcolor{preprocessor}{\#if !NO\_DEBUGGER\_ATTRIBUTES}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00254}00254         [DebuggerDisplay(\textcolor{stringliteral}{"{}OnError(\{Exception\})"{}})]}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00255}00255 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00256}00256 \textcolor{preprocessor}{\#if !NO\_SERIALIZABLE}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00257}00257         [Serializable]}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00258}00258 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00259}00259         \textcolor{keyword}{internal} sealed \textcolor{keyword}{class }OnErrorNotification : \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}<T>}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00260}00260         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00261}00261             \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} exception;}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00262}00262 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00266}00266             \textcolor{keyword}{public} OnErrorNotification(\mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} exception)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00267}00267             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00268}00268                 this.exception = exception;}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00269}00269             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00270}00270 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00274}00274             \textcolor{keyword}{public} \textcolor{keyword}{override} T \mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}} \{ \textcolor{keyword}{get} \{ exception.Throw(); \textcolor{keywordflow}{throw} exception; \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00275}00275 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00279}00279             \textcolor{keyword}{public} \textcolor{keyword}{override} \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} exception; \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00280}00280 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00284}00284             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_notification_a9ef2a3f0ae5ab51969c0c9ec320d212a}{HasValue}} \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00285}00285 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00289}00289             \textcolor{keyword}{public} \textcolor{keyword}{override} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}} \mbox{\hyperlink{class_uni_rx_1_1_notification_a4ebef660705cd808e54aff0ea5624535}{Kind}} \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}}.OnError; \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00290}00290 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00294}00294             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{int} GetHashCode()}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00295}00295             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00296}00296                 \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}}.GetHashCode();}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00297}00297             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00298}00298 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00302}00302             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_notification_a619390bf6d8d03cc7c96f115db2de742}{Equals}}(\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}} other)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00303}00303             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00304}00304                 \textcolor{keywordflow}{if} (Object.ReferenceEquals(\textcolor{keyword}{this}, other))}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00305}00305                     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00306}00306                 \textcolor{keywordflow}{if} (Object.ReferenceEquals(other, \textcolor{keyword}{null}))}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00307}00307                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00308}00308                 \textcolor{keywordflow}{if} (other.\mbox{\hyperlink{class_uni_rx_1_1_notification_a4ebef660705cd808e54aff0ea5624535}{Kind}} != \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}}.OnError)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00309}00309                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00310}00310                 \textcolor{keywordflow}{return} Object.Equals(\mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}}, other.\mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00311}00311             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00312}00312 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00316}00316             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{string} ToString()}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00317}00317             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00318}00318                 \textcolor{keywordflow}{return} String.Format(CultureInfo.CurrentCulture, \textcolor{stringliteral}{"{}OnError(\{0\})"{}}, \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}}.GetType().FullName);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00319}00319             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00320}00320 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00325}00325             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{Accept}}(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T>}} observer)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00326}00326             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00327}00327                 \textcolor{keywordflow}{if} (observer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00328}00328                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}observer"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00329}00329 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00330}00330                 observer.OnError(\mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00331}00331             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00332}00332 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00338}00338             \textcolor{keyword}{public} \textcolor{keyword}{override} TResult \mbox{\hyperlink{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}{Accept<TResult>}}(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T, TResult>}} observer)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00339}00339             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00340}00340                 \textcolor{keywordflow}{if} (observer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00341}00341                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}observer"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00342}00342 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00343}00343                 \textcolor{keywordflow}{return} observer.OnError(\mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00344}00344             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00345}00345 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00352}00352             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{Accept}}(Action<T> onNext, Action<Exception> onError, Action onCompleted)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00353}00353             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00354}00354                 \textcolor{keywordflow}{if} (onNext == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00355}00355                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onNext"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00356}00356                 \textcolor{keywordflow}{if} (onError == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00357}00357                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onError"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00358}00358                 \textcolor{keywordflow}{if} (onCompleted == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00359}00359                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onCompleted"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00360}00360 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00361}00361                 onError(\mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00362}00362             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00363}00363 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00371}00371             \textcolor{keyword}{public} \textcolor{keyword}{override} TResult \mbox{\hyperlink{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}{Accept<TResult>}}(Func<T, TResult> onNext, Func<Exception, TResult> onError, Func<TResult> onCompleted)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00372}00372             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00373}00373                 \textcolor{keywordflow}{if} (onNext == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00374}00374                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onNext"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00375}00375                 \textcolor{keywordflow}{if} (onError == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00376}00376                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onError"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00377}00377                 \textcolor{keywordflow}{if} (onCompleted == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00378}00378                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onCompleted"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00379}00379 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00380}00380                 \textcolor{keywordflow}{return} onError(\mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00381}00381             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00382}00382         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00383}00383 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00387}00387         [DebuggerDisplay(\textcolor{stringliteral}{"{}OnCompleted()"{}})]}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00388}00388         [Serializable]}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00389}00389         \textcolor{keyword}{internal} sealed \textcolor{keyword}{class }OnCompletedNotification : \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}<T>}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00390}00390         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00394}00394             \textcolor{keyword}{public} OnCompletedNotification()}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00395}00395             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00396}00396             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00397}00397 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00401}00401             \textcolor{keyword}{public} \textcolor{keyword}{override} T \mbox{\hyperlink{class_uni_rx_1_1_notification_a067c9f94bccd8a48f569f2f92fcfb626}{Value}} \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{throw} \textcolor{keyword}{new} InvalidOperationException(\textcolor{stringliteral}{"{}No Value"{}}); \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00402}00402 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00406}00406             \textcolor{keyword}{public} \textcolor{keyword}{override} \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} \mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{null}; \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00407}00407 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00411}00411             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_notification_a9ef2a3f0ae5ab51969c0c9ec320d212a}{HasValue}} \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00412}00412 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00416}00416             \textcolor{keyword}{public} \textcolor{keyword}{override} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}} \mbox{\hyperlink{class_uni_rx_1_1_notification_a4ebef660705cd808e54aff0ea5624535}{Kind}} \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}}.OnCompleted; \} \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00417}00417 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00421}00421             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{int} GetHashCode()}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00422}00422             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00423}00423                 \textcolor{keywordflow}{return} typeof(T).GetHashCode() \string^ 8510;}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00424}00424             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00425}00425 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00429}00429             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_notification_a619390bf6d8d03cc7c96f115db2de742}{Equals}}(\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}} other)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00430}00430             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00431}00431                 \textcolor{keywordflow}{if} (Object.ReferenceEquals(\textcolor{keyword}{this}, other))}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00432}00432                     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00433}00433                 \textcolor{keywordflow}{if} (Object.ReferenceEquals(other, \textcolor{keyword}{null}))}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00434}00434                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00435}00435                 \textcolor{keywordflow}{return} other.Kind == \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}}.OnCompleted;}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00436}00436             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00437}00437 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00441}00441             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{string} ToString()}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00442}00442             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00443}00443                 \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}OnCompleted()"{}};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00444}00444             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00445}00445 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00450}00450             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{Accept}}(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T>}} observer)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00451}00451             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00452}00452                 \textcolor{keywordflow}{if} (observer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00453}00453                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}observer"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00454}00454 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00455}00455                 observer.OnCompleted();}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00456}00456             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00457}00457 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00463}00463             \textcolor{keyword}{public} \textcolor{keyword}{override} TResult \mbox{\hyperlink{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}{Accept<TResult>}}(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T, TResult>}} observer)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00464}00464             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00465}00465                 \textcolor{keywordflow}{if} (observer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00466}00466                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}observer"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00467}00467 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00468}00468                 \textcolor{keywordflow}{return} observer.OnCompleted();}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00469}00469             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00470}00470 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00477}00477             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{Accept}}(Action<T> onNext, Action<Exception> onError, Action onCompleted)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00478}00478             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00479}00479                 \textcolor{keywordflow}{if} (onNext == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00480}00480                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onNext"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00481}00481                 \textcolor{keywordflow}{if} (onError == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00482}00482                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onError"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00483}00483                 \textcolor{keywordflow}{if} (onCompleted == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00484}00484                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onCompleted"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00485}00485 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00486}00486                 onCompleted();}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00487}00487             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00488}00488 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00496}00496             \textcolor{keyword}{public} \textcolor{keyword}{override} TResult \mbox{\hyperlink{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}{Accept<TResult>}}(Func<T, TResult> onNext, Func<Exception, TResult> onError, Func<TResult> onCompleted)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00497}00497             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00498}00498                 \textcolor{keywordflow}{if} (onNext == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00499}00499                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onNext"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00500}00500                 \textcolor{keywordflow}{if} (onError == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00501}00501                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onError"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00502}00502                 \textcolor{keywordflow}{if} (onCompleted == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00503}00503                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}onCompleted"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00504}00504 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00505}00505                 \textcolor{keywordflow}{return} onCompleted();}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00506}00506             \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00507}00507         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00508}00508 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00519}\mbox{\hyperlink{class_uni_rx_1_1_notification_a619390bf6d8d03cc7c96f115db2de742}{00519}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_notification_a619390bf6d8d03cc7c96f115db2de742}{Equals}}(\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}} other);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00520}00520 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00532}\mbox{\hyperlink{class_uni_rx_1_1_notification_a1fae6632a03ad03421e11c6dfed57471}{00532}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_notification_a1fae6632a03ad03421e11c6dfed57471}{operator ==}}(\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}} left, \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}} right)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00533}00533         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00534}00534             \textcolor{keywordflow}{if} (\textcolor{keywordtype}{object}.ReferenceEquals(left, right))}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00535}00535                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00536}00536 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00537}00537             \textcolor{keywordflow}{if} ((\textcolor{keywordtype}{object})left == \textcolor{keyword}{null} || (\textcolor{keywordtype}{object})right == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00538}00538                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00539}00539 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00540}00540             \textcolor{keywordflow}{return} left.\mbox{\hyperlink{class_uni_rx_1_1_notification_a619390bf6d8d03cc7c96f115db2de742}{Equals}}(right);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00541}00541         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00542}00542 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00554}\mbox{\hyperlink{class_uni_rx_1_1_notification_a30868ca61a7c17d85b879728d040a50c}{00554}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_notification_a30868ca61a7c17d85b879728d040a50c}{operator !=}}(\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}} left, \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}} right)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00555}00555         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00556}00556             \textcolor{keywordflow}{return} !(left == right);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00557}00557         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00558}00558 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00569}\mbox{\hyperlink{class_uni_rx_1_1_notification_a052d6ed13c4938de9e82891348b54adc}{00569}}         \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_uni_rx_1_1_notification_a052d6ed13c4938de9e82891348b54adc}{Equals}}(\textcolor{keywordtype}{object} obj)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00570}00570         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00571}00571             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_notification_a619390bf6d8d03cc7c96f115db2de742}{Equals}}(obj as \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00572}00572         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00573}00573 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00578}\mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{00578}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{Accept}}(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T>}} observer);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00579}00579 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00586}\mbox{\hyperlink{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}{00586}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} TResult \mbox{\hyperlink{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}{Accept<TResult>}}(\mbox{\hyperlink{interface_uni_rx_1_1_i_observer}{IObserver<T, TResult>}} observer);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00587}00587 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00594}\mbox{\hyperlink{class_uni_rx_1_1_notification_af57901ad7e220202360398e98e69e5c8}{00594}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_uni_rx_1_1_notification_af57901ad7e220202360398e98e69e5c8}{Accept}}(Action<T> onNext, Action<Exception> onError, Action onCompleted);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00595}00595 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00604}\mbox{\hyperlink{class_uni_rx_1_1_notification_ad85631c0243bd0b984540635b7b16a4a}{00604}}         \textcolor{keyword}{public} \textcolor{keyword}{abstract} TResult \mbox{\hyperlink{class_uni_rx_1_1_notification_ab4836fc3671403bc620a913b56c6957b}{Accept<TResult>}}(Func<T, TResult> onNext, Func<Exception, TResult> onError, Func<TResult> onCompleted);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00605}00605 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00610}\mbox{\hyperlink{class_uni_rx_1_1_notification_ae686585cc1dcfe98032ae059bca249d3}{00610}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_notification_ae686585cc1dcfe98032ae059bca249d3}{ToObservable}}()}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00611}00611         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00612}00612             \textcolor{keywordflow}{return} this.\mbox{\hyperlink{class_uni_rx_1_1_notification_ae686585cc1dcfe98032ae059bca249d3}{ToObservable}}(Scheduler.Immediate);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00613}00613         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00614}00614 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00620}\mbox{\hyperlink{class_uni_rx_1_1_notification_a08fb27e4df291d10394d5849703664db}{00620}}         \textcolor{keyword}{public} \mbox{\hyperlink{interface_uni_rx_1_1_i_observable}{IObservable<T>}} \mbox{\hyperlink{class_uni_rx_1_1_notification_a08fb27e4df291d10394d5849703664db}{ToObservable}}(\mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler}{IScheduler}} scheduler)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00621}00621         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00622}00622             \textcolor{keywordflow}{if} (scheduler == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00623}00623                 \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}scheduler"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00624}00624 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00625}00625             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_uni_rx_1_1_observable}{Observable}}.Create<T>(observer => scheduler.\mbox{\hyperlink{interface_uni_rx_1_1_i_scheduler_aca269ddbc2473ddc87dc5be6d299a583}{Schedule}}(() =>}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00626}00626             \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00627}00627                 this.\mbox{\hyperlink{class_uni_rx_1_1_notification_a45f76896187fc1de57604ff7fe8b4d09}{Accept}}(observer);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00628}00628                 \textcolor{keywordflow}{if} (this.\mbox{\hyperlink{class_uni_rx_1_1_notification_a4ebef660705cd808e54aff0ea5624535}{Kind}} == \mbox{\hyperlink{namespace_uni_rx_a22e9e515f5d77e490876bfb7d85cee83}{NotificationKind}}.OnNext)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00629}00629                     observer.OnCompleted();}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00630}00630             \}));}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00631}00631         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00632}00632     \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00633}00633 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00637}00637     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{class }\mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification}}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00638}00638     \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00645}\mbox{\hyperlink{class_uni_rx_1_1_notification_abedefc57c1617d39522f7f28960788b4}{00645}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}} \mbox{\hyperlink{class_uni_rx_1_1_notification_abedefc57c1617d39522f7f28960788b4}{CreateOnNext<T>}}(T value)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00646}00646         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00647}00647             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}}.\mbox{\hyperlink{class_uni_rx_1_1_notification_1_1_on_next_notification}{OnNextNotification}}(value);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00648}00648         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00649}00649 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00657}\mbox{\hyperlink{class_uni_rx_1_1_notification_aa9397eb1d6367457d4c4b180a9d554e4}{00657}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}} \mbox{\hyperlink{class_uni_rx_1_1_notification_aa9397eb1d6367457d4c4b180a9d554e4}{CreateOnError<T>}}(\mbox{\hyperlink{class_uni_rx_1_1_notification_a307e2a91456a4f056a46fcdacdd0dfd1}{Exception}} error)}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00658}00658         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00659}00659             \textcolor{keywordflow}{if} (error == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00660}00660                 \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentNullException(\textcolor{stringliteral}{"{}error"{}});}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00661}00661 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00662}00662             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}}.\mbox{\hyperlink{class_uni_rx_1_1_notification_1_1_on_error_notification}{OnErrorNotification}}(error);}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00663}00663         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00664}00664 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00670}\mbox{\hyperlink{class_uni_rx_1_1_notification_a6a2323d868bd16baa08cb2b056a40622}{00670}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}} \mbox{\hyperlink{class_uni_rx_1_1_notification_a6a2323d868bd16baa08cb2b056a40622}{CreateOnCompleted<T>}}()}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00671}00671         \{}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00672}00672             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_uni_rx_1_1_notification}{Notification<T>}}.\mbox{\hyperlink{class_uni_rx_1_1_notification_1_1_on_completed_notification}{OnCompletedNotification}}();}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00673}00673         \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00674}00674     \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00675}00675 \}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00676}00676 }
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00677}00677 \textcolor{preprocessor}{\#pragma warning restore 0659}}
+\DoxyCodeLine{\Hypertarget{_notification_8cs_source_l00678}00678 \textcolor{preprocessor}{\#pragma warning restore 0661}}
+
+\end{DoxyCode}

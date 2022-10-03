@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,5 +12,8 @@ public class TickMetaData
     public string TickedBy;
     public string TickerMessage = "";
     public readonly float TickTime = Time.time;
-    public float ExecutionTime = float.MinValue;
+    public float ExecutionTimeInMicroSeconds => ExecutionTimeInTicks * TicksPrMicroSecond;
+    public float ExecutionTimeInTicks = float.MinValue;
+    private static float TicksPrMicroSecond => (1000f*1000f)/ Stopwatch.Frequency;
+
 }

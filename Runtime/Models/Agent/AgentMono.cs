@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniRx;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 
 public class AgentMono : MonoBehaviour, IAgent
@@ -12,6 +14,8 @@ public class AgentMono : MonoBehaviour, IAgent
     [SerializeField]
     [InspectorName("Settings")]
     private AgentModel model = new AgentModel();
+
+    private Stopwatch stopwatch = new Stopwatch();
     public AgentModel Model => model;
     public string TypeIdentifier => GetType().FullName;
 
@@ -67,8 +71,9 @@ public class AgentMono : MonoBehaviour, IAgent
         return gameObject.name;
     }
 
-    public void Tick(TickMetaData metaData)
+    public void ActivateNextAction(TickMetaData metaData)
     {
+        stopwatch.Restart();
         if (Uai == null)
         {
             var aiByName = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
@@ -99,6 +104,8 @@ public class AgentMono : MonoBehaviour, IAgent
         }
 
         Uai.UaiContext.LastActions = actions;
+
+        metaData.ExecutionTimeInTicks = stopwatch.ElapsedTicks;
     }
 
     public bool CanAutoTick()

@@ -54,7 +54,7 @@ public abstract class AgentScript : IAgent
         return "";
     }
 
-    public void ActivateNextAction(TickMetaData metaData)
+    public void ActivateNextAction(TickMetaData metaData, IAiContext context = null)
     {
         throw new NotImplementedException();
         //Ai.Context.SetContext(AiContextKey.TickMetaData, metaData);

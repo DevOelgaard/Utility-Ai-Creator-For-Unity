@@ -69,7 +69,7 @@ public class ParameterContainer
                 paramColorByName.Add(parameterName,param);
             }
         }
-        else if (type == typeof(Enum))
+        else if (type == typeof(Enum) || type.IsSubclassOf(typeof(Enum)))
         {
             var param = new ParamEnum(parameterName, (Enum) value);
             if (paramEnumByName.ContainsKey(parameterName))

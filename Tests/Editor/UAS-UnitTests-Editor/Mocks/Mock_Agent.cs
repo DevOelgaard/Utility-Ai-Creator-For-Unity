@@ -21,6 +21,11 @@
             Uai = newUai;
         }
 
+        public void SetContextType(IAiContext context)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Uai Uai { get; set; }
         public bool CanAutoTick()
         {

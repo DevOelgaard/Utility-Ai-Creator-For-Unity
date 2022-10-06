@@ -8,8 +8,10 @@ public interface IAgent
 {
     AgentModel Model { get; }
     string TypeIdentifier { get; }
-    void ActivateNextAction(TickMetaData metaData, IAiContext context = null);
+    void ActivateNextAction(TickMetaData metaData);
     void SetAi(Uai newUai);
+    void SetContextType(IAiContext context);
     Uai Uai { get; set; }
     bool CanAutoTick();
+    
 }

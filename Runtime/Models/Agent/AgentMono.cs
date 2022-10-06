@@ -24,6 +24,8 @@ public class AgentMono : MonoBehaviour, IAgent
 
     private DecisionScoreEvaluator decisionScoreEvaluator;
     private Uai uai;
+    private IAiContext context;
+
     public Uai Uai
     {
         get => uai;
@@ -44,6 +46,7 @@ public class AgentMono : MonoBehaviour, IAgent
         SetAi(aiByName);
         decisionScoreEvaluator = new DecisionScoreEvaluator();
     }
+    
 
     public void SetAi(Uai newUai)
     {
@@ -52,8 +55,19 @@ public class AgentMono : MonoBehaviour, IAgent
             DebugService.LogWarning("Setting Ai of agent: " + name +" to null", this);
             throw new NullReferenceException();
         }
+
+        if (context != null)
+        {
+            Uai.SetContext(context);
+        }
+
         DebugService.Log("Setting Ai of agent: " + newUai.Name, this);
         Uai = newUai;
+    }
+    public void SetContextType(IAiContext newContext)
+    {
+        context = newContext;
+        Uai?.SetContext(context);
     }
 
     void OnDestroy()
@@ -71,7 +85,7 @@ public class AgentMono : MonoBehaviour, IAgent
         return gameObject.name;
     }
 
-    public void ActivateNextAction(TickMetaData metaData, IAiContext context = null)
+    public void ActivateNextAction(TickMetaData metaData)
     {
         stopwatch.Restart();
         if (Uai == null)
@@ -80,10 +94,6 @@ public class AgentMono : MonoBehaviour, IAgent
             SetAi(aiByName);
         }
 
-        if (context != null)
-        {
-            Uai.SetContext(context);
-        }
         Uai.UaiContext.TickMetaData = metaData;
         Model.LastTickMetaData = metaData;
         Model.LastTickTime = Time.time;

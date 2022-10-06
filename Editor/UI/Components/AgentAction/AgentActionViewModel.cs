@@ -12,6 +12,7 @@ internal class AgentActionViewModel : AiObjectViewModel
     {
         var root = AssetService.GetTemplateContainer(GetType().FullName);
         parametersContainer = root.Q<VisualElement>("ParametersContainer");
+        styleSheets.Add(StylesService.GetStyleSheet("AgentActionViewModel"));
 
         Body.Clear();
         Body.Add(root);

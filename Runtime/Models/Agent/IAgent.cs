@@ -8,7 +8,7 @@ public interface IAgent
 {
     AgentModel Model { get; }
     string TypeIdentifier { get; }
-    void ActivateNextAction(TickMetaData metaData);
+    void ActivateNextAction(TickMetaData metaData, IAiContext context = null);
     void SetAi(Uai newUai);
     Uai Uai { get; set; }
     bool CanAutoTick();

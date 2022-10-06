@@ -71,13 +71,18 @@ public class AgentMono : MonoBehaviour, IAgent
         return gameObject.name;
     }
 
-    public void ActivateNextAction(TickMetaData metaData)
+    public void ActivateNextAction(TickMetaData metaData, IAiContext context = null)
     {
         stopwatch.Restart();
         if (Uai == null)
         {
             var aiByName = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
             SetAi(aiByName);
+        }
+
+        if (context != null)
+        {
+            Uai.SetContext(context);
         }
         Uai.UaiContext.TickMetaData = metaData;
         Model.LastTickMetaData = metaData;

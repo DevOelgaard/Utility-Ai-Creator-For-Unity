@@ -39,7 +39,14 @@ public class Uai: AiObjectModel
                 .Subscribe(_ => UpdateInfo());
         }
     }
-    internal readonly IAiContext UaiContext = new AiContext();
+
+    private IAiContext uaiContext;
+
+    internal IAiContext UaiContext
+    {
+        get { return uaiContext ??= new AiContext(); }
+        private set => uaiContext = value;
+    }
 
     public Uai(): base()
     {
@@ -52,6 +59,11 @@ public class Uai: AiObjectModel
         BaseAiObjectType = typeof(Uai);
     }
 
+    internal void SetContext(IAiContext context)
+    {
+        if (UaiContext != null) return;
+        UaiContext = context;
+    }
 
     protected override AiObjectModel InternalClone()
     {

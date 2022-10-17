@@ -19,7 +19,7 @@ public abstract class AgentAction: AiObjectModel
     }
 
     public virtual void OnStart(IAiContext context) { }
-    public virtual void OnGoing(IAiContext context) { }
+    public virtual void OnGoing(IAiContext context) { OnStart(context);}
     public virtual void OnEnd(IAiContext context) { }
 
     protected override string GetNameFormat(string currentName)

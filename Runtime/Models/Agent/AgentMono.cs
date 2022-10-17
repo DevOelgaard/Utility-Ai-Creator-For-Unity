@@ -58,6 +58,7 @@ public class AgentMono : MonoBehaviour, IAgent
 
         if (context != null)
         {
+            context.Agent = this;
             Uai.SetContext(context);
         }
 
@@ -67,6 +68,7 @@ public class AgentMono : MonoBehaviour, IAgent
     public void SetContextType(IAiContext newContext)
     {
         context = newContext;
+        context.Agent = this;
         Uai?.SetContext(context);
     }
 

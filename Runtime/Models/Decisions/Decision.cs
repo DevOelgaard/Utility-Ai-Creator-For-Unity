@@ -11,7 +11,7 @@ public class Decision: UtilityContainer
     private ReactiveListNameSafe<AgentAction> agentActions = new ReactiveListNameSafe<AgentAction>();
     public TickMetaData LastSelectedTickMetaData;
     private float weight = 1f;
-    private float baseWeight = 1f;
+    // private float baseWeight = 1f;
 
     public ReactiveListNameSafe<AgentAction> AgentActions
     {
@@ -44,6 +44,11 @@ public class Decision: UtilityContainer
         agentActionSub = agentActions.OnValueChanged
             .Subscribe(_ => UpdateInfo());
         BaseAiObjectType = typeof(Decision);
+    }
+
+    internal override float GetWeight()
+    {
+        return weight;
     }
 
     protected override AiObjectModel InternalClone()
@@ -100,33 +105,6 @@ public class Decision: UtilityContainer
         }
     }
 
-    // protected override async Task RestoreInternalAsync(RestoreState s, bool restoreDebug = false)
-    // {
-    //     await base.RestoreInternalAsync(s, restoreDebug);
-    //     var state = (DecisionState) s;
-    //     Name = state.Name;
-    //     Description = state.Description;
-    //
-    //     AgentActions = new ReactiveListNameSafe<AgentAction>();
-    //     var restoredAgentActions = await RestoreAbleService
-    //         .GetAiObjectsSortedByIndex<AgentAction>(CurrentDirectory + Consts.FolderName_AgentActions,
-    //             restoreDebug);
-    //     
-    //     AgentActions.Add(RestoreAbleService.OrderByNames(state.AgentActions, restoredAgentActions));
-    //
-    //     Considerations = new ReactiveListNameSafe<Consideration>();
-    //     var considerations = await RestoreAbleService
-    //         .GetAiObjectsSortedByIndex<Consideration>(CurrentDirectory + Consts.FolderName_Considerations,
-    //             restoreDebug);
-    //     
-    //     Considerations.Add(RestoreAbleService.OrderByNames(state.Considerations, considerations));
-    //
-    //     if (restoreDebug)
-    //     {
-    //         LastCalculatedUtility = state.LastCalculatedUtility;
-    //     }
-    // }
-
     protected override float CalculateUtility(IAiContext context)
     {
         var modifier = float.NaN;
@@ -144,7 +122,7 @@ public class Decision: UtilityContainer
         {
             weight = Convert.ToSingle(parent.Weight.Value);
         }
-        return base.CalculateUtility(context) * weight;
+        return base.CalculateUtility(context);
     }
 
     protected override void ClearSubscriptions()

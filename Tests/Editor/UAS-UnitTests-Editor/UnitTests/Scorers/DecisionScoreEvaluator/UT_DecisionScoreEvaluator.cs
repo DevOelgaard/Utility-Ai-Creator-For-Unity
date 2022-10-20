@@ -7,7 +7,7 @@ namespace UnitTests.Scorers.DecisionScoreEvaluators
     [TestFixture]
     public class UtDecisionScoreEvaluator
     {
-        private DecisionScoreEvaluator uut;
+        private DseHighestBuckets uut;
         private List<Decision> mockDecisions;
         private List<Bucket> mockBuckets;
         private Mock_UtilityContainerSelector mockDecisionSelector;
@@ -81,19 +81,19 @@ namespace UnitTests.Scorers.DecisionScoreEvaluators
                 CurrentDecisionSelector = mockDecisionSelector
             };
 
-            uut = new DecisionScoreEvaluator();
+            uut = new DseHighestBuckets();
         }
 
         [Test]
         public void GetName_Default_ReturnsCorrectName()
         {
-            Assert.AreEqual(Consts.Name_DefaultDSE, uut.GetName());
+            Assert.AreEqual(Consts.Name_HighestBucketDSE, uut.GetName());
         }
 
         [Test]
         public void GetDescription_Default_ReturnsCorrectDescription()
         {
-            Assert.AreEqual(Consts.Description_DefaultDSE, uut.GetDescription());
+            Assert.AreEqual(Consts.Description_HighestBucketDSE, uut.GetDescription());
         }
 
         [Test]

@@ -22,7 +22,7 @@ public class AgentMono : MonoBehaviour, IAgent
     [HideInInspector]
     public string defaultAiName = "";
 
-    private DecisionScoreEvaluator decisionScoreEvaluator;
+    private DecisionScoreEvaluator dse;
     private Uai uai;
     private IAiContext context;
 
@@ -44,7 +44,7 @@ public class AgentMono : MonoBehaviour, IAgent
         AgentManager.Instance.Register(this);
         var aiByName = PlayAbleAiService.Instance.GetAiByName(defaultAiName);
         SetAi(aiByName);
-        decisionScoreEvaluator = new DecisionScoreEvaluator();
+        dse = new DseAllBuckets();
     }
     
 
@@ -101,7 +101,7 @@ public class AgentMono : MonoBehaviour, IAgent
         Model.LastTickTime = Time.time;
         Model.LastTickFrame = Time.frameCount;
 
-        var actions = decisionScoreEvaluator.NextActions(Uai.Buckets.Values, Uai);
+        var actions = dse.NextActions(Uai.Buckets.Values, Uai);
         var oldActions = Uai.UaiContext.LastActions;
         foreach(var action in actions)
         {

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 public class UCSHighestScore : UtilityContainerSelector
 {
@@ -23,13 +19,10 @@ public class UCSHighestScore : UtilityContainerSelector
     public override Bucket GetBestUtilityContainer(List<Bucket> buckets, IAiContext context)
     {
         UtilityContainer bestContainer = null;
-        foreach(Bucket bucket in buckets)
+        foreach(Bucket currentlyEvaluatedBucket in buckets)
         {
-            //
-            var weight = Convert.ToSingle(bucket.Weight.Value);
-
-            context.CurrentEvaluatedBucket = bucket;
-            bestContainer = CheckBestContainer(bucket, context, bestContainer);
+            context.CurrentEvaluatedBucket = currentlyEvaluatedBucket;
+            bestContainer = CheckBestContainer(currentlyEvaluatedBucket, context, bestContainer);
         }
         return bestContainer as Bucket;
     }
@@ -37,31 +30,31 @@ public class UCSHighestScore : UtilityContainerSelector
     public override Decision GetBestUtilityContainer(List<Decision> decisions, IAiContext context)
     {
         UtilityContainer bestContainer = null;
-        foreach (var decision in decisions)
+        foreach (var currentlyEvaluatedDecision in decisions)
         {
-            context.CurrentEvaluatedDecision = decision;
-            bestContainer = CheckBestContainer(decision, context, bestContainer);
+            context.CurrentEvaluatedDecision = currentlyEvaluatedDecision;
+            bestContainer = CheckBestContainer(currentlyEvaluatedDecision, context, bestContainer);
         }
         return bestContainer as Decision;
     }
 
-    private UtilityContainer CheckBestContainer(UtilityContainer container, IAiContext context, UtilityContainer bestContainer = null)
+    private UtilityContainer CheckBestContainer(UtilityContainer currentlyEvaluatedContainer, IAiContext context, UtilityContainer bestContainer = null)
     {
-        var utility = container.GetUtility(context);
-        
+        var utility = currentlyEvaluatedContainer.GetUtility(context);
+
         if (utility <= 0)
         {
-            return bestContainer;
+            return null;
         }
 
         if (bestContainer == null)
         {
-            return container;
+            return currentlyEvaluatedContainer;
         } else
         {
             if(utility > bestContainer.LastCalculatedUtility)
             {
-                return container;
+                return currentlyEvaluatedContainer;
             }
         }
         return bestContainer;

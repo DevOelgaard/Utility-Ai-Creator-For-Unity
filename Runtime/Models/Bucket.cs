@@ -80,8 +80,12 @@ public class Bucket : UtilityContainer
         {
             Weight.Value = modifier;
         }
-        return base.CalculateUtility(context) * Convert.ToSingle(Weight.Value);
+        return base.CalculateUtility(context);
+    }
 
+    internal override float GetWeight()
+    {
+        return Weight.Value;
     }
 
     public override void SetParent(AiObjectModel parent, int indexInParent)

@@ -7,7 +7,7 @@ namespace IntegrationTests.CalculateUtility
         [TestFixture]
         public class IT_ConsiderationUsAverageAiContextDecisionBucketUcsHighestDSE
         {
-            private DecisionScoreEvaluator dSE;
+            private DseHighestBuckets dSE;
             private UCSHighestScore ucsHighestScore;
             private UsAverageScorer uSAverage;
             private IAiContext aIContext;
@@ -21,7 +21,7 @@ namespace IntegrationTests.CalculateUtility
             public void SetUp()
             {
                 ucsHighestScore = new UCSHighestScore();
-                dSE = new DecisionScoreEvaluator();
+                dSE = new DseHighestBuckets();
                 uSAverage = new UsAverageScorer();
                 uai = new Uai
                 {

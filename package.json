@@ -1,6 +1,6 @@
 {
   "name": "net.devoe.ai.uas",
-  "version": "1.9.4",
+  "version": "1.10.1",
   "displayName": "Utility Ai Creator",
   "description": "An editor tool for quickly creating complex Utility Ais with a minimum of coding.",
   "unity": "2021.2",

@@ -98,9 +98,11 @@ public static class Consts
     public const string Description_USCompensationScorer =
         "Returns all considerations scores multiplied and compensates for multiplying by <1.";
 
-    public const string Name_DefaultDSE = "Default DSE";
-    public const string Description_DefaultDSE = "Selects the highest scored object";
+    public const string Name_HighestBucketDSE = "Highest Bucket DSE";
+    public const string Description_HighestBucketDSE = "Selects the highest scored object";
 
+    public const string Name_AllBucketsDSE = "All Buckets DSE";
+    public const string Description_AllBucketsDSE = "Evaluates all buckets. Decision.utility i multiplied by bucket weight";
     // Editor Windows
     public const string Window_TemplateManager_Name = "Template Manager";
     public const string Window_RuntimeInspector_Name = "Runtime Inspector";

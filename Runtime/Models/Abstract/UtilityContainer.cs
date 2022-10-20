@@ -39,6 +39,8 @@ public abstract class UtilityContainer : AiObjectModel
             lastUtilityChanged.OnNext(value);
         }
     }
+
+    internal abstract float GetWeight();
     
     public IObservable<float> LastUtilityScoreChanged => lastUtilityChanged;
     private Subject<float> lastUtilityChanged = new Subject<float>();
@@ -105,7 +107,7 @@ public abstract class UtilityContainer : AiObjectModel
 
     protected virtual float CalculateUtility(IAiContext context)
     {
-        return context.UtilityScorer.CalculateUtility(Considerations.Values, context);
+        return context.UtilityScorer.CalculateUtility(Considerations.Values, context) * GetWeight();
     }
 
     internal float GetUtility(IAiContext context)

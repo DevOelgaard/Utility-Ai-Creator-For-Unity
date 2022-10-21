@@ -107,6 +107,10 @@ public abstract class UtilityContainer : AiObjectModel
 
     protected virtual float CalculateUtility(IAiContext context)
     {
+        return Evaluate(context);
+    }
+    public float Evaluate(IAiContext context)
+    {
         return context.UtilityScorer.CalculateUtility(Considerations.Values, context) * GetWeight();
     }
 
@@ -120,6 +124,8 @@ public abstract class UtilityContainer : AiObjectModel
         }
         return LastCalculatedUtility;
     }
+
+    
 
     public void SortConsiderations()
     {

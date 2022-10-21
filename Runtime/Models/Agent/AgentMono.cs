@@ -87,6 +87,11 @@ public class AgentMono : MonoBehaviour, IAgent
         return gameObject.name;
     }
 
+    public void ActivateNextAction()
+    {
+        ActivateNextAction(new TickMetaData());
+    }
+
     public void ActivateNextAction(TickMetaData metaData)
     {
         stopwatch.Restart();

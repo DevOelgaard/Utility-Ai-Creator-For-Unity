@@ -8,6 +8,7 @@ public interface IAgent
 {
     AgentModel Model { get; }
     string TypeIdentifier { get; }
+    void ActivateNextAction();
     void ActivateNextAction(TickMetaData metaData);
     void SetAi(Uai newUai);
     void SetContextType(IAiContext context);

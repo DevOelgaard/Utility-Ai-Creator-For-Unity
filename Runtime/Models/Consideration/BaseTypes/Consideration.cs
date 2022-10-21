@@ -117,28 +117,42 @@ public abstract class Consideration : AiObjectModel
     public virtual float CalculateScore(IAiContext context)
     {
         BaseScore = CalculateBaseScore(context);
-        if (BaseScore < Convert.ToSingle(MinFloat.Value))
+        if (BaseScore < MinFloat.Value)
         {
             return BaseScoreBelowMinValue();
         }
-        else if (BaseScore > Convert.ToSingle(MaxFloat.Value))
+        else if (BaseScore > MaxFloat.Value)
         {
             return BaseScoreAboveMaxValue();
         }
-        //var normalizedBaseScore = Normalize(BaseScore);
-        var response = CurrentResponseCurve.CalculateResponse(BaseScore);
+
+        var range = MaxFloat.Value - MinFloat.Value;
+        var responseRange = CurrentResponseCurve.MaxX - CurrentResponseCurve.MinX;
+        var rangeFactor = responseRange / range;
+        var factoredScore = BaseScore * rangeFactor;
+        var response = CurrentResponseCurve.CalculateResponse(factoredScore);
+        
         NormalizedScore = Mathf.Clamp(response, 0f, 1f);
 
         return NormalizedScore;
     }
 
 
-
+    /// <summary>
+    /// Define what to return if the base score is below value
+    /// Returns 0 as standard
+    /// </summary>
+    /// <returns></returns>
     protected virtual float BaseScoreBelowMinValue()
     {
         return 0;
     }
 
+    /// <summary>
+    /// Define what to return if the base score exceeds max value
+    /// Returns 1 as standard
+    /// </summary>
+    /// <returns></returns>
     protected virtual float BaseScoreAboveMaxValue()
     {
         return 1;

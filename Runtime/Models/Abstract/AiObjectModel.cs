@@ -25,6 +25,8 @@ public abstract class AiObjectModel: PersistSingleFile, IInitializeAble
         private set => contextAddress = value;
     }
 
+    public AiObjectModel Parent => ContextAddress.Parent;
+
     private ContextAddress contextAddress;
     internal AiObjectMetaData MetaData = new AiObjectMetaData();
     protected readonly CompositeDisposable disposables = new CompositeDisposable();

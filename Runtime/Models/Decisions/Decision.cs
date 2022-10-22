@@ -46,7 +46,7 @@ public class Decision: UtilityContainer
         BaseAiObjectType = typeof(Decision);
     }
 
-    internal override float GetWeight()
+    public override float GetWeight()
     {
         return weight;
     }

@@ -40,7 +40,7 @@ public abstract class UtilityContainer : AiObjectModel
         }
     }
 
-    internal abstract float GetWeight();
+    public abstract float GetWeight();
     
     public IObservable<float> LastUtilityScoreChanged => lastUtilityChanged;
     private Subject<float> lastUtilityChanged = new Subject<float>();

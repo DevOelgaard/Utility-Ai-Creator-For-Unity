@@ -58,7 +58,7 @@ public class Bucket : UtilityContainer
     }
 
     private bool firstCalculation = true;
-    internal float baseWeight { get; private set; }
+    public float baseWeight { get; private set; }
 
     protected override float CalculateUtility(IAiContext context)
     {
@@ -83,7 +83,7 @@ public class Bucket : UtilityContainer
         return base.CalculateUtility(context);
     }
 
-    internal override float GetWeight()
+    public override float GetWeight()
     {
         return Weight.Value;
     }

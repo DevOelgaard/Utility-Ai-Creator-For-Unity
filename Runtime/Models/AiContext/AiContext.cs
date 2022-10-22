@@ -89,7 +89,7 @@ public class AiContext: IAiContext
     /// </summary>
     /// <param name="key">The key for retrieving data</param>
     /// <param name="value">The data to store</param>
-    /// <param name="owner">The owner of the data. If null the data is stored locally</param>
+    /// <param name="owner">The owner of the data. If null the data is stored globally</param>
     /// <returns></returns>
     public void SetContext(object key, object value, AiObjectModel owner = null)
     {

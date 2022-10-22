@@ -39,7 +39,7 @@ public class AgentMono : MonoBehaviour, IAgent
 
     protected virtual void Start()
     {
-        Debug.Log("Called");
+        // Debug.Log("Called");
         Model.Name = SetAgentName();
         AgentManager.Instance.Register(this);
         var aiByName = PlayAbleAiService.Instance.GetAiByName(defaultAiName);

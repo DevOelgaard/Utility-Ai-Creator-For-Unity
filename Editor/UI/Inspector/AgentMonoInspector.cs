@@ -22,7 +22,7 @@ internal class AgentMonoInspector: Editor
 
     public override VisualElement CreateInspectorGUI()
     {
-        Debug.Log("Creating inspector");
+        // Debug.Log("Creating inspector");
         root = new VisualElement();
         var defaultInspector = new IMGUIContainer();
         defaultInspector.onGUIHandler = () => DrawDefaultInspector();
@@ -37,7 +37,7 @@ internal class AgentMonoInspector: Editor
             root.Add(currentAiField);
             SetAiFieldChoices(PlayAbleAiService.Instance.PlayAbleAIs, currentAiField, agent.defaultAiName);
             PlayAbleAiService.Instance.OnAisChanged
-                .Subscribe(values => SetAiFieldChoices(values, currentAiField, agent.Uai.Name))
+                .Subscribe(values => SetAiFieldChoices(values, currentAiField, agent?.Uai?.Name))
                 .AddTo(disposables);
             
             currentAiField.RegisterCallback<ChangeEvent<string>>(evt =>

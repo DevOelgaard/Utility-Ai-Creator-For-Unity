@@ -152,7 +152,7 @@ internal class TemplateService: PersistSingleFile
             return;
         }
         
-        Debug.Log("Loading current project. Last Loaded: " + lastLoaded + " Now: " + DateTime.Now);
+        // Debug.Log("Loading current project. Last Loaded: " + lastLoaded + " Now: " + DateTime.Now);
         lastLoaded = DateTime.Now;
 
         SetState("Loading");

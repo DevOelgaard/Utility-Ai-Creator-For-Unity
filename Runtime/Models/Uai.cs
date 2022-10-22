@@ -62,7 +62,7 @@ public class Uai: AiObjectModel
     internal void SetContext(IAiContext context)
     {
         // if (UaiContext != null) return;
-        Debug.Log("Setting AI Context. From: " + UaiContext.GetType() + " to: " + context.GetType());
+        // Debug.Log("Setting AI Context. From: " + UaiContext.GetType() + " to: " + context.GetType());
         UaiContext = context;
     }
 

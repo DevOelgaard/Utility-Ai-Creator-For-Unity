@@ -35,7 +35,7 @@ namespace IntegrationTests.CalculateUtility
         public void CalculateUtility_OneIsZero_ReturnsZero()
         {
             var considerations = CreateUniformConsiderations(10, 0.5f);
-            var zeroConsideration = new Stub_Consideration_IT(0, new List<Parameter>());
+            var zeroConsideration = new Stub_Consideration_IT(0, new List<ParamFloat>());
             zeroConsideration.ReturnValue = 0;
             considerations.Add(zeroConsideration);
 
@@ -71,9 +71,9 @@ namespace IntegrationTests.CalculateUtility
         public void CalculateUtility_DifferentInput_ReturnsExpected(float a, float b, float c, float expected)
         {
             var considerations = new List<Consideration>();
-            var m1 = new Stub_Consideration_IT(a, new List<Parameter>());
-            var m2 = new Stub_Consideration_IT(b, new List<Parameter>());
-            var m3 = new Stub_Consideration_IT(c, new List<Parameter>());
+            var m1 = new Stub_Consideration_IT(a, new List<ParamFloat>());
+            var m2 = new Stub_Consideration_IT(b, new List<ParamFloat>());
+            var m3 = new Stub_Consideration_IT(c, new List<ParamFloat>());
 
             considerations.Add(m1);
             considerations.Add(m2);
@@ -90,7 +90,7 @@ namespace IntegrationTests.CalculateUtility
             var result = new List<Consideration>();
             for (var i = 0; i < numberOfConsiderations; i++)
             {
-                var consideration = new Stub_Consideration_IT(returnValue, new List<Parameter>());
+                var consideration = new Stub_Consideration_IT(returnValue, new List<ParamFloat>());
                 consideration.MinFloat.Value = min;
                 consideration.MaxFloat.Value = max;
                 result.Add(consideration);

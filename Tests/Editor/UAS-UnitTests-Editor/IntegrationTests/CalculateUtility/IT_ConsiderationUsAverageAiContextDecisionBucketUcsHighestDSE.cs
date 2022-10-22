@@ -39,7 +39,7 @@ namespace IntegrationTests.CalculateUtility
                 var highestAction = new Mock_AgentAction();
                 highestAction.Name = "Highest";
 
-                var highConsideration = new Stub_Consideration_IT(1, new List<Parameter>());
+                var highConsideration = new Stub_Consideration_IT(1, new List<ParamFloat>());
 
                 var highDecisions = new Decision();
                 highDecisions.AgentActions.Add(highestAction);
@@ -70,7 +70,7 @@ namespace IntegrationTests.CalculateUtility
                 var highestAction = new Mock_AgentAction();
                 highestAction.Name = "Highest";
 
-                var mediumConsideration = new Stub_Consideration_IT(0.5f, new List<Parameter>());
+                var mediumConsideration = new Stub_Consideration_IT(0.5f, new List<ParamFloat>());
 
                 var mediumDecision = new Decision();
                 mediumDecision.AgentActions.Add(highestAction);
@@ -84,7 +84,7 @@ namespace IntegrationTests.CalculateUtility
                 var loverAction = new Mock_AgentAction();
                 highestAction.Name = "Lower";
 
-                var highConsideration = new Stub_Consideration_IT(0.5f, new List<Parameter>());
+                var highConsideration = new Stub_Consideration_IT(0.5f, new List<ParamFloat>());
 
                 var highDecisions = new Decision();
                 highDecisions.AgentActions.Add(loverAction);
@@ -116,7 +116,7 @@ namespace IntegrationTests.CalculateUtility
                         returnValue = (i / 100) * max + 0.1f;
 
                     }
-                    var consideration = new Stub_Consideration_IT(returnValue, new List<Parameter>());
+                    var consideration = new Stub_Consideration_IT(returnValue, new List<ParamFloat>());
                     consideration.MinFloat.Value = min;
                     consideration.MaxFloat.Value = max;
                     result.Add(consideration);

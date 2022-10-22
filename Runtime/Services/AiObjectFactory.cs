@@ -14,9 +14,10 @@ internal class AiObjectFactory
     internal static object CreateInstance(Type t, bool nonPublic = false)
     {
         DebugService.Log("Creating instance of type: " + t, nameof(AiObjectFactory));
-        var newObject = t == typeof(Parameter) ? 
-            new Parameter() : 
-            Activator.CreateInstance(t);
+        // var newObject = t == typeof(Parameter) ? 
+        //     new Parameter() : 
+        //     Activator.CreateInstance(t);
+        var newObject = Activator.CreateInstance(t);
 
         if (newObject.GetType().GetInterface(nameof(IInitializeAble)) != null)
         {

@@ -10,7 +10,7 @@ namespace Mocks
     {
         public float ReturnValue;
 
-        public Stub_Consideration_IT(float returnValue, List<Parameter> parameters, float min = 0f, float max = 1f)
+        public Stub_Consideration_IT(float returnValue, List<ParamFloat> parameters, float min = 0f, float max = 1f)
         {
             ReturnValue = returnValue;
             throw new NotImplementedException("This doesn't work as inteded");

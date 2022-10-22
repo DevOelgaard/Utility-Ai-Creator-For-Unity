@@ -50,25 +50,25 @@ namespace UnitTests.Services
             }
         }
         
-        [Test]
-        public void NamesToListParameters_NamedAfterNameList_ReturnsCorrectNames()
-        {
-            var expected = nameList;
-            var parameters = new List<Parameter>();
-            foreach (var name in nameList)
-            {
-                var o = new Parameter(name,nameList.IndexOf(name));
-                parameters.Add(o);
-            }
-
-            var result = RestoreAbleService.NamesToList(parameters);
-
-            foreach (var expectedValue in expected)
-            {
-                var index = expected.IndexOf(expectedValue);
-                Assert.AreEqual(expectedValue,result[index]);
-            }
-        }
+        // [Test]
+        // public void NamesToListParameters_NamedAfterNameList_ReturnsCorrectNames()
+        // {
+        //     var expected = nameList;
+        //     var parameters = new List<ParamFloat>();
+        //     foreach (var name in nameList)
+        //     {
+        //         var o = new ParamFloat(name,nameList.IndexOf(name));
+        //         parameters.Add(o);
+        //     }
+        //
+        //     var result = RestoreAbleService.NamesToList(parameters);
+        //
+        //     foreach (var expectedValue in expected)
+        //     {
+        //         var index = expected.IndexOf(expectedValue);
+        //         Assert.AreEqual(expectedValue,result[index]);
+        //     }
+        // }
         
         // [Test]
         // public void OrderByNames_NamedAfterNameList_ReturnsSortedList()

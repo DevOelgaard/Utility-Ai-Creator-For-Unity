@@ -11,10 +11,10 @@ internal static class RestoreAbleService
         return aiObjects.Where(a => a != null).Select(a => a.Name).ToList();
     }
 
-    internal static List<string> NamesToList(List<Parameter> aiObjects)
-    {
-        return aiObjects.Where(a => a != null).Select(a => a.Name).ToList();
-    }
+    // internal static List<string> NamesToList(List<Parameter> aiObjects)
+    // {
+    //     return aiObjects.Where(a => a != null).Select(a => a.Name).ToList();
+    // }
 
     internal static List<T> OrderByNames<T>(List<string> desiredOrder, List<T> aiObjects) where T : AiObjectModel
     {
@@ -47,27 +47,27 @@ internal static class RestoreAbleService
     //     return result;
     // }
 
-    internal static async Task<List<Parameter>> GetParameters(string path, bool restoreDebug)
-    {
-        var result = new List<Parameter>();
-        var parameterStates = await PersistenceAPI.Instance.LoadRestoreAblesOfTypeAsync<RestoreState>(path, typeof(Parameter));
-        parameterStates = parameterStates.OrderBy(p => p.LoadedObject?.Index).ToList();
-        
-        foreach (var p in parameterStates)
-        {
-            if (p.LoadedObject == null)
-            {
-                var parameter = new Parameter("Error", p.Exception.ToString());
-                result.Add(parameter);
-            }
-            else
-            {
-                var parameter = await RestoreAble.Restore<Parameter>(p.LoadedObject, restoreDebug);
-                result.Add(parameter);
-            }
-        }
-        return result;
-    }
+    // internal static async Task<List<Parameter>> GetParameters(string path, bool restoreDebug)
+    // {
+    //     var result = new List<Parameter>();
+    //     var parameterStates = await PersistenceAPI.Instance.LoadRestoreAblesOfTypeAsync<RestoreState>(path, typeof(Parameter));
+    //     parameterStates = parameterStates.OrderBy(p => p.LoadedObject?.Index).ToList();
+    //     
+    //     foreach (var p in parameterStates)
+    //     {
+    //         if (p.LoadedObject == null)
+    //         {
+    //             var parameter = new Parameter("Error", p.Exception.ToString());
+    //             result.Add(parameter);
+    //         }
+    //         else
+    //         {
+    //             var parameter = await RestoreAble.Restore<Parameter>(p.LoadedObject, restoreDebug);
+    //             result.Add(parameter);
+    //         }
+    //     }
+    //     return result;
+    // }
     
     // internal static async Task<List<UtilityContainerSelector>> GetUcs(string path, bool restoreDebug)
     // {

@@ -39,7 +39,7 @@ namespace IntegrationTests.CalculateUtility
                 .LastUtilityScoreChanged
                 .Subscribe(_ => timesCalled++);
 
-            var consideration = new Stub_Consideration_IT(0.7f, new List<Parameter>());
+            var consideration = new Stub_Consideration_IT(0.7f, new List<ParamFloat>());
             consideration.Initialize();
             bucket.Considerations.Add(consideration);
 
@@ -72,9 +72,9 @@ namespace IntegrationTests.CalculateUtility
         [TestCase(2, 1, -1, 0)]
         public void GetUtility_MultipleValues_ReturnsExpected(float a, float b, float c, float expected)
         {
-            var c1 = new Stub_Consideration_IT(a, new List<Parameter>());
-            var c2 = new Stub_Consideration_IT(b, new List<Parameter>());
-            var c3 = new Stub_Consideration_IT(c, new List<Parameter>());
+            var c1 = new Stub_Consideration_IT(a, new List<ParamFloat>());
+            var c2 = new Stub_Consideration_IT(b, new List<ParamFloat>());
+            var c3 = new Stub_Consideration_IT(c, new List<ParamFloat>());
             c1.Initialize();
             c2.Initialize();
             c3.Initialize();
@@ -93,7 +93,7 @@ namespace IntegrationTests.CalculateUtility
             var result = new List<Consideration>();
             for (var i = 0; i < numberOfConsiderations; i++)
             {
-                var consideration = new Stub_Consideration_IT(returnValue, new List<Parameter>());
+                var consideration = new Stub_Consideration_IT(returnValue, new List<ParamFloat>());
                 consideration.Initialize();
                 consideration.MinFloat.Value = min;
                 consideration.MaxFloat.Value = max;

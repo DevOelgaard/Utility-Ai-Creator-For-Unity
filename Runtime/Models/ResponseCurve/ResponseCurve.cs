@@ -355,10 +355,10 @@ public class ResponseCurve: AiObjectModel
             tempRFs.Add(rF);
         }
         
-        var tempSegments = new List<Parameter>();
+        var tempSegments = new List<ParamFloat>();
         foreach (var segmentState in s.segments)
         {
-            var segment = await RestoreAble.Restore<Parameter>(segmentState);
+            var segment = await RestoreAble.Restore<ParamFloat>(segmentState);
             tempSegments.Add(segment);
         }
         

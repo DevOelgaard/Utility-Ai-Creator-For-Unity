@@ -36,10 +36,10 @@ internal class FileExtensionService
         {
             return typeof(ResponseFunction);
         }
-        else if (path.Contains(Consts.FileExtension_Parameter))
-        {
-            return typeof(Parameter);
-        }
+        // else if (path.Contains(Consts.FileExtension_Parameter))
+        // {
+        //     return typeof(Parameter);
+        // }
         else if (path.Contains(Consts.FileExtension_TickerSettings))
         {
             return typeof(UaiTickerSettingsModel);
@@ -89,10 +89,10 @@ internal class FileExtensionService
         {
             return typeof(ResponseFunctionSingleFileState);
         }
-        else if (path.Contains(Consts.FileExtension_Parameter))
-        {
-            return typeof(ParameterState);
-        }
+        // else if (path.Contains(Consts.FileExtension_Parameter))
+        // {
+        //     return typeof(ParameterState);
+        // }
         else if (path.Contains(Consts.FileExtension_TickerSettings))
         {
             return typeof(UaiTickerSettingsModelSingleFileState);
@@ -143,10 +143,10 @@ internal class FileExtensionService
         {
             return Consts.FileExtension_ResponseFunction;
         }
-        if (type.IsAssignableFrom(typeof(Parameter)))
-        {
-            return Consts.FileExtension_Parameter;
-        }
+        // if (type.IsAssignableFrom(typeof(Parameter)))
+        // {
+        //     return Consts.FileExtension_Parameter;
+        // }
         if (type.IsAssignableFrom(typeof(TickerMode)))
         {
             return Consts.FileExtension_TickerModes;
@@ -195,10 +195,10 @@ internal class FileExtensionService
         {
             return Consts.FileExtension_ResponseFunction;
         }
-        if (type.IsAssignableFrom(typeof(ParameterState)))
-        {
-            return Consts.FileExtension_Parameter;
-        }
+        // if (type.IsAssignableFrom(typeof(ParameterState)))
+        // {
+        //     return Consts.FileExtension_Parameter;
+        // }
         if (type.IsAssignableFrom(typeof(UaiTickerSettingsModelSingleFileState)))
         {
             return Consts.FileExtension_TickerSettings;

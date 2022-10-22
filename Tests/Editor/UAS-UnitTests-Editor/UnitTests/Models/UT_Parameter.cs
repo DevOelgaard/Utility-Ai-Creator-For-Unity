@@ -8,7 +8,7 @@ namespace UnitTests.Models
     public class UT_Parameter
     {
         private CompositeDisposable disposable = new CompositeDisposable();
-        private Parameter uut;
+        private ParamFloat uut;
 
         [SetUp]
         public void SetUp()
@@ -18,9 +18,9 @@ namespace UnitTests.Models
         [Test]
         public void Clone_NewlyCreatedObject_CloneHasSameValueAndName()
         {
-            uut = new Parameter("TestOne", 5);
+            uut = new ParamFloat("TestOne", 5f);
 
-            var result = uut.Clone();
+            var result = uut.Clone() as ParamFloat;
             
             Assert.AreEqual(uut.Name,result.Name);
             Assert.AreEqual(uut.Value,result.Value);

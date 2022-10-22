@@ -57,7 +57,7 @@ namespace IntegrationTests.CalculateUtility
 
                 }
 
-                var consideration = new Stub_Consideration_IT(returnValue, new List<Parameter>());
+                var consideration = new Stub_Consideration_IT(returnValue, new List<ParamFloat>());
                 consideration.MinFloat.Value = min;
                 consideration.MaxFloat.Value = max;
                 result.Add(consideration);

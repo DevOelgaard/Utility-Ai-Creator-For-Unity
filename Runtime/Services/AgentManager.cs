@@ -3,6 +3,7 @@ using UniRxExtension;
 using UnityEngine;
 using UniRx;
 using System;
+using UnityEngine.UI;
 
 internal class AgentManager
 {
@@ -49,7 +50,12 @@ internal class AgentManager
         var identifier = agent.TypeIdentifier;
         if (Model.AgentsByIdentifier.ContainsKey(identifier))
         {
-            Model.AgentsByIdentifier.Remove(identifier);
+            Model.AgentsByIdentifier[identifier].Remove(agent);
+            if (Model.AgentsByIdentifier[identifier].Count <= 0)
+            {
+                Model.AgentsByIdentifier.Remove(identifier);
+                Model.AgentIdentifiers.Remove(identifier);
+            }
         }
         Model.Agents.Remove(agent);
         agentsUpdated.OnNext(agent);

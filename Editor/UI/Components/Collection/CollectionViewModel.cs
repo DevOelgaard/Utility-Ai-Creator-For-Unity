@@ -52,6 +52,7 @@ public class CollectionViewModel<T> : VisualElement where T : AiObjectModel
         dropdownContainer.Add(addCopyPopup);
 
         addCopyPopup.RegisterCallback<ChangeEvent<string>>(OnAddCopyValueChanged);
+        //addCopyPopup.RegisterCallback<MouseOverEvent>(UpdatePopup);
 
         this.templates = templates;
         this.templates.OnValueChanged
@@ -107,9 +108,24 @@ public class CollectionViewModel<T> : VisualElement where T : AiObjectModel
             .AddTo(subscriptions);
     }
 
+    // private DateTime lastUpdateTime = DateTime.MinValue;
+    // private int secondsBetweenUpdate = 60;
+    // private void UpdatePopup(MouseOverEvent evt)
+    // {
+    //     var lastUpdatedUtc = lastUpdateTime.ToUniversalTime();
+    //     if (DateTime.UtcNow > lastUpdatedUtc.AddSeconds(60))
+    //     {
+    //         InitAddCopyPopup();
+    //     }
+    // }
+
     private async void OnAddCopyValueChanged(ChangeEvent<string> evt)
     {
-        if (evt.newValue != null && evt.newValue != Consts.LineBreakBaseTypes && evt.newValue != Consts.LineBreakTemplates && evt.newValue != Consts.LineBreakDemos)
+        if (evt.newValue != null && 
+            evt.newValue != Consts.LineBreakBaseTypes && 
+            evt.newValue != Consts.LineBreakTemplates && 
+            evt.newValue != Consts.LineBreakDemos)
+            
         {
             await AddCopy(evt.newValue);
         }

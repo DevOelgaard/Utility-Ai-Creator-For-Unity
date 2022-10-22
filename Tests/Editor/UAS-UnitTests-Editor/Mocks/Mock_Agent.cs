@@ -11,6 +11,11 @@
 
         public string TypeIdentifier => string.IsNullOrEmpty(TypeIdentifierString) ? GetType().FullName : TypeIdentifierString;
 
+        public void ActivateNextAction()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void ActivateNextAction(TickMetaData metaData)
         {
             TickCalls++;

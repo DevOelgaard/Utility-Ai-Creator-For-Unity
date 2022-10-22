@@ -197,45 +197,6 @@ public class ParameterContainer
         }
     }
 
-
-    
-    // internal void AddParameter(Parameter param)
-    // {
-    //     if (parametersByName.ContainsKey(param.Name))
-    //     {
-    //         parametersByName[param.Name] = param;
-    //     }
-    //     else
-    //     {
-    //         parametersByName.Add(param.Name, param);
-    //     }
-    // }
-
-    // internal Parameter GetParameter(string parameterName)
-    // {
-    //     if (!parametersByName.ContainsKey(parameterName))
-    //     {
-    //         var p = Parameters.FirstOrDefault(p => p.Name == parameterName);
-    //         if (p == null)
-    //         {
-    //             DebugService.LogError("Couldn't find parameter: " + parameterName, this);
-    //         }
-    //         parametersByName.Add(parameterName,p);
-    //     }
-    //
-    //     return parametersByName[parameterName];
-    // }
-
-
-    // private void InitializeDefaultParameters()
-    // {
-    //     // throw new NotImplementedException("The Parameters (List<ParamBase>), should be initialized here");
-    //     foreach (var param in getParameters.Invoke())
-    //     {
-    //         AddParameter(param);
-    //     }
-    // }
-
     internal ParameterContainer Clone()
     {
         var clone = new ParameterContainer();

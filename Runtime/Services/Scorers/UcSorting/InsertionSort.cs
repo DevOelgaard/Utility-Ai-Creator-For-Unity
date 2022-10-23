@@ -10,7 +10,7 @@ internal class InsertionSort
                     var flag = 0;
                     for (var j = i-1; j >= 0 && flag != 1; j++)
                     {
-                        if (key.LastCalculatedUtility > list[j].LastCalculatedUtility)
+                        if (key.Utility > list[j].Utility)
                         {
                             list[j + 1] = list[j];
                             j--;

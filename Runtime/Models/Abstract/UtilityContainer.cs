@@ -28,13 +28,13 @@ public abstract class UtilityContainer : AiObjectModel
         }
     }
 
-    private float lastCalculatedUtility;
-    public float LastCalculatedUtility
+    private float utility;
+    public float Utility
     {
-        get => lastCalculatedUtility;
+        get => utility;
         set
         {
-            lastCalculatedUtility = value;
+            utility = value;
             ScoreModels[0].Value = value;
             lastUtilityChanged.OnNext(value);
         }
@@ -117,12 +117,12 @@ public abstract class UtilityContainer : AiObjectModel
     internal float GetUtility(IAiContext context)
     {
         MetaData.LastTickEvaluated = context.TickMetaData.TickCount;
-        LastCalculatedUtility = CalculateUtility(context);
-        if (float.IsNaN(LastCalculatedUtility))
+        Utility = CalculateUtility(context);
+        if (float.IsNaN(Utility))
         {
-            LastCalculatedUtility = -1;
+            Utility = -1;
         }
-        return LastCalculatedUtility;
+        return Utility;
     }
 
     

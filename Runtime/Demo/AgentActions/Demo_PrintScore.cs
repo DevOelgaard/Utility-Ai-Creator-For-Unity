@@ -25,6 +25,6 @@ internal class Demo_PrintScore : AgentAction
     {
         var decision = ContextAddress.Parent as Decision;
         var bucket = decision.ContextAddress.Parent as Bucket;
-        Debug.Log("Bucket Score: " + bucket.LastCalculatedUtility + " Decision score: " + decision.LastCalculatedUtility);
+        Debug.Log("Bucket Score: " + bucket.Utility + " Decision score: " + decision.Utility);
     }
 }

@@ -32,7 +32,7 @@ public class DseHighestBuckets: DecisionScoreEvaluator
         } else 
         {
             var bestDecision = uai.CurrentDecisionSelector.GetBestUtilityContainer(decisions, uai.UaiContext);
-            if (bestDecision == null || bestDecision.LastCalculatedUtility <= 0)
+            if (bestDecision == null || bestDecision.Utility <= 0)
             {
                 //Debug.LogWarning("No valid decision. Add a \"fall back\" decision (Ie. Idle), which always scores >0");
                 return new List<AgentAction>();

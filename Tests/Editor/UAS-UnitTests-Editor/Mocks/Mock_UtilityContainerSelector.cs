@@ -10,12 +10,12 @@ namespace Mocks
         public Decision BestDecision;
         public override Bucket GetBestUtilityContainer(List<Bucket> containers, IAiContext context)
         {
-            return BestBucket ?? containers.MaxBy(c => c.LastCalculatedUtility);
+            return BestBucket ?? containers.MaxBy(c => c.Utility);
         }
 
         public override Decision GetBestUtilityContainer(List<Decision> containers, IAiContext context)
         {
-            return BestDecision ?? containers.MaxBy(c => c.LastCalculatedUtility);
+            return BestDecision ?? containers.MaxBy(c => c.Utility);
         }
 
         public override string GetDescription()

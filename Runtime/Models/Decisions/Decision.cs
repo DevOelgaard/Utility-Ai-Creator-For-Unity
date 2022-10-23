@@ -44,11 +44,12 @@ public class Decision: UtilityContainer
         agentActionSub = agentActions.OnValueChanged
             .Subscribe(_ => UpdateInfo());
         BaseAiObjectType = typeof(Decision);
+        AddParameter("Base Weight", 1f);
     }
 
     public override float GetWeight()
     {
-        return weight;
+        return ParameterContainer.GetParamFloat("Base Weight").Value;
     }
 
     protected override AiObjectModel InternalClone()
@@ -120,9 +121,9 @@ public class Decision: UtilityContainer
         }
         else
         {
-            weight = Convert.ToSingle(parent.Weight.Value);
+            weight = GetWeight();
         }
-        return base.CalculateUtility(context);
+        return base.CalculateUtility(context) * parent.Utility;
     }
 
     protected override void ClearSubscriptions()
@@ -146,7 +147,7 @@ public class Decision: UtilityContainer
         {
             Considerations.Add(await Restore<Consideration>(considerationState));
         }
-        LastCalculatedUtility = s.lastCalculatedUtility;
+        Utility = s.lastCalculatedUtility;
     }
     // protected override async Task InternalSaveToFile(string path, IPersister persister, RestoreState state)
     // {

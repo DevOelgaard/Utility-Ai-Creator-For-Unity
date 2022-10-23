@@ -52,7 +52,7 @@ public class UCSHighestScore : UtilityContainerSelector
             return currentlyEvaluatedContainer;
         } else
         {
-            if(utility > bestContainer.LastCalculatedUtility)
+            if(utility > bestContainer.Utility)
             {
                 return currentlyEvaluatedContainer;
             }

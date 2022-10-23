@@ -190,7 +190,7 @@ public class Bucket : UtilityContainer
             Considerations.Add(await Restore<Consideration>(considerationState));
         }
         Weight = await RestoreAble.Restore<ParamFloat>(s.weight);
-        LastCalculatedUtility = s.lastCalculatedUtility;
+        Utility = s.lastCalculatedUtility;
     }
 
     public override SingleFileState GetSingleFileState()
@@ -224,7 +224,7 @@ public class BucketSingleFileState: AiObjectModelSingleFileState
         {
             considerations.Add(oDecision.GetSingleFileState() as ConsiderationSingleFileState);
         }
-        lastCalculatedUtility = o.LastCalculatedUtility;
+        lastCalculatedUtility = o.Utility;
         weight = o.Weight.GetState() as ParamBaseState<float>;
     }
 }

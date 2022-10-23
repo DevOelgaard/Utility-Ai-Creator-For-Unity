@@ -13,7 +13,7 @@ namespace Mocks
         public Mock_Bucket(float returnValue = 0f)
         {
             ReturnValue = returnValue;
-            LastCalculatedUtility = returnValue;
+            Utility = returnValue;
         }
 
 

@@ -90,7 +90,7 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
 
     private List<UtilityContainer> UpdateList(List<UtilityContainer> list, UtilityContainer container)
     {
-        if (container.LastCalculatedUtility <= 0 )
+        if (container.Utility <= 0 )
         {
             return list;
         }
@@ -104,8 +104,8 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
             {
                 highestValid = list[NumberOfItemsToEvaluate - 1];
             }
-            var minimumAllowedScore = highestValid.LastCalculatedUtility - MaxDeviationFromHighest;
-            if (container.LastCalculatedUtility < minimumAllowedScore)
+            var minimumAllowedScore = highestValid.Utility - MaxDeviationFromHighest;
+            if (container.Utility < minimumAllowedScore)
             {
                 return list;
             }
@@ -117,11 +117,11 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
         {
             list.Add(container);
         } 
-        else if (container.LastCalculatedUtility < list[evaluateIndex].LastCalculatedUtility)
+        else if (container.Utility < list[evaluateIndex].Utility)
         {
             return list;
         } 
-        else if (container.LastCalculatedUtility < list[evaluateIndex].LastCalculatedUtility)
+        else if (container.Utility < list[evaluateIndex].Utility)
         {
             var rand = UnityEngine.Random.Range(0, 2);
             if (rand == 0) // Swapping two equally scored containers at random
@@ -134,7 +134,7 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
             list.Add(container);
         }
         list = list
-            .OrderByDescending(uc => uc.LastCalculatedUtility)
+            .OrderByDescending(uc => uc.Utility)
             .ToList();
         return list;
     }
@@ -153,13 +153,13 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
             var sum = list
                 .Take(numberOfItems)
                 .Where(uc => uc != null)
-                .Sum(uc => uc.LastCalculatedUtility);
+                .Sum(uc => uc.Utility);
             
 
             var resultNumber = UnityEngine.Random.Range(0, sum);
             for(var i = 0; i < numberOfItems; i++)
             {
-                resultNumber -= list[i].LastCalculatedUtility;
+                resultNumber -= list[i].Utility;
                 if(resultNumber <= 0)
                 {
                     return list[i];
@@ -182,11 +182,11 @@ internal class UCSRandomFromXHighest : UtilityContainerSelector
         }
         else if (list.Count() < NumberOfItemsToEvaluate)
         {
-            return list.Last().LastCalculatedUtility;
+            return list.Last().Utility;
         }
         else
         {
-            return list[NumberOfItemsToEvaluate - 1].LastCalculatedUtility;
+            return list[NumberOfItemsToEvaluate - 1].Utility;
         }
     }
 }

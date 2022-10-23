@@ -14,7 +14,7 @@ namespace Mocks
         public Mock_Decision(float returnValue = 0f)
         {
             ReturnValue = returnValue;
-            LastCalculatedUtility = returnValue;
+            Utility = returnValue;
             // var a = new Mock_AgentAction();
             // a.Name = returnValue.ToString();
             // AgentActions.Add(a);

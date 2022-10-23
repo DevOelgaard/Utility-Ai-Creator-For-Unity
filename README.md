@@ -111,38 +111,38 @@ public class GameHandler : MonoBehaviour
 #### Template Manager - Setting up the Ai
 
 1. In the top toolbar of Unity: UAI Creator -> Template Manager<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Open%20Template%20Manager.png "Open Template Manager")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Open%20Template%20Manager.png "Open Template Manager")
    1. If prompted press "Create New Project"
    2. Create an empty folder, name it "HelloWorld" and select it
 2. In the 'AIs' category: Add element -> Uai<br>
-![img](https://github.com/DevOelgaard/UAS/blob/9b82d4e56205a54b060407f4c8c525c4466c18d5/Packages/UtilityAiSystem/ReadmeResources/Images/Add%20first%20UAI.png "Add first UAI")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Add%20first%20UAI.png "Add first UAI")
 3. Double click the new Uai, which just appeared<br>
-![img](https://github.com/DevOelgaard/UAS/blob/0d9b95165f283f73cbf5770ce4d319f375709166/Packages/UtilityAiSystem/ReadmeResources/Images/Double%20Click%20UAI.png "Double Click UAI")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Double%20Click%20UAI.png "Double Click UAI")
 4. Name the UAI: 'Hello World'<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Rename%20UAI.png "Rename UAI")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Rename%20UAI.png "Rename UAI")
 5. Add a bucket<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Add%20a%20bucket.png "Add a bucket")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Add%20a%20bucket.png "Add a bucket")
 6. Expand the bucket by pressing _Expand_ (On the left side of the newly added bucket)
 7. Add Consideration "Fixed Value"<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Add%20Consideration%20Fixed%20Value.png "Add Consideration Fixed Value")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Add%20Consideration%20Fixed%20Value.png "Add Consideration Fixed Value")
 8. Select the _Decisions_ Tab
 9. Add a decision<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Add%20decision.png "Add decision")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Add%20decision.png "Add decision")
 10. Expand the decision by pressing _Expand_ (On the left side of the newly added decision)
 11. Add Consideration "Fixed Value"<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Add%20consideration%20to%20decision.png "Add consideration to decision")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Add%20consideration%20to%20decision.png "Add consideration to decision")
 12. Select the _Actions_ Tab
 13. Add the Action "Print Txt". _This is the action you implemented earlier_<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Add%20PrintTxt.png "Add PrintTxt")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Add%20PrintTxt.png "Add PrintTxt")
 14. Expand the "Print Txt" Action by pressing _Expand_
 15. In the _Text to print_ field input: "Hello World". _You defined this in code in the **AddParameter** method_<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Input%20Hello%20World.png "Input Hello World")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Input%20Hello%20World.png "Input Hello World")
 16. In the template managers toolbar: File -> Save
     - _If you lose your work, you can now reload your project by: File -> Reload Project_<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/FileSave.png "Save File")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/FileSave.png "Save File")
 17. In the top-right corner Toggle **Playable** on
     - _This tells the UAC, that the Ai can be used in the game_<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/PlayAbleOn.png "Toggle Playable On")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/PlayAbleOn.png "Toggle Playable On")
 18. Close the Template manager
 
 #### Unity - Creating the agent
@@ -150,13 +150,13 @@ public class GameHandler : MonoBehaviour
 1. Navigate to your scene view
 2. In the _Hierarchy_: Right Click -> 3D Object -> Cube
 3. Name it: "Agent"<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/AddAgent.png "Add Agent")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/AddAgent.png "Add Agent")
 4. Select the Agent
 5. In the Agents _Inspector_: Add Component -> Agent Mono<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Add%20AgentMono.png "Add AgentMono")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Add%20AgentMono.png "Add AgentMono")
 6. In the _Agent Mono Component_: Set the default Ai to **Hello World**. 
    - _This is the AI you created in the template manager_<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Select%20Hello%20World%20Uai.png "Select Hello World")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Select%20Hello%20World%20Uai.png "Select Hello World")
    - If the Ai isn't shown in the _default Ai_ drop down. Return to the template manager and press **Force Update Playable Ais**. _this error can happen right after installing the package_
 7. In the _Hierarchy_: Right Click -> Create Empty
 8. Name it: "GameHandler"
@@ -260,7 +260,7 @@ This chapter is meant to give you an overview of the UAI. You can read it all or
 ### The Basics
 
 A UAI is created by putting together multiple parts. At the top level you have the **UAI**, which consists of a collection of **Buckets**, each **bucket** holds a collection of **Considerations** and a collection of **Decisions**. Each **decision** holds a collection of **Considerations** and **AgentActions**.<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/UAI%20Rich%20Picture.png "UAI Rich Picture")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/UAI%20Rich%20Picture.png "UAI Rich Picture")
 
 **UAI**: Used by an agent as a container for all UAI objects, including decision making objects (more on that later).<br>
 **Bucket**: Collection for a group of similar **Decisions**, which shares one or more **Considerations**.<br>
@@ -272,7 +272,7 @@ A UAI is created by putting together multiple parts. At the top level you have t
 #### UAI
 
 The UAI consists of a collection of Buckets and 4 Decision Making Objects. By attaching a UAI to an agent, the agent will be able to select actions from within the UAIs **buckets**.<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/UAI%20Components.png "UAI Components")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/UAI%20Components.png "UAI Components")
 
 #### Bucket
 
@@ -281,7 +281,7 @@ A bucket should be used to group all decisions which shares _(or could share)_ t
 If any of the buckets considerations returns a score of 0, it indicates that all decisions in the bucket are invalid. I.e., if the agents don’t have a ranged weapon, he shouldn’t consider any ranged decisions.
 The weight defines the priority of the bucket compared to other buckets, where a higher weight equals a higher priority, by increasing the likelihood of the buckets decisions being selected, (due to a higher total utility).<br>
 The utility represents how much the agent would benefit from choosing this decision. The rule for calculating the utility is defined by the **Utility Scorer**.<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Bucket%20RichPicture.png "Bucket Rich Picture")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Bucket%20RichPicture.png "Bucket Rich Picture")
 
 #### Decision
 
@@ -291,7 +291,7 @@ A **Decision** represents a specific set of actions an agent can take, like “F
 The **Considerations** should be relevant to the given decision. I.e., for the decision “Fire bow at target”, the considerations could be: “Chance to hit target”, “Potential damage to target” and “Desire to damage target”.
 The utility represents how much the agent would benefit from choosing this decision. The rule for calculating the utility is defined by the **Utility Scorer**.
 The actions define the code, that must be executed in the game. Int the “Fire bow at target” example, the actions could be: “Animate fire bow”, “Deal damage to target” and “Reduce ammunition”. Another approach could be to use a single action called: “Fire bow at target”, and let all logic concerning animation, damage, and ammunition be handled by the game, but this depends on the given use case.<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Decision%20RichPicture.png "Decision Rich Picture")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Decision%20RichPicture.png "Decision Rich Picture")
 
 #### Consideration
 
@@ -300,7 +300,7 @@ Some basic considerations are shipped with the UAI Creator, but in almost all ca
 The consideration uses a **Response Curve** to convert the game data to a normalized score.<br>
 A score of 0 means that the consideration is impossible, and that the associated decision/bucket should be invalidated. An example of could be “Do I have a ranged weapon?”, and it could be attached to a bucket containing ranged attacks. If the agent does not have a ranged weapon, there is no reason to consider ranged attacks.<br>
 The performance tag is set by the user and is used by the UAI Creator to determine the order of execution of considerations. For performance reasons it is desirable to calculate performance-light considerations before performance-heave considerations.<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Consideration%20RichPicture.png "Consideration Rich Picture")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Consideration%20RichPicture.png "Consideration Rich Picture")
 
 There are multiple variants of considerations. The description above applies to all types of considerations, except as stated below.
 
@@ -330,14 +330,12 @@ Sample code can be found in [UAC-Show Case](https://github.com/DevOelgaard/UAC-S
 The Response Curve is used to define how game data should be converted.<br>
 In the example on the screenshot of the Response Curve UI, an agent has an automatic rifle. At close range the rifle shouldn’t be used and returns a value of 0. The rifle is most effective at medium range, which is represented by the normal distribution between X=0.1 and X=0.8. Finally, the rifle has some special ability, which is very effective at long ranges.<br>
 You can create your own response functions by creating a class, that inherits from ResponseFunction.<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/Screenshot%20ResponseCurve.png "ResponseCurve - Screenshot")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Screenshot%20ResponseCurve.png "ResponseCurve - Screenshot")
 
 #### AgentAction
 
 The agent action can be considered the “Output” of the UAI.<br>
 The UAI Creator comes with some Unity specific Agent Actions, but in most cases, they should be implemented by the user.<br>
-
-
 
 ##### Code
 
@@ -381,7 +379,7 @@ The _Ms Between Ticks_ and _Frames Between Ticks_ are equal to a logical AND, me
 
 Use the … between ticks, settings to improve performance, by limiting the resources spent on decision making for an agent.<br>
 This is very use case specific. In an FPS or racing game the user might expect the agents, to react instantly to the users’ inputs, and these should be set very low. In other games it might seem weird, if all agents act instantaneously to changes in the game world.<br>
-![img](https://github.com/DevOelgaard/UAS/blob/82a1ab346d1fba0e79a643ced8b167d837bf9bc8/Packages/UtilityAiSystem/ReadmeResources/Images/AgentMono%20Inspector.png "AgentMono Inspector")
+![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/AgentMono%20Inspector.png "AgentMono Inspector")
 
 #### Parameters
 

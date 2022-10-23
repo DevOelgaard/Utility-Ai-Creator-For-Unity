@@ -2,8 +2,7 @@
 
 [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/DevOelgaard)<br>
 
-This is a one-man hobby project, which is distributed as a free Unity-Package. Sponsorships would increase my incentive to spend more time on the project and potentially hire a UX designer, to really improve the user experience.<br>
-Furthermore a sponsorship would make me a happy man:)
+Becoming a sponsor will help this project stay alive, and make me a happy man :).
 
 ## What is Utility Ai Creator (UAC)?
 
@@ -459,5 +458,4 @@ You can add your own Utility Scorer by creating a class, that implements the IUt
 
 [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/DevOelgaard)<br>
 
-This is a one-man hobby project, which is distributed as a free Unity-Package. Sponsorships would increase my incentive to spend more time on the project and potentially hire a UX designer, to really improve the user experience.<br>
-Furthermore a sponsorship would make me a happy man :)<br>
+Becoming a sponsor will help this project stay alive, and make me a happy man :).

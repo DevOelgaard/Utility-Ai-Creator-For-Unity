@@ -26,7 +26,7 @@ internal class TickerModeDesiredFrameRate : TickerMode
 
     public TickerModeDesiredFrameRate() : base(UaiTickerMode.DesiredFrameRate, Consts.Description_TickerModeDesiredFrameRate)
     {
-        ParameterContainer.AddParameter("Target Framerate", 60);
+        ParameterContainer.AddParameter("Target Framerate", 60f);
         ParameterContainer.AddParameter("Sample Time Seconds", 1f);
         ParameterContainer.AddParameter("Debug", false);
         ParameterContainer.AddParameter("DebugTickCount", 0);

@@ -24,7 +24,7 @@ internal class TickerModeTimeBudget : TickerMode
 
         while(TickedAgentsThisFrame < agents.Count)
         {
-            if (stopwatch.ElapsedMilliseconds >= ParameterContainer.GetParamFloat("Time Budget MS").Value)
+            if (stopwatch.ElapsedMilliseconds >= ParameterContainer.GetParamInt("Time Budget MS").Value)
             {
                 if (ParameterContainer.GetParamBool("Debug").Value)
                 {

@@ -132,7 +132,7 @@ public class ParameterContainer
         }
         catch (Exception e)
         {
-            Console.WriteLine( "Parameter not found! Exception: " + e);
+            DebugService.LogError(Consts.ErrorMsg_ParameterNotFound,this,e);
             throw;
         }
     }
@@ -144,7 +144,7 @@ public class ParameterContainer
         }
         catch (Exception e)
         {
-            Console.WriteLine( "Parameter not found! Exception: " + e);
+            DebugService.LogError(Consts.ErrorMsg_ParameterNotFound,this,e);
             throw;
         }
     }
@@ -156,7 +156,7 @@ public class ParameterContainer
         }
         catch (Exception e)
         {
-            Console.WriteLine( "Parameter not found! Exception: " + e);
+            DebugService.LogError(Consts.ErrorMsg_ParameterNotFound,this,e);
             throw;
         }
     }
@@ -168,7 +168,7 @@ public class ParameterContainer
         }
         catch (Exception e)
         {
-            Console.WriteLine( "Parameter not found! Exception: " + e);
+            DebugService.LogError(Consts.ErrorMsg_ParameterNotFound,this,e);
             throw;
         }
     }
@@ -180,7 +180,7 @@ public class ParameterContainer
         }
         catch (Exception e)
         {
-            Console.WriteLine( "Parameter not found! Exception: " + e);
+            DebugService.LogError(Consts.ErrorMsg_ParameterNotFound,this,e);
             throw;
         }
     }
@@ -192,7 +192,7 @@ public class ParameterContainer
         }
         catch (Exception e)
         {
-            Console.WriteLine( "Parameter not found! Exception: " + e);
+            DebugService.LogError(Consts.ErrorMsg_ParameterNotFound,this,e);
             throw;
         }
     }

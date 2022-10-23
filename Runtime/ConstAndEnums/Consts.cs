@@ -196,4 +196,8 @@ public static class Consts
     internal const string Sequence_CalculateUtility_User = "CalculateUtility_User";
     internal const string Sequence_Persistence_Load = "Load Project";
     internal const string Sequence_Persistence_Save = "Save Project";
+    
+    // Error messages
+    internal const string ErrorMsg_ParameterNotFound =
+        "Parameter not found. Make sure you added it as the same type as you are trying to retrieve";
 }

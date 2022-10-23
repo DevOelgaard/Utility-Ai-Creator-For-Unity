@@ -454,4 +454,8 @@ You can add your own Utility Scorer by creating a class, that implements the IUt
 - Only use the score from considerations which are scorers
   - Use Consideration.IsScorer to check this. _(See advanced guide)_
 
+## Sponsor - Keep the project alive
 
+[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/DevOelgaard)<br>
+
+Becoming a sponsor will help this project stay alive, and make me a happy man :).

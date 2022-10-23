@@ -26,13 +26,13 @@ public static class DebugService
 
         public static void LogError(string message, object sender, Exception ex = null)
         {
-                if(!PrintDebug) return;
+                //if(!PrintDebug) return;
                 Debug.LogError(Message(message,sender,ex));
         }
 
         public static void DebugException(Exception ex)
         {
-                if(!PrintDebug) return;
+                //if(!PrintDebug) return;
                 Debug.LogException(ex);
         }
 

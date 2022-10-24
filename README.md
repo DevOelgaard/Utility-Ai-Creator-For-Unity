@@ -293,6 +293,46 @@ The utility represents how much the agent would benefit from choosing this decis
 The actions define the code, that must be executed in the game. Int the “Fire bow at target” example, the actions could be: “Animate fire bow”, “Deal damage to target” and “Reduce ammunition”. Another approach could be to use a single action called: “Fire bow at target”, and let all logic concerning animation, damage, and ammunition be handled by the game, but this depends on the given use case.<br>
 ![img](https://github.com/DevOelgaard/UnityUtilityAiSystem/blob/784ead147036c3ce9835603de74324bbb7076e69/ReadmeResources/Images/Decision%20RichPicture.png "Decision Rich Picture")
 
+##### Finding best target
+
+```csharp
+using UnityEngine;
+
+public class DecisionAllTargets:Decision
+{
+    protected override float CalculateUtility(IAiContext context)
+    {
+        var bestUtility = float.MinValue;
+        GameObject bestTarget = null;
+        // Finding all targets with basic Unity method
+        var targets = GameObject.FindGameObjectsWithTag("Target");
+
+        foreach (var target in targets)
+        {
+            // Storing the target in the AI context and makes it available for all
+            // Child Considerations and AgentActions of the decision
+            context.SetContext("Target",target,this);
+
+            // Getting utility for current target
+            var utility = Evaluate(context);
+
+            if (utility > bestUtility)
+            {
+                bestTarget = target;
+                bestUtility = utility;
+            }
+        }
+        
+        // Storing the best target to be used by AgentActions if the decision is selected
+        context.SetContext("Target",bestTarget,this);
+        
+        // returning the best utility
+        return bestUtility;
+    }
+}
+```
+
+
 #### Consideration
 
 The consideration can be considered the “Input” of the UAI, as this is the place, where data is extracted from the game and converted to a normalized score between 0-1.<br>

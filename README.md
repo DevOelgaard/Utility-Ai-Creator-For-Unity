@@ -404,6 +404,19 @@ The relevant fields and methods are:<br>
 - Void SetContext(object key, object value, AiObjectModel owner), sets a value for a given key, and specifies the owner of the data. If no owner is set the data is stored globally. Define the owner when you want the data to be shared between descendants.<br>
 - LastSelectedDecision, LastSelectedBucket, CurrentEvaluatedDecision and CurrentEvaluatedBucket are used to access the bucket and decision who “won”, the last tick, and the bucket and decision, which is currently being evaluated.<br>
 
+```csharp
+    {
+
+        var dataToShare = "Some data";
+        
+        // Storing data for sharing
+        context.SetContext("SOME KEY",dataToShare,Parent);
+
+        // Retrieving data 
+        var retrievedData = context.GetContext<string>("SOME KEY");
+    }
+```
+
 Sample code can be found in [UAC-Show Case](https://github.com/DevOelgaard/UAC-Showcase)<br>
 
 #### AgentMono

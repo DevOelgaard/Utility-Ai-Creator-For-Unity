@@ -413,7 +413,7 @@ The relevant fields and methods are:<br>
         context.SetContext("SOME KEY",dataToShare,Parent);
 
         // Retrieving data 
-        var retrievedData = context.GetContext<string>("SOME KEY");
+        var retrievedData = context.GetContext<string>("SOME KEY", this);
     }
 ```
 

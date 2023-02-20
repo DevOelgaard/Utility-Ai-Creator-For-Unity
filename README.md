@@ -41,18 +41,18 @@ For support join: [Support Chanel Discord](https://discord.gg/3Pa2mmDE9a)
 
 ## Quick Start
 
-This chapter helps you get started with a simple ‘hello world’ example.
-This guide was made with UAC V. 1.11.1 and Unity v. 2021.2.10f1 running on Windows 10, if you are running a different version or OS, the guide might not be 100% accurate.
-
 ### Installation
 
-1. Open Package Manager: Window -> Package Manager
-2. In top-left corner of package manager: + -> Add package from git URL
-3. Add one of the following links and press 'Add'. _[Get help](https://docs.unity3d.com/Manual/upm-git.html#Git-HTTPS)_
-   - Https: https://github.com/DevOelgaard/UnityUtilityAiSystem.git
-   - SSH: git@github.com:DevOelgaard/UnityUtilityAiSystem.git (Requires SSH Key)
-4. The package is now installed and appears in the Package manager
-   - If you don't see it make sure to select the filter: "Packages: In Project", in the package manager toolbar
+To install the Unity Utility AI System package, follow these steps:
+
+1. Open the Package Manager: `Window` -> `Package Manager`.
+2. In the top-left corner of the Package Manager, click the `+` button and select `Add package from git URL`.
+3. Add one of the following links and press 'Add' _[Get help](https://docs.unity3d.com/Manual/upm-git.html#Git-HTTPS)_: 
+   * HTTPS: https://github.com/DevOelgaard/UnityUtilityAiSystem.git
+   * SSH: git@github.com:DevOelgaard/UnityUtilityAiSystem.git (requires SSH key)
+4. The package is now installed and should appear in the Package Manager.
+5. If you don't see it, make sure to select the filter: `"Packages: In Project"` in the Package Manager toolbar.
+
 
 ### Hello World
 
